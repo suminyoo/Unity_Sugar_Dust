@@ -1,16 +1,40 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class WorldItem : MonoBehaviour
 {
-    public ItemData itemData; // 이 오브젝트가 어떤 아이템인지 정보
-    public int amount = 1;    // 몇 개가 들어있는지
+    public ItemData itemData; // 아이템 SO
+    public int amount = 1;    // 들어있는 개수
 
-    // 아이템 데이터를 기반으로 외형을 초기화하는 함수 (생성 시 호출)
+    private Transform target; //플레이어
+    public float moveSpeed = 10f;
+
     public void Initialize(ItemData data, int count)
     {
         itemData = data;
         amount = count;
-        // 필요하다면 여기서 3D 모델을 교체하거나 크기를 조정하는 로직 추가 가능
+    }
+
+    public void StartFollow(Transform player)
+    {
+        target = player;
+    }
+    public void StopFollow(Transform player)
+    {
+        if (target == player)
+            target = null;
+    }
+
+
+    private void Update()
+    {
+        if (target == null) return;
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            target.position,
+            moveSpeed * Time.deltaTime
+        );
     }
 
     private void OnTriggerEnter(Collider other)

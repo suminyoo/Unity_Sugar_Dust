@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void OnDamage(float damage)
     {
         hp -= damage;
+
         Debug.Log($"적 피격! 남은 HP: {hp}");
 
         if (hp <= 0)
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour, IDamageable
     void Die()
     {
         Debug.Log("생명체 처치");
+
         if (deathEffect != null)
         {
             Instantiate(deathEffect, transform.position, Quaternion.identity);

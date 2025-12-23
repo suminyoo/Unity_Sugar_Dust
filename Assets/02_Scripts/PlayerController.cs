@@ -12,13 +12,13 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Transform cameraTransform;
     public Transform characterModel;
+    private InventorySystem inventory;
 
     private Rigidbody rb;
     private Vector3 moveInput;
     private bool isInteracting = false;
 
 
-    private InventorySystem inventory; 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,22 +30,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //입력 처리
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
+        //카메라 기준 이동 방향 계산
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
         camForward.y = 0; camRight.y = 0;
 
         moveInput = (camForward.normalized * v + camRight.normalized * h).normalized;
 
+        //마우스 상호작용 체크
         isInteracting = Input.GetMouseButton(0) || Input.GetMouseButton(1);
 
-        if (isInteracting)
+        //상호작용 중이면 마우스 방향 보기, 아니면 이동 방향 보기
+        if (isInteracting) 
         {
             LookAtMouse();
         }
-        else if (moveInput != Vector3.zero)
+        else if (moveInput != Vector3.zero) 
         {
             LookAtMoveDirection();
         }
@@ -63,7 +67,7 @@ public class PlayerController : MonoBehaviour
         characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    // 마우스 지점을 바라보기
+    // 마우스 지점 바라보기
     void LookAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -97,11 +101,11 @@ public class PlayerController : MonoBehaviour
         // 과적
         if (weightRatio >= 1.0f)
         {
-            Debug.Log("가방이 너무너무 무겁다..");
+            Debug.Log("가방이 너무 무겁다..");
             finalSpeed = tooHeavySpeed;
         }
-        // 최대 수용 가능 무게의 85퍼
-        else if (weightRatio >= 0.85f)
+        // 최대 수용 가능 무게의 80퍼
+        else if (weightRatio >= 0.8f)
         {
             Debug.Log("가방이 무겁다..");
             finalSpeed = heavySpeed;
@@ -118,7 +122,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 애니메이션 속도 조절 (뛰다가 걷다가 기어가게 보이도록)
-        // 걷는 애니메이션 속도를 실제 이동 속도에 맞춰 줄여줍니다.
+        // 걷는 애니메이션 속도를 실제 이동 속도에 맞춰
         //if (animator != null)
         //{
         //    float animSpeed = finalSpeed / moveSpeed; // 1.0(정상) ~ 0.2(느림)

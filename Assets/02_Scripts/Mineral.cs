@@ -3,7 +3,7 @@ using UnityEngine;
 public class Mineral : MonoBehaviour, IMineable
 {
     [Header("Mineral Stats")]
-    public string mineralName = "Raw Resource";
+    public string mineralName = "New Resource";
     public float health = 100f;
     public GameObject hitEffectPrefab; // 채굴 시 파편 이펙트
     public GameObject dropItemPrefab;  // 파괴 시 드랍 아이템

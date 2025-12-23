@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
 
     private float currentXAngle = 0f;
     private float currentYAngle = 30f;
-    private Vector3 currentVelocity = Vector3.zero;
+    private Vector3 currentVelocity = Vector3.zero; // SmoothDamp 용 변수 (변수유지해야 함수 쓸때 초기화 안됨)
 
     void Update()
     {
@@ -26,22 +26,23 @@ public class CameraFollow : MonoBehaviour
         }
         if (Input.GetMouseButton(2))
         {
-            currentXAngle += Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime;
+            currentXAngle += Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime; //unscaledDeltaTime: timescale 무시하기위해
             currentYAngle -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.unscaledDeltaTime;
-            currentYAngle = Mathf.Clamp(currentYAngle, 10f, 80f);
+            currentYAngle = Mathf.Clamp(currentYAngle, 10f, 80f); // 수직 각도 제한을 위한 clamp 함수
         }
     }
 
-    void FixedUpdate() 
+    void FixedUpdate() // 이동처리, 카메라 떨리지 않게
     {
         if (target == null) return;
 
         Quaternion rotation = Quaternion.Euler(currentYAngle, currentXAngle, 0);
-        float distance = offset.magnitude;
+        float distance = offset.magnitude; //카메라와 타겟의 거리
         Vector3 rotatedOffset = rotation * new Vector3(0, 0, -distance);
         Vector3 targetPosition = target.position + rotatedOffset;
 
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime, Mathf.Infinity, Time.fixedDeltaTime);
-        transform.LookAt(target.position + Vector3.up * 1.5f);
+        // 카메라의 부드러운 이동, 관성 있게 smoothDamp
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
+        transform.LookAt(target.position + Vector3.up * 1.5f); //타겟 머리쪽 보기
     }
 }

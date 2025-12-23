@@ -27,12 +27,12 @@ public class InventorySystem : MonoBehaviour
     public List<InventorySlot> slots = new List<InventorySlot>(); // 실제 아이템 리스트
 
     [Header("References")]
-    public Transform dropPosition; // 아이템을 버릴 때 생성될 위치 (플레이어 앞)
+    public Transform dropPosition; // 아이템을 버릴 위치
 
     // 아이템 추가 메서드 (WorldItem에서 호출)
     public bool AddItem(ItemData data, int count)
     {
-        // 무게 체크 (미리 계산)
+        // 무게 체크
         if (currentWeight + (data.weight * count) > maxWeight + 50f) // 50은 초과 허용치
         {
             return false; // 너무 무거워서 못 줍는다 (기획에 따라 삭제 가능)

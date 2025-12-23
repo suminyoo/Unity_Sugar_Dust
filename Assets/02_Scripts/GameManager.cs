@@ -12,11 +12,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Life Cycle")]
     public int dayCount = 1;
-    public float dayTime = 120f; // 하루 제한 시간 (초)
+    public float dayTime = 120f; // 하루 제한 시간 (미정
 
     void Awake()
     {
-        // 씬이 바뀌어도 파괴되지 않는 싱글톤 구조
         if (Instance == null)
         {
             Instance = this;
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int amount) { money += amount; }
     public void SpendMoney(int amount) { money -= amount; }
 
-    // 씬 전환 시 호출할 함수
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

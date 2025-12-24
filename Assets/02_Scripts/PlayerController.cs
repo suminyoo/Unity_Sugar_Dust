@@ -1,4 +1,5 @@
 using UnityEngine;
+using static ActionSystem;
 
 public enum PlayerState
 {
@@ -15,8 +16,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
-    public float rotationSpeed = 15f;
+    public float rotationSpeed = 5f;
     public float jumpForce = 5f;
+    public float actionRotationSpeed = 20f;
 
     [Header("Weight Penalty")]
     public float heavySpeed = 3f;
@@ -89,11 +91,11 @@ public class PlayerController : MonoBehaviour
 
         if (isInteracting)
         {
-            LookAtMouse();
+            LookAtMouse(actionRotationSpeed);
         }
         else if (moveInput != Vector3.zero)
         {
-            LookAtMoveDirection();
+            LookAtMoveDirection(rotationSpeed);
         }
     }
 
@@ -203,17 +205,19 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Hit");
     }
 
-    public void OnWield()
+    public void OnWield(ActionType actionType)
     {
         if (!isGrounded) return;
-        // 이미 공격 모션 중일떄?? 
-        // if (currentState == PlayerState.Attack || currentState == PlayerState.Mine) return;
 
         currentState = PlayerState.Wield;
 
+        // 공격 채광 동일 모션
         animator.SetTrigger("Wield");
 
+        // 분기점
+        // if (actionType == ActionType.Attack) ...
     }
+
 
     public void OnDie()
     {
@@ -221,27 +225,30 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Die");
     }
 
-    void LookAtMoveDirection()
+    void LookAtMoveDirection(float speed)
     {
         Quaternion targetRotation = Quaternion.LookRotation(moveInput);
-        characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        characterModel.rotation =
+            Quaternion.Slerp(characterModel.rotation, targetRotation, speed * Time.deltaTime);
     }
 
-    void LookAtMouse()
+    void LookAtMouse(float speed)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
-        float rayDistance;
 
-        if (groundPlane.Raycast(ray, out rayDistance))
+        if (groundPlane.Raycast(ray, out float rayDistance))
         {
             Vector3 lookPoint = ray.GetPoint(rayDistance);
             Vector3 direction = (lookPoint - transform.position).normalized;
+
             if (direction != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * 1.5f * Time.deltaTime);
+                characterModel.rotation =
+                    Quaternion.Slerp(characterModel.rotation, targetRotation, speed * Time.deltaTime);
             }
         }
     }
+
 }

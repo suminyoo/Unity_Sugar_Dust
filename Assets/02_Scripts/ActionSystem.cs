@@ -3,8 +3,16 @@ using UnityEngine;
 public interface IMineable { void OnMine(float power); }
 public interface IDamageable { void OnDamage(float damage); }
 
+
+
 public class ActionSystem : MonoBehaviour
-{
+{ 
+    public enum ActionType
+    {
+        Attack,
+        Mine
+    }
+
     [Header("Settings")]
     public Transform firePoint;
     public float actionRange = 3.5f;
@@ -13,6 +21,14 @@ public class ActionSystem : MonoBehaviour
     [Header("Stats")]
     public float attackDamage = 10f;
     public float miningPower = 20f;
+
+    [Header("Cooldown")]
+    public float attackCooldown = 1f;
+    public float mineCooldown = 1f;
+
+    private float attackTimer = 0f;
+    private float mineTimer = 0f;
+
 
     private PlayerController playerController;
 
@@ -24,9 +40,7 @@ public class ActionSystem : MonoBehaviour
     void Update()
     {
         DrawDebugRay(); //디버그용
-
-        if (Input.GetMouseButtonDown(0)) TryAction(true);
-        if (Input.GetMouseButtonDown(1)) TryAction(false);
+        HandleActionInput();
     }
 
     //디버그용
@@ -40,39 +54,54 @@ public class ActionSystem : MonoBehaviour
         else
             Debug.DrawRay(ray.origin, ray.direction * actionRange, Color.red);
     }
+    void HandleActionInput()
+    {
+        if (attackTimer > 0)
+            attackTimer -= Time.deltaTime;
 
-    void TryAction(bool isWield)
+        if (mineTimer > 0)
+            mineTimer -= Time.deltaTime;
+
+        if (Input.GetMouseButton(0) && attackTimer <= 0f)
+        {
+            TryAction(ActionType.Attack);
+            attackTimer = attackCooldown;
+        }
+
+        if (Input.GetMouseButton(1) && mineTimer <= 0f)
+        {
+            TryAction(ActionType.Mine);
+            mineTimer = mineCooldown;
+        }
+
+    }
+    void TryAction(ActionType actionType)
     {
         if (firePoint == null) return;
-
-        if (playerController != null)
-        {
-            playerController.OnWield();
-        }
 
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, actionRange, actionLayer))
+        playerController.OnWield(actionType);
+
+        if (!Physics.Raycast(ray, out hit, actionRange, actionLayer))
+            return;
+
+        switch (actionType)
         {
-            if (isWield)
-            {
+            case ActionType.Attack:
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
                 if (target != null)
-                {
                     target.OnDamage(attackDamage);
-                    Debug.Log("공격 적중");
-                }
-            }
-            else
-            {
+                break;
+
+
+            case ActionType.Mine:
                 IMineable mineral = hit.collider.GetComponent<IMineable>();
                 if (mineral != null)
-                {
                     mineral.OnMine(miningPower);
-                    Debug.Log("광질 성공");
-                }
-            }
+                break;
         }
     }
+
 }

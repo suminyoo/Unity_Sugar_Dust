@@ -1,73 +1,232 @@
 using UnityEngine;
 
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Jump,
+    Wield, //공격,채광
+    Damaged,
+    Die
+}
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 5f;
+    public float walkSpeed = 5f;
+    public float runSpeed = 8f;
     public float rotationSpeed = 15f;
+    public float jumpForce = 5f;
 
+    [Header("Weight Penalty")]
     public float heavySpeed = 3f;
     public float tooHeavySpeed = 1f;
 
     [Header("References")]
     public Transform cameraTransform;
     public Transform characterModel;
+    public Animator animator;
     private InventorySystem inventory;
-
     private Rigidbody rb;
+
+    public PlayerState currentState = PlayerState.Idle;
+
     private Vector3 moveInput;
     private bool isInteracting = false;
-
+    private bool canRun = false;
+    private bool isGrounded = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         inventory = GetComponent<InventorySystem>();
+
         if (cameraTransform == null) cameraTransform = Camera.main.transform;
+        if (animator == null) animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        //입력 처리
+        if (currentState == PlayerState.Die) return;
+
+        HandleInput();
+        UpdateStateAndAnimation();
+    }
+
+    void FixedUpdate()
+    {
+        if (currentState == PlayerState.Die) return;
+
+        MovePlayer();
+    }
+
+    void HandleInput()
+    {
+        // 입력
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        //카메라 기준 이동 방향 계산
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
         camForward.y = 0; camRight.y = 0;
 
         moveInput = (camForward.normalized * v + camRight.normalized * h).normalized;
 
-        //마우스 상호작용 체크
+        // 달리기
+        canRun = Input.GetKey(KeyCode.LeftShift) && moveInput != Vector3.zero;
+
+        // 점프
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            Jump();
+        }
+
+        // 회전 (액션중, 이동중)
         isInteracting = Input.GetMouseButton(0) || Input.GetMouseButton(1);
 
-        //상호작용 중이면 마우스 방향 보기, 아니면 이동 방향 보기
-        if (isInteracting) 
+        if (isInteracting)
         {
             LookAtMouse();
         }
-        else if (moveInput != Vector3.zero) 
+        else if (moveInput != Vector3.zero)
         {
             LookAtMoveDirection();
         }
     }
 
-    void FixedUpdate()
+    void Jump()
     {
-        MovePlayer();
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+        currentState = PlayerState.Jump;
+        animator.SetTrigger("Jump");
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            // normal.y > 0.5f는 윗면
+            if (collision.contacts[0].normal.y > 0.5f)
+            {
+                isGrounded = true;
+            }
+        }
     }
 
-    // 이동 방향을 바라보기
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+    void MovePlayer()
+    {
+        // 무게 계산
+        float currentWeight = inventory != null ? inventory.currentWeight : 0f;
+        float maxWeight = inventory != null ? inventory.maxWeight : 100f;
+        if (maxWeight == 0) maxWeight = 1f;
+
+        float weightRatio = currentWeight / maxWeight;
+        float finalSpeed = walkSpeed;
+
+        // 무게에따른 속도
+        // TODO: 무게제한 로직 수정(수식수정)
+        if (weightRatio >= 1.0f) // 100퍼
+        {
+            finalSpeed = tooHeavySpeed;
+            canRun = false;
+        }
+        else if (weightRatio >= 0.8f) // 80퍼
+        {
+            finalSpeed = heavySpeed;
+            canRun = false;
+        }
+        else 
+        {
+            finalSpeed = canRun ? runSpeed : walkSpeed;
+        }
+
+        // 이동
+        if (moveInput != Vector3.zero)
+        {
+            rb.MovePosition(rb.position + moveInput * finalSpeed * Time.fixedDeltaTime);
+        }
+    }
+    void UpdateStateAndAnimation()
+    {
+        if (animator == null) return;
+
+        if (!isGrounded)
+        {
+            currentState = PlayerState.Jump;
+        }
+        else if (moveInput != Vector3.zero)
+        {
+            currentState = PlayerState.Move;
+        }
+        else
+        {
+            currentState = PlayerState.Idle;
+        }
+
+        // 블렌드 트리 애니메이션
+
+        //월드 기준 이동 방향을 캐릭터 기준으로 변환
+        Vector3 localVelocity = characterModel.InverseTransformDirection(moveInput);
+
+        // 걷기=0.5, 달리기=1.0
+        float animSpeed = 0f;
+
+        if (moveInput != Vector3.zero) // 이동일때
+        {
+            if (canRun) //과적아닐때
+                animSpeed = 1.0f;
+            else
+                animSpeed = 0.5f;
+        }
+
+        animator.SetFloat("InputX", localVelocity.x * animSpeed, 0.1f, Time.deltaTime);
+        animator.SetFloat("InputY", localVelocity.z * animSpeed, 0.1f, Time.deltaTime);
+
+        animator.SetBool("IsGrounded", isGrounded);
+        animator.SetBool("IsRunning", canRun);
+    }
+
+    public void OnTakeDamage()
+    {
+        currentState = PlayerState.Damaged;
+        animator.SetTrigger("Hit");
+    }
+
+    public void OnWield()
+    {
+        if (!isGrounded) return;
+        // 이미 공격 모션 중일떄?? 
+        // if (currentState == PlayerState.Attack || currentState == PlayerState.Mine) return;
+
+        currentState = PlayerState.Wield;
+
+        animator.SetTrigger("Wield");
+
+    }
+
+    public void OnDie()
+    {
+        currentState = PlayerState.Die;
+        animator.SetTrigger("Die");
+    }
+
     void LookAtMoveDirection()
     {
         Quaternion targetRotation = Quaternion.LookRotation(moveInput);
         characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    // 마우스 지점 바라보기
     void LookAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -78,56 +237,11 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 lookPoint = ray.GetPoint(rayDistance);
             Vector3 direction = (lookPoint - transform.position).normalized;
-
             if (direction != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * 1.5f * Time.deltaTime);
             }
         }
-    }
-
-    void MovePlayer()
-    {
-        // 무게 비율 (0.0 ~ 1.0 이상)
-        float currentWeight = inventory != null ? inventory.currentWeight : 0f;
-        float maxWeight = inventory != null ? inventory.maxWeight : 100f;
-
-        if (maxWeight == 0) maxWeight = 1f;
-
-        float weightRatio = currentWeight / maxWeight;
-        float finalSpeed = moveSpeed;
-
-        // 과적
-        if (weightRatio >= 1.0f)
-        {
-            Debug.Log("가방이 너무 무겁다..");
-            finalSpeed = tooHeavySpeed;
-        }
-        // 최대 수용 가능 무게의 80퍼
-        else if (weightRatio >= 0.8f)
-        {
-            Debug.Log("가방이 무겁다..");
-            finalSpeed = heavySpeed;
-        }
-
-        // 이동
-        if (moveInput != Vector3.zero)
-        {
-            rb.MovePosition(rb.position + moveInput * finalSpeed * Time.fixedDeltaTime);
-
-            // 회전
-            Quaternion targetRotation = Quaternion.LookRotation(moveInput);
-            characterModel.rotation = Quaternion.Slerp(characterModel.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        }
-
-        // 애니메이션 속도 조절 (뛰다가 걷다가 기어가게 보이도록)
-        // 걷는 애니메이션 속도를 실제 이동 속도에 맞춰
-        //if (animator != null)
-        //{
-        //    float animSpeed = finalSpeed / moveSpeed; // 1.0(정상) ~ 0.2(느림)
-        //    animator.speed = animSpeed;
-        //    animator.SetFloat("MoveSpeed", moveInput.magnitude * animSpeed);
-        //}
     }
 }

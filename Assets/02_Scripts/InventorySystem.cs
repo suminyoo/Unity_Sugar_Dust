@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 인벤토리 한 칸을 정의하는 클래스
 [System.Serializable]
-public class InventorySlot
+public class InventorySlot //인벤토리 한칸
 {
     public ItemData itemData;
     public int quantity;
@@ -19,29 +18,38 @@ public class InventorySlot
 
 public class InventorySystem : MonoBehaviour
 {
-    [Header("Capacity")]
     public float maxWeight = 100f;
+    public float extremeMaxWeight;
+
     public float currentWeight = 0f;
 
-    [Header("Contents")]
-    public List<InventorySlot> slots = new List<InventorySlot>(); // 실제 아이템 리스트
+    public List<InventorySlot> slots = new List<InventorySlot>();
 
-    [Header("References")]
-    public Transform dropPosition; // 아이템을 버릴 위치
+    public Transform dropPosition;
 
-    // 아이템 추가 메서드 (WorldItem에서 호출)
-    public bool AddItem(ItemData data, int count)
+
+    private void Start()
     {
+    }
+
+    //아이템 먹음
+    public bool AddItem(ItemData item, int count)
+    {
+        // TODO: 업그레이드 항목으로 옮기기
+        float extraCapacity = maxWeight * (0.8f / Mathf.Log(maxWeight + 1, 10));
+        extremeMaxWeight = maxWeight + extraCapacity;
+
         // 무게 체크
-        if (currentWeight + (data.weight * count) > maxWeight + 50f) // 50은 초과 허용치
+        if (currentWeight + (item.weight * count) > extremeMaxWeight)
         {
-            return false; // 너무 무거워서 못 줍는다 (기획에 따라 삭제 가능)
+            Debug.Log("너무 무거워서 못 줍는다");
+            return false;
         }
 
         // 이미 있는 아이템인지 확인 (스택 가능할 경우)
-        if (data.isStackable)
+        if (item.isStackable)
         {
-            InventorySlot existingSlot = slots.Find(s => s.itemData == data);
+            InventorySlot existingSlot = slots.Find(s => s.itemData == item);
             if (existingSlot != null)
             {
                 existingSlot.AddQuantity(count);
@@ -51,27 +59,26 @@ public class InventorySystem : MonoBehaviour
         }
 
         // 새 슬롯 추가
-        slots.Add(new InventorySlot(data, count));
+        slots.Add(new InventorySlot(item, count));
         UpdateTotalWeight();
         return true;
     }
 
-    // 아이템 버리기 메서드 (UI에서 호출하거나 단축키로 호출)
+    // 아이템 버리기
     public void DropItem(InventorySlot slot)
     {
         if (slot.itemData.dropPrefab != null)
         {
-            // 바닥에 프리팹 생성
             GameObject obj = Instantiate(slot.itemData.dropPrefab, dropPosition.position, Quaternion.identity);
 
-            // 생성된 오브젝트에 데이터 주입
+            // 생성된 오브젝트에 데이터
             WorldItem worldItem = obj.GetComponent<WorldItem>();
             if (worldItem != null)
             {
                 worldItem.Initialize(slot.itemData, slot.quantity);
             }
 
-            // 물리 효과를 위해 조금 튕겨나가게 하기
+            // 물리 효과
             Rigidbody rb = obj.GetComponent<Rigidbody>();
             if (rb != null)
             {

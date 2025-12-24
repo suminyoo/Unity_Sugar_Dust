@@ -3,57 +3,59 @@ using UnityEngine;
 public interface IMineable { void OnMine(float power); }
 public interface IDamageable { void OnDamage(float damage); }
 
-public class InteractionSystem : MonoBehaviour
+public class ActionSystem : MonoBehaviour
 {
     [Header("Settings")]
-    public Transform firePoint;             
-    public float interactionRange = 3.5f; 
-    public LayerMask interactionLayer; //상호작용 가능한 오브젝트에 붙히는레이어
+    public Transform firePoint;
+    public float actionRange = 3.5f;
+    public LayerMask actionLayer;
 
     [Header("Stats")]
     public float attackDamage = 10f;
     public float miningPower = 20f;
 
-    [Header("References")]
-    public Animator animator;
+    private PlayerController playerController;
+
+    void Start()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
 
     void Update()
     {
-        DrawDebugRay(); //디버그 레이
+        DrawDebugRay(); //디버그용
 
         if (Input.GetMouseButtonDown(0)) TryAction(true);
         if (Input.GetMouseButtonDown(1)) TryAction(false);
     }
 
+    //디버그용
     void DrawDebugRay()
     {
         if (firePoint == null) return;
-
-        // 레이 생성: 발사 지점 위치에서, 발사 지점의 정면(forward) 방향으로
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, interactionRange, interactionLayer))
-        {
+        if (Physics.Raycast(ray, out hit, actionRange, actionLayer))
             Debug.DrawLine(ray.origin, hit.point, Color.green);
-        }
         else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * interactionRange, Color.red);
-        }
+            Debug.DrawRay(ray.origin, ray.direction * actionRange, Color.red);
     }
 
-    void TryAction(bool isAttack)
+    void TryAction(bool isWield)
     {
-        //if (animator != null) animator.SetTrigger(isAttack ? "Attack" : "Mining");
         if (firePoint == null) return;
+
+        if (playerController != null)
+        {
+            playerController.OnWield();
+        }
 
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, interactionRange, interactionLayer))
+        if (Physics.Raycast(ray, out hit, actionRange, actionLayer))
         {
-            if (isAttack)
+            if (isWield)
             {
                 IDamageable target = hit.collider.GetComponent<IDamageable>();
                 if (target != null)

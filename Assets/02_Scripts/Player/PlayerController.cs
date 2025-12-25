@@ -9,7 +9,8 @@ public enum PlayerState
     Jump,
     Wield, //공격,채광
     Damaged,
-    Die
+    Die,
+    Wait
 }
 
 public class PlayerController : MonoBehaviour
@@ -54,24 +55,19 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // 1. 스탯 초기화
         currentHp = data.maxHp;
-
-        // 2. 상태 초기화
         currentState = PlayerState.Idle;
-        isGrounded = true; // 시작할 땐 보통 땅에 있다고 가정 (필요시 레이캐스트 체크)
+        isGrounded = true;
         isInteracting = false;
         canRun = false;
 
-        // 3. 물리 및 컴포넌트 활성화 (Die()에서 꺼진 것들 다시 켜기)
         rb.velocity = Vector3.zero;
-        rb.isKinematic = false; // 물리 다시 켜기
-        this.enabled = true;    // 스크립트 다시 켜기
+        rb.isKinematic = false;
+        this.enabled = true;
 
-        // 4. 애니메이션 리셋 (선택사항: Idle로 강제 전환)
         if (animator != null)
         {
-            animator.Rebind(); // 애니메이터 초기화
+            animator.Rebind();
             animator.Update(0f);
         }
 
@@ -115,6 +111,13 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
+        if (currentState == PlayerState.Wait)
+        {
+            moveInput = Vector3.zero; 
+            canRun = false;
+            return;
+        }
+
         // 입력
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -151,18 +154,17 @@ public class PlayerController : MonoBehaviour
     {
         if (animator == null) return;
 
-        if (!isGrounded)
+        if (currentState == PlayerState.Wait)
         {
-            currentState = PlayerState.Jump;
+            animator.SetFloat("InputX", 0);
+            animator.SetFloat("InputY", 0);
+            animator.SetBool("IsRunning", false);
+            return;
         }
-        else if (moveInput != Vector3.zero)
-        {
-            currentState = PlayerState.Move;
-        }
-        else
-        {
-            currentState = PlayerState.Idle;
-        }
+
+        if (!isGrounded) currentState = PlayerState.Jump;
+        else if (moveInput != Vector3.zero) currentState = PlayerState.Move;
+        else currentState = PlayerState.Idle;
 
         // 블렌드 트리 애니메이션
 
@@ -276,24 +278,27 @@ public class PlayerController : MonoBehaviour
 
     public void Wait()
     {
-        // 이미 상태가 변했으면 패스
         if (currentState == PlayerState.Die) return;
 
-        currentState = PlayerState.Idle; // 상태는 Idle로 두거나 Victory 상태를 만들어도 됨
+        currentState = PlayerState.Wait;
 
-        // 물리 엔진 정지 (미끄러짐 방지)
         rb.velocity = Vector3.zero;
-        rb.isKinematic = true;
 
-        // 애니메이션은 Idle로 두거나 승리 포즈가 있다면 재생
-        // animator.SetTrigger("Victory"); 
-
-        // 조작을 막기 위해 상태를 별도로 정의하거나, Update에서 플래그 체크 필요
-        // 여기서는 간단하게 currentState를 활용하기 위해 Faint처럼 조작 불가 상태를 하나 만들면 좋지만,
-        // 일단은 GameManager에서 입력을 막거나, 아래처럼 bool 변수를 하나 써도 됩니다.
-        this.enabled = false; // 스크립트 자체를 꺼버려서 Update(조작)를 막는 가장 쉬운 방법
+        if (animator != null)
+        {
+            animator.SetFloat("InputX", 0);
+            animator.SetFloat("InputY", 0);
+            animator.SetBool("IsRunning", false);
+        }
     }
-
+    public void WaitDone()
+    {
+        if (currentState == PlayerState.Wait)
+        {
+            currentState = PlayerState.Idle;
+            rb.isKinematic = false;
+        }
+    }
 
     void LookAtMoveDirection(float speed)
     {

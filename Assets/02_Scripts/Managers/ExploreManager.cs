@@ -9,9 +9,12 @@ public class ExploreManager : MonoBehaviour
     public float timeLimit = 60f;
     private float currentTime;
     private bool isExplorationEnded = false;
+    private bool isExploreStarted = false;
+
 
     [Header("References")]
     private PlayerController player;
+    public GridMapSpawner mapSpawner;
 
     [Header("UI")]
     public GameObject resultUIPanel;
@@ -23,18 +26,37 @@ public class ExploreManager : MonoBehaviour
 
     void Start()
     {
-        currentTime = timeLimit;
-        if (resultUIPanel != null) resultUIPanel.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player.gameObject.SetActive(false);
 
-        player.OnPlayerDied += OnPlayerDeath;
+        if (resultUIPanel != null) resultUIPanel.SetActive(false);
+        mapSpawner.OnMapGenerationComplete += OnMapReady;
+        OnMapReady();
+        
     }
+
     void OnDestroy()
     {
+        if (player != null) player.OnPlayerDied -= OnPlayerDeath;
+        if (mapSpawner != null) mapSpawner.OnMapGenerationComplete -= OnMapReady;
+    }
+
+    void OnMapReady()
+    {
+        Debug.Log("맵 준비 완료 신호 수신");
+
         if (player != null)
         {
-            player.OnPlayerDied -= OnPlayerDeath;
+            // TODO: 플레이어 배치 좌표 정하기
+            player.transform.position = new Vector3(10, 2, 10); 
+
+            player.gameObject.SetActive(true);
+
+            player.OnPlayerDied += OnPlayerDeath;
         }
+
+        currentTime = timeLimit;
+        isExploreStarted = true;
     }
 
     void OnPlayerDeath()

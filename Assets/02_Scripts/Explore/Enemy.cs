@@ -4,12 +4,12 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    public enum EnemyState { 
-        Patrol, 
-        Chase, 
-        Attack, 
-        Damaged, 
-        Die 
+    public enum EnemyState {
+        Patrol,
+        Chase,
+        Attack,
+        Damaged,
+        Die
     }
 
     public EnemyState currentState = EnemyState.Patrol;
@@ -36,13 +36,17 @@ public class Enemy : MonoBehaviour, IDamageable
         animator = GetComponentInChildren<Animator>();
         attackHitbox.SetActive(false);
 
-
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.OnPlayerDied += ClearTarget;
 
         Initialize();
     }
-    
+    void OnDestroy()
+    {
+        if (player != null) player.OnPlayerDied -= ClearTarget;
+
+    }
+
     public void Initialize()
     {
         if (data == null) return;

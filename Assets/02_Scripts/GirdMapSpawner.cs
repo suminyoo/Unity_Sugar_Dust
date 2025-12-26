@@ -28,6 +28,7 @@ public class GridMapSpawner : MonoBehaviour
     public Text statusText;         // 맵 생성 중 표시 텍스트
     public PlayerController player;       // 플레이어 (로딩 중엔 움직임 막기 위해)
 
+    private List<Vector2Int> allCoordinates;
 
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
     private bool[,] gridMap;
@@ -35,50 +36,50 @@ public class GridMapSpawner : MonoBehaviour
     private IEnumerator Start()
     {
         // 로딩 시작 
-        if (loadingPanel != null) loadingPanel.SetActive(true);
-        if (statusText != null) statusText.text = "지형 데이터를 불러오는 중...";
+        loadingPanel.SetActive(true);
+        statusText.text = "맵 로딩중...";
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.Wait();
 
         InitializeMap();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);  //연출용 지연
 
-        // 맵 생성
-        if (statusText != null) statusText.text = "기반암 생성 중...";
+        // ---맵 생성---
+        statusText.text = "기반암 생성 중...";
         GenerateGround();
-        yield return null;
+        yield return null;    //땅
 
-        // 맵 오브젝트 배치
+        statusText.text = "오브젝트 배치 중...";
+        // ---맵 오브젝트 배치---
         foreach (var objData in mapObjects)
         {
-            if (statusText != null) statusText.text = $"{objData.objectName} 배치 중...";
             yield return null;
             SpawnObject(objData);
         }
+        yield return null; //각 오브젝트
 
-        //런타임 navmesh 베이크
-        if (statusText != null) statusText.text = "지형 분석 및 경로 생성 중...";
-        yield return null;
 
-        if (navSurface != null)
-        {
-            navSurface.RemoveData();
-            navSurface.BuildNavMesh();
-        }
+        // ---런타임 navmesh 베이크---
+        statusText.text = "지형 분석 및 경로 생성 중...";
+        navSurface.RemoveData();
+        navSurface.BuildNavMesh();
+        yield return null;     // nav mesh 베이크
 
-        //적 배치
+
+        //---적 배치---
         foreach (var objData in enemyObjects)
         {
             if (statusText != null) statusText.text = $"{objData.objectName} 소환 중...";
             yield return null;
             SpawnObject(objData);
         }
+        yield return null; // 적
 
-        // 로딩 완료
+        // ---로딩 완료---
         if (statusText != null) statusText.text = "준비 완료!";
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f); //로딩 완료 연출
 
         if (loadingPanel != null) loadingPanel.SetActive(false);
         player.WaitDone();
@@ -92,8 +93,28 @@ public class GridMapSpawner : MonoBehaviour
     void InitializeMap()
     {
         gridMap = new bool[mapSize.x, mapSize.y];
+
+        allCoordinates = new List<Vector2Int>();
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                allCoordinates.Add(new Vector2Int(x, y));
+            }
+        }
     }
 
+    // FisherYates  리스트 랜덤섞기
+    void ShuffleCoordinates()
+    {
+        for (int i = 0; i < allCoordinates.Count; i++)
+        {
+            Vector2Int temp = allCoordinates[i];
+            int randomIndex = UnityEngine.Random.Range(i, allCoordinates.Count);
+            allCoordinates[i] = allCoordinates[randomIndex];
+            allCoordinates[randomIndex] = temp;
+        }
+    }
 
     void GenerateGround()
     {
@@ -124,34 +145,30 @@ public class GridMapSpawner : MonoBehaviour
     void SpawnObject(ExploreObjectData data)
     {
         int spawnedCount = 0;
-        int maxAttempts = 10;
 
-        while (spawnedCount < data.spawnCount)
+        ShuffleCoordinates();
+
+        foreach (Vector2Int coord in allCoordinates)
         {
-            bool placed = false;
+            if (spawnedCount >= data.spawnCount) break;
 
-            for (int i = 0; i < maxAttempts; i++)
+            int x = coord.x;
+            int y = coord.y;
+
+            if (x + data.size.x > mapSize.x || y + data.size.y > mapSize.y)
+                continue;
+
+            if (CheckArea(x, y, data.size.x, data.size.y))
             {
-                // 오브젝트 좌표 랜덤. 크기에 맞게 범위 제한
-                int x = UnityEngine.Random.Range(0, mapSize.x - data.size.x + 1);
-                int y = UnityEngine.Random.Range(0, mapSize.y - data.size.y + 1);
-
-                // 배치가능 검사
-                if (CheckArea(x, y, data.size.x, data.size.y))
-                {
-                    //배치
-                    PlaceObject(x, y, data);
-                    spawnedCount++;
-                    placed = true;
-                    break;
-                }
-                if (!placed) //배치 실패
-                {
-                    Debug.LogWarning($"{data.objectName} 배치불가. (생성된 수: {spawnedCount}/{data.spawnCount})");
-                    break;
-                }
+                PlaceObject(x, y, data);
+                spawnedCount++;
             }
         }
+        if (spawnedCount < data.spawnCount)
+        {
+            Debug.Log($"[알림] 공간이 부족하여 {data.objectName} {data.spawnCount - spawnedCount}개를 배치하지 못했습니다.");
+        }
+    
 
         // 영역 비었는지 확인
         bool CheckArea(int startX, int startY, int sizeX, int sizeY)
@@ -168,7 +185,6 @@ public class GridMapSpawner : MonoBehaviour
 
         void PlaceObject(int x, int y, ExploreObjectData data)
         {
-            // 그리드 점유 표시
             for (int i = x; i < x + data.size.x; i++)
             {
                 for (int j = y; j < y + data.size.y; j++)

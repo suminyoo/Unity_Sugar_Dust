@@ -69,9 +69,9 @@ public class GridMapSpawner : MonoBehaviour
 
 
         //---적 배치---
+        statusText.text = "몬스터 배치 중...";
         foreach (var objData in enemyObjects)
         {
-            if (statusText != null) statusText.text = $"{objData.objectName} 소환 중...";
             yield return null;
             SpawnObject(objData);
         }
@@ -84,7 +84,6 @@ public class GridMapSpawner : MonoBehaviour
         if (loadingPanel != null) loadingPanel.SetActive(false);
         player.WaitDone();
 
-        Debug.Log("맵 로딩 완료.");
 
         OnMapGenerationComplete?.Invoke();
     }
@@ -122,7 +121,7 @@ public class GridMapSpawner : MonoBehaviour
 
         // 생성
         GameObject ground = Instantiate(groundPrefab, transform);
-        ground.name = "Generated_Ground";
+        ground.name = "Exploration_Ground";
 
         // 레이어설정 
         int groundLayerIndex = LayerMask.NameToLayer("Ground");
@@ -135,10 +134,8 @@ public class GridMapSpawner : MonoBehaviour
 
         ground.transform.localScale = new Vector3(totalWidth / 10f, 1f, totalHeight / 10f); // 10으로 나눠야 정확한 스케일
 
-
         // 위치 보정
         // Grid는 (0,0)에서 ground Pivot은 중앙 (0.5)만큼
-
         ground.transform.localPosition = new Vector3(totalWidth * 0.5f, 0f, totalHeight * 0.5f);
     }
 
@@ -148,12 +145,12 @@ public class GridMapSpawner : MonoBehaviour
 
         ShuffleCoordinates();
 
-        foreach (Vector2Int coord in allCoordinates)
+        foreach (Vector2Int cor in allCoordinates)
         {
             if (spawnedCount >= data.spawnCount) break;
 
-            int x = coord.x;
-            int y = coord.y;
+            int x = cor.x;
+            int y = cor.y;
 
             if (x + data.size.x > mapSize.x || y + data.size.y > mapSize.y)
                 continue;
@@ -166,7 +163,7 @@ public class GridMapSpawner : MonoBehaviour
         }
         if (spawnedCount < data.spawnCount)
         {
-            Debug.Log($"[알림] 공간이 부족하여 {data.objectName} {data.spawnCount - spawnedCount}개를 배치하지 못했습니다.");
+            Debug.Log($"공간이 부족하여 {data.objectName} {data.spawnCount - spawnedCount}개를 배치하지 못했습니다.");
         }
     
 
@@ -219,7 +216,7 @@ public class GridMapSpawner : MonoBehaviour
         }
     }
 
-    // 디버그? 에디터 그리드 확인용
+    // 디버그 에디터 그리드 확인용
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

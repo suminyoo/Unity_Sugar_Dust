@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2095903149680380188}
   - component: {fileID: 5417123095975483688}
-  - component: {fileID: 2067912809393034141}
   - component: {fileID: 123492177825142315}
   - component: {fileID: 2412008195196047802}
   m_Layer: 6
@@ -44,48 +43,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4773038499599090888}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2067912809393034141
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4773038499599090888}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 58d4eefae416a1543ad3bc47661597f3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &123492177825142315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +58,7 @@ MonoBehaviour:
   mineralName: SugarDustChunk
   health: 100
   hitEffectPrefab: {fileID: 0}
-  dropItemPrefab: {fileID: 7526708260535565530, guid: a54a4fdb4fe9f2b42ab485333330d4f8, type: 3}
+  lootTable: {fileID: 11400000, guid: d91457606cf204e4fb52e8776e21f34f, type: 2}
 --- !u!136 &2412008195196047802
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -159,7 +116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4458899494531338, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 4458899494531338, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
       propertyPath: m_LocalRotation.w

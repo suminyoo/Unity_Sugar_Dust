@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 {
     public event Action OnPlayerDied;
 
+    public PlayerInventory myInventory;
+
     private float currentHp;
     public PlayerData data;
 
@@ -24,7 +26,6 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     public Transform characterModel;
     public Animator animator;
-    private InventorySystem inventory;
     private Rigidbody rb;
 
     public PlayerState currentState = PlayerState.Idle;
@@ -40,7 +41,9 @@ public class PlayerController : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        inventory = GetComponent<InventorySystem>();
+
+        myInventory = GetComponent<PlayerInventory>();
+
 
         if (cameraTransform == null) cameraTransform = Camera.main.transform;
         if (animator == null) animator = GetComponentInChildren<Animator>();
@@ -188,30 +191,28 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsGrounded", isGrounded);
         animator.SetBool("IsRunning", canRun);
     }
-
     void Move()
     {
-        // 무게 계산
-        float currentWeight = inventory != null ? inventory.currentWeight : 0f;
-        float maxWeight = inventory != null ? inventory.maxWeight : 100f;
-        if (maxWeight == 0) maxWeight = 1f;
+        float currentWeight = myInventory != null ? myInventory.currentWeight : 0f;
+        float maxWeight = myInventory != null ? myInventory.maxWeight : 100f;
+
+        if (maxWeight <= 0) maxWeight = 1f;
 
         float weightRatio = currentWeight / maxWeight;
         float finalSpeed = data.walkSpeed;
 
-        // 무게에따른 속도
-        // TODO: 무게제한 로직 수정(수식수정)
-        if (weightRatio >= 1.0f) // 100퍼
+        // 무게에 따른 속도 패널티
+        if (weightRatio >= 1.0f) // 100퍼 초과
         {
             finalSpeed = data.tooHeavySpeed;
-            canRun = false;
+            canRun = false; // 강제로 달리기 불가
         }
-        else if (weightRatio >= 0.8f) // 80퍼
+        else if (weightRatio >= 0.8f) // 80퍼 이상
         {
             finalSpeed = data.heavySpeed;
-            canRun = false;
+            canRun = false; // 강제로 달리기 불가
         }
-        else 
+        else
         {
             finalSpeed = canRun ? data.runSpeed : data.walkSpeed;
         }

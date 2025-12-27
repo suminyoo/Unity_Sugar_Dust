@@ -10,6 +10,7 @@ public class ExploreManager : MonoBehaviour
     private float currentTime;
     private bool isExplorationEnded = false;
     private bool isExploreStarted = false;
+    private Transform playerSpawnPoint;
 
 
     [Header("References")]
@@ -29,6 +30,8 @@ public class ExploreManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.gameObject.SetActive(false);
 
+        playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint").GetComponent<Transform>();
+
         if (resultUIPanel != null) resultUIPanel.SetActive(false);
         mapSpawner.OnMapGenerationComplete += OnMapReady;
         OnMapReady();
@@ -47,8 +50,7 @@ public class ExploreManager : MonoBehaviour
 
         if (player != null)
         {
-            // TODO: 플레이어 배치 좌표 정하기
-            player.transform.position = new Vector3(10, 2, 10); 
+            player.transform.position = playerSpawnPoint.transform.position;
 
             player.gameObject.SetActive(true);
 

@@ -8,7 +8,7 @@ public enum RotationType
     SlightJitter    // 자연스러운 회전
 }
 
-[CreateAssetMenu(fileName = "NewExploreObject", menuName = "Game/Explore Object")]
+[CreateAssetMenu(fileName = "NewExploreObject", menuName = "SO/Explore Object")]
 public class ExploreObjectData : ScriptableObject
 {
     [Header("Basic Info")]

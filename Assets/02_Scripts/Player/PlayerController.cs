@@ -17,23 +17,25 @@ public class PlayerController : MonoBehaviour
 {
     public event Action OnPlayerDied;
 
-    public PlayerInventory myInventory;
-
-    private float currentHp;
-    public PlayerData data;
-
     [Header("References")]
+
+    public PlayerData data;
+    public PlayerCondition playerCondition;
+
     public Transform cameraTransform;
     public Transform characterModel;
+
     public Animator animator;
     private Rigidbody rb;
+
+    [Header("Settings")]
 
     public PlayerState currentState = PlayerState.Idle;
 
     private Vector3 moveInput;
-    private bool isInteracting = false;
-    private bool canRun = false;
-    private bool isGrounded = true;
+    private bool isInteracting;
+    private bool isRunning;
+    private bool isGrounded;
 
     void Start()
     {
@@ -42,43 +44,42 @@ public class PlayerController : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
-        myInventory = GetComponent<PlayerInventory>();
+        playerCondition = GetComponent<PlayerCondition>();
 
+        cameraTransform = Camera.main.transform;
+        animator = GetComponentInChildren<Animator>();
 
-        if (cameraTransform == null) cameraTransform = Camera.main.transform;
-        if (animator == null) animator = GetComponentInChildren<Animator>();
+        playerCondition.OnDie += HandleDie;
+        playerCondition.OnTakeDamage += HandleHit;
 
         Initialize();
     }
     public void Initialize()
     {
-        if (data == null)
-        {
-            Debug.LogError("Player Data가 없습니다!");
-            return;
-        }
-
-        currentHp = data.maxHp;
         currentState = PlayerState.Idle;
         isGrounded = true;
         isInteracting = false;
-        canRun = false;
+        isRunning = false;
 
         rb.velocity = Vector3.zero;
         rb.isKinematic = false;
         this.enabled = true;
 
-        if (animator != null)
-        {
-            animator.Rebind();
-            animator.Update(0f);
-        }
+        animator.Rebind();
+        animator.Update(0f);
 
         Debug.Log("플레이어 초기화 완료");
     }
+
+    void OnDestroy()
+    {
+        playerCondition.OnDie -= HandleDie;
+        playerCondition.OnTakeDamage -= HandleHit;
+    }
+
     void Update()
     {
-        if (currentState == PlayerState.Die) return;
+        if (currentState == PlayerState.Die || currentState == PlayerState.Wait) return;
 
         HandleInput();
         UpdateStateAndAnimation();
@@ -86,21 +87,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentState == PlayerState.Die) return;
+        if (currentState == PlayerState.Die || currentState == PlayerState.Wait) return;
 
-        Move();
+        HandleMove();
     }
 
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            // normal.y > 0.5f는 윗면
-            if (collision.contacts[0].normal.y > 0.5f)
-            {
-                isGrounded = true;
-                //SnapToGround();
-            }
+            //if (collision.contacts[0].normal.y > 0.5f) { }//가파른 벽인 경우(현재 없음)
+            isGrounded = true;
         }
     }
 
@@ -117,7 +114,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Wait)
         {
             moveInput = Vector3.zero; 
-            canRun = false;
+            isRunning = false;
             return;
         }
 
@@ -127,17 +124,18 @@ public class PlayerController : MonoBehaviour
 
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
-        camForward.y = 0; camRight.y = 0;
+        camForward.y = 0; 
+        camRight.y = 0;
 
         moveInput = (camForward.normalized * v + camRight.normalized * h).normalized;
 
         // 달리기
-        canRun = Input.GetKey(KeyCode.LeftShift) && moveInput != Vector3.zero;
+        isRunning = Input.GetKey(KeyCode.LeftShift) && moveInput != Vector3.zero;
 
         // 점프
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            Jump();
+            HandleJump();
         }
 
         // 회전 (액션중, 이동중)
@@ -179,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveInput != Vector3.zero) // 이동일때
         {
-            if (canRun) //과적아닐때
+            if (isRunning) //과적아닐때
                 animSpeed = 1.0f;
             else
                 animSpeed = 0.5f;
@@ -189,68 +187,10 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("InputY", localVelocity.z * animSpeed, 0.1f, Time.deltaTime);
 
         animator.SetBool("IsGrounded", isGrounded);
-        animator.SetBool("IsRunning", canRun);
-    }
-    void Move()
-    {
-        float currentWeight = myInventory != null ? myInventory.currentWeight : 0f;
-        float maxWeight = myInventory != null ? myInventory.maxWeight : 100f;
-
-        if (maxWeight <= 0) maxWeight = 1f;
-
-        float weightRatio = currentWeight / maxWeight;
-        float finalSpeed = data.walkSpeed;
-
-        // 무게에 따른 속도 패널티
-        if (weightRatio >= 1.0f) // 100퍼 초과
-        {
-            finalSpeed = data.tooHeavySpeed;
-            canRun = false; // 강제로 달리기 불가
-        }
-        else if (weightRatio >= 0.8f) // 80퍼 이상
-        {
-            finalSpeed = data.heavySpeed;
-            canRun = false; // 강제로 달리기 불가
-        }
-        else
-        {
-            finalSpeed = canRun ? data.runSpeed : data.walkSpeed;
-        }
-
-        // 이동
-        if (moveInput != Vector3.zero)
-        {
-            rb.MovePosition(rb.position + moveInput * finalSpeed * Time.fixedDeltaTime);
-        }
+        animator.SetBool("IsRunning", isRunning);
     }
 
-    void Jump()
-    {
-        rb.AddForce(Vector3.up * data.jumpForce, ForceMode.Impulse);
-        isGrounded = false;
-        currentState = PlayerState.Jump;
-        animator.SetTrigger("Jump");
-    }
-
-    public void TakeDamage(float damage)
-    {
-        if (currentState == PlayerState.Die) return;
-
-        currentHp -= damage;
-        Debug.Log($"플레이어 HP: {currentHp}");
-
-        if (currentHp <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            currentState = PlayerState.Damaged;
-            animator.SetTrigger("Hit");
-        }
-    }
-
-    public void Wield(ActionType actionType)
+    public void HandleWield(ActionType actionType)
     {
         if (!isGrounded) return;
 
@@ -263,7 +203,57 @@ public class PlayerController : MonoBehaviour
         // if (actionType == ActionType.Attack) ...
     }
 
-    public void Die()
+    void HandleMove()
+    {
+        if (moveInput == Vector3.zero) return;
+
+        bool tryRun = Input.GetKey(KeyCode.LeftShift) && playerCondition.CanRun();
+
+        if (tryRun) HandleRun();
+        else HandleWalk();
+    }
+
+    void HandleRun()
+    {
+        // 소모량
+        float cost = playerCondition.runCostPerSec * Time.fixedDeltaTime;
+
+        if (playerCondition.UseStamina(cost))
+        {
+            isRunning = true;
+            float speed = data.runSpeed;
+            rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            HandleWalk();
+        }
+    }
+
+    void HandleWalk()
+    {
+        isRunning = false;
+        float speed = playerCondition.GetWalkSpeed(data);
+        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+    }    
+
+    void HandleJump()
+    {
+        rb.AddForce(Vector3.up * data.jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+        currentState = PlayerState.Jump;
+        animator.SetTrigger("Jump");
+    }
+
+    void HandleHit()
+    {
+        if (currentState == PlayerState.Die) return;
+
+        currentState = PlayerState.Damaged;
+        animator.SetTrigger("Hit");
+    }
+
+    public void HandleDie()
     {
         if (currentState == PlayerState.Die) return;
 
@@ -275,7 +265,6 @@ public class PlayerController : MonoBehaviour
 
         OnPlayerDied?.Invoke();
     }
-
 
     public void Wait()
     {
@@ -292,6 +281,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", false);
         }
     }
+
     public void WaitDone()
     {
         if (currentState == PlayerState.Wait)
@@ -301,11 +291,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region 캐릭터 방향
     void LookAtMoveDirection(float speed)
     {
         Quaternion targetRotation = Quaternion.LookRotation(moveInput);
         characterModel.rotation =
-            Quaternion.Slerp(characterModel.rotation, targetRotation, speed * Time.deltaTime);
+        Quaternion.Slerp(characterModel.rotation, targetRotation, speed * Time.deltaTime);
     }
 
     void LookAtMouse(float speed)
@@ -326,5 +317,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    #endregion 
 
 }

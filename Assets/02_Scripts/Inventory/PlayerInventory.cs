@@ -21,7 +21,6 @@ public class PlayerInventory : InventoryHolder
 
          if (base.AddItem(item, count))
         {
-            // 성공적으로 들어갔으니 무게 증가
             currentWeight += item.weight * count;
             return true;
         }

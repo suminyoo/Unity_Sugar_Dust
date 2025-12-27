@@ -100,7 +100,7 @@ public class ExploreManager : MonoBehaviour
         // 시간 초과로 인한 실패라면 플레이어를 죽임
         if (shouldKillPlayer && player != null)
         {
-            player.Die(); // isExplorationEnded 체크 필요 (무한루프방지)
+            player.HandleDie(); // isExplorationEnded 체크 필요 (무한루프방지)
         }
 
         StartCoroutine(ProcessResultAndLeave());

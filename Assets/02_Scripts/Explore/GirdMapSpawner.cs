@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,7 @@ public class GridMapSpawner : MonoBehaviour
 
     [Header("UI & System")]
     public GameObject loadingPanel;
-    public Text statusText;         // 맵 생성 중 표시 텍스트
+    public TextMeshProUGUI statusText;         // 맵 생성 중 표시 텍스트
     public PlayerController player;       // 플레이어 (로딩 중엔 움직임 막기 위해)
 
     private List<Vector2Int> allCoordinates;

@@ -75,7 +75,7 @@ public class ActionSystem : MonoBehaviour
     void StartAction(ActionType actionType)
     {
         currentActionType = actionType;
-        playerController.Wield(actionType); //플레이어 애니메이션
+        playerController.HandleWield(actionType); //플레이어 애니메이션
     }
 
     public void ExecuteAction()

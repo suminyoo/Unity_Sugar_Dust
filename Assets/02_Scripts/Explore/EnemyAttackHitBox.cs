@@ -13,12 +13,13 @@ public class EnemyAttackHitBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerController player = other.GetComponent<PlayerController>();
+            PlayerCondition targetCondition = other.GetComponent<PlayerCondition>();
 
-            if (player != null && enemy != null)
+            if (targetCondition != null && enemy != null)
             {
-                player.TakeDamage(enemy.data.attackDamage);
-                Debug.Log("Attack Target");
+                targetCondition.TakeDamage(enemy.data.attackDamage);
+
+                Debug.Log($"Attack Target: {other.name}");
             }
         }
     }

@@ -1,0 +1,111 @@
+using UnityEngine;
+using System;
+
+public class PlayerCondition : MonoBehaviour
+{
+    //이벤트
+    public event Action<float> OnHpChanged;      // HP 변경
+    public event Action<float> OnStaminaChanged; // 스테미나 변경
+    public event Action OnTakeDamage;            // 피격
+    public event Action OnDie;                   // 사망
+
+    [Header("References")]
+    public PlayerInventory inventory;
+
+    [Header("Stats")]
+    public float maxHp = 100f;
+    public float maxStamina = 100f;
+
+    public float currentHp { get; private set; }
+    public float currentStamina { get; private set; }
+
+    public bool IsDead => currentHp <= 0;
+
+    [Header("Settings")]
+    public float staminaRecovery = 15f;
+    public float recoveryDelay = 1.0f;
+    public float runCostPerSec = 10f;
+    public float jumpCost = 20f;
+    private float lastStaminaUseTime;
+
+    void Start()
+    {
+        currentHp = maxHp;
+        currentStamina = maxStamina;
+        
+        inventory = GetComponent<PlayerInventory>();
+
+        OnHpChanged?.Invoke(1f);
+        OnStaminaChanged?.Invoke(1f);
+    }
+
+    void Update()
+    {
+        if (IsDead) return;
+
+        // 스테미나 자연 회복
+        if (Time.time - lastStaminaUseTime > recoveryDelay)
+        {
+            if (currentStamina < maxStamina)
+            {
+                currentStamina += staminaRecovery * Time.deltaTime;
+                currentStamina = Mathf.Min(currentStamina, maxStamina);
+                OnStaminaChanged?.Invoke(currentStamina / maxStamina);
+            }
+        }
+    }
+    public float GetCurrentWeightRatio()
+    {
+        if (inventory == null) return 0f;
+
+        float max = inventory.maxWeight > 0 ? inventory.maxWeight : 1f;
+        return inventory.currentWeight / max;
+    }
+
+    public bool CanRun()
+    {
+        float ratio = GetCurrentWeightRatio();
+        return ratio < 0.8f;
+    }
+
+
+    public void TakeDamage(float amount = 10f)
+    {
+        if (IsDead) return;
+
+        currentHp -= amount;
+
+        // UI 갱신
+        OnHpChanged?.Invoke(currentHp / maxHp);
+
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            OnDie?.Invoke();
+        }
+        else
+        {
+            OnTakeDamage?.Invoke();
+        }
+    }
+
+    public bool UseStamina(float amount)
+    {
+        if (currentStamina >= amount)
+        {
+            currentStamina -= amount;
+            lastStaminaUseTime = Time.time;
+            OnStaminaChanged?.Invoke(currentStamina / maxStamina);
+            return true;
+        }
+        return false;
+    }
+    public float GetWalkSpeed(PlayerData data)
+    {
+        float ratio = GetCurrentWeightRatio();
+
+        if (ratio >= 1.0f) return data.tooHeavySpeed; // 과적
+        if (ratio >= 0.8f) return data.heavySpeed;    // 무거움
+        return data.walkSpeed;                        // 정상
+    }
+}

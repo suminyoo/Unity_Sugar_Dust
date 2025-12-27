@@ -174,6 +174,7 @@ GameObject:
   - component: {fileID: 3263422928921274895}
   - component: {fileID: 3476547784288654736}
   - component: {fileID: 2089687116368024317}
+  - component: {fileID: 351708741489739455}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -268,11 +269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fe1213f6a0cd54094156b98822b7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInventory: {fileID: 0}
   data: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
+  playerCondition: {fileID: 0}
   cameraTransform: {fileID: 0}
   characterModel: {fileID: 7689735961417210788}
-  animator: {fileID: 0}
+  animator: {fileID: 916631771916963682}
   currentState: 0
 --- !u!114 &3476547784288654736
 MonoBehaviour:
@@ -307,13 +308,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f78fb2cf4583874891f3b9c7097ee19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySize: 20
-  dropPosition: {fileID: 0}
+  inventorySize: 9
+  dropPosition: {fileID: 3833010317735993240}
   inventorySystem:
     slots: []
     maxSlots: 0
   maxWeight: 100
   currentWeight: 0
+--- !u!114 &351708741489739455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2410324380083322258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425a300e157f4414c941e8493416a422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 2089687116368024317}
+  maxHp: 100
+  maxStamina: 50
+  staminaRecovery: 15
+  recoveryDelay: 1
+  runCostPerSec: 10
+  jumpCost: 20
 --- !u!1 &3450923666700700299
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +345,7 @@ GameObject:
   - component: {fileID: 3833010317735993240}
   - component: {fileID: 7440830622287040822}
   m_Layer: 0
-  m_Name: RayFirePoint/DropPostion
+  m_Name: RayFirePoint/DropPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,6 +451,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5060384197802920858}
   m_SourcePrefab: {fileID: 100100000, guid: b4235d9df06b17d498218a340b679137, type: 3}
+--- !u!95 &916631771916963682 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1737706889828983884, guid: b4235d9df06b17d498218a340b679137, type: 3}
+  m_PrefabInstance: {fileID: 1487617829870234414}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3563662771721045729 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2725162522574613967, guid: b4235d9df06b17d498218a340b679137, type: 3}

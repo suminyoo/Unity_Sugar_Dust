@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public interface IMineable { void OnMine(float power); }
 public interface IDamageable { void TakeDamage(float damage); }
@@ -55,6 +56,11 @@ public class ActionSystem : MonoBehaviour
 
     void HandleActionInput()
     {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (attackTimer > 0) attackTimer -= Time.deltaTime;
         if (mineTimer > 0) mineTimer -= Time.deltaTime;
 

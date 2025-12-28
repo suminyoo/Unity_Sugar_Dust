@@ -14,6 +14,9 @@ public class WorldItem : MonoBehaviour
     private readonly float floatSpeed = 2f;
     private readonly float floatHeight = 0.25f;
 
+    public float pickupDelay = 2f;
+    private float enablePickupTime;  // 줍기 가능 타임
+
     private bool isFloating = false;
     private Vector3 startPos;
     private Rigidbody rb;
@@ -22,6 +25,8 @@ public class WorldItem : MonoBehaviour
     {
         itemData = data;
         amount = count;
+
+        enablePickupTime = Time.time + pickupDelay;
     }
 
     void Start()
@@ -36,10 +41,14 @@ public class WorldItem : MonoBehaviour
 
         startPos = transform.position;
         isFloating = true;
+
+        if (enablePickupTime == 0) enablePickupTime = Time.time;
     }
 
     public void StartFollow(Transform player)
     {
+        if (Time.time < enablePickupTime) return;
+
         target = player;
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
     }
@@ -77,6 +86,8 @@ public class WorldItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (Time.time < enablePickupTime) return;
+
         if (other.CompareTag("Player"))
         {
             InventoryHolder inventory = other.GetComponent<InventoryHolder>();

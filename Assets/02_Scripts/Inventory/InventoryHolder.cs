@@ -66,11 +66,11 @@ public class InventoryHolder : MonoBehaviour
         if (slot.IsEmpty) return;
 
         // 넣기 시도
-        // (전체를 다 넣을 수도 있고 공간 부족으로 일부만 들어갈 수도 있음 - 구현 고려 필요)
-        // 일단 단순하게 "전부 들어가거나, 아예 안 들어가거나"로 구현
+        // TODO: (전체를 다 넣을 수도 있고 공간 부족으로 일부만 들어갈 수도 있음 - 구현 고려 필요)
+        // 일단 임시 (전부 들어가거 안 들어가거나)
         if (to.AddItem(slot.itemData, slot.amount))
         {
-            // 2. 성공했으면 내 가방의 해당 칸 비우기
+            // 성공시 해당 칸 비우기
             inventorySystem.RemoveItemAtIndex(index, slot.amount);
         }
         else

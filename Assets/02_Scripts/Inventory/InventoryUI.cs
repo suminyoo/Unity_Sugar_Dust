@@ -4,7 +4,7 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     [Header("Connection")]
-    public InventoryHolder playerInventory;
+    public InventoryHolder connectedInventory;
     public MouseItemData mouseItemData;
     public GameObject slotPrefab;
     public Transform contentPanel;
@@ -13,18 +13,18 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        if (playerInventory != null && playerInventory.InventorySystem != null)
+        if (connectedInventory != null && connectedInventory.InventorySystem != null)
         {
-            playerInventory.InventorySystem.OnInventoryUpdated += RefreshUI;
+            connectedInventory.InventorySystem.OnInventoryUpdated += RefreshUI;
 
             InitializeUI();
         }
     }
     void OnDestroy() // 또는 OnDisable()
     {
-        if (playerInventory != null && playerInventory.InventorySystem != null)
+        if (connectedInventory != null && connectedInventory.InventorySystem != null)
         {
-            playerInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
+            connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
         }
     }
 
@@ -36,7 +36,7 @@ public class InventoryUI : MonoBehaviour
         uiSlots.Clear();
 
         // 인벤토리 최대 크기만큼 슬롯 생성
-        int size = playerInventory.InventorySystem.maxSlots;
+        int size = connectedInventory.InventorySystem.maxSlots;
         for (int i = 0; i < size; i++)
         {
             GameObject newSlot = Instantiate(slotPrefab, contentPanel);
@@ -55,7 +55,7 @@ public class InventoryUI : MonoBehaviour
     // 데이터(System)랑 화면(UI) 동기화
     public void RefreshUI()
     {
-        var system = playerInventory.InventorySystem;
+        var system = connectedInventory.InventorySystem;
 
         for (int i = 0; i < uiSlots.Count; i++)
         {

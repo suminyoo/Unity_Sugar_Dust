@@ -65,7 +65,11 @@ public class PlayerCondition : MonoBehaviour
     public bool CanRun()
     {
         float ratio = GetCurrentWeightRatio();
-        return ratio < 0.8f;
+
+        if(ratio <= 0.8f && currentStamina > 0) 
+            return true;
+        else 
+            return false;
     }
 
 

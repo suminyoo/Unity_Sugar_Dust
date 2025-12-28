@@ -5,12 +5,14 @@ using System.Collections;
 public class PlayerHUD : MonoBehaviour
 {
     [Header("References")]
-    public PlayerCondition playerCondition; 
+    public PlayerCondition playerCondition;
 
+    [Header("HP")]
+    public Slider hpSlider;
+
+    [Header("Stemina")]
     public Slider staminaSlider;
-
     public float barAnimationDuration = 0.2f; // 변화하는 데 걸리는 시간
-
     private Coroutine staminaCoroutine;
 
     void Start()
@@ -18,7 +20,7 @@ public class PlayerHUD : MonoBehaviour
         playerCondition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCondition>();
         
         playerCondition.OnStaminaChanged += UpdateStaminaUI;
-        // playerCondition.OnHpChanged += UpdateHpUI; 
+        playerCondition.OnHpChanged += UpdateHpUI; 
     }
 
     void OnDestroy()
@@ -26,11 +28,21 @@ public class PlayerHUD : MonoBehaviour
         playerCondition.OnStaminaChanged -= UpdateStaminaUI;
     }
 
+    private void UpdateHpUI(float ratio)
+    {
+        hpSlider.value = ratio;
+    }
+
     private void UpdateStaminaUI(float ratio)
     {
-        StopCoroutine(staminaCoroutine);
+        if (staminaCoroutine != null)
+        {
+            StopCoroutine(staminaCoroutine);
+        }
+
         staminaCoroutine = StartCoroutine(UpdateBarSmoothly(staminaSlider, ratio));
     }
+
 
     private IEnumerator UpdateBarSmoothly(Slider slider , float targetNormalizedValue)
     {

@@ -5,8 +5,7 @@ public class InventoryUI : MonoBehaviour
 {
     [Header("Connection")]
     public InventoryHolder playerInventory;
-
-    [Header("UI Setup")]
+    public MouseItemData mouseItemData;
     public GameObject slotPrefab;
     public Transform contentPanel;
 
@@ -19,6 +18,13 @@ public class InventoryUI : MonoBehaviour
             playerInventory.InventorySystem.OnInventoryUpdated += RefreshUI;
 
             InitializeUI();
+        }
+    }
+    void OnDestroy() // 또는 OnDisable()
+    {
+        if (playerInventory != null && playerInventory.InventorySystem != null)
+        {
+            playerInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
         }
     }
 
@@ -38,6 +44,7 @@ public class InventoryUI : MonoBehaviour
 
             if (uiScript != null)
             {
+                uiScript.Init(this, i);
                 uiSlots.Add(uiScript);
             }
         }
@@ -52,15 +59,9 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < uiSlots.Count; i++)
         {
-            // 데이터 리스트에 아이템이 있으면 -> 아이템 표시 (SetSlot)
             if (i < system.slots.Count)
             {
                 uiSlots[i].SetSlot(system.slots[i]);
-            }
-            // 데이터가 없으면 -> 빈 칸 처리 (ClearSlot)
-            else
-            {
-                uiSlots[i].ClearSlot();
             }
         }
     }

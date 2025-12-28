@@ -7,6 +7,7 @@ public class PlayerInventory : InventoryHolder
     public float maxWeight = 100f;
     public float currentWeight = 0f;
 
+    // 아이템 얻을때 무게 계산 로직
     public override bool AddItem(ItemData item, int count)
     {
         float extraCapacity = maxWeight * (0.8f / Mathf.Log(maxWeight + 1, 10));
@@ -29,11 +30,28 @@ public class PlayerInventory : InventoryHolder
         return false;
     }
 
-    public override void DropItem(ItemData item, int count)
+    // 바닥에 버릴 때 무게 감소
+    public override void DropItemAtIndex(int index, int count)
     {
-        currentWeight -= item.weight * count;
+        // 인덱스 안전 검사
+        if (index < 0 || index >= inventorySystem.slots.Count) return;
 
-        base.DropItem(item, count);
+        var slot = inventorySystem.slots[index];
+
+        currentWeight -= slot.itemData.weight * count;
+
+        base.DropItemAtIndex(index, count);
     }
 
+
+    public override void ConsumeItem(ItemData item, int count)
+    {
+        // 실제 시스템에 아이템이 충분한지 확인
+        int currentCount = inventorySystem.GetItemCount(item);
+        if (currentCount >= count)
+        {
+            currentWeight -= item.weight * count;
+            base.ConsumeItem(item, count);
+        }
+    }
 }

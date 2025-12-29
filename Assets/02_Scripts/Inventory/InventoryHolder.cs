@@ -21,7 +21,7 @@ public class InventoryHolder : MonoBehaviour
         return inventorySystem.AddItemToSlots(item, count);
     }
 
-    // 바닥에 버리기 -> 플레이어, 보물상자
+    // 바닥에 버리기: 플레이어, 보물상자
     public virtual void DropItemAtIndex(int index, int count)
     {
         var slot = inventorySystem.slots[index];

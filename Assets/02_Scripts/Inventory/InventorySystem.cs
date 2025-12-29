@@ -117,7 +117,7 @@ public class InventorySystem
     }
 
     // 아이템 제ㅣ거 
-    //위치 중요: 사용자의 마우스 드래그나 슬롯 클릭시 사용
+    //아이템위치 중요: 사용자의 마우스 드래그나 슬롯 클릭시 사용
     public void RemoveItemAtIndex(int index, int count)
     {
         //유효성 검사 (범위 밖이거나 빈칸)) 이면
@@ -187,7 +187,7 @@ public class InventorySystem
     }
 
     //아이템 몇개 있는지
-    // 퀘스트 제출 전에 아이템 있는지 확인용
+    // 퀘스트 제출 전에 아이템 있는지 확인용?
     public int GetItemCount(ItemData item)
     {
         int total = 0;

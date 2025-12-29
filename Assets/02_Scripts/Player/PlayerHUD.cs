@@ -12,15 +12,21 @@ public class PlayerHUD : MonoBehaviour
 
     [Header("Stemina")]
     public Slider staminaSlider;
-    public float barAnimationDuration = 0.2f; // 변화하는 데 걸리는 시간
+    public float barAnimationDuration = 0.2f; // 스테미나 차기 전 딜레이시간
     private Coroutine staminaCoroutine;
+    public float hideDelay = 0.5f;
+    private Coroutine hideStaminaCoroutine;
+
 
     void Start()
     {
         playerCondition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCondition>();
-        
+
         playerCondition.OnStaminaChanged += UpdateStaminaUI;
-        playerCondition.OnHpChanged += UpdateHpUI; 
+        playerCondition.OnHpChanged += UpdateHpUI;
+
+        staminaSlider.gameObject.SetActive(staminaSlider.value < 1f);
+
     }
 
     void OnDestroy()
@@ -35,12 +41,35 @@ public class PlayerHUD : MonoBehaviour
 
     private void UpdateStaminaUI(float ratio)
     {
-        if (staminaCoroutine != null)
+        // 100%면 숨김 
+        if (ratio >= 1f)
         {
-            StopCoroutine(staminaCoroutine);
+            if (hideStaminaCoroutine == null)
+                hideStaminaCoroutine = StartCoroutine(HideStaminaAfterDelay());
+            return;
         }
 
+        // 값이 줄어들면 표기
+        if (hideStaminaCoroutine != null)
+        {
+            StopCoroutine(hideStaminaCoroutine);
+            hideStaminaCoroutine = null;
+        }
+
+        staminaSlider.gameObject.SetActive(true);
+
+        if (staminaCoroutine != null)
+            StopCoroutine(staminaCoroutine);
+
         staminaCoroutine = StartCoroutine(UpdateBarSmoothly(staminaSlider, ratio));
+    }
+
+    private IEnumerator HideStaminaAfterDelay()
+    {
+        yield return new WaitForSeconds(hideDelay);
+
+        staminaSlider.gameObject.SetActive(false);
+        hideStaminaCoroutine = null;
     }
 
 

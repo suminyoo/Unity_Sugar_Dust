@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class MouseItemData : MonoBehaviour
 {
     public Image itemSprite;
     public TextMeshProUGUI amountText;
     public InventorySlot mouseSlot;
+
+    public event Action OnMouseItemChanged;
 
     private void Awake()
     {
@@ -21,6 +24,8 @@ public class MouseItemData : MonoBehaviour
         itemSprite.sprite = slot.itemData.icon;
         itemSprite.color = Color.white;
         amountText.text = slot.amount > 1 ? slot.amount.ToString() : "";
+
+        OnMouseItemChanged?.Invoke();
     }
 
     public void ClearSlot()
@@ -29,6 +34,15 @@ public class MouseItemData : MonoBehaviour
         itemSprite.color = Color.clear;
         itemSprite.sprite = null;
         amountText.text = "";
+
+        OnMouseItemChanged?.Invoke();
+    }
+
+    //마우스 아이템 무게
+    public float GetMouseItemWeight()
+    {
+        if (HasItem) return mouseSlot.itemData.weight * mouseSlot.amount;
+        return 0f;
     }
 
     public bool HasItem => mouseSlot != null && mouseSlot.itemData != null;

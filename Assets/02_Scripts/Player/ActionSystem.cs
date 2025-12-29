@@ -103,7 +103,7 @@ public class ActionSystem : MonoBehaviour
                 if (target != null)
                 {
                     target.TakeDamage(attackDamage);
-                    Debug.Log("공격 적중 (이벤트 호출)");
+                    Debug.Log("공격 적중");
                 }
                 break;
 
@@ -112,7 +112,7 @@ public class ActionSystem : MonoBehaviour
                 if (mineral != null)
                 {
                     mineral.OnMine(miningPower);
-                    Debug.Log("채광 성공 (이벤트 호출)");
+                    Debug.Log("채광 성공");
                 }
                 break;
         }

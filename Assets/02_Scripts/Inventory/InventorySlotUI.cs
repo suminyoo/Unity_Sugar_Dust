@@ -1,16 +1,19 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
+    public static event Action<ItemData> OnItemRightClicked;
+
     [Header("UI Components")]
     public Image itemIcon;
     public TextMeshProUGUI amountText;
 
-    private InventorySlot _slot;
     private int _slotIndex;
+    private InventorySlot _slot;
     private InventoryUI _managerUI;
 
     public void Init(InventoryUI ui, int index)
@@ -49,11 +52,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             {
                 HandlePickOne();
             }
-            // 그냥 우클릭은 => 아이템 사용
+            // 그냥 우클릭은 아이템 정보 열기
             else
             {
-                // TODO: 아이템 사용로직 
-                Debug.Log($"아이템 사용 시도: {_slot.itemData.itemName}");
+                OnItemRightClicked.Invoke(_slot.itemData);
             }
         } 
         // -- 좌클릭: 드래그 없이 클릭만으로 내려놓기
@@ -65,6 +67,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
         }
     }
+
     void HandlePickOne()
     {
         // 마우스가 비어있다면 1개 새로 집기
@@ -156,4 +159,5 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 _managerUI.mouseItemData.ClearSlot();
         }
     }
+
 }

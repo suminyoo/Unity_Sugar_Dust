@@ -1,11 +1,76 @@
+using TMPro;
 using UnityEngine;
 
 //플레이어 인벤토리, 인벤홀더 상속
 public class PlayerInventory : InventoryHolder
 {
-    [Header("Weight Stats")]
-    public float maxWeight = 100f;
+    public MouseItemData mouseItemData;
+
+    [Header("Weight")]
+    public float maxWeight = 100f; //TODO: 가방 종류 혹은 플레이어 능력에 따른 무게 한계치
     public float currentWeight = 0f;
+    public TextMeshProUGUI weightText;
+
+    [Header("Text Colors")]
+    public Color normalColor = Color.white;
+    public Color warningColor = new Color(1f, 0.6f, 0f); // 주황
+    public Color exceedColor = Color.red;
+
+    private void Start()
+    {
+        inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
+        mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
+        UpdateWeightUI(); // 초기화
+    }
+    private void OnDestroy()
+    {
+        inventorySystem.OnInventoryUpdated -= RefreshTotalWeight;
+        mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
+    }
+    private void MouseItemChanged()
+    {
+        float mouseWeight = mouseItemData.GetMouseItemWeight();
+        currentWeight += mouseWeight;
+
+        UpdateWeightUI();
+    }
+
+    public void RefreshTotalWeight()
+    {
+        float totalWeight = 0f;
+        foreach (var slot in inventorySystem.slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                float slotWeight = slot.itemData.weight * slot.amount;
+                totalWeight += slotWeight;
+                Debug.Log($"슬롯: {slot.itemData.itemName} x {slot.amount} = {slotWeight:F1}kg");
+            }
+        }
+        if(mouseItemData.HasItem)
+        {
+            float mouseWeight = mouseItemData.GetMouseItemWeight();
+            totalWeight += mouseWeight;
+            Debug.Log($"마우스 아이템 무게 추가: {mouseWeight:F1}kg");
+        }
+
+        currentWeight = totalWeight;
+        UpdateWeightUI();
+        Debug.Log($"총 무게 업데이트: {currentWeight:F1}kg / {maxWeight:F1}kg");
+    }
+
+    public void UpdateWeightUI()
+    {
+        if (weightText == null) return;
+
+        weightText.text = $"{currentWeight:F1}kg / {maxWeight:F1}kg";
+
+        float weightRatio = currentWeight / maxWeight;
+
+        if (weightRatio >= 1f) weightText.color = exceedColor;
+        else if (weightRatio >= 0.8f) weightText.color = warningColor;
+        else weightText.color = normalColor;
+    }
 
     // 아이템 얻을때 무게 계산 로직
     public override bool AddItem(ItemData item, int count)
@@ -16,18 +81,11 @@ public class PlayerInventory : InventoryHolder
         // 무게 체크
         if (currentWeight + (item.weight * count) > limit)
         {
-            Debug.Log($"너무 무거움! (현재: {currentWeight}, 한계: {limit})");
+            Debug.Log($"무게 초과로 습득 불가 (현재: {currentWeight}, 한계: {limit})");
             return false;
         }
 
-         if (base.AddItem(item, count))
-        {
-            currentWeight += item.weight * count;
-            return true;
-        }
-
-        Debug.Log("가방 칸이 꽉 찼습니다.");
-        return false;
+        return base.AddItem(item, count);
     }
 
     // 바닥에 버릴 때 무게 감소
@@ -35,10 +93,6 @@ public class PlayerInventory : InventoryHolder
     {
         // 인덱스 안전 검사
         if (index < 0 || index >= inventorySystem.slots.Count) return;
-
-        var slot = inventorySystem.slots[index];
-
-        currentWeight -= slot.itemData.weight * count;
 
         base.DropItemAtIndex(index, count);
     }
@@ -50,8 +104,13 @@ public class PlayerInventory : InventoryHolder
         int currentCount = inventorySystem.GetItemCount(item);
         if (currentCount >= count)
         {
-            currentWeight -= item.weight * count;
             base.ConsumeItem(item, count);
+            Debug.Log($"{item.itemName} {count}개 소비 완료");
         }
+        else
+        {
+            Debug.LogWarning("소비할 아이템 수량이 부족합니다.");
+        }
+
     }
 }

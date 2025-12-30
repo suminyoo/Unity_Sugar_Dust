@@ -17,11 +17,9 @@ public class ActionSystem : MonoBehaviour
     public float actionRange = 3.5f;
     public LayerMask actionLayer;
 
-    [Header("Stats")]
     public float attackDamage = 10f;
     public float miningPower = 20f;
 
-    [Header("Cooldown")]
     public float attackCooldown = 1f;
     public float mineCooldown = 1f;
 
@@ -48,6 +46,7 @@ public class ActionSystem : MonoBehaviour
         if (firePoint == null) return;
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit, actionRange, actionLayer))
             Debug.DrawLine(ray.origin, hit.point, Color.green);
         else

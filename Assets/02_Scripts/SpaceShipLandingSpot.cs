@@ -1,8 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 
 public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
 {
+    public static event Action OnPlayerReturnToTown;   
     public CommonConfirmPopup popupUI; 
     public string townSceneName = "Town";
 
@@ -13,12 +14,12 @@ public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
             "탐사를 마치고 마을로 돌아가시겠습니까?",
             () => {
                 Debug.Log("마을로 이동 중...");
-                SceneManager.LoadScene(townSceneName);
+                OnPlayerReturnToTown?.Invoke();
             }
         );
     }
 
-    public string GetInteractPrompt() => "우주선 부르기";
+    public string GetInteractPrompt() => "[E] 우주선 부르기";
 }
 
 

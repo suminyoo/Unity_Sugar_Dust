@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GridMapSpawner : MonoBehaviour
 {
@@ -13,21 +12,17 @@ public class GridMapSpawner : MonoBehaviour
     [Header("Map Settings")]
     public Vector2Int mapSize = new Vector2Int(20, 20);
     public float cellSize = 3.0f;
-
-    [Header("Ground Settings")]
     public GameObject groundPrefab;
-
-    [Header("NavMesh")]
     public NavMeshSurface navSurface;
+    public PlayerController player;       // 플레이어 (로딩 중엔 움직임 막기 위해)
 
-    [Header("Objects to Spawn")]
+    [Header("Objects")]
     public List<ExploreObjectData> mapObjects;     // 배치할 맵요소 (장애물 광물 등)
     public List<ExploreObjectData> enemyObjects;    // 배치할 적들
 
-    [Header("UI & System")]
+    [Header("UI")]
     public GameObject loadingPanel;
     public TextMeshProUGUI statusText;         // 맵 생성 중 표시 텍스트
-    public PlayerController player;       // 플레이어 (로딩 중엔 움직임 막기 위해)
 
     private List<Vector2Int> allCoordinates;
 

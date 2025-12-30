@@ -7,8 +7,6 @@ public class CommonConfirmPopup : MonoBehaviour
     [Header("UI Components")]
     public TextMeshProUGUI messageText;
 
-    // 만약 버튼 텍스트도 바꾸고 싶다면 여기에 추가 (예: confirmButtonText)
-
     private Action onConfirm; // 네 눌렀을 때 실행할 함수 저장
     private Action onCancel;  // 아니오 눌렀을 때 실행할 함수 저장
 

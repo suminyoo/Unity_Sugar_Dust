@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,76 +7,38 @@ public interface IInteractable
     void OnInteract();
     string GetInteractPrompt();
 }
-
 public class InteractionSystem : MonoBehaviour
 {
-    public BoxCollider interactionBoxCollider;
-    public LayerMask interactionLayer;    // Interaction 레이어
-
     [Header("UI")]
     public GameObject interactionPanel;
     public TextMeshProUGUI interactionText;
 
+    // 현재 범위 안에 있는 상호작용 가능한 물체들을 담을 리스트
+    private List<IInteractable> interactablesInRange = new List<IInteractable>();
     private IInteractable currentInteractable;
 
     void Update()
     {
-        CheckForInteractable();
+        UpdateCurrentInteractable();
         HandleInput();
     }
 
-    void CheckForInteractable()
+    // 리스트 중 가장 가까운 물체를 현재 타겟으로
+    void UpdateCurrentInteractable()
     {
-        if (interactionBoxCollider == null) return;
-
-        // 센터 위치: 로컬 좌표를 월드 좌표로
-        Vector3 center = interactionBoxCollider.transform.TransformPoint(interactionBoxCollider.center);
-
-        // 크기: 콜라이더 크기에 스케일을 곱하고 절반으로 나눔
-        Vector3 halfExtents = Vector3.Scale(interactionBoxCollider.size, interactionBoxCollider.transform.lossyScale) * 0.5f;
-
-        // 회전: 콜라이더의 회전값 그대로 사용
-        Quaternion rotation = interactionBoxCollider.transform.rotation;
-
-        // OverlapBox 실행
-        Collider[] hitColliders = Physics.OverlapBox(center, halfExtents, rotation, interactionLayer);
-
-        IInteractable closestInteractable = null;
-        float closestDistance = float.MaxValue;
-
-        // 가장 가까운 물체 찾기
-        foreach (Collider hit in hitColliders)
-        {
-            // 자기 자신은 무시
-            if (hit == interactionBoxCollider) continue;
-
-            IInteractable interactable = hit.GetComponent<IInteractable>();
-
-            if (interactable != null)
-            {
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestInteractable = interactable;
-                }
-            }
-        }
-
-        // UI 처리
-        if (closestInteractable != null)
-        {
-            currentInteractable = closestInteractable;
-            if (interactionPanel != null)
-            {
-                interactionPanel.SetActive(true);
-                if (interactionText != null) interactionText.text = closestInteractable.GetInteractPrompt();
-            }
-        }
-        else
+        if (interactablesInRange.Count == 0)
         {
             currentInteractable = null;
             if (interactionPanel != null) interactionPanel.SetActive(false);
+            return;
+        }
+
+        currentInteractable = interactablesInRange[0];
+
+        if (interactionPanel != null)
+        {
+            interactionPanel.SetActive(true);
+            if (interactionText != null) interactionText.text = currentInteractable.GetInteractPrompt();
         }
     }
 
@@ -87,19 +50,23 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        if (interactionBoxCollider == null) return;
+        // 들어온 물체가 IInteractable을 가지고 있는지
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactablesInRange.Add(interactable);
+        }
+    }
 
-        Gizmos.color = new Color(1, 0, 0, 0.3f);
-
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(
-            interactionBoxCollider.transform.TransformPoint(interactionBoxCollider.center),
-            interactionBoxCollider.transform.rotation,
-            Vector3.Scale(interactionBoxCollider.size, interactionBoxCollider.transform.lossyScale)
-        );
-        Gizmos.matrix = rotationMatrix;
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+    private void OnTriggerExit(Collider other)
+    {
+        // 나간 물체 리스트에서 제거
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactablesInRange.Remove(interactable);
+        }
     }
 }

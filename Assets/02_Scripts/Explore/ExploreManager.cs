@@ -22,26 +22,27 @@ public class ExploreManager : MonoBehaviour
     public Text timerText;
     public Text resultMessageText; // 메시지 표시용
 
-    [Header("Scene Navigation")]
+    [Header("Scene")]
     public string townSceneName = "TownScene";
 
     void Start()
     {
+        SpaceShipLandingSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        player.gameObject.SetActive(false);
 
         playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint").GetComponent<Transform>();
 
         if (resultUIPanel != null) resultUIPanel.SetActive(false);
         mapSpawner.OnMapGenerationComplete += OnMapReady;
-        OnMapReady();
         
     }
 
     void OnDestroy()
     {
-        if (player != null) player.OnPlayerDied -= OnPlayerDeath;
-        if (mapSpawner != null) mapSpawner.OnMapGenerationComplete -= OnMapReady;
+        SpaceShipLandingSpot.OnPlayerReturnToTown -= ExploreSuccess;
+        player.OnPlayerDied -= OnPlayerDeath;
+        mapSpawner.OnMapGenerationComplete -= OnMapReady;
     }
 
     void OnMapReady()
@@ -55,6 +56,7 @@ public class ExploreManager : MonoBehaviour
             player.gameObject.SetActive(true);
 
             player.OnPlayerDied += OnPlayerDeath;
+
         }
 
         currentTime = timeLimit;
@@ -64,8 +66,6 @@ public class ExploreManager : MonoBehaviour
     void OnPlayerDeath()
     {
         if (isExplorationEnded) return;
-
-        Debug.Log("플레이어 사망 확인 -> 탐사 실패 처리");
         ExploreFail(false);
     }
 
@@ -85,11 +85,11 @@ public class ExploreManager : MonoBehaviour
 
         if (currentTime <= 0)
         {
-            ExploreFail(true); // 시간 초과 처리
+            //TODO: 얼어붙는 이펙트 활성화 
+            //TODO: 시간 초과시 플레이어에게 지속적인 피해 주기
         }
     }
 
-    // 시간 초과
     void ExploreFail(bool shouldKillPlayer)
     {
         if (isExplorationEnded) return;
@@ -97,11 +97,7 @@ public class ExploreManager : MonoBehaviour
 
         if (resultMessageText != null) resultMessageText.text = "탐사 실패...";
 
-        // 시간 초과로 인한 실패라면 플레이어를 죽임
-        if (shouldKillPlayer && player != null)
-        {
-            player.HandleDie(); // isExplorationEnded 체크 필요 (무한루프방지)
-        }
+        //TODO: 아이템 소실 처리
 
         StartCoroutine(ProcessResultAndLeave());
     }
@@ -112,7 +108,7 @@ public class ExploreManager : MonoBehaviour
         if (isExplorationEnded) return;
         isExplorationEnded = true;
 
-        Debug.Log("탈출 성공! 아이템 보존");
+        Debug.Log("탐사 성공");
 
         if (resultMessageText != null) resultMessageText.text = "탐사 성공! 무사히 귀환합니다.";
 

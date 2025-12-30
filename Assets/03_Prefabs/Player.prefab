@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: 3476547784288654736}
   - component: {fileID: 2089687116368024317}
   - component: {fileID: 351708741489739455}
-  - component: {fileID: 2334020512068510772}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -341,25 +340,6 @@ MonoBehaviour:
   recoveryDelay: 1
   runCostPerSec: 10
   jumpCost: 20
---- !u!114 &2334020512068510772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410324380083322258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4116b4b0493b2194baa8029455435653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionRange: 2
-  interactionLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  rayPoint: {fileID: 3833010317735993240}
-  interactionPanel: {fileID: 0}
-  interactionText: {fileID: 0}
 --- !u!1 &3450923666700700299
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,8 +392,10 @@ GameObject:
   - component: {fileID: 7504108874485528454}
   - component: {fileID: 1690970687665502000}
   - component: {fileID: 7793539508595114016}
+  - component: {fileID: 2731264559992334025}
+  - component: {fileID: 6062306883150323869}
   m_Layer: 0
-  m_Name: InteractionCube
+  m_Name: InteractionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,8 +410,8 @@ Transform:
   m_GameObject: {fileID: 6155634689879726424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.029598236, y: 0.85510004, z: 1.57}
-  m_LocalScale: {x: 1.8520383, y: 2.009034, z: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 1.5}
+  m_LocalScale: {x: 1.5, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7689735961417210788}
@@ -449,7 +431,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6155634689879726424}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -499,12 +481,53 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2731264559992334025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155634689879726424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4116b4b0493b2194baa8029455435653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionPanel: {fileID: 0}
+  interactionText: {fileID: 0}
+--- !u!54 &6062306883150323869
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155634689879726424}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1487617829870234414
 PrefabInstance:
   m_ObjectHideFlags: 0

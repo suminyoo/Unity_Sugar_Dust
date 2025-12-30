@@ -27,13 +27,13 @@ public class PlayerInventory : InventoryHolder
         inventorySystem.OnInventoryUpdated -= RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
     }
-    private void MouseItemChanged()
-    {
-        float mouseWeight = mouseItemData.GetMouseItemWeight();
-        currentWeight += mouseWeight;
+    //private void MouseItemChanged()
+    //{
+    //    float mouseWeight = mouseItemData.GetMouseItemWeight();
+    //    currentWeight += mouseWeight;
 
-        UpdateWeightUI();
-    }
+    //    UpdateWeightUI();
+    //}
 
     public void RefreshTotalWeight()
     {

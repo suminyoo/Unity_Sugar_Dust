@@ -3,12 +3,12 @@ using UnityEngine;
 public class InventoryHolder : MonoBehaviour
 {
     [Header("Settings")]
-    public int inventorySize = 20;
+    public int inventorySize = 9;
     public Transform dropPosition; // 버릴 위치
 
     //외부에서는 못건들고 구현하는 자식만 건들 수 있게
     [SerializeField] protected InventorySystem inventorySystem;
-    public InventorySystem InventorySystem => inventorySystem;
+    public InventorySystem InventorySystem => inventorySystem; //얘는 public
 
     protected virtual void Awake()
     {

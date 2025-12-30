@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class ExploreManager : MonoBehaviour
 {
@@ -18,12 +19,14 @@ public class ExploreManager : MonoBehaviour
     public GridMapSpawner mapSpawner;
 
     [Header("UI")]
+    public TextMeshProUGUI timerText;
     public GameObject resultUIPanel;
-    public Text timerText;
-    public Text resultMessageText; // 메시지 표시용
+    public TextMeshProUGUI resultMessageText; // 메시지 표시용
+    public Transform resultItemContainer;
+    public GameObject resultItemSlotPrefab;
 
     [Header("Scene")]
-    public string townSceneName = "TownScene";
+    public string townSceneName = "Town";
 
     void Start()
     {
@@ -80,7 +83,7 @@ public class ExploreManager : MonoBehaviour
             float displayTime = Mathf.Max(currentTime, 0);
             int minutes = Mathf.FloorToInt(displayTime / 60F);
             int seconds = Mathf.FloorToInt(displayTime % 60F);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
         }
 
         if (currentTime <= 0)
@@ -99,7 +102,40 @@ public class ExploreManager : MonoBehaviour
 
         //TODO: 아이템 소실 처리
 
-        StartCoroutine(ProcessResultAndLeave());
+        ShowResultItems();
+
+    }
+
+    void ShowResultItems()
+    {
+        InventoryHolder inventoryHolder = player.GetComponent<InventoryHolder>();
+
+        if (inventoryHolder == null) return;
+
+        // 초기화
+        foreach (Transform child in resultItemContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var slot in inventoryHolder.InventorySystem.slots)
+        {
+            // 빈 슬롯은 건너뜀
+            if (slot.itemData == null || slot.amount == 0) continue;
+
+            // 프리팹 생성
+            GameObject slotUI = Instantiate(resultItemSlotPrefab, resultItemContainer);
+            Debug.Log($"[ResultUI] 아이템 슬롯 생성됨 - 아이템: {slot.itemData.name}, 수량: {slot.amount}");
+
+            var uiScript = slotUI.GetComponent<ResultItemSlotUI>();
+            if (uiScript != null)
+            {
+                uiScript.SetData(slot.itemData, slot.amount);
+            }
+        }
+
+        resultUIPanel.SetActive(true);
+
     }
 
     // 탐사 성공
@@ -114,23 +150,23 @@ public class ExploreManager : MonoBehaviour
 
         if (player != null) player.Wait();
 
-        StartCoroutine(ProcessResultAndLeave());
+        ShowResultItems();
+
     }
-    IEnumerator ProcessResultAndLeave()
+
+    public void ReturnToTown()
     {
-        yield return new WaitForSeconds(3.0f);
-
-        // 결과창 보는 ui BUTTON
-        if (resultUIPanel != null)
-        {
-            resultUIPanel.SetActive(true);
-
-            // 획득한 아이템 목록 띄우기 로직
-        }
-
-        // TODO: 버튼으로 마을이동
-
-        Debug.Log("마을로 귀환합니다...");
+        //TODO: 범용성 있는 씬 이동 클래스 이용으로 바꾸기
         SceneManager.LoadScene(townSceneName);
+    }
+
+    public float GetCurrentTime()
+    {
+        return currentTime;
+    }
+
+    public float GetTimeLimit()
+    {
+        return timeLimit;
     }
 }

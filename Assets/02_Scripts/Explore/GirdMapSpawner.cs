@@ -29,7 +29,19 @@ public class GridMapSpawner : MonoBehaviour
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
     private bool[,] gridMap;
 
-    private IEnumerator Start()
+    private void Start()
+    {
+        StartCoroutine(GenerateMapRoutine());
+    }
+
+    public void RestartMap()
+    {
+        CleanupMap();
+        StopAllCoroutines();
+        StartCoroutine(GenerateMapRoutine());
+    }
+
+    private IEnumerator GenerateMapRoutine()
     {
         // 로딩 시작 
         loadingPanel.SetActive(true);
@@ -73,6 +85,8 @@ public class GridMapSpawner : MonoBehaviour
         }
         yield return null; // 적
 
+        OnMapGenerationComplete?.Invoke();
+
         // ---로딩 완료---
         if (statusText != null) statusText.text = "준비 완료!";
         yield return new WaitForSeconds(1.0f); //로딩 완료 연출
@@ -81,7 +95,13 @@ public class GridMapSpawner : MonoBehaviour
         player.WaitDone();
 
 
-        OnMapGenerationComplete?.Invoke();
+    }
+    void CleanupMap()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // 맵 초기화
@@ -100,7 +120,7 @@ public class GridMapSpawner : MonoBehaviour
     }
 
     // FisherYates  리스트 랜덤섞기
-    void ShuffleCoordinates()
+    void MixCoordinates()
     {
         for (int i = 0; i < allCoordinates.Count; i++)
         {
@@ -137,9 +157,10 @@ public class GridMapSpawner : MonoBehaviour
 
     void SpawnObject(ExploreObjectData data)
     {
+        if (data.prefab == null) return;
         int spawnedCount = 0;
 
-        ShuffleCoordinates();
+        MixCoordinates();
 
         foreach (Vector2Int cor in allCoordinates)
         {

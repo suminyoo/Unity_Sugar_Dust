@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private Rigidbody rb;
 
+    public GameObject interactionBox;
+
     [Header("Settings")]
 
     public PlayerState currentState = PlayerState.Idle;
@@ -280,6 +282,8 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("InputY", 0);
             animator.SetBool("IsRunning", false);
         }
+
+        interactionBox.SetActive(false);
     }
 
     public void WaitDone()
@@ -289,6 +293,8 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Idle;
             rb.isKinematic = false;
         }
+        interactionBox.SetActive(true);
+
     }
 
     #region 캐릭터 방향

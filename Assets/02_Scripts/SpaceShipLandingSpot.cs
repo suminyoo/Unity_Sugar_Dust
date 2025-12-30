@@ -1,0 +1,42 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
+{
+    public CommonConfirmPopup popupUI; 
+    public string townSceneName = "Town";
+
+    public void OnInteract()
+    {
+        // 팝업을 열면서 메시지와 할 일(람다식) 전달
+        popupUI.OpenPopup(
+            "탐사를 마치고 마을로 돌아가시겠습니까?",
+            () => {
+                Debug.Log("마을로 이동 중...");
+                SceneManager.LoadScene(townSceneName);
+            }
+        );
+    }
+
+    public string GetInteractPrompt() => "우주선 부르기";
+}
+
+
+//=========================================
+//public class BedInteractable : MonoBehaviour, IInteractable
+//{
+//    public CommonConfirmPopup popupUI;
+
+//    public void OnInteract()
+//    {
+//        popupUI.OpenPopup(
+//            "잠을 자고 하루를 마치시겠습니까?",
+//            () => {
+//                Debug.Log("Zzz... 아침이 되었습니다.");
+//                // GameManager.Instance.NextDay();
+//            }
+//        );
+//    }
+
+//    public string GetInteractPrompt() => "잠자기";
+//}

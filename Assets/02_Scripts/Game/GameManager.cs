@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Default Settings")]
     public float defaultMaxHp = 100f;
-    public float defaultMaxStamina = 100f;
+    public float defaultMaxStamina = 50f;
     public int defaultInventorySize = 2;
 
     private void Awake()
@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             // 게임 시작시 초기화 (테스트용)
             // 타이틀 에서 새 게임 때 호출하거나 파일 로드 시 덮어씌움

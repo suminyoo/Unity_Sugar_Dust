@@ -71,19 +71,19 @@ public class PlayerInventory : InventoryHolder
             {
                 float slotWeight = slot.itemData.weight * slot.amount;
                 totalWeight += slotWeight;
-                Debug.Log($"슬롯: {slot.itemData.itemName} x {slot.amount} = {slotWeight:F1}kg");
+                //Debug.Log($"슬롯: {slot.itemData.itemName} x {slot.amount} = {slotWeight:F1}kg");
             }
         }
         if(mouseItemData.HasItem)
         {
             float mouseWeight = mouseItemData.GetMouseItemWeight();
             totalWeight += mouseWeight;
-            Debug.Log($"마우스 아이템 무게 추가: {mouseWeight:F1}kg");
+            //Debug.Log($"마우스 아이템 무게 추가: {mouseWeight:F1}kg");
         }
 
         currentWeight = totalWeight;
         UpdateWeightUI();
-        Debug.Log($"총 무게 업데이트: {currentWeight:F1}kg / {maxWeight:F1}kg");
+        //Debug.Log($"총 무게 업데이트: {currentWeight:F1}kg / {maxWeight:F1}kg");
     }
 
     public void UpdateWeightUI()

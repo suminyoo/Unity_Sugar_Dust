@@ -36,6 +36,7 @@ public class GridMapSpawner : MonoBehaviour
 
     public void RestartMap()
     {
+
         CleanupMap();
         StopAllCoroutines();
         StartCoroutine(GenerateMapRoutine());

@@ -12,7 +12,7 @@ public class NextMapPoint : MonoBehaviour, IInteractable
         CommonConfirmPopup.Instance.OpenPopup(
             "다음 구역으로 이동하시겠습니까?", 
             () => {
-                if(mapSpawner != null) 
+                if (mapSpawner != null) 
                     mapSpawner.RestartMap();
             }
         );

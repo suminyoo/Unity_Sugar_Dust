@@ -6,6 +6,8 @@ public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
     public static event Action OnPlayerReturnToTown;   
     public string townSceneName = "Town";
 
+    public string GetInteractPrompt() => "[E] 우주선 부르기";
+
     public void OnInteract()
     {
         // 팝업을 열면서 메시지와 할 일(람다식) 전달
@@ -18,7 +20,6 @@ public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
         );
     }
 
-    public string GetInteractPrompt() => "[E] 우주선 부르기";
 }
 
 

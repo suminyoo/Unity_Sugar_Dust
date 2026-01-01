@@ -7,7 +7,6 @@ public class InventoryToggle : MonoBehaviour
 
     void Start()
     {
-        playerBagPanel = transform.Find("PlayerBagPanel").gameObject;
         playerBagPanel.SetActive(false);
     }
 

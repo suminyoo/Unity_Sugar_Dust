@@ -60,22 +60,36 @@ public class InventoryHolder : MonoBehaviour
         }
     }
 
-    public virtual void TransferSlot(int index, InventoryHolder to)
+    //아이템 transfer 로직 변화에 맞게 수정
+    public virtual void TransferTo(int fromIndex, InventoryHolder toHolder)
     {
-        var slot = inventorySystem.slots[index];
-        if (slot.IsEmpty) return;
+        // 내 슬롯 데이터 가져오기
+        InventorySlot fromSlot = inventorySystem.slots[fromIndex];
 
-        // 넣기 시도
-        // TODO: (전체를 다 넣을 수도 있고 공간 부족으로 일부만 들어갈 수도 있음 - 구현 고려 필요)
-        // 일단 임시 (전부 들어가거 안 들어가거나)
-        if (to.AddItem(slot.itemData, slot.amount))
+        if (fromSlot.IsEmpty) return; // 빈칸 패스
+
+        // 받는 쪽에 넣기 시도 
+        // 보내려는 아이템과 개수
+        ItemData itemToSend = fromSlot.itemData;
+        int amountToSend = fromSlot.amount;
+
+        // 받는 인벤토리 시스템
+        InventorySystem toSystem = toHolder.InventorySystem;
+
+        // 상대방 인벤토리에 들어갈 수 있는 잔여 공간 계산이 필요하지만, 
+        // 우선 성공하면 차감 방식
+
+        // 상대방에게 성공적으로 다 들어간 겨경우
+        if (toSystem.AddItemToSlots(itemToSend, amountToSend))
         {
-            // 성공시 해당 칸 비우기
-            inventorySystem.RemoveItemAtIndex(index, slot.amount);
+            // 내 인벤토리에서 해당 개수제거
+            inventorySystem.RemoveItemAtIndex(fromIndex, amountToSend);
         }
         else
         {
-            Debug.Log("상대방 가방이 꽉 찼거나 넣을 수 없습니다.");
+            // 실패 (꽉 참? 등ㄷ응)
+            // TODO: 일부만 들어가는 로직은 AddItemToSlots가 남은 개수를 반환해ㅑ야함(현재 bool값만 리턴)
+            Debug.Log("상대방 공간이 부족합니다!");
         }
     }
 }

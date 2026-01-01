@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NextMapPoint : MonoBehaviour, IInteractable
+public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
     public GridMapSpawner mapSpawner;

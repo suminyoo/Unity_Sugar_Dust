@@ -66,6 +66,19 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 HandleDropLogic();
             }
         }
+
+        // Shift 좌클릭으로 아이템 이동
+        // TODO: 드래그 이동?? 우선적으로는 클릭만
+        if (eventData.button == PointerEventData.InputButton.Left && Input.GetKey(KeyCode.LeftShift))
+        {
+            // 샵 매니저가 존재한다면 (상점/진열대 모드라면)
+            if (StorageUIManager.Instance != null && StorageUIManager.Instance.rootCanvas.activeSelf)
+            {
+                // "매니저님, 저(_slotIndex) 이동할래요. 저는 이 UI(_managerUI) 소속입니다."
+                StorageUIManager.Instance.HandleItemTransfer(_slotIndex, _managerUI);
+            }
+        }
+
     }
 
     void HandlePickOne()

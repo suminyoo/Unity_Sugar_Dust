@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class ToExplore : MonoBehaviour, IInteractable
+public class ExploreStartInTown : MonoBehaviour, IInteractable
 {
     //public static event Action OnPlayerGoExplore;
     public string exploreSceneName = "Explore";

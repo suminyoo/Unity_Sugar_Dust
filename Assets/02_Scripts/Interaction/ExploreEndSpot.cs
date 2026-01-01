@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
+public class ExploreEndSpot : MonoBehaviour, IInteractable
 {
     public static event Action OnPlayerReturnToTown;   
     public string townSceneName = "Town";

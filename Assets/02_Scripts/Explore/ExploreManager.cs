@@ -28,7 +28,7 @@ public class ExploreManager : MonoBehaviour
 
     void Start()
     {
-        SpaceShipLandingSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
+        ExploreEndSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -41,7 +41,7 @@ public class ExploreManager : MonoBehaviour
 
     void OnDestroy()
     {
-        SpaceShipLandingSpot.OnPlayerReturnToTown -= ExploreSuccess;
+        ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
         player.OnPlayerDied -= OnPlayerDeath;
         mapSpawner.OnMapGenerationComplete -= OnMapReady;
     }

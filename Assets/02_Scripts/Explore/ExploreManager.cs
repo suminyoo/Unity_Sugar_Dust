@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System.Collections;
 using TMPro;
 
 public class ExploreManager : MonoBehaviour
@@ -27,6 +24,7 @@ public class ExploreManager : MonoBehaviour
 
     [Header("Scene")]
     public string townSceneName = "Town";
+    public int townSpawnPointID = 1;
 
     void Start()
     {
@@ -156,8 +154,9 @@ public class ExploreManager : MonoBehaviour
 
     public void ReturnToTown()
     {
-        //TODO: 범용성 있는 씬 이동 클래스 이용으로 바꾸기
-        SceneManager.LoadScene(townSceneName);
+        Debug.Log($"SceneController : {SceneController.Instance}");
+        Debug.Log($"GameManager : {GameManager.Instance}");
+        SceneController.Instance.LoadScene(townSceneName, townSpawnPointID);
     }
 
     public float GetCurrentTime()

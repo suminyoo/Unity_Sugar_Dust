@@ -4,13 +4,12 @@ using System;
 public class SpaceShipLandingSpot : MonoBehaviour, IInteractable
 {
     public static event Action OnPlayerReturnToTown;   
-    public CommonConfirmPopup popupUI; 
     public string townSceneName = "Town";
 
     public void OnInteract()
     {
         // 팝업을 열면서 메시지와 할 일(람다식) 전달
-        popupUI.OpenPopup(
+        CommonConfirmPopup.Instance.OpenPopup(
             "탐사를 마치고 마을로 돌아가시겠습니까?",
             () => {
                 Debug.Log("마을로 이동 중...");

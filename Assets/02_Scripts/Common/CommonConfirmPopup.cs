@@ -4,16 +4,34 @@ using System;
 
 public class CommonConfirmPopup : MonoBehaviour
 {
+    public static CommonConfirmPopup Instance;
+
     [Header("UI Components")]
     public TextMeshProUGUI messageText;
 
     private Action onConfirm; // 네 눌렀을 때 실행할 함수 저장
     private Action onCancel;  // 아니오 눌렀을 때 실행할 함수 저장
 
+    private void Awake()
+    {
+        // 싱글톤
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        ClosePopup();
+    }
+
     void Update()
     {
         // ESC 키를 누르면 아니오와 똑같이 처리
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             OnClickNo();
         }

@@ -11,6 +11,8 @@ public class InventoryUI : MonoBehaviour
 
     private List<InventorySlotUI> uiSlots = new List<InventorySlotUI>();
 
+    private InventorySystem currentInventorySystem;
+
     void Start()
     {
         if (connectedInventory != null && connectedInventory.InventorySystem != null)
@@ -25,6 +27,26 @@ public class InventoryUI : MonoBehaviour
         if (connectedInventory != null && connectedInventory.InventorySystem != null)
         {
             connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
+        }
+    }
+
+    // 외부에서 인벤토리 설정해주는 함수
+    public void SetInventorySystem(InventorySystem newSystem)
+    {
+        // 기존 시스템이 연결 끊기
+        if (currentInventorySystem != null)
+        {
+            currentInventorySystem.OnInventoryUpdated -= RefreshUI;
+        }
+
+        // 새로운 시스템으로
+        currentInventorySystem = newSystem;
+
+        //새 시스템 구독 및 화면 초기화
+        if (currentInventorySystem != null)
+        {
+            currentInventorySystem.OnInventoryUpdated += RefreshUI;
+            InitializeUI(); // 슬롯 개수 다시 계산해서 생성
         }
     }
 

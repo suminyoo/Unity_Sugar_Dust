@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerHUD : MonoBehaviour
 
     [Header("HP")]
     public Slider hpSlider;
+    public TextMeshProUGUI hpText;
 
     [Header("Stemina")]
     public Slider staminaSlider;
@@ -34,13 +36,15 @@ public class PlayerHUD : MonoBehaviour
         playerCondition.OnStaminaChanged -= UpdateStaminaUI;
     }
 
-    private void UpdateHpUI(float ratio)
+    private void UpdateHpUI(float curHp, float maxHp)
     {
-        hpSlider.value = ratio;
+        hpSlider.value = curHp / maxHp;
+        hpText.text = $"{(int)curHp} / {(int)maxHp}";
     }
 
-    private void UpdateStaminaUI(float ratio)
+    private void UpdateStaminaUI(float curStem, float maxStem)
     {
+        float ratio = curStem / maxStem;
         // 100%¸é ¼û±è 
         if (ratio >= 1f)
         {

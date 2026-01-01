@@ -4,7 +4,9 @@ using UnityEngine;
 //플레이어 인벤토리, 인벤홀더 상속
 public class PlayerInventory : InventoryHolder
 {
+    public PlayerData playerData; // SO 연결 필요
     public MouseItemData mouseItemData;
+    public InventoryUI inventoryUI;
 
     [Header("Weight")]
     public float maxWeight = 100f; //TODO: 가방 종류 혹은 플레이어 능력에 따른 무게 한계치
@@ -18,22 +20,47 @@ public class PlayerInventory : InventoryHolder
 
     private void Start()
     {
+        if (GameManager.Instance != null)
+        {
+            LoadInventoryFromManager();
+        }
+
         inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
-        UpdateWeightUI(); // 초기화
     }
     private void OnDestroy()
     {
         inventorySystem.OnInventoryUpdated -= RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
     }
-    //private void MouseItemChanged()
-    //{
-    //    float mouseWeight = mouseItemData.GetMouseItemWeight();
-    //    currentWeight += mouseWeight;
 
-    //    UpdateWeightUI();
-    //}
+    private void LoadInventoryFromManager()
+    {
+        if (GameManager.Instance == null) return;
+
+        GameData data = GameManager.Instance.LoadPlayerState();
+
+        // 새로 만들기
+        int size = playerData.GetInventorySize(data.inventoryLevel);
+        inventorySystem = new InventorySystem(size);
+
+        // 데이터 채우기
+        var savedSlots = data.inventorySlots;
+        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        {
+            if (i < savedSlots.Count)
+                inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
+        }
+
+        // ui에게 재연결
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetInventorySystem(this.inventorySystem);
+        }
+
+        UpdateWeightUI();
+        Debug.Log("인벤토리 로드 및 UI 재연결 완료");
+    }
 
     public void RefreshTotalWeight()
     {

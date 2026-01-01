@@ -4,8 +4,8 @@ using System;
 public class PlayerCondition : MonoBehaviour
 {
     //이벤트
-    public event Action<float> OnHpChanged;      // HP 변경
-    public event Action<float> OnStaminaChanged; // 스테미나 변경
+    public event Action<float, float> OnHpChanged;      // HP 변경
+    public event Action<float, float> OnStaminaChanged; // 스테미나 변경
     public event Action OnTakeDamage;            // 피격
     public event Action OnDie;                   // 사망
 
@@ -30,13 +30,26 @@ public class PlayerCondition : MonoBehaviour
 
     void Start()
     {
-        currentHp = maxHp;
-        currentStamina = maxStamina;
-        
         inventory = GetComponent<PlayerInventory>();
 
-        OnHpChanged?.Invoke(1f);
-        OnStaminaChanged?.Invoke(1f);
+        if (GameManager.Instance != null)
+        {
+            LoadStatusFromManager();
+        }
+    }
+
+    void LoadStatusFromManager()
+    {
+        GameData data = GameManager.Instance.LoadPlayerState();
+
+        // 저장된 데이터 불러오기
+        currentHp = data.currentHp;
+        currentStamina = data.currentStamina;
+
+        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnStaminaChanged?.Invoke(1, 1); // 꽉 채워서 (버그방지)
+
+        Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
     }
 
     void Update()
@@ -50,7 +63,7 @@ public class PlayerCondition : MonoBehaviour
             {
                 currentStamina += staminaRecovery * Time.deltaTime;
                 currentStamina = Mathf.Min(currentStamina, maxStamina);
-                OnStaminaChanged?.Invoke(currentStamina / maxStamina);
+                OnStaminaChanged?.Invoke(currentStamina, maxStamina);
             }
         }
     }
@@ -80,7 +93,7 @@ public class PlayerCondition : MonoBehaviour
         currentHp -= amount;
 
         // UI 갱신
-        OnHpChanged?.Invoke(currentHp / maxHp);
+        OnHpChanged?.Invoke(currentHp, maxHp);
 
         if (currentHp <= 0)
         {
@@ -99,7 +112,7 @@ public class PlayerCondition : MonoBehaviour
         {
             currentStamina -= amount;
             lastStaminaUseTime = Time.time;
-            OnStaminaChanged?.Invoke(currentStamina / maxStamina);
+            OnStaminaChanged?.Invoke(currentStamina, maxStamina);
             return true;
         }
         return false;

@@ -71,6 +71,21 @@ public class InventorySystem
 
     }
 
+    public void RestoreData(int newSize)
+    {
+        maxSlots = newSize;
+        slots.Clear(); // 기존 슬롯 다 지우고
+
+        // 새 크기만큼 빈 슬롯 채우기
+        for (int i = 0; i < maxSlots; i++)
+        {
+            slots.Add(new InventorySlot());
+        }
+
+        // 주의: 여기서 OnInventoryUpdated를 호출하지 않아도 됨 
+        // (데이터 채워넣은 뒤에 한 번만 호출하면 되니까)
+    }
+
     // ADD: 이미 있으면 갯수 더하기, 없으면 슬롯 리스트에 새로 추가
     // auto라서 빈곳부터 채움 (지정 인덱스로 넣지 않음)
     public bool AddItemToSlots(ItemData item, int count)

@@ -14,7 +14,7 @@ public class ActionSystem : MonoBehaviour
 
     [Header("Settings")]
     public Transform firePoint;
-    public float actionRange = 3.5f;
+    public float actionRange = 2f;
     public LayerMask actionLayer;
 
     public float attackDamage = 10f;

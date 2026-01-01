@@ -43,6 +43,8 @@ public class GridMapSpawner : MonoBehaviour
 
     private IEnumerator GenerateMapRoutine()
     {
+        yield return null;
+
         // 로딩 시작 
         loadingPanel.SetActive(true);
         statusText.text = "맵 로딩중...";

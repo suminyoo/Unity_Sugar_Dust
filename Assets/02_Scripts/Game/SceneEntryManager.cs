@@ -1,0 +1,67 @@
+using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
+
+public class SceneEntryManager : MonoBehaviour
+{
+    private void Start()
+    {
+        if (SceneController.Instance == null) return;
+
+        int targetID = SceneController.Instance.targetSpawnPointID;
+
+        // 타겟 스폰 포인트 찾기
+        SpawnPoint[] points = FindObjectsOfType<SpawnPoint>();
+        SpawnPoint targetPoint = null;
+
+        foreach (var p in points)
+        {
+            if (p.spawnID == targetID)
+            {
+                targetPoint = p;
+                break;
+            }
+        }
+
+        if (targetPoint != null)
+        {
+            StartCoroutine(MovePlayerSafely(targetPoint));
+        }
+        else
+        {
+            Debug.LogWarning("목표 스폰 포인트를 찾지 못함");
+        }
+    }
+
+    private IEnumerator MovePlayerSafely(SpawnPoint targetPoint)
+    {
+        yield return null;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            CharacterController cc = player.GetComponent<CharacterController>();
+            NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+
+            if (cc != null) cc.enabled = false;
+            if (agent != null) agent.enabled = false;
+
+            // 이동 및 회전
+            player.transform.position = targetPoint.transform.position;
+            player.transform.rotation = targetPoint.transform.rotation;
+
+            yield return null;
+
+            // 컴포넌트 다시 켜기
+            if (cc != null) cc.enabled = true;
+            if (agent != null)
+            {
+                agent.Warp(targetPoint.transform.position); // NavMesh라 Warp
+                agent.enabled = true;
+            }
+
+            Debug.Log($"플레이어를 스폰 포인트 {targetPoint.spawnID}번으로 이동 완료");
+        }
+    }
+}

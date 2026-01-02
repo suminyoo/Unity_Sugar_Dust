@@ -15,24 +15,24 @@ public class StorageUIManager : MonoBehaviour
     // UI 전체를 감싸는 부모 오브젝트 (배경 등)
     public GameObject rootCanvas;
 
-    // ★ 현재 활성화된 데이터와 UI를 기억하는 변수 ★
+    // 현재 활성화된 데이터와 UI 변수
     private InventoryHolder _playerHolder;
-    private InventoryHolder _currentOtherHolder; // 현재 거래 중인 상대방 (진열대, 상자 등)
-    private InventoryUI _currentOtherUI;         // 현재 켜져 있는 상대방 UI
+    private InventoryHolder _currentOtherHolder; // 현재 거래 중인 Storage
+    private InventoryUI _currentOtherUI;         // 현재 켜져 있는 Storage UI
 
     private void Awake()
     {
         Instance = this;
         rootCanvas.SetActive(false);
 
-        // 시작할 때 모든 상대방 UI를 꺼둡니다.
+        // 시작할 때 모든 상대방 UI 비활성화
         if (commonStorageUI) commonStorageUI.gameObject.SetActive(false);
         if (myShopUI) myShopUI.gameObject.SetActive(false);
         if (weaponShopUI) weaponShopUI.gameObject.SetActive(false);
     }
 
-    // 1. 외부(진열대, 상자)에서 호출하는 열기 함수
-    // uiType 같은 Enum을 써서 어떤 모양의 UI를 열지 결정할 수도 있습니다.
+    // 외부(Storage)에서 호출해서 UI 열기
+    // TODO: uiType -  Enum을 써서 상자별 다른 ui를 열도록 확장 가능
     public void OpenStorage(InventoryHolder player, InventoryHolder other, string shopType = "Common")
     {
         _playerHolder = player;
@@ -48,7 +48,7 @@ public class StorageUIManager : MonoBehaviour
         // 기존 열려있던 UI 끄기
         if (_currentOtherUI != null) _currentOtherUI.gameObject.SetActive(false);
 
-        // 타입에 따라 적절한 UI 패널 선택
+        // 타입에 따라 UI 패널 선택
         switch (shopType)
         {
             case "MyShop":
@@ -84,26 +84,26 @@ public class StorageUIManager : MonoBehaviour
         _currentOtherUI = null;
     }
 
-    // 2. 아이템 이동 요청 처리 (슬롯에서 호출)
+    // 아이템 이동 요청 처리 (슬롯에서 호출)
     public void HandleItemTransfer(int slotIndex, InventoryUI clickedUI)
     {
-        // 샵이 안 열려있으면 무시
+        // 스토리지?> 샵이 안 열려있으면 무시
         if (!rootCanvas.activeSelf) return;
 
         InventoryHolder fromHolder = null;
         InventoryHolder toHolder = null;
 
-        // A. 플레이어 UI를 클릭했나요?
+        // 플레이어 UI를 클릭했는지
         if (clickedUI == playerInventoryUI)
         {
-            fromHolder = _playerHolder;       // 나: 플레이어
-            toHolder = _currentOtherHolder;   // 너: 현재 열린 상대방 (진열대든, 무기상이든)
+            fromHolder = _playerHolder;       // 플레이어
+            toHolder = _currentOtherHolder;   // 현재 열린 스토리지
         }
-        // B. 현재 열린 상대방 UI를 클릭했나요?
+        // 현재열린상대방 UI를 클릭했느,ㄴ지
         else if (clickedUI == _currentOtherUI)
         {
-            fromHolder = _currentOtherHolder; // 나: 상대방
-            toHolder = _playerHolder;         // 너: 플레이어
+            fromHolder = _currentOtherHolder; // 현재 열린 스토리지
+            toHolder = _playerHolder;         // 플레이어
         }
 
         // 전송 실행

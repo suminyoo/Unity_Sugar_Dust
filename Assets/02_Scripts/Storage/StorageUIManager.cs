@@ -20,6 +20,8 @@ public class StorageUIManager : MonoBehaviour
     private InventoryHolder _currentOtherHolder; // 현재 거래 중인 Storage
     private InventoryUI _currentOtherUI;         // 현재 켜져 있는 Storage UI
 
+    public float closeDistance = 3.0f;
+
     private void Awake()
     {
         Instance = this;
@@ -29,6 +31,22 @@ public class StorageUIManager : MonoBehaviour
         if (commonStorageUI) commonStorageUI.gameObject.SetActive(false);
         if (myShopUI) myShopUI.gameObject.SetActive(false);
         if (weaponShopUI) weaponShopUI.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        // UI가 켜져 있고, 상대 스토리지가 존재할 때만 거리 체크
+        if (rootCanvas.activeSelf && _currentOtherHolder != null && _playerHolder != null)
+        {
+            // 거리 계산
+            float dist = Vector3.Distance(_playerHolder.transform.position, _currentOtherHolder.transform.position);
+
+            // 멀어지면 닫기
+            if (dist > closeDistance)
+            {
+                CloseStorage();
+            }
+        }
     }
 
     // 외부(Storage)에서 호출해서 UI 열기

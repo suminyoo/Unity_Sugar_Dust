@@ -105,6 +105,7 @@ public class InteractionSystem : MonoBehaviour
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
+            //Debug.Log("interact: " + other.name);
             interactablesInRange.Add(interactable);
         }
     }
@@ -115,6 +116,8 @@ public class InteractionSystem : MonoBehaviour
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
+            //Debug.Log("interact out: " + other.name);
+
             interactablesInRange.Remove(interactable);
         }
     }

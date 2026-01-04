@@ -11,10 +11,10 @@ public class PlayerCondition : MonoBehaviour
 
     [Header("References")]
     public PlayerInventory inventory;
+    public PlayerData playerData;
 
-    [Header("Stats")]
-    public float maxHp = 100f;
-    public float maxStamina = 100f;
+    private float maxHp;
+    private float maxStamina;
 
     public float currentHp { get; private set; }
     public float currentStamina { get; private set; }
@@ -36,11 +36,14 @@ public class PlayerCondition : MonoBehaviour
         {
             LoadStatusFromManager();
         }
+
+        this.maxHp = playerData.maxHp;
+        this.maxStamina = playerData.maxStamina;
     }
 
     void LoadStatusFromManager()
     {
-        GameData data = GameManager.Instance.LoadPlayerState();
+        GameData data = GameManager.Instance.LoadSceneSaveData();
 
         // 저장된 데이터 불러오기
         currentHp = data.currentHp;

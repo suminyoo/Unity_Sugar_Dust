@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPanel: {fileID: 6598396535932136334}
   interactionText: {fileID: 2065859867095909455}
-  interactionRange: 3
+  interactionRange: 15
 --- !u!54 &8593897148782400700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3128,14 +3128,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88e955f80c86e64ca917775d3c33614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   savedData:
     currentHp: 0
     currentStamina: 0
-    inventoryLevel: 0
+    inventorySize: 0
+    displayStandSize: 0
     inventorySlots: []
-  defaultMaxHp: 100
-  defaultMaxStamina: 50
-  defaultInventorySize: 2
+    displayStandSlots: []
 --- !u!1 &3253108403595612182
 GameObject:
   m_ObjectHideFlags: 0
@@ -3622,7 +3622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fe1213f6a0cd54094156b98822b7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
+  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   playerCondition: {fileID: 0}
   cameraTransform: {fileID: 0}
   characterModel: {fileID: 2823395197709944036}
@@ -3662,7 +3662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f78fb2cf4583874891f3b9c7097ee19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySize: 9
   dropPosition: {fileID: 5393933517987567661}
   inventorySystem:
     slots: []
@@ -3689,8 +3688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 6339855684519581690}
-  maxHp: 100
-  maxStamina: 50
+  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   staminaRecovery: 15
   recoveryDelay: 1
   runCostPerSec: 10
@@ -5645,6 +5643,7 @@ MonoBehaviour:
   myShopUI: {fileID: 4433821743675569097}
   weaponShopUI: {fileID: 0}
   rootCanvas: {fileID: 6081492799921224555}
+  closeDistance: 3
 --- !u!1 &6143510223119952387
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
 
-    [Header("UI Reference")]
     public CanvasGroup fadeCanvasGroup; //아직 미사용 페이드용 검은화면
     public float fadeDuration = 1.0f;
 
@@ -25,7 +23,6 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void LoadScene(string sceneName, int spawnPointID)
     {
         StartCoroutine(TransitionRoutine(sceneName, spawnPointID));
@@ -36,12 +33,13 @@ public class SceneController : MonoBehaviour
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
 
-        // 2. 플레이어 조작 비활성화 (선택 사항)
+        // 플레이어 조작 비활성화 (선택 사항)
         // 만약 플레이어 조작을 막고 싶다면 여기서 처리
 
         //Fade Out
         yield return StartCoroutine(Fade(1f));
 
+        // ====================================================
         // 데이터 저장
         // 씬에 있는 플레이어를 찾아서 데이터 저장
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -49,6 +47,7 @@ public class SceneController : MonoBehaviour
         {
             var condition = player.GetComponent<PlayerCondition>();
             var inventory = player.GetComponent<PlayerInventory>();
+            Debug.Log($"condition{condition.currentHp} / {condition.currentStamina}");
 
             if (GameManager.Instance != null && condition != null && inventory != null)
             {
@@ -60,6 +59,15 @@ public class SceneController : MonoBehaviour
                 );
             }
         }
+        // ====================================================
+        // 씬에 있는 DisplayStand 스크립트
+        DisplayStand displayStand = FindObjectOfType<DisplayStand>();
+
+        if (displayStand != null && GameManager.Instance != null)
+        {
+            // 진열대 인벤토리 슬롯 리스트를 매니저에게 전달
+            GameManager.Instance.SaveDisplayStand(displayStand.InventorySystem.slots);
+        }
 
         // 씬 로드
         yield return SceneManager.LoadSceneAsync(sceneName);
@@ -68,6 +76,7 @@ public class SceneController : MonoBehaviour
 
         // Fade In
         yield return StartCoroutine(Fade(0f));
+
     }
 
     private IEnumerator Fade(float finalAlpha)

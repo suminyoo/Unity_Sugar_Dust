@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
 
-    public PlayerData data;
+    public PlayerData playerData;
     public PlayerCondition playerCondition;
 
     public Transform cameraTransform;
@@ -145,11 +145,11 @@ public class PlayerController : MonoBehaviour
 
         if (isInteracting)
         {
-            LookAtMouse(data.actionRotationSpeed);
+            LookAtMouse(playerData.actionRotationSpeed);
         }
         else if (moveInput != Vector3.zero)
         {
-            LookAtMoveDirection(data.rotationSpeed);
+            LookAtMoveDirection(playerData.rotationSpeed);
         }
     }
 
@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
         if (playerCondition.UseStamina(cost))
         {
             isRunning = true;
-            float speed = data.runSpeed;
+            float speed = playerData.runSpeed;
             rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
         }
         else
@@ -235,13 +235,13 @@ public class PlayerController : MonoBehaviour
     void HandleWalk()
     {
         isRunning = false;
-        float speed = playerCondition.GetWalkSpeed(data);
+        float speed = playerCondition.GetWalkSpeed(playerData);
         rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
     }    
 
     void HandleJump()
     {
-        rb.AddForce(Vector3.up * data.jumpForce, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * playerData.jumpForce, ForceMode.Impulse);
         isGrounded = false;
         currentState = PlayerState.Jump;
         animator.SetTrigger("Jump");
@@ -283,7 +283,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", false);
         }
 
-        interactionBox.SetActive(false);
     }
 
     public void WaitDone()
@@ -293,7 +292,6 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Idle;
             rb.isKinematic = false;
         }
-        interactionBox.SetActive(true);
 
     }
 

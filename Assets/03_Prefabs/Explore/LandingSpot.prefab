@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6001036687108147509}
+  - component: {fileID: 2520257739466562116}
   m_Layer: 0
   m_Name: LandingSpot
   m_TagString: Untagged
@@ -34,6 +35,19 @@ Transform:
   - {fileID: 4921314317802807024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2520257739466562116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216586451355079381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fed9c5c4d33f4e409df5613f1a5e69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  townSceneName: Town
 --- !u!1 &3510168284469792222
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +165,6 @@ GameObject:
   - component: {fileID: 2984859058183217333}
   - component: {fileID: 1600468150969472266}
   - component: {fileID: 8588509967418493332}
-  - component: {fileID: 2016428513864149436}
   m_Layer: 0
   m_Name: Space_Car
   m_TagString: Untagged
@@ -224,28 +237,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2016428513864149436
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628500321232125639}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6432750020379824417, guid: a4da91bae952a4c28a4407a29d6f4e7f, type: 3}
 --- !u!1 &8268552704958725208
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +249,9 @@ GameObject:
   - component: {fileID: 3037320373512886761}
   - component: {fileID: 6550234767117762901}
   - component: {fileID: 8509795865266210043}
-  m_Layer: 0
-  m_Name: Roundabout
+  - component: {fileID: 4803069701480090804}
+  m_Layer: 9
+  m_Name: SpaceShipLandingSpot
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +270,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 316564816062379107}
   - {fileID: 4737119561135082960}
   - {fileID: 6803211765481972217}
   - {fileID: 2071220654336491140}
@@ -359,80 +350,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4992602182176871446, guid: 0664ad8d467b44b8ea7fffb3260c11b3, type: 3}
---- !u!1001 &429138583290344107
-PrefabInstance:
+--- !u!114 &4803069701480090804
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 953470199052544555}
-    m_Modifications:
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-      propertyPath: m_Name
-      value: Streetlight_1 (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
---- !u!4 &316564816062379107 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
-  m_PrefabInstance: {fileID: 429138583290344107}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268552704958725208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fed9c5c4d33f4e409df5613f1a5e69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  townSceneName: Town
 --- !u!1001 &2102694455185913932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -497,11 +427,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 492313920716032862}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+--- !u!1 &1726467015706534974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 2102694455185913932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &492313920716032862
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726467015706534974}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5372705, z: -0.0000048801303}
 --- !u!4 &2071220654336491140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
@@ -571,16 +533,48 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8085306617928492223}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
 --- !u!4 &4737119561135082960 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
   m_PrefabInstance: {fileID: 4624511156074400536}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5401629635877443434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 4624511156074400536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &8085306617928492223
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5401629635877443434}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5372705, z: -0.0000048801303}
 --- !u!1001 &5241421642507700006
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -645,11 +639,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (7)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3929528269597103473}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+--- !u!1 &4784692915783899988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 5241421642507700006}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &3929528269597103473
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784692915783899988}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5372705, z: -0.0000048801303}
 --- !u!4 &5272998796896289262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
@@ -719,11 +745,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3954693339657892976}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+--- !u!1 &4839407438460690957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 5328574751524978303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &3954693339657892976
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4839407438460690957}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5372705, z: -0.0000048801303}
 --- !u!4 &5215968539531638967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
@@ -793,11 +851,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1726538499201778821}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+--- !u!1 &4912487266005400092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 5690096686609098350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1726538499201778821
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912487266005400092}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5372705, z: -0.0000048801303}
 --- !u!4 &5721675479024525478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
@@ -867,11 +957,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight_1 (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 439813705154879777, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 42662169200554382}
   m_SourcePrefab: {fileID: 100100000, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+--- !u!1 &6134480635625995075 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 782467372246621298, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}
+  m_PrefabInstance: {fileID: 6915818527738308401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &42662169200554382
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134480635625995075}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12807128
+  m_Height: 1.1235205
+  m_Direction: 1
+  m_Center: {x: 0.0000009536743, y: 0.5372705, z: -0.0000048801303}
 --- !u!4 &6803211765481972217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112644147833702088, guid: 690811b2f96364ce99e5bad945baa14c, type: 3}

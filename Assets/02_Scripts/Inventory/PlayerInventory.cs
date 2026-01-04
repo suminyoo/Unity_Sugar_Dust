@@ -38,10 +38,10 @@ public class PlayerInventory : InventoryHolder
     {
         if (GameManager.Instance == null) return;
 
-        GameData data = GameManager.Instance.LoadPlayerState();
+        GameData data = GameManager.Instance.LoadSceneSaveData();
 
         // 새로 만들기
-        int size = playerData.GetInventorySize(data.inventoryLevel);
+        int size = playerData.GetInventorySize(data.inventorySize);
         inventorySystem = new InventorySystem(size);
 
         // 데이터 채우기

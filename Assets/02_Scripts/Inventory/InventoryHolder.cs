@@ -3,7 +3,7 @@ using UnityEngine;
 public class InventoryHolder : MonoBehaviour
 {
     [Header("Settings")]
-    public int inventorySize = 9;
+    private int inventorySize;
     public Transform dropPosition; // 버릴 위치
 
     //외부에서는 못건들고 구현하는 자식만 건들 수 있게

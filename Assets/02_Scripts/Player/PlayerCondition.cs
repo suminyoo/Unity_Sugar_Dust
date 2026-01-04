@@ -8,6 +8,7 @@ public class PlayerCondition : MonoBehaviour
     public event Action<float, float> OnStaminaChanged; // 스테미나 변경
     public event Action OnTakeDamage;            // 피격
     public event Action OnDie;                   // 사망
+    public event Action OnRevive;                // 부활
 
     [Header("References")]
     public PlayerInventory inventory;
@@ -28,6 +29,17 @@ public class PlayerCondition : MonoBehaviour
     public float jumpCost = 20f;
     private float lastStaminaUseTime;
 
+    private void Awake()
+    {
+        if (playerData != null)
+        {
+            // 데이터 로드 전 잠깐이라도 풀피로 설정해둠
+            // 이렇게 해야 IsDead가 false가 되어 PlayerController가 Start에서 죽는 처리를 안함
+            currentHp = playerData.maxHp;
+            currentStamina = playerData.maxStamina;
+        }
+    }
+
     void Start()
     {
         inventory = GetComponent<PlayerInventory>();
@@ -36,9 +48,6 @@ public class PlayerCondition : MonoBehaviour
         {
             LoadStatusFromManager();
         }
-
-        this.maxHp = playerData.maxHp;
-        this.maxStamina = playerData.maxStamina;
     }
 
     void LoadStatusFromManager()
@@ -49,8 +58,11 @@ public class PlayerCondition : MonoBehaviour
         currentHp = data.currentHp;
         currentStamina = data.currentStamina;
 
+        this.maxHp = playerData.maxHp;
+        this.maxStamina = playerData.maxStamina;
+
         OnHpChanged?.Invoke(currentHp, maxHp);
-        OnStaminaChanged?.Invoke(1, 1); // 꽉 채워서 (버그방지)
+        OnStaminaChanged?.Invoke(maxStamina, maxStamina); // 꽉 채워서 (버그방지)
 
         Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
     }
@@ -108,7 +120,21 @@ public class PlayerCondition : MonoBehaviour
             OnTakeDamage?.Invoke();
         }
     }
+    public void Revive(float recoverAmount)
+    {
+        // 체력 회복
+        currentHp = recoverAmount;
+        if (currentHp > maxHp) currentHp = maxHp;
 
+        currentStamina = maxStamina;
+
+        OnRevive?.Invoke();
+
+        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+
+        Debug.Log($"플레이어 부활 완료 HP: {currentHp}");
+    }
     public bool UseStamina(float amount)
     {
         if (currentStamina >= amount)

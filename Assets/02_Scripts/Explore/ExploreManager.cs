@@ -24,7 +24,6 @@ public class ExploreManager : MonoBehaviour
 
     [Header("Scene")]
     public string townSceneName = "Town";
-    public int townSpawnPointID = 1;
 
     void Start()
     {
@@ -156,7 +155,7 @@ public class ExploreManager : MonoBehaviour
     {
         Debug.Log($"SceneController : {SceneController.Instance}");
         Debug.Log($"GameManager : {GameManager.Instance}");
-        SceneController.Instance.LoadScene(townSceneName, townSpawnPointID);
+        SceneController.Instance.LoadScene(townSceneName, SPAWN_ID.Town_Center);
     }
 
     public float GetCurrentTime()

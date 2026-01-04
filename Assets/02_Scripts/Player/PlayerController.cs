@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
         playerCondition.OnDie += HandleDie;
         playerCondition.OnTakeDamage += HandleHit;
+        playerCondition.OnRevive += HandleRevive;
 
         Initialize();
     }
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         playerCondition.OnDie -= HandleDie;
         playerCondition.OnTakeDamage -= HandleHit;
+        playerCondition.OnRevive -= HandleRevive;
     }
 
     void Update()
@@ -267,6 +269,19 @@ public class PlayerController : MonoBehaviour
 
         OnPlayerDied?.Invoke();
     }
+    private void HandleRevive()
+    {
+        if (currentState == PlayerState.Die)
+        {
+            Initialize();
+
+            animator.SetBool("IsDead", false);
+            animator.Play("Idle");
+
+            Debug.Log("PlayerController: 부활 신호 수신 -> 상태 리셋됨");
+        }
+    }
+
 
     public void Wait()
     {

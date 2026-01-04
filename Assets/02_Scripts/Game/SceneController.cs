@@ -10,7 +10,7 @@ public class SceneController : MonoBehaviour
     public float fadeDuration = 1.0f;
 
     // 다음 씬으로 넘겨줄 목적지 ID
-    public int targetSpawnPointID { get; private set; }
+    public SPAWN_ID targetSpawnPointID { get; private set; }
 
     private void Awake()
     {
@@ -23,12 +23,12 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void LoadScene(string sceneName, int spawnPointID)
+    public void LoadScene(string sceneName, SPAWN_ID spawnPointID)
     {
         StartCoroutine(TransitionRoutine(sceneName, spawnPointID));
     }
 
-    private IEnumerator TransitionRoutine(string sceneName, int spawnPointID)
+    private IEnumerator TransitionRoutine(string sceneName, SPAWN_ID spawnPointID)
     {
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
@@ -47,17 +47,26 @@ public class SceneController : MonoBehaviour
         {
             var condition = player.GetComponent<PlayerCondition>();
             var inventory = player.GetComponent<PlayerInventory>();
+
             Debug.Log($"condition{condition.currentHp} / {condition.currentStamina}");
 
-            if (GameManager.Instance != null && condition != null && inventory != null)
+            if (condition.IsDead)
             {
-                // 인벤토리 슬롯과 스탯저장
-                GameManager.Instance.SavePlayerState(
-                    condition.currentHp,
-                    condition.currentStamina,
-                    inventory.InventorySystem.slots
-                );
+                Debug.Log("플레이어 사망. 병원으로 이송합니다.");
+
+                // 목적지 병원
+                targetSpawnPointID = SPAWN_ID.Town_Hospital;
+
+                // TODO: 인벤토리 드랍 로직?
             }
+
+            // 살아있음 평소 상태 저장
+            GameManager.Instance.SavePlayerState(
+                condition.currentHp,
+                condition.currentStamina,
+                inventory.InventorySystem.slots
+            );
+            
         }
         // ====================================================
         // 씬에 있는 DisplayStand 스크립트

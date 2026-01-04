@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region 씬 데이터 세이브
+
     // 씬 넘어가기 전에 플레이어의 상태를 매니저에 기록
     public void SavePlayerState(float hp, float stamina, List<InventorySlot> slots)
     {

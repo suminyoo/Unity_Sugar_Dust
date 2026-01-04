@@ -44,10 +44,9 @@ public class PlayerCondition : MonoBehaviour
     {
         inventory = GetComponent<PlayerInventory>();
 
-        if (GameManager.Instance != null)
-        {
-            LoadStatusFromManager();
-        }
+
+        LoadStatusFromManager();
+        
     }
 
     void LoadStatusFromManager()

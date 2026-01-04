@@ -2504,7 +2504,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7951142059159501913}
   m_HandleRect: {fileID: 0}
@@ -3132,10 +3132,13 @@ MonoBehaviour:
   savedData:
     currentHp: 0
     currentStamina: 0
+    money: 0
+    ownedKeyItems: []
     inventorySize: 0
-    displayStandSize: 0
     inventorySlots: []
+    displayStandSize: 0
     displayStandSlots: []
+    displayStandPrices: 
 --- !u!1 &3253108403595612182
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,6 +3531,7 @@ GameObject:
   - component: {fileID: 347982599899303631}
   - component: {fileID: 6339855684519581690}
   - component: {fileID: 1528900771614785273}
+  - component: {fileID: 6849355001262120325}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3693,6 +3697,19 @@ MonoBehaviour:
   recoveryDelay: 1
   runCostPerSec: 10
   jumpCost: 20
+--- !u!114 &6849355001262120325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822141951251999060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268470783ae8778489d97238b69bc9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMoney: 0
 --- !u!1 &3926807828522715641
 GameObject:
   m_ObjectHideFlags: 0

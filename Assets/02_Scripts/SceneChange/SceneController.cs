@@ -75,7 +75,7 @@ public class SceneController : MonoBehaviour
         if (displayStand != null && GameManager.Instance != null)
         {
             // 진열대 인벤토리 슬롯 리스트를 매니저에게 전달
-            GameManager.Instance.SaveDisplayStand(displayStand.InventorySystem.slots);
+            GameManager.Instance.SaveDisplayStand(displayStand.InventorySystem.slots, displayStand.slotPrices);
         }
 
         // 씬 로드

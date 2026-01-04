@@ -16,4 +16,8 @@ public class ItemData : ScriptableObject
 
     [Header("World Object")]
     public GameObject dropPrefab;
+
+
+    [Header("Price")]
+    public int sellPrice;
 }

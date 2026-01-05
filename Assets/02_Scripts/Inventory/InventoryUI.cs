@@ -22,31 +22,11 @@ public class InventoryUI : MonoBehaviour
             InitializeUI();
         }
     }
-    void OnDestroy() // 또는 OnDisable()
+    void OnDestroy()
     {
         if (connectedInventory != null && connectedInventory.InventorySystem != null)
         {
             connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
-        }
-    }
-
-    // 외부에서 인벤토리 설정해주는 함수
-    public void SetInventorySystem(InventorySystem newSystem)
-    {
-        // 기존 시스템이 연결 끊기
-        if (currentInventorySystem != null)
-        {
-            currentInventorySystem.OnInventoryUpdated -= RefreshUI;
-        }
-
-        // 새로운 시스템으로
-        currentInventorySystem = newSystem;
-
-        //새 시스템 구독 및 화면 초기화
-        if (currentInventorySystem != null)
-        {
-            currentInventorySystem.OnInventoryUpdated += RefreshUI;
-            InitializeUI(); // 슬롯 개수 다시 계산해서 생성
         }
     }
 
@@ -74,7 +54,29 @@ public class InventoryUI : MonoBehaviour
         RefreshUI();
     }
 
-    // 데이터(System)랑 화면(UI) 동기화
+    // 외부에서 인벤토리 설정해주는 함수
+    public void SetInventorySystem(InventorySystem newSystem)
+    {
+        //씬 전환시 인벤토리 연결 관리
+
+        // 기존 시스템이 연결 끊기
+        if (currentInventorySystem != null)
+        {
+            currentInventorySystem.OnInventoryUpdated -= RefreshUI;
+        }
+
+        // 새로운 시스템으로
+        currentInventorySystem = newSystem;
+
+        //새 시스템 구독 및 화면 초기화
+        if (currentInventorySystem != null)
+        {
+            currentInventorySystem.OnInventoryUpdated += RefreshUI;
+            InitializeUI(); // 슬롯 개수 다시 계산해서 생성
+        }
+    }
+
+    // 데이터(Inventory System)랑 화면(Inventory UI) 동기화
     public void RefreshUI()
     {
         var system = connectedInventory.InventorySystem;

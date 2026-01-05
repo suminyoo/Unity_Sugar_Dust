@@ -66,10 +66,8 @@ public class SceneEntryManager : MonoBehaviour
                 var condition = player.GetComponent<PlayerCondition>();
                 if (condition != null)
                 {
-                    // "일어나!" 신호 보내기 (체력은 이미 10으로 로드되어 있음)
-                    // 이 함수가 OnRevive 이벤트를 발생시켜 컨트롤러를 리셋함
                     float reviveAmount = 10f;
-                    condition.Revive(reviveAmount); // 10% 비율로 부활 (혹은 그냥 호출용)
+                    condition.Revive(reviveAmount); //체력 조금 회복 후 부활
                 }
             }
 

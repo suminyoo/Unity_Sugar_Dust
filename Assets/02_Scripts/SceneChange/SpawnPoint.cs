@@ -12,10 +12,4 @@ public class SpawnPoint : MonoBehaviour
 {
     public SPAWN_ID spawnID; // 고유 번호
 
-    // 에디터에서 눈에 잘 띄게 그림 그리기
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 0.5f);
-    }
 }

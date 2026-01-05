@@ -27,8 +27,10 @@ public class ActionSystem : MonoBehaviour
     private float mineTimer = 0f;
 
     private PlayerController playerController;
-
     private ActionType currentActionType; //현재행동
+
+    public GameObject sword;
+    public GameObject pickaxe;
 
     void Start()
     {
@@ -51,6 +53,22 @@ public class ActionSystem : MonoBehaviour
             Debug.DrawLine(ray.origin, hit.point, Color.green);
         else
             Debug.DrawRay(ray.origin, ray.direction * actionRange, Color.red);
+    }
+
+    void HandleToolVisibility(ActionType actionType)
+    {
+        switch (actionType)
+        {
+            case ActionType.Attack:
+                sword.SetActive(true);
+                pickaxe.SetActive(false);
+                break;
+
+            case ActionType.Mine:
+                sword.SetActive(false);
+                pickaxe.SetActive(true);
+                break;
+        }
     }
 
     void HandleActionInput()
@@ -80,6 +98,7 @@ public class ActionSystem : MonoBehaviour
     void StartAction(ActionType actionType)
     {
         currentActionType = actionType;
+        HandleToolVisibility(actionType); //도구 보이기/숨기기
         playerController.HandleWield(actionType); //플레이어 애니메이션
     }
 

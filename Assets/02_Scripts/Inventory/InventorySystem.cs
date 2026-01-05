@@ -68,7 +68,6 @@ public class InventorySystem
         {
             slots.Add(new InventorySlot());
         }
-
     }
 
     public void RestoreData(int newSize)
@@ -82,7 +81,7 @@ public class InventorySystem
             slots.Add(new InventorySlot());
         }
 
-        // 주의: 여기서 OnInventoryUpdated를 호출하지 않아도 됨 
+        // 여기서 OnInventoryUpdated를 호출하지 않아도 됨 
         // (데이터 채워넣은 뒤에 한 번만 호출하면 되니까)
     }
 

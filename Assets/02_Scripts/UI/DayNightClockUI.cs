@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 
+// 시계 ui 관리 스크립트 (현재는 ExploreManager의 시간에 따라 시계바늘 회전)
 public class DayNightClockUI : MonoBehaviour
 {
-    [Header("References")]
     public ExploreManager exploreManager;
     public RectTransform clockDial;
 

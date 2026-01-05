@@ -2,11 +2,10 @@ using UnityEngine;
 using TMPro;
 using System;
 
+// 확인 팝업 UI 제어 스크립트
 public class CommonConfirmPopup : MonoBehaviour
 {
     public static CommonConfirmPopup Instance;
-
-    [Header("UI Components")]
     public TextMeshProUGUI messageText;
 
     private Action onConfirm; // 네 눌렀을 때 실행할 함수 저장
@@ -14,7 +13,6 @@ public class CommonConfirmPopup : MonoBehaviour
 
     private void Awake()
     {
-        // 싱글톤
         if (Instance == null)
         {
             Instance = this;

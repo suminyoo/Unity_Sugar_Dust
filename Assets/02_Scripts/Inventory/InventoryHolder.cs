@@ -76,9 +76,6 @@ public class InventoryHolder : MonoBehaviour
         // 받는 인벤토리 시스템
         InventorySystem toSystem = toHolder.InventorySystem;
 
-        // 상대방 인벤토리에 들어갈 수 있는 잔여 공간 계산이 필요하지만, 
-        // 우선 성공하면 차감 방식
-
         // 상대방에게 성공적으로 다 들어간 겨경우
         if (toSystem.AddItemToSlots(itemToSend, amountToSend))
         {
@@ -87,7 +84,8 @@ public class InventoryHolder : MonoBehaviour
         }
         else
         {
-            // 실패 (꽉 참? 등ㄷ응)
+            // 실패 (꽉 참? 등)
+
             // TODO: 일부만 들어가는 로직은 AddItemToSlots가 남은 개수를 반환해ㅑ야함(현재 bool값만 리턴)
             Debug.Log("상대방 공간이 부족합니다!");
         }

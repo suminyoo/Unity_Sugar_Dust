@@ -1,16 +1,17 @@
 using UnityEngine;
 
+// 두 인벤토리 간의 아이템 이동 및 UI 관리를 담당하는 매니저 클래스   
 public class StorageUIManager : MonoBehaviour
 {
     public static StorageUIManager Instance;
 
-    [Header("Player UI")]
+    [Header("Player")]
     public InventoryUI playerInventoryUI; // 플레이어 인벤토리
 
-    [Header("Various Target UIs (상대방 UI들)")]
-    public InventoryUI commonStorageUI; // 일반 상자/진열대용 기본 UI
+    [Header("Target UIs 상대스토리지가 사용할 ui들")]
     public InventoryUI myShopUI;
-    public InventoryUI weaponShopUI; //이런식 추가
+    public InventoryUI commonStorageUI; // 일반 상자용 UI
+    public InventoryUI weaponShopUI; 
 
     // UI 전체를 감싸는 부모 오브젝트 (배경 등)
     public GameObject rootCanvas;

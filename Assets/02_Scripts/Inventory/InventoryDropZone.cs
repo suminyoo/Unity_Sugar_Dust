@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 
 public class InventoryDropZone : MonoBehaviour, IDropHandler
 {
-    [Header("Reference")]
     public InventoryUI inventoryUI; // MouseItemData에 접근을 위해
 
     public void OnDrop(PointerEventData eventData)

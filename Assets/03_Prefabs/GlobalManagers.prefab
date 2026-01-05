@@ -3654,6 +3654,8 @@ MonoBehaviour:
   miningPower: 20
   attackCooldown: 1
   mineCooldown: 1
+  sword: {fileID: 1054840840256456509}
+  pickaxe: {fileID: 7978847527627480560}
 --- !u!114 &6339855684519581690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5656,8 +5658,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInventoryUI: {fileID: 221583159101405152}
-  commonStorageUI: {fileID: 0}
   myShopUI: {fileID: 4433821743675569097}
+  commonStorageUI: {fileID: 0}
   weaponShopUI: {fileID: 0}
   rootCanvas: {fileID: 6081492799921224555}
   closeDistance: 3
@@ -8901,7 +8903,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_TargetDisplay: 0
 --- !u!114 &1768479878268046284
 MonoBehaviour:
@@ -9405,6 +9407,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3826721114627580652, guid: cf4232f8e95f9aa418299f9fd564f560, type: 3}
   m_PrefabInstance: {fileID: 340550584889435999}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7978847527627480560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7639071982480243375, guid: cf4232f8e95f9aa418299f9fd564f560, type: 3}
+  m_PrefabInstance: {fileID: 340550584889435999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6430239134726075502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9577,5 +9584,10 @@ PrefabInstance:
 --- !u!4 &425691918211472775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6551141071444541534, guid: cf90ad150f6ea944aa3a0db178ecc8b6, type: 3}
+  m_PrefabInstance: {fileID: 6846043811082362329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1054840840256456509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5882128500413749988, guid: cf90ad150f6ea944aa3a0db178ecc8b6, type: 3}
   m_PrefabInstance: {fileID: 6846043811082362329}
   m_PrefabAsset: {fileID: 0}

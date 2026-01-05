@@ -23,12 +23,13 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void LoadScene(string sceneName, SPAWN_ID spawnPointID)
     {
-        StartCoroutine(TransitionRoutine(sceneName, spawnPointID));
+        StartCoroutine(SceneTransitionCor(sceneName, spawnPointID));
     }
 
-    private IEnumerator TransitionRoutine(string sceneName, SPAWN_ID spawnPointID)
+    private IEnumerator SceneTransitionCor(string sceneName, SPAWN_ID spawnPointID)
     {
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;

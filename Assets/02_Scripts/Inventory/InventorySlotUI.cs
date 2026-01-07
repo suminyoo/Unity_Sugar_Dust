@@ -16,6 +16,36 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private InventorySlot _slot;
     private InventoryUI _managerUI;
 
+
+    [Header("Shop Visuals")]
+    public GameObject priceTagGroup;   // 가격 ui (평소엔 비활성화)
+    public TextMeshProUGUI priceText;  // 가격 텍스트
+
+    // Init할 때나 Refresh할 때 가격 표시 여부 결정
+    public void UpdateSlotVisual(InventorySlot slot, InventoryContext context, int price = 0)
+    {
+        SetSlot(slot); // 기존 아이콘/수량 설정
+
+        // 컨텍스트에 따른 시각적 변화 처리
+        if (context == InventoryContext.MyShop || context == InventoryContext.NPCShop)
+        {
+            if (!slot.IsEmpty)
+            {
+                priceTagGroup.SetActive(true);
+                priceText.text = $"{price} G";
+            }
+            else
+            {
+                priceTagGroup.SetActive(false); // 빈 슬롯은 가격표 숨김
+            }
+        }
+        else
+        {
+            // 플레이어나 상자면 가격표 숨김
+            priceTagGroup.SetActive(false);
+        }
+    }
+
     public void Init(InventoryUI ui, int index)
     {
         _managerUI = ui;
@@ -42,9 +72,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //  클릭 처리 (우클릭: 1개씩 / 좌클릭: 내려놓기)
     public void OnPointerClick(PointerEventData eventData)
     {
+
         // -- 우클릭: 1개씩 집기
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+            _managerUI.HandleSlotRightClick(_slotIndex);
+
             if (_slot.IsEmpty) return;
 
             // Ctrl 키 누른 상태여야 하나씩 집기
@@ -55,7 +88,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // 그냥 우클릭은 아이템 정보 열기
             else
             {
-                OnItemRightClicked.Invoke(_slot.itemData);
+                // 현재 매니저에게 위임해서 주석처리
+                //OnItemRightClicked.Invoke(_slot.itemData);
             }
         } 
         // -- 좌클릭: 드래그 없이 클릭만으로 내려놓기

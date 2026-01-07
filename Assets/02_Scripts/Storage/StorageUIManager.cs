@@ -72,15 +72,22 @@ public class StorageUIManager : MonoBehaviour
         {
             case "MyShop":
                 _currentOtherUI = myShopUI;
+                // DisplayStand로 캐스팅해서 넘겨줌 (가격 정보 때문에)
+                if (other is DisplayStand stand)
+                {
+                    _currentOtherUI.InitShopMode(stand);
+                }
                 break;
-            case "Weapon":
+
+            case "Weapon": // (NPC 상점 예시)
                 _currentOtherUI = weaponShopUI;
+                //_currentOtherUI.InitNPCShopMode(); // NPC 상점 모드 구현필요
                 break;
+
             case "Common":
-                break;
-                
             default:
                 _currentOtherUI = commonStorageUI;
+                //_currentOtherUI.InitChestMode(); // 일반 상자 모드 구현ㅍ 필요
                 break;
         }
 
@@ -98,7 +105,7 @@ public class StorageUIManager : MonoBehaviour
         rootCanvas.SetActive(false);
         if (_currentOtherUI != null) _currentOtherUI.gameObject.SetActive(false);
 
-        _playerHolder = null;
+        //_playerHolder = null;
         _currentOtherHolder = null;
         _currentOtherUI = null;
     }
@@ -128,6 +135,10 @@ public class StorageUIManager : MonoBehaviour
         // 전송 실행
         if (fromHolder != null && toHolder != null)
         {
+            // 여기서 NPC 상점이면 이동 막기 가능
+            // 그러면 클릭 구매만 되는것임 (구현 고려)
+            // 예: if (clickedUI.contextType == InventoryContext.NPCShop) return;
+
             fromHolder.TransferTo(slotIndex, toHolder);
         }
     }

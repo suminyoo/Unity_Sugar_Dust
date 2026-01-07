@@ -8,21 +8,51 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     public static event Action<ItemData> OnItemRightClicked;
 
-    [Header("UI Components")]
+    [Header("UI")]
     public Image itemIcon;
     public TextMeshProUGUI amountText;
 
-    private int _slotIndex;
     private InventorySlot _slot;
     private InventoryUI _managerUI;
-
+    private int _slotIndex;
 
     [Header("Shop Visuals")]
     public GameObject priceTagGroup;   // 가격 ui (평소엔 비활성화)
     public TextMeshProUGUI priceText;  // 가격 텍스트
 
-    // Init할 때나 Refresh할 때 가격 표시 여부 결정
-    public void UpdateSlotVisual(InventorySlot slot, InventoryContext context, int price = 0)
+    #region Initialization
+
+    // 인벤토리 UI 매니저와 슬롯 인덱스 초기화
+    public void Init(InventoryUI ui, int index)
+    {
+        _managerUI = ui;
+        _slotIndex = index;
+    }
+
+    #endregion
+
+    #region Visual Update
+
+    // 인벤토리 슬롯의 아이콘과 수량 설정  
+    public void SetSlot(InventorySlot slot)
+    {
+        _slot = slot;
+        if (!_slot.IsEmpty)
+        {
+            itemIcon.sprite = slot.itemData.icon;
+            itemIcon.color = Color.white;
+            amountText.text = slot.amount > 1 ? slot.amount.ToString() : "";
+        }
+        else
+        {
+            itemIcon.sprite = null;
+            itemIcon.color = Color.clear;
+            amountText.text = "";
+        }
+    }
+
+    // 인벤토리 슬롯에 가격 표시 여부 결정
+    public void DecideSlotVisual(InventorySlot slot, InventoryContext context, int price = 0)
     {
         SetSlot(slot); // 기존 아이콘/수량 설정
 
@@ -46,73 +76,57 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
-    public void Init(InventoryUI ui, int index)
-    {
-        _managerUI = ui;
-        _slotIndex = index;
-    }
+    #endregion
 
-    public void SetSlot(InventorySlot slot)
-    {
-        _slot = slot;
-        if (!_slot.IsEmpty)
-        {
-            itemIcon.sprite = slot.itemData.icon;
-            itemIcon.color = Color.white;
-            amountText.text = slot.amount > 1 ? slot.amount.ToString() : "";
-        }
-        else
-        {
-            itemIcon.sprite = null;
-            itemIcon.color = Color.clear;
-            amountText.text = "";
-        }
-    }
-
-    //  클릭 처리 (우클릭: 1개씩 / 좌클릭: 내려놓기)
+    #region Click Event
+    
+    //  클릭 처리
     public void OnPointerClick(PointerEventData eventData)
     {
-
-        // -- 우클릭: 1개씩 집기
+        // ==== 우클릭 : 아이템 정보 열기
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             _managerUI.HandleSlotRightClick(_slotIndex);
 
             if (_slot.IsEmpty) return;
 
-            // Ctrl 키 누른 상태여야 하나씩 집기
+            // 그냥 우클릭은 아이템 정보 
+            // 현재 매니저에게 위임해서 주석처리
+            //OnItemRightClicked.Invoke(_slot.itemData);
+
+            return; // 우클릭 처리 완료 후 종료
+        }
+
+        // 좌클릭인 경우에만 아래 로직 수행
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // ==== Ctrl 좌클릭으로 한개 집기
+            // 일반 좌클릭보다 특수 키 조합을 먼저 체크하여 중복 실행 방지
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 HandlePickOne();
+                return;
             }
-            // 그냥 우클릭은 아이템 정보 열기
-            else
+
+            // ==== Shift 좌클릭으로 아이템 이동
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                // 현재 매니저에게 위임해서 주석처리
-                //OnItemRightClicked.Invoke(_slot.itemData);
+                // 샵 매니저가 존재한다면 (상점/진열대 모드라면)
+                if (StorageUIManager.Instance != null && StorageUIManager.Instance.rootCanvas.activeSelf)
+                {
+                    // 매니저에게 슬롯 인덱스로 이동요청, 자기소속 UI 전달
+                    StorageUIManager.Instance.HandleItemTransfer(_slotIndex, _managerUI);
+                }
+                return;
             }
-        } 
-        // -- 좌클릭: 드래그 없이 클릭만으로 내려놓기
-        else if (eventData.button == PointerEventData.InputButton.Left)
-        {
+
+            // ==== 일반 좌클릭: 슬롯에 마우스 아이템 드롭 
+            // Shift나 Ctrl이 눌리지 않았을 때만 실행됨
             if (_managerUI.mouseItemData.HasItem)
             {
                 HandleDropLogic();
             }
         }
-
-        // Shift 좌클릭으로 아이템 이동
-        // TODO: 드래그 이동?? 우선적으로는 클릭만
-        if (eventData.button == PointerEventData.InputButton.Left && Input.GetKey(KeyCode.LeftShift))
-        {
-            // 샵 매니저가 존재한다면 (상점/진열대 모드라면)
-            if (StorageUIManager.Instance != null && StorageUIManager.Instance.rootCanvas.activeSelf)
-            {
-                // "매니저님, 저(_slotIndex) 이동할래요. 저는 이 UI(_managerUI) 소속입니다."
-                StorageUIManager.Instance.HandleItemTransfer(_slotIndex, _managerUI);
-            }
-        }
-
     }
 
     void HandlePickOne()
@@ -124,7 +138,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             _managerUI.mouseItemData.UpdateMouseSlot(oneItem);
             _managerUI.connectedInventory.InventorySystem.RemoveItemAtIndex(_slotIndex, 1);
         }
-        // 마우스에 같은 아이템'이 있다면 1개 더 얹기
+        // 마우스에 같은 아이템이 있다면 1개 더 얹기
         else if (_managerUI.mouseItemData.mouseSlot.itemData == _slot.itemData)
         {
             _managerUI.mouseItemData.mouseSlot.AddAmount(1);
@@ -132,6 +146,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             _managerUI.connectedInventory.InventorySystem.RemoveItemAtIndex(_slotIndex, 1);
         }
     }
+
+    #endregion
+
+    #region Drag & Drop Event
 
     // 드래그 시작 (좌클릭)
     public void OnBeginDrag(PointerEventData eventData)
@@ -206,5 +224,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 _managerUI.mouseItemData.ClearSlot();
         }
     }
+
+    #endregion
+
 
 }

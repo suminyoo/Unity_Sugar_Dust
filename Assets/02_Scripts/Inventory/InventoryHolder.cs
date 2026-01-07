@@ -4,16 +4,22 @@ public class InventoryHolder : MonoBehaviour
 {
     [Header("Settings")]
     private int inventorySize;
-    public Transform dropPosition; // 버릴 위치
+    public Transform itemDropPosition; // 버릴 위치
 
     //외부에서는 못건들고 구현하는 자식만 건들 수 있게
     [SerializeField] protected InventorySystem inventorySystem;
     public InventorySystem InventorySystem => inventorySystem; //얘는 public
 
+    #region Unity lifecycle
+
     protected virtual void Awake()
     {
         inventorySystem = new InventorySystem(inventorySize);
     }
+
+    #endregion
+
+    #region 인벤토리 아이템 관리
 
     // 아이템 넣기
     public virtual bool AddItem(ItemData item, int count)   
@@ -21,7 +27,7 @@ public class InventoryHolder : MonoBehaviour
         return inventorySystem.AddItemToSlots(item, count);
     }
 
-    // 바닥에 버리기: 플레이어, 보물상자
+    // 아이템 빼기 : 바닥에 버리기, 다른 인벤토리로 옮기기 등 
     public virtual void DropItemAtIndex(int index, int count)
     {
         var slot = inventorySystem.slots[index];
@@ -30,7 +36,7 @@ public class InventoryHolder : MonoBehaviour
         // 프리팹 생성
         if (slot.itemData.dropPrefab != null)
         {
-            Vector3 pos = dropPosition != null ? dropPosition.position : transform.position + transform.forward;
+            Vector3 pos = itemDropPosition != null ? itemDropPosition.position : transform.position + transform.forward;
             GameObject droppedObj = Instantiate(slot.itemData.dropPrefab, pos, Quaternion.identity);
 
             // 바닥에 떨어진 아이템에 개수 전달
@@ -42,7 +48,7 @@ public class InventoryHolder : MonoBehaviour
         inventorySystem.RemoveItemAtIndex(index, count);
     }
 
-    // 상점, 조합대, 퀘스트 제출 등 인벤토리에서 아이템 자동 소모? 할때
+    // 상점, 조합대, 퀘스트 제출 등 인벤토리에서 아이템 자동 소모? 할때 (아직 미사용 중)
     public virtual void ConsumeItem(ItemData item, int count)
     {
         // 아이템 개수 확인
@@ -60,7 +66,7 @@ public class InventoryHolder : MonoBehaviour
         }
     }
 
-    //아이템 transfer 로직 변화에 맞게 수정
+    //아이템 transfer : 다른 인벤토리로 옮기기
     public virtual void TransferTo(int fromIndex, InventoryHolder toHolder)
     {
         // 내 슬롯 데이터 가져오기
@@ -76,7 +82,7 @@ public class InventoryHolder : MonoBehaviour
         // 받는 인벤토리 시스템
         InventorySystem toSystem = toHolder.InventorySystem;
 
-        // 상대방에게 성공적으로 다 들어간 겨경우
+        // 상대방에게 성공적으로 다 들어간 경우
         if (toSystem.AddItemToSlots(itemToSend, amountToSend))
         {
             // 내 인벤토리에서 해당 개수제거
@@ -87,7 +93,10 @@ public class InventoryHolder : MonoBehaviour
             // 실패 (꽉 참? 등)
 
             // TODO: 일부만 들어가는 로직은 AddItemToSlots가 남은 개수를 반환해ㅑ야함(현재 bool값만 리턴)
+
             Debug.Log("상대방 공간이 부족합니다!");
         }
     }
+    
+    #endregion
 }

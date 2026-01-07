@@ -45,6 +45,4 @@ public class ItemInfoUI : MonoBehaviour
         defaultPanel.SetActive(true);
     }
 
-
-
 }

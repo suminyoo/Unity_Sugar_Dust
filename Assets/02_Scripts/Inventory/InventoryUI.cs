@@ -129,7 +129,7 @@ public class InventoryUI : MonoBehaviour
                 }
 
                 // 슬롯에게 데이터와 컨텍스트, 가격을 넘김
-                uiSlots[i].UpdateSlotVisual(system.slots[i], contextType, itemPrice);
+                uiSlots[i].DecideSlotVisual(system.slots[i], contextType, itemPrice);
             }
         }
     }

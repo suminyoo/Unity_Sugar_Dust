@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class WorldItem : MonoBehaviour
-{
+{ 
+    #region Variables & Settings
+
     [Header("Item Data")]
     public ItemData itemData;
     public int amount = 1;
@@ -21,6 +23,9 @@ public class WorldItem : MonoBehaviour
     private Vector3 startPos;
     private Rigidbody rb;
 
+    #endregion
+
+    #region Initialization
     public void Initialize(ItemData data, int count)
     {
         itemData = data;
@@ -44,7 +49,9 @@ public class WorldItem : MonoBehaviour
 
         if (enablePickupTime == 0) enablePickupTime = Time.time;
     }
+    #endregion
 
+    #region Follow Logic
     public void StartFollow(Transform player)
     {
         if (Time.time < enablePickupTime) return;
@@ -57,6 +64,7 @@ public class WorldItem : MonoBehaviour
     {
         if (target == player) target = null;
     }
+    #endregion
 
     private void Update()
     {

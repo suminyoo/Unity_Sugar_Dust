@@ -4,6 +4,8 @@ using UnityEngine;
 //플레이어 인벤토리, 인벤홀더 상속
 public class PlayerInventory : InventoryHolder
 {
+    #region Variables
+
     public PlayerData playerData; // SO 연결 필요
     public MouseItemData mouseItemData;
     public InventoryUI inventoryUI;
@@ -17,6 +19,10 @@ public class PlayerInventory : InventoryHolder
     public Color normalColor = Color.white;
     public Color warningColor = new Color(1f, 0.6f, 0f); // 주황
     public Color exceedColor = Color.red;
+
+    #endregion
+
+    #region Lifecycle & Initialization
 
     private void Start()
     {
@@ -61,7 +67,9 @@ public class PlayerInventory : InventoryHolder
         UpdateWeightUI();
         Debug.Log("인벤토리 로드 및 UI 재연결 완료");
     }
+    #endregion
 
+    #region Weight System (Calculation & UI)
     public void RefreshTotalWeight()
     {
         float totalWeight = 0f;
@@ -98,7 +106,9 @@ public class PlayerInventory : InventoryHolder
         else if (weightRatio >= 0.8f) weightText.color = warningColor;
         else weightText.color = normalColor;
     }
+    #endregion
 
+    #region Inventory Holder Overrides
     // 아이템 얻을때 무게 계산 로직
     public override bool AddItem(ItemData item, int count)
     {
@@ -140,4 +150,5 @@ public class PlayerInventory : InventoryHolder
         }
 
     }
+    #endregion
 }

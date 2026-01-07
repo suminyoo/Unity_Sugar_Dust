@@ -58,6 +58,8 @@ public class InventorySystem
 
     public UnityAction OnInventoryUpdated;
 
+    #region Initialization
+
     // 초기화
     public InventorySystem(int size)
     {
@@ -85,6 +87,9 @@ public class InventorySystem
         // (데이터 채워넣은 뒤에 한 번만 호출하면 되니까)
     }
 
+    #endregion
+
+    #region Add Logic
     // ADD: 이미 있으면 갯수 더하기, 없으면 슬롯 리스트에 새로 추가
     // auto라서 빈곳부터 채움 (지정 인덱스로 넣지 않음)
     public bool AddItemToSlots(ItemData item, int count)
@@ -119,6 +124,9 @@ public class InventorySystem
         //꽉참
         return false;
     }
+    #endregion
+
+    #region Slot Manipulation (Index-based)
 
     // 아이템 업데이트 (지정 인덱스 슬롯)
     public void UpdateSlotAtIndex(int index, ItemData item, int count)
@@ -166,6 +174,9 @@ public class InventorySystem
         OnInventoryUpdated?.Invoke();
     }
 
+    #endregion
+
+    #region Search & Consume Item
     // 제작/퀘스트용: 아이템 데이터로 찾아서 개수만큼 소모
     // 위치 상관없이 인벤에서 꺼내서 없앰
     public void ConsumeItem(ItemData item, int count)
@@ -214,4 +225,5 @@ public class InventorySystem
         }
         return total;
     }
+    #endregion
 }

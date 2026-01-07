@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
             savedData.InitNewGame(
                 playerData.maxHp,
                 playerData.maxStamina,
-                playerData.inventorySizes[0],
-                playerData.displayStandSizes[0]
+                playerData.inventorySizes[3],
+                playerData.displayStandSizes[3]
                 );
         }
         else

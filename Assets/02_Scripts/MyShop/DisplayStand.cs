@@ -5,8 +5,15 @@ public class DisplayStand : InventoryHolder, IInteractable
 {
     public PlayerData playerData; // SO 
     private PlayerInventory playerInventory;
-    public List<Transform> displayPoints; //아이템이 놓일 위치
+
+    private List<Transform> displayPoints = new List<Transform>();
     private List<GameObject> spawnedVisualItems = new List<GameObject>();
+    private List<GameObject> spawnedStandObjects = new List<GameObject>();
+
+    public GameObject displayStandPrefab;
+    public Transform gridOrigin;
+    public int columns = 4;
+    public Vector2 spacing = new Vector2(1.5f, 1.5f);
 
     public List<int> slotPrices = new List<int>();    // 각 인벤토리 슬롯에 대응하는 판매 가격 리스트
 
@@ -15,6 +22,20 @@ public class DisplayStand : InventoryHolder, IInteractable
     private void Start()
     {
         playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+
+        LoadDisplayStandFromManager(); // 시작할 때 로드
+
+        //사이즈 맞춰 진열대 배치
+        GenerateDisplayGrid();
+
+        UpdateVisuals();
+
+
+        // 인벤토리 크기만큼 가격 리스트 크기 맞추기 (안전장치)
+        while (slotPrices.Count < inventorySystem.slots.Count)
+        {
+            slotPrices.Add(0); // 일단 0원으로 초기화
+        }
     }
 
     public void OnInteract()
@@ -25,14 +46,6 @@ public class DisplayStand : InventoryHolder, IInteractable
     protected override void Awake()
     {
         base.Awake();
-
-        LoadDisplayStandFromManager(); // 시작할 때 로드
-
-        // 인벤토리 크기만큼 가격 리스트 크기 맞추기 (안전장치)
-        while (slotPrices.Count < inventorySystem.slots.Count)
-        {
-            slotPrices.Add(0); // 일단 0원으로 초기화
-        }
 
     }
 
@@ -48,6 +61,66 @@ public class DisplayStand : InventoryHolder, IInteractable
         inventorySystem.OnInventoryUpdated -= UpdateVisuals;
     }
 
+
+    // 그리드로 진열대 생성
+    private void GenerateDisplayGrid()
+    {
+        // 기존 오브젝트 청소
+        foreach (var obj in spawnedStandObjects)
+        {
+            if (obj != null) Destroy(obj);
+        }
+        spawnedStandObjects.Clear();
+        displayPoints.Clear();
+
+        if (displayStandPrefab == null || gridOrigin == null) return;
+
+        int totalCount = inventorySystem.slots.Count;
+        if (totalCount == 0) return;
+
+        // 행 개수
+        int rows = Mathf.CeilToInt((float)totalCount / columns);
+
+        // 실제 사용할 열 수 계산
+        int currentCols = Mathf.Min(totalCount, columns);
+
+        // 전체 그리드의 가로/세로 길이 계산 (간격 * (개수-1))
+        float totalWidth = (currentCols - 1) * spacing.x;
+        float totalDepth = (rows - 1) * spacing.y;
+
+        // 시작 위치 계산 (중심에서 절반만큼 왼쪽, 위쪽으로 이동)
+        float startX = -totalWidth / 2f;
+        float startZ = totalDepth / 2f;
+
+        for (int i = 0; i < totalCount; i++)
+        {
+            // 행, 열 계산
+            int row = i / columns;
+            int col = i % columns;
+
+            // 각 로컬 좌표 계산
+            float xPos = startX + (col * spacing.x);
+            float zPos = startZ - (row * spacing.y);
+
+            // 로컬 좌표 벡터 생성
+            Vector3 localPos = new Vector3(xPos, 0, zPos);
+
+            // 월드 좌표로 변환 (GridOrigin 기준)
+            Vector3 worldPos = gridOrigin.TransformPoint(localPos);
+            worldPos.y = this.transform.position.y;
+
+            // 생성
+            GameObject standObj = Instantiate(displayStandPrefab, worldPos, gridOrigin.rotation, this.transform);
+            spawnedStandObjects.Add(standObj);
+
+            // 아이템 포인트 찾기 (기존 로직 동일)
+            Transform itemPoint = standObj.transform.Find("ItemPoint");
+
+            displayPoints.Add(itemPoint);
+        }
+    }
+
+
     // 진열대 아이템 가격 설정 함수
     //TODO: UI 구현 필요ㅕ
     public void SetSlotPrice(int slotIndex, int newPrice)
@@ -59,6 +132,7 @@ public class DisplayStand : InventoryHolder, IInteractable
             // 변경된 가격 저장 로직 필요 시 호출
         }
     }
+
     //가격 조회
     public int GetSlotPrice(int slotIndex)
     {
@@ -68,6 +142,7 @@ public class DisplayStand : InventoryHolder, IInteractable
         }
         return 0;
     }
+    
     public bool TryGetRandomSellableItem(out int slotIndex, out Transform itemLocation)
     {
         // 현재 판매 가능한(비어있지 않은) 모든 슬롯의 인덱스를 수집
@@ -166,6 +241,7 @@ public class DisplayStand : InventoryHolder, IInteractable
             }
         }
     }
+    
     private void LoadDisplayStandFromManager()
     {
         if (GameManager.Instance == null) return;

@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IShopSource
+{    
+    int GetPrice(int slotIndex); //해당칸의 가격정보를 전달
+    //가격 정보가 필요한 NPC Shop 이나 Display Stand가 구현해야함
+}
+
 public enum InventoryContext
 {
     Player,     // 플레이어 가방 (사용/장착)
@@ -11,6 +17,8 @@ public enum InventoryContext
 
 public class InventoryUI : MonoBehaviour
 {
+    #region Variables & Data
+
     [Header("Connection")]
     public InventoryHolder connectedInventory;
     public MouseItemData mouseItemData;
@@ -21,11 +29,13 @@ public class InventoryUI : MonoBehaviour
 
     private InventorySystem currentInventorySystem;
 
-
     public InventoryContext contextType = InventoryContext.Player; // 기본값
 
-    // 연결된 진열대 (내 상점일 때 가격 가져오기 위함)
-    private DisplayStand connectedDisplayStand;
+    private IShopSource currentShopSource; //가격정보 전달해주는 인터페이스 구현한 인벤토리
+
+    #endregion
+
+    #region Unity Lifecycle
 
     void Start()
     {
@@ -43,6 +53,10 @@ public class InventoryUI : MonoBehaviour
             connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
         }
     }
+
+    #endregion
+
+    #region UI Setup & Initialization
 
     // 설정된 개수(만큼 빈 슬롯을 미리 생성
     void InitializeUI()
@@ -90,21 +104,17 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-
     // 초기화 (진열대 열 때 호출)
-    public void InitShopMode(DisplayStand stand)
+    public void InitShopMode(IShopSource shopSource, InventoryContext context)
     {
-        contextType = InventoryContext.MyShop;
-        connectedDisplayStand = stand;
+        contextType = context;       // MyShop 인지 NPCShop 인지 저장
+        currentShopSource = shopSource; // 가격 알려주는 애
         InitializeUI();
     }
 
-    public void InitPlayerMode()
-    {
-        contextType = InventoryContext.Player;
-        connectedDisplayStand = null;
-        InitializeUI(); // 혹은 RefreshUI
-    }
+    #endregion
+
+
     // 화면 갱신
     public void RefreshUI()
     {
@@ -117,15 +127,13 @@ public class InventoryUI : MonoBehaviour
                 int itemPrice = 0;
 
                 // 가격 정보 가져오기 로직
-                if (contextType == InventoryContext.MyShop && connectedDisplayStand != null)
+                if (contextType == InventoryContext.MyShop || contextType == InventoryContext.NPCShop)
                 {
-                    itemPrice = connectedDisplayStand.GetSlotPrice(i);
-                }
-                else if (contextType == InventoryContext.NPCShop)
-                {
-                    // NPC 상점이라면 아이템 기본 가격이나 상점 데이터에서 가져옴
-                    if (system.slots[i].itemData != null)
-                        itemPrice = 100; // 예시: system.slots[i].itemData.basePrice;
+                    if (currentShopSource != null)
+                    {
+                        // 가격 받아오기
+                        itemPrice = currentShopSource.GetPrice(i);
+                    }
                 }
 
                 // 슬롯에게 데이터와 컨텍스트, 가격을 넘김
@@ -133,7 +141,10 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
-     
+
+
+    #region Click Event Handling
+
     //우클릭 이벤트 분기 처리 
     public void HandleSlotRightClick(int slotIndex)
     {
@@ -143,27 +154,25 @@ public class InventoryUI : MonoBehaviour
         switch (contextType)
         {
             case InventoryContext.Player:
-                // [플레이어] 아이템 사용/정보 팝업
-                // ItemActionManager.Instance.ShowUseMenu(slot.itemData);
-                Debug.Log($"[Player] {slot.itemData.name} 정보 및 사용 창 열기");
-                break;
-
             case InventoryContext.Chest:
-                // [상자] 바로 이동시키거나 정보 창
-                Debug.Log($"[Chest] {slot.itemData.name} 정보 창 열기");
+                // 플레이어나 상자: 정보창
+                ItemUIPopupManager.Instance.ShowItemInfo(slot.itemData);
                 break;
 
             case InventoryContext.MyShop:
-                // [내 상점] 가격 설정 팝업
-                Debug.Log($"[MyShop] {slot.itemData.name} 가격 설정 창 열기 (현재 가격: {connectedDisplayStand.GetSlotPrice(slotIndex)})");
-                // PopupManager.Instance.ShowPriceSettingPopup(connectedDisplayStand, slotIndex);
+                // 팝업매니저가 꼭 구체적인 DisplayStand 타입을 원한다면 여기서만 변환
+                if (currentShopSource is DisplayStand stand)
+                {
+                    ItemUIPopupManager.Instance.ShowPriceSetting(stand, slotIndex, slot.itemData);
+                }
                 break;
 
             case InventoryContext.NPCShop:
-                // [NPC 상점] 구매 확인 팝업
-                Debug.Log($"[NPCShop] {slot.itemData.name} 구매하시겠습니까? (가격: 100G)");
-                // PopupManager.Instance.ShowBuyConfirmPopup(slot.itemData, 100);
+                // 구매창 띄우기 (가격만 필요하면 인터페이스 그대로 사용)
+                int price = (currentShopSource != null) ? currentShopSource.GetPrice(slotIndex) : 0;
+                ItemUIPopupManager.Instance.ShowBuyConfirm(slot.itemData, price);
                 break;
         }
     }
+    #endregion
 }

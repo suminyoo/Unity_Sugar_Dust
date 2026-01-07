@@ -72,23 +72,20 @@ public class StorageUIManager : MonoBehaviour
         {
             case "MyShop":
                 _currentOtherUI = myShopUI;
-                // DisplayStand로 캐스팅해서 넘겨줌 (가격 정보 때문에)
-                if (other is DisplayStand stand)
+                if (other is IShopSource source)
                 {
-                    _currentOtherUI.InitShopMode(stand);
+                    _currentOtherUI.InitShopMode(source, InventoryContext.MyShop);
                 }
                 break;
 
-            case "Weapon": // (NPC 상점 예시)
-                _currentOtherUI = weaponShopUI;
-                //_currentOtherUI.InitNPCShopMode(); // NPC 상점 모드 구현필요
-                break;
-
-            case "Common":
-            default:
-                _currentOtherUI = commonStorageUI;
-                //_currentOtherUI.InitChestMode(); // 일반 상자 모드 구현ㅍ 필요
-                break;
+                // 나중에 NPC 상점 추가할 때 예시
+                /*
+                case "Weapon":
+                    _currentOtherUI = weaponShopUI;
+                    if (other is IShopSource npcSource)
+                        _currentOtherUI.InitShopMode(npcSource, InventoryContext.NPCShop);
+                    break;
+                */
         }
 
         // 선택된 상대방 UI 활성화 및 데이터 연결

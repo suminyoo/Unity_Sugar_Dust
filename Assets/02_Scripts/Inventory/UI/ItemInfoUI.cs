@@ -13,15 +13,6 @@ public class ItemInfoUI : MonoBehaviour
     public TextMeshProUGUI infoText;
     public TextMeshProUGUI weightText;
 
-    private void OnEnable()
-    {
-        InventorySlotUI.OnItemRightClicked += ShowItemInfo;
-    }
-
-    private void OnDisable()
-    {
-        InventorySlotUI.OnItemRightClicked -= ShowItemInfo;
-    }
 
     private void Start()
     {
@@ -29,15 +20,17 @@ public class ItemInfoUI : MonoBehaviour
         defaultPanel.SetActive(true);
     }
 
-    void ShowItemInfo(ItemData data)
+    public void OpenPanel(ItemData data)
     {
         defaultPanel.SetActive(false);
         itemInfoPanel.SetActive(true);
+
         icon.sprite = data.icon;
         nameText.text = data.itemName;
         weightText.text = $"¹«°Ô: {data.weight:F1}kg";
         infoText.text = data.description;
     }
+
 
     public void Close()
     {

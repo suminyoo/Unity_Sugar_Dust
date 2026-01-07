@@ -28,7 +28,7 @@ public class PlayerAssetsManager : MonoBehaviour
 
     private void Start()
     {
-        // 1. 게임 시작 시 데이터 로드
+        // 게임 시작 시 데이터 로드
         if (GameManager.Instance != null)
         {
             var data = GameManager.Instance.LoadAssets();

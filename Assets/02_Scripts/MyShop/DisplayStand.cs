@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisplayStand : InventoryHolder, IInteractable
+public class DisplayStand : InventoryHolder, IInteractable, IShopSource
 {
+    #region Variables & Data
+
     public PlayerData playerData; // SO 
     private PlayerInventory playerInventory;
 
@@ -17,7 +19,34 @@ public class DisplayStand : InventoryHolder, IInteractable
 
     public List<int> slotPrices = new List<int>();    // 각 인벤토리 슬롯에 대응하는 판매 가격 리스트
 
+    #endregion
+
+    #region Interaction (IInteractable)
+
     public string GetInteractPrompt() => "[E] 진열대 열기";
+
+    public void OnInteract()
+    {
+        StorageUIManager.Instance.OpenStorage(playerInventory, this, "MyShop");
+    }
+    #endregion
+
+    #region Price (IShopSource)
+
+    public int GetPrice(int slotIndex)
+    {
+        return GetSlotPrice(slotIndex);
+    }
+
+    #endregion
+
+    #region Unity Lifecycle
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+    }
 
     private void Start()
     {
@@ -38,17 +67,6 @@ public class DisplayStand : InventoryHolder, IInteractable
         }
     }
 
-    public void OnInteract()
-    {
-        StorageUIManager.Instance.OpenStorage(playerInventory, this, "MyShop");
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-    }
-
     private void OnEnable()
     {
         // 데이터 바뀌면 자동 저장
@@ -61,6 +79,9 @@ public class DisplayStand : InventoryHolder, IInteractable
         inventorySystem.OnInventoryUpdated -= UpdateVisuals;
     }
 
+    #endregion
+
+    #region Grid & Visual Management
 
     // 그리드로 진열대 생성
     private void GenerateDisplayGrid()
@@ -119,7 +140,48 @@ public class DisplayStand : InventoryHolder, IInteractable
             displayPoints.Add(itemPoint);
         }
     }
+    private void UpdateVisuals()
+    {
+        // 진열된 아이템 지우기
+        foreach (var obj in spawnedVisualItems)
+        {
+            if (obj != null) Destroy(obj);
+        }
+        spawnedVisualItems.Clear();
 
+        // 인벤토리 슬롯 돌면서 모델 생성
+        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        {
+            // 진열대 부족하면 중단 (부족하지 않아야함 수가 같음)
+            if (i >= displayPoints.Count) break;
+
+            var slot = inventorySystem.slots[i];
+
+            if (!slot.IsEmpty && slot.itemData.dropPrefab != null)
+            {
+                // 아이템 진열대에 생성
+                GameObject visualObj = Instantiate(
+                    slot.itemData.dropPrefab,
+                    displayPoints[i].position,
+                    Quaternion.identity,
+                    displayPoints[i]
+                );
+
+                visualObj.GetComponent<Collider>().enabled = false; //콜라이더끄기?
+
+                spawnedVisualItems.Add(visualObj);
+            }
+            else
+            {
+                // 빈 칸 null 추가
+                spawnedVisualItems.Add(null);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Shop & NPC Logic
 
     // 진열대 아이템 가격 설정 함수
     //TODO: UI 구현 필요ㅕ
@@ -203,45 +265,10 @@ public class DisplayStand : InventoryHolder, IInteractable
         return false; // 판매 실패
     }
 
-    private void UpdateVisuals()
-    {
-        // 진열된 아이템 지우기
-        foreach (var obj in spawnedVisualItems)
-        {
-            if (obj != null) Destroy(obj);
-        }
-        spawnedVisualItems.Clear();
+    #endregion
 
-        // 인벤토리 슬롯 돌면서 모델 생성
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
-        {
-            // 진열대 부족하면 중단 (부족하지 않아야함 수가 같음)
-            if (i >= displayPoints.Count) break;
+    #region Data Persistence
 
-            var slot = inventorySystem.slots[i];
-
-            if (!slot.IsEmpty && slot.itemData.dropPrefab != null)
-            {
-                // 아이템 진열대에 생성
-                GameObject visualObj = Instantiate(
-                    slot.itemData.dropPrefab,
-                    displayPoints[i].position,
-                    Quaternion.identity,
-                    displayPoints[i]
-                );
-
-                visualObj.GetComponent<Collider>().enabled = false; //콜라이더끄기?
-
-                spawnedVisualItems.Add(visualObj);
-            }
-            else
-            {
-                // 빈 칸 null 추가
-                spawnedVisualItems.Add(null);
-            }
-        }
-    }
-    
     private void LoadDisplayStandFromManager()
     {
         if (GameManager.Instance == null) return;
@@ -284,5 +311,8 @@ public class DisplayStand : InventoryHolder, IInteractable
 
     }
 
+    #endregion
+
+    
 
 }

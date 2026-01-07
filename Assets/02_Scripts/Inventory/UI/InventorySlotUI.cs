@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
-    public static event Action<ItemData> OnItemRightClicked;
-
     [Header("UI")]
     public Image itemIcon;
     public TextMeshProUGUI amountText;
@@ -86,13 +84,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // ==== 우클릭 : 아이템 정보 열기
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+            // 우클릭으로 창띄우기 (매니저에게 위임)
             _managerUI.HandleSlotRightClick(_slotIndex);
 
             if (_slot.IsEmpty) return;
-
-            // 그냥 우클릭은 아이템 정보 
-            // 현재 매니저에게 위임해서 주석처리
-            //OnItemRightClicked.Invoke(_slot.itemData);
 
             return; // 우클릭 처리 완료 후 종료
         }
@@ -226,6 +221,5 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     #endregion
-
 
 }

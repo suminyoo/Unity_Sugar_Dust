@@ -728,6 +728,7 @@ MonoBehaviour:
   columns: 3
   spacing: {x: 3, y: 3}
   slotPrices: 
+  slotActiveStates: 
 --- !u!1001 &407970072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3468,7 +3469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8015331256204487403, guid: 69a27bc608c4d1d49b501b46c84800c5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8256314682255646485, guid: 69a27bc608c4d1d49b501b46c84800c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3531,7 +3532,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -6239714966650624205, guid: 69a27bc608c4d1d49b501b46c84800c5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69a27bc608c4d1d49b501b46c84800c5, type: 3}

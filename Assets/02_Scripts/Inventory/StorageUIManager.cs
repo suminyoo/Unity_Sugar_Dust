@@ -8,7 +8,7 @@ public class StorageUIManager : MonoBehaviour
     [Header("Player")]
     public InventoryUI playerInventoryUI; // 플레이어 인벤토리
 
-    [Header("Target UIs 상대스토리지가 사용할 ui들")]
+    [Header("Target UIs ")] //상대스토리지가 사용할 ui들
     public InventoryUI myShopUI;
     public InventoryUI commonStorageUI; // 일반 상자용 UI
     public InventoryUI weaponShopUI; 

@@ -25,57 +25,54 @@ public class NPCBrain : MonoBehaviour
         // 이미 대화 중이면 중복 실행 방지
         if (isInteracting) return;
 
-        // 코루틴 시작
-        if (interactionCoroutine != null) StopCoroutine(interactionCoroutine);
-        interactionCoroutine = StartCoroutine(InteractionProcess());
+        // 대화 시작: 코루틴 대신 콜백 방식으로 변경 (더 깔끔함)
+        StartCoroutine(StartDialogueRoutine());
     }
-
-    private IEnumerator InteractionProcess()
+    private IEnumerator StartDialogueRoutine()
     {
         isInteracting = true;
-
-        // 1. 이동 멈춤 & 플레이어 바라보기
         controller.Movement.Stop();
         if (playerTransform != null) controller.Movement.LookAtTarget(playerTransform);
-
-        // 2. 애니메이션 (대화 모션)
         if (controller.Animation != null) controller.Animation.PlayTalkRandom();
 
-        // ---------------------------------------------------------
-        // [임시 구현] 실제 대화 시스템이 들어갈 자리
-        // ---------------------------------------------------------
-        Debug.Log($"NPC: 안녕하세요! (마우스 클릭으로 대화 넘기기 시뮬레이션)");
+        // 1. 대화 끝났는지 확인할 변수
+        bool dialogueFinished = false;
 
-        // 가상의 대화 상태 변수
-        bool isDialogueFinished = false;
+        // 2. 대화 데이터 가져오기 (SO가 없으면 기본 대사)
+        DialogueData dialogueToPlay = null;
+        // 추후 NPCData에 DialogueData 필드를 추가해서 가져오면 됨
+        // dialogueToPlay = controller.data.dialogueData; 
 
-        // 예시: 대화창을 띄우는 함수 호출
-        // DialogueManager.Instance.StartDialogue(npcData, () => { isDialogueFinished = true; });
-
-        // [핵심] 대화가 끝날 때까지 무한 대기 (프레임 단위 체크)
-        // 실제 구현 시에는 UI 매니저가 isDialogueFinished를 true로 바꿔줄 때까지 기다림
-        while (!isDialogueFinished)
+        if (dialogueToPlay != null)
         {
-            // --- 임시 테스트용 코드 ---
-            // 마우스 왼쪽 클릭을 하면 대화가 끝난 것으로 간주
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("NPC: 즐거운 모험 되세요! (대화 종료)");
-                isDialogueFinished = true; // 루프 탈출 조건 달성
-            }
-            // -----------------------
+            // 매니저에게 대화 요청 (끝나면 dialogueFinished를 true로 만듦)
+            DialogueManager.Instance.StartDialogue(dialogueToPlay, () => {
+                dialogueFinished = true;
+            });
 
-            yield return null; // 다음 프레임까지 대기
+            // 3. 대화가 끝날 때까지 대기 (WaitUntil)
+            yield return new WaitUntil(() => dialogueFinished);
         }
-        // ---------------------------------------------------------
+        else
+        {
+            // 데이터가 없을 경우 테스트용 말풍선 띄우기
+            Debug.LogWarning("대화 데이터가 없습니다. 말풍선으로 대체합니다.");
+            controller.Bubble.ShowBubble("대화 데이터가 없어요...", 2f);
+            yield return new WaitForSeconds(2f);
+        }
 
-        // 3. 잠시 뜸 들이기 (대화창 닫히고 바로 획 돌면 어색하니까)
-        yield return new WaitForSeconds(0.5f);
-
-        // 4. 다시 이동 재개
+        // 4. 대화 종료 후 처리
         controller.Movement.Resume();
         isInteracting = false;
     }
+
+    // 혼잣말 테스트용 함수
+    public void SayToSelf(string text)
+    {
+        if (controller.Bubble != null)
+            controller.Bubble.ShowBubble(text, 3f);
+    }
+
 
     private IEnumerator PatrolRoutine()
     {

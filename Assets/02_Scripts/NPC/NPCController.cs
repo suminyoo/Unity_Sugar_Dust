@@ -12,12 +12,15 @@ public class NPCController : MonoBehaviour
     [HideInInspector] public NPCMovement Movement;
     [HideInInspector] public NPCBrain Brain;
     [HideInInspector] public NPCAnimation Animation;
+    [HideInInspector] public SpeechBubble Bubble;
 
     private void Awake()
     {
         Movement = GetComponent<NPCMovement>();
         Brain = GetComponent<NPCBrain>();
         Animation = GetComponent<NPCAnimation>(); // 추가됨
+        Bubble = GetComponentInChildren<SpeechBubble>();
+
 
         // 애니메이션 컴포넌트 초기화 (Movement를 넘겨줌)
         Animation.Init(Movement);

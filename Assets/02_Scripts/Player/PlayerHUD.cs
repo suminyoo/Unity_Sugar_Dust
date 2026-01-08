@@ -5,6 +5,8 @@ using TMPro;
 
 public class PlayerHUD : MonoBehaviour
 {
+    #region Variables & References
+
     [Header("References")]
     public PlayerCondition playerCondition;
 
@@ -19,23 +21,37 @@ public class PlayerHUD : MonoBehaviour
     public float hideDelay = 0.5f;
     private Coroutine hideStaminaCoroutine;
 
+    [Header("Money")]
+    public TextMeshProUGUI moneyText;
+
+    #endregion
+
+    #region Unity Lifecycle
 
     void Start()
     {
         playerCondition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCondition>();
 
-        playerCondition.OnStaminaChanged += UpdateStaminaUI;
         playerCondition.OnHpChanged += UpdateHpUI;
+        playerCondition.OnStaminaChanged += UpdateStaminaUI;
+
+        PlayerAssetsManager.Instance.OnMoneyChanged += UpdateMoneyUI;
 
         staminaSlider.gameObject.SetActive(staminaSlider.value < 1f);
 
     }
 
     void OnDestroy()
-    { 
+    {
+        playerCondition.OnHpChanged -= UpdateHpUI;
         playerCondition.OnStaminaChanged -= UpdateStaminaUI;
+        PlayerAssetsManager.Instance.OnMoneyChanged -= UpdateMoneyUI;
     }
 
+    #endregion
+
+
+    #region HP & Stamina 
     private void UpdateHpUI(float curHp, float maxHp)
     {
         hpSlider.value = curHp / maxHp;
@@ -76,7 +92,6 @@ public class PlayerHUD : MonoBehaviour
         hideStaminaCoroutine = null;
     }
 
-
     private IEnumerator UpdateBarSmoothly(Slider slider , float targetNormalizedValue)
     {
         float initialNormalizedValue = slider.value;
@@ -95,4 +110,18 @@ public class PlayerHUD : MonoBehaviour
         // 끝난 후 최종 값으로 정확히 설정
         slider.value = targetNormalizedValue;
     }
+
+    #endregion
+
+    #region Money 
+
+    private void UpdateMoneyUI(int currentGold)
+    {
+        if (moneyText != null)
+        {
+            moneyText.text = $"{currentGold:N0} G";
+        }
+    }
+
+    #endregion
 }

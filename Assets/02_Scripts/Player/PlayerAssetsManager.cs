@@ -18,6 +18,8 @@ public class PlayerAssetsManager : MonoBehaviour
 
 
     // UI 업데이트를 위한 이벤트
+    // TODO: 상점 UI가 완성되면 이벤트를 구독하여 돈 값이 변할 때마다 화면의 텍스트가 갱신되도록
+
     public event Action<int> OnMoneyChanged;
 
     private void Awake()
@@ -49,7 +51,7 @@ public class PlayerAssetsManager : MonoBehaviour
     {
         currentMoney += amount;
         OnMoneyChanged?.Invoke(currentMoney);
-        Debug.Log($"[Money] {amount}원 획득! (현재: {currentMoney})");
+        Debug.Log($"[Money] {amount}원 획득 (현재: {currentMoney})");
     }
 
     // 나중에 플레이어가 상점을 확장하거나 가구를 살 때 사용

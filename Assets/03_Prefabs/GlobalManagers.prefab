@@ -1027,6 +1027,7 @@ MonoBehaviour:
   staminaSlider: {fileID: 6760123716995824662}
   barAnimationDuration: 0.2
   hideDelay: 0.5
+  moneyText: {fileID: 3420640279864325275}
 --- !u!114 &3609651016474207609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2823,7 +2824,7 @@ GameObject:
   - component: {fileID: 4818923571806446853}
   - component: {fileID: 3420640279864325275}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MoneyText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2845,8 +2846,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 879.99994, y: 367.891}
-  m_SizeDelta: {x: 140, y: 44.22}
+  m_AnchoredPosition: {x: 861.12, y: 370}
+  m_SizeDelta: {x: 177.76, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4818923571806446853
 CanvasRenderer:
@@ -2876,7 +2877,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1000 G
+  m_text: 9999999 G
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 052c7669e8331d4478811ea00cf76d9e, type: 2}
   m_sharedMaterial: {fileID: 3562123515732122321, guid: 052c7669e8331d4478811ea00cf76d9e, type: 2}

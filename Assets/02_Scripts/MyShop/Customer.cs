@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
+//테스트용 메인 로직으로 사용하지 않을것임
+
 public class Customer : MonoBehaviour
 {
     public enum State { Wander, MoveToItem, Thinking, Leave }
@@ -19,7 +21,6 @@ public class Customer : MonoBehaviour
     // 내부 상태 변수
     private State currentState;
     private int targetSlotIndex = -1;  // 사려고 찜한 슬롯 번호
-    private int targetItemPrice = 0;  // 보러 갈 아이템의 가격
 
     private void Start()
     {
@@ -73,7 +74,7 @@ public class Customer : MonoBehaviour
                 bool success = targetShop.TrySellItemToNPC(targetSlotIndex);
                 if (success)
                 {
-                    Debug.Log($"NPC: 오! {targetItemPrice}원이면 살만하네. (구매함)");
+                    Debug.Log($"NPC: 오! {sellingPrice}원이면 살만하네. (구매함)");
                     // 샀어 애니메이션
                 }
                 else
@@ -83,7 +84,7 @@ public class Customer : MonoBehaviour
             }
             else
             {
-                Debug.Log($"NPC: {targetItemPrice}원? 너무 비싼데.. (안 삼)");
+                Debug.Log($"NPC: {sellingPrice}원? 너무 비싼데.. (안 삼)");
                 // 안사 애니메이션
             }
         }

@@ -1,7 +1,7 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemPriceInfoUI : MonoBehaviour
 {
@@ -17,12 +17,12 @@ public class ItemPriceInfoUI : MonoBehaviour
     public TextMeshProUGUI sellingPriceText;
 
     [Header("Activation")]
-    public Button activateButton;       // 활성화/비활성화 토글 버튼
-    public TextMeshProUGUI buttonText;  // 버튼 글씨 ("판매 시작" / "판매 중지")
-    public Image buttonImage;           // 버튼 색상 변경용
+    public Button activateButton;       // 활성화 비활성화 토글 버튼
+    public TextMeshProUGUI buttonText;  // 버튼 글씨 (판매 시작 / 판매 중지)
+    public Image buttonImage;           // 버튼 색상용
 
-    public Color activePriceColor = new Color(0, 0.6f, 0, 0.8f); // 판매 중 색
-    public Color inactivePriceColor = new Color(0, 0, 0, 0.5f);  // 판매 중지 색
+    public Color activePriceColor = new Color(0, 0.6f, 0, 0.8f);
+    public Color inactivePriceColor = new Color(0, 0, 0, 0.5f);
 
     // 내부 상태 변수
     private int currentSellingPrice;
@@ -40,14 +40,10 @@ public class ItemPriceInfoUI : MonoBehaviour
         itemInfoPanel.SetActive(false);
         defaultPanel.SetActive(true);
 
-        if (activateButton != null)
-        {
-            // 혹시라도 중복 연결되는 걸 막기 위해 기존 연결 삭제
-            activateButton.onClick.RemoveAllListeners();
-
-            // "클릭하면 OnActivateButtonClicked 함수를 실행해라"
-            activateButton.onClick.AddListener(OnActivateButtonClicked);
-        }
+        // 기존 연결 삭제
+        activateButton.onClick.RemoveAllListeners();
+        activateButton.onClick.AddListener(OnActivateButtonClicked);
+        
     }
 
     public void OpenPanel(ItemData data, int currentPrice, bool isActive,
@@ -93,7 +89,6 @@ public class ItemPriceInfoUI : MonoBehaviour
     // 판매 시작/중지 버튼 클릭
     private void OnActivateButtonClicked()
     {
-        // 상태 뒤집기 (Toggle)
         isCurrentActive = !isCurrentActive;
 
         UpdateUI();
@@ -111,12 +106,12 @@ public class ItemPriceInfoUI : MonoBehaviour
         if (isCurrentActive)
         {
             buttonText.text = "판매 중지";
-            buttonImage.color = activePriceColor; // 활성화됨 (초록색 등)
+            buttonImage.color = activePriceColor; // 활성화
         }
         else
         {
             buttonText.text = "판매 시작";
-            buttonImage.color = inactivePriceColor;  // 비활성화 (회색)
+            buttonImage.color = inactivePriceColor;  // 비활성화
         }
     }
 

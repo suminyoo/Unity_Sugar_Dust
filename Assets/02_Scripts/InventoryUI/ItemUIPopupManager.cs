@@ -23,11 +23,9 @@ public class ItemUIPopupManager : MonoBehaviour
     }
 
     // 진열대 아이템 창
-    // Action<int> onPriceChanged: 가격 바뀔 때마다 연락받을 곳
-    public void ShowPriceSetting(ItemData data, int currentPrice, bool isActive,
+    public void ShowPriceInfo(ItemData data, int currentPrice, bool isActive,
                                  Action<int> onPriceChanged, Action<bool> onActiveChanged)
     {
-        CloseAllPopups();
         priceInfoUI.OpenPanel(data, currentPrice, isActive, onPriceChanged, onActiveChanged);
     }
 

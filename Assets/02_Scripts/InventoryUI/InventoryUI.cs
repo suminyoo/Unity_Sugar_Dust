@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//가격 정보가 필요한 NPC Shop 이나 Display Stand가 구현해야함
 public interface IShopSource
 {    
     int GetPrice(int slotIndex); //해당칸의 가격정보를 전달
-    //가격 정보가 필요한 NPC Shop 이나 Display Stand가 구현해야함
+    bool IsSlotActive(int slotIndex);  // 활성화 여부
 }
 
 public enum InventoryContext
@@ -55,6 +56,20 @@ public class InventoryUI : MonoBehaviour
         {
             connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
         }
+    }
+    void OnDisable()
+    {
+        // 선택된 슬롯 인덱스 초기화
+        selectedSlotIndex = -1;
+
+        // 아이템 정보창 닫기
+        if (ItemUIPopupManager.Instance != null)
+        {
+            ItemUIPopupManager.Instance.CloseAllPopups();
+        }
+
+        // 슬롯 선택 비주얼 해제
+        foreach (var slot in uiSlots) slot.SetSelected(false);
     }
 
     #endregion
@@ -122,6 +137,17 @@ public class InventoryUI : MonoBehaviour
     public void RefreshUI()
     {
         var system = connectedInventory.InventorySystem;
+        if (system == null) return;
+
+        // 선택된 슬롯이 비었으면 팝업닫기
+        if (selectedSlotIndex != -1 && selectedSlotIndex < system.slots.Count)
+        {
+            if (system.slots[selectedSlotIndex].IsEmpty)
+            {
+                selectedSlotIndex = -1; // 선택 해제
+                ItemUIPopupManager.Instance.CloseAllPopups(); // 팝업 닫기
+            }
+        }
 
         for (int i = 0; i < uiSlots.Count; i++)
         {
@@ -130,13 +156,14 @@ public class InventoryUI : MonoBehaviour
                 int itemPrice = 0;
                 bool isActive = false;
 
-                if (contextType == InventoryContext.MyShop && currentShopSource is DisplayStand stand)
+                if ((contextType == InventoryContext.MyShop || contextType == InventoryContext.NPCShop)
+                                     && currentShopSource != null)
                 {
                     // 설정한 가격 요청
-                    itemPrice = stand.GetSlotPrice(i);
+                    itemPrice = currentShopSource.GetPrice(i);
 
                     // 판매 상태로 색 바꿈
-                    isActive = stand.IsSlotActive(i);
+                    isActive = currentShopSource.IsSlotActive(i); // 인터페이스 메서드
                 }
                 // NPC 상점은 항상 파는 가격이 중요하므로 기존 유지
                 else if (contextType == InventoryContext.NPCShop && currentShopSource != null)
@@ -193,7 +220,7 @@ public class InventoryUI : MonoBehaviour
                     int currentPrice = stand.GetSlotPrice(slotIndex);
                     bool currentActive = stand.IsSlotActive(slotIndex);
 
-                    ItemUIPopupManager.Instance.ShowPriceSetting(
+                    ItemUIPopupManager.Instance.ShowPriceInfo(
                         slot.itemData,
                         currentPrice,
                         currentActive,

@@ -37,16 +37,28 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
     public int GetPrice(int slotIndex)
     {
         // 활성화되지 않은 슬롯은 판매 안함
-        if (!IsSlotActive(slotIndex)) return -1; // -1로 구매 불가 표시
+        //if (!IsSlotActive(slotIndex)) return -1; // -1로 구매 불가 표시
+        // TODO: 화면에 -1로 표기되는것보다 다른 텍스트 대치 고려
         return GetSlotPrice(slotIndex);
     }
 
     // 슬롯 활성화 여부 확인
     public bool IsSlotActive(int slotIndex)
     {
-        if (slotIndex >= 0 && slotIndex < slotActiveStates.Count)
-            return slotActiveStates[slotIndex];
-        return false;
+        // 인벤토리 시스템 자체가 없거나, 인덱스가 범위를 벗어나면 false
+        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.slots.Count)
+            return false;
+
+        // 아이템이 비어있으면 false
+        if (inventorySystem.slots[slotIndex].IsEmpty)
+            return false;
+
+        // 활성화 리스트의 범위를 벗어나면 false (아직 초기화 안 된 경우 등)
+        if (slotIndex >= slotActiveStates.Count)
+            return false;
+
+        // 실제 값 리턴
+        return slotActiveStates[slotIndex];
     }
 
     #endregion
@@ -79,14 +91,11 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
     private void OnEnable()
     {
         inventorySystem.OnInventoryUpdated += HandleInventoryUpdate;
-
     }
 
     private void OnDestroy()
     {
-
         inventorySystem.OnInventoryUpdated -= HandleInventoryUpdate;
-
     }
 
     #endregion
@@ -158,6 +167,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
             // 아이템이 없는데 활성화 되어있거나 가격이 남아있다면 초기화
             if (inventorySystem.slots[i].IsEmpty)
             {
+                // 
                 slotActiveStates[i] = false; // 아이템 없으면 판매 중지
                 slotPrices[i] = 0;           // 가격표 수거
             }
@@ -230,11 +240,20 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
     //가격 조회
     public int GetSlotPrice(int slotIndex)
     {
-        if (slotIndex >= 0 && slotIndex < slotPrices.Count)
-        {
-            return slotPrices[slotIndex];
-        }
-        return 0;
+        // 인벤토리 시스템 자체가 없거나, 인덱스가 범위를 벗어나면 0원
+        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.slots.Count)
+            return 0;
+
+        // 아이템이 비어있으면 0원
+        if (inventorySystem.slots[slotIndex].IsEmpty)
+            return 0;
+
+        // slotPrices의 범위를 벗어나면 0원 (리스트 싱크가 안 맞을 때)
+        if (slotIndex >= slotPrices.Count)
+            return 0;
+
+        // 실제 가격 리턴
+        return slotPrices[slotIndex];
     }
     
     public bool TryGetRandomSellableItem(out int slotIndex, out Transform itemLocation)
@@ -313,6 +332,11 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
         // 새로 만들기
         int size = playerData.GetDisplayStandSize(data.displayStandSize);
         inventorySystem = new InventorySystem(size);
+
+        // 시스템이 바뀌었으니, 이벤트도 새 시스템에 재연결
+        // 기존 연결 해제 후 다시 연결
+        inventorySystem.OnInventoryUpdated -= HandleInventoryUpdate;
+        inventorySystem.OnInventoryUpdated += HandleInventoryUpdate;
 
         //가격 정보
         slotPrices = new List<int>(new int[inventorySystem.slots.Count]); //기본 0으로 된 리스트

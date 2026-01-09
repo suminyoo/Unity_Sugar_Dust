@@ -7,6 +7,7 @@ public class StorageUIManager : MonoBehaviour
 
     [Header("Player")]
     public InventoryUI playerInventoryUI; // 플레이어 인벤토리
+    public GameObject playerBagPanel;     // 플레이어 인벤토리 전체를 감싸는 부모 패널 (토글 권한 위해)
 
     [Header("Target UIs ")] //상대스토리지가 사용할 ui들
     public InventoryUI myShopUI;
@@ -36,16 +37,23 @@ public class StorageUIManager : MonoBehaviour
 
     private void Update()
     {
-        // UI가 켜져 있고, 상대 스토리지가 존재할 때만 거리 체크
-        if (rootCanvas.activeSelf && _currentOtherHolder != null && _playerHolder != null)
+        if (rootCanvas.activeSelf)
         {
-            // 거리 계산
-            float dist = Vector3.Distance(_playerHolder.transform.position, _currentOtherHolder.transform.position);
-
-            // 멀어지면 닫기
-            if (dist > closeDistance)
+            // ESC 키로 닫기
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseStorage();
+                return;
+            }
+
+            // 거리 체크 (멀어지면 닫기)
+            if (_currentOtherHolder != null && _playerHolder != null)
+            {
+                float dist = Vector3.Distance(_playerHolder.transform.position, _currentOtherHolder.transform.position);
+                if (dist > closeDistance)
+                {
+                    CloseStorage();
+                }
             }
         }
     }
@@ -58,6 +66,9 @@ public class StorageUIManager : MonoBehaviour
         _currentOtherHolder = other;
 
         rootCanvas.SetActive(true);
+
+        //플레이어 가방 강제로열기 
+        playerBagPanel.SetActive(true);
 
         // 플레이어 UI 연결 및 갱신
         playerInventoryUI.connectedInventory = _playerHolder;
@@ -99,8 +110,15 @@ public class StorageUIManager : MonoBehaviour
 
     public void CloseStorage()
     {
+        // 루트배경
         rootCanvas.SetActive(false);
-        if (_currentOtherUI != null) _currentOtherUI.gameObject.SetActive(false);
+
+        // 상대ui 끄기
+        // TODO: 상점 배경?과 상대ui 수정 고려
+        _currentOtherUI.gameObject.SetActive(false);
+
+        // 플레이어 가방 끄기
+        playerBagPanel.SetActive(false);
 
         //_playerHolder = null;
         _currentOtherHolder = null;

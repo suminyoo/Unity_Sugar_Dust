@@ -1369,6 +1369,7 @@ GameObject:
   - component: {fileID: 3245679823336002408}
   - component: {fileID: 5486801414117316892}
   - component: {fileID: 3609651016474207609}
+  - component: {fileID: 8880582685080995894}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1424,6 +1425,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usageInfoUI: {fileID: 3236037031846218985}
   priceInfoUI: {fileID: 1605489342758217138}
+--- !u!114 &8880582685080995894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775549143135775410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512da14c1a8305f4c976cba46371f500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBagPanel: {fileID: 8098312485022705567}
+  toggleKey: 9
 --- !u!1 &808600524136313844
 GameObject:
   m_ObjectHideFlags: 0
@@ -7433,6 +7448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInventoryUI: {fileID: 221583159101405152}
+  playerBagPanel: {fileID: 8098312485022705567}
   myShopUI: {fileID: 4433821743675569097}
   commonStorageUI: {fileID: 0}
   weaponShopUI: {fileID: 0}
@@ -9105,6 +9121,8 @@ MonoBehaviour:
   activateButton: {fileID: 277408950551762822}
   buttonText: {fileID: 1941684127650819654}
   buttonImage: {fileID: 7511268590200301265}
+  activePriceColor: {r: 0, g: 0.6, b: 0, a: 0.8}
+  inactivePriceColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &7542076998311993720
 GameObject:
   m_ObjectHideFlags: 0
@@ -9905,11 +9923,11 @@ RectTransform:
   - {fileID: 8119989670359220096}
   - {fileID: 5853410038616845690}
   - {fileID: 5000407509076502233}
-  m_Father: {fileID: 7655878818097017118}
+  m_Father: {fileID: 2792401203903642155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -315}
   m_SizeDelta: {x: 320, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3604410094485432674
@@ -10102,57 +10120,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.01
---- !u!1 &8268597449982984717
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7655878818097017118}
-  - component: {fileID: 8755658939030766589}
-  m_Layer: 5
-  m_Name: PlayerTabToggle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7655878818097017118
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8268597449982984717}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1063389648587487630}
-  m_Father: {fileID: 2792401203903642155}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -315}
-  m_SizeDelta: {x: 320, y: 320}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8755658939030766589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8268597449982984717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512da14c1a8305f4c976cba46371f500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBagPanel: {fileID: 8098312485022705567}
-  toggleKey: 9
 --- !u!1 &8280032176916729036
 GameObject:
   m_ObjectHideFlags: 0
@@ -10994,7 +10961,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4747225447652751753}
-  - {fileID: 7655878818097017118}
+  - {fileID: 1063389648587487630}
   - {fileID: 8710498781692415076}
   - {fileID: 44763050174237776}
   - {fileID: 5609828916492187555}

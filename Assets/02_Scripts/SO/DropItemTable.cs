@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New Drop Item Table", menuName = "SO/Drop Table")]
+[CreateAssetMenu(fileName = "New Drop Item Table", menuName = "Game/Drop Table")]
 public class DropItemTable : ScriptableObject
 {
     [System.Serializable]

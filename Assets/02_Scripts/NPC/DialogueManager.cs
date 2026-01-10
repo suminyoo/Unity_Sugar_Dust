@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // TextMeshPro 사용 권장
+using TMPro;
 using System;
 
 public class DialogueManager : MonoBehaviour
@@ -8,12 +8,13 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     [Header("UI Components")]
-    public GameObject dialoguePanel; // 대화창 전체 패널
-    public TextMeshProUGUI nameText; // 화자 이름 텍스트
-    public TextMeshProUGUI dialogueText; // 대사 내용 텍스트
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI dialogueText;
 
     private Queue<string> sentences = new Queue<string>();
-    private Action onDialogueEnded; // 대화 끝났을 때 NPC에게 알려줄 신호
+
+    private Action onDialogueEnded;
     private bool isDialogueActive = false;
 
     private void Awake()
@@ -21,19 +22,19 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        dialoguePanel.SetActive(false); // 시작할 땐 꺼두기
+        dialoguePanel.SetActive(false); 
     }
 
     private void Update()
     {
-        // 대화 중일 때 마우스 클릭하면 다음 대사로
+        // 대화 중일 때 마우스 클릭하면 다음 대사
         if (isDialogueActive && Input.GetMouseButtonDown(0))
         {
             DisplayNextSentence();
         }
     }
 
-    // NPCBrain에서 이 함수를 호출해서 대화를 시작함
+    // NPCBrain에서 이 함수를 호출해서 대화시작
     public void StartDialogue(DialogueData data, Action callback)
     {
         if (data == null) return;
@@ -64,7 +65,7 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         dialogueText.text = sentence;
 
-        // [추후 구현: 타이핑 효과나 선택지 로직이 여기 들어감]
+        // [TODO: 타이핑 효과나 선택지 로직
         // StopAllCoroutines();
         // StartCoroutine(TypeSentence(sentence));
     }
@@ -74,7 +75,6 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
 
-        // NPC에게 "대화 끝났어!"라고 알림
         onDialogueEnded?.Invoke();
     }
 }

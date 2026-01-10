@@ -13,8 +13,8 @@ public class NPCData : ScriptableObject
 
     [Header("Interaction")]
     public string promptText = "[E] 대화하기"; // 상호작용 텍스트
+    public DialogueData defaultDialogue;
 
-    // 나중에 대화 데이터, 상점 인벤토리 데이터 등을 여기에 추가
-    // public DialogueData dialogue; 
+    // 나중에 대화 데이터, 상점 인벤토리 데이터 등을 추가?
     // public ShopData shopData;
 }

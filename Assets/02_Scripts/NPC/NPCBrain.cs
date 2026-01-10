@@ -41,7 +41,7 @@ public class NPCBrain : MonoBehaviour
         // 2. 대화 데이터 가져오기 (SO가 없으면 기본 대사)
         DialogueData dialogueToPlay = null;
         // 추후 NPCData에 DialogueData 필드를 추가해서 가져오면 됨
-        // dialogueToPlay = controller.data.dialogueData; 
+        dialogueToPlay = controller.data.defaultDialogue; 
 
         if (dialogueToPlay != null)
         {

@@ -4,12 +4,12 @@ using System.Collections;
 
 public class SpeechBubble : MonoBehaviour
 {
-    public GameObject bubbleCanvas; // Äµ¹ö½º ¿ÀºêÁ§Æ®
+    public GameObject bubbleCanvas;
     public TextMeshProUGUI bubbleText;
 
     private void Start()
     {
-        bubbleCanvas.SetActive(false); // Æò¼Ò¿£ ¼û±è
+        bubbleCanvas.SetActive(false);
     }
 
     public void ShowBubble(string text, float duration = 2.0f)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Dialogue", menuName = "SO/Dialogue Data")]
+[CreateAssetMenu(fileName = "New Dialogue", menuName = "NPC/Dialogue Data")]
 public class DialogueData : ScriptableObject
 {
     [Header("Speaker")]

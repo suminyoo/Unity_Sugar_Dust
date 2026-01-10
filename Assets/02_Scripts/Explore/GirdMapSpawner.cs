@@ -14,7 +14,6 @@ public class GridMapSpawner : MonoBehaviour
     public float cellSize = 3.0f;
     public GameObject groundPrefab;
     public NavMeshSurface navSurface;
-    public PlayerController player;       // 플레이어 (로딩 중엔 움직임 막기 위해)
 
     [Header("Objects")]
     public List<ExploreObjectData> mapObjects;     // 배치할 맵요소 (장애물 광물 등)
@@ -50,8 +49,7 @@ public class GridMapSpawner : MonoBehaviour
         loadingPanel.SetActive(true);
         statusText.text = "맵 로딩중...";
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        player.Wait();
+        InputControlManager.Instance.LockInput();
 
         InitializeMap();
 
@@ -95,8 +93,7 @@ public class GridMapSpawner : MonoBehaviour
         yield return new WaitForSeconds(1.0f); //로딩 완료 연출
 
         if (loadingPanel != null) loadingPanel.SetActive(false);
-        player.WaitDone();
-
+        InputControlManager.Instance.UnlockInput();
 
     }
     void CleanupMap()

@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
         playerCondition.OnTakeDamage += HandleHit;
         playerCondition.OnRevive += HandleRevive;
 
+        InputControlManager.Instance.OnInputStateChanged += HandleInputStateChange;
+
         Initialize();
     }
     public void Initialize()
@@ -79,6 +81,8 @@ public class PlayerController : MonoBehaviour
         playerCondition.OnDie -= HandleDie;
         playerCondition.OnTakeDamage -= HandleHit;
         playerCondition.OnRevive -= HandleRevive;
+
+        InputControlManager.Instance.OnInputStateChanged -= HandleInputStateChange;
     }
 
     void Update()
@@ -282,8 +286,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleInputStateChange(bool canInput)
+    {
+        if (!canInput)
+        {
+            Wait(); 
+        }
+        else
+        {
+            WaitDone();
+        }
+    }
 
-    public void Wait()
+    private void Wait()
     {
         if (currentState == PlayerState.Die) return;
 
@@ -300,7 +315,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void WaitDone()
+    private void WaitDone()
     {
         if (currentState == PlayerState.Wait)
         {

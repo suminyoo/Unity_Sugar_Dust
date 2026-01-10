@@ -328,7 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4116b4b0493b2194baa8029455435653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionPanel: {fileID: 6598396535932136334}
   interactionText: {fileID: 2065859867095909455}
   interactionRange: 15
 --- !u!54 &8593897148782400700
@@ -1504,6 +1503,7 @@ GameObject:
   - component: {fileID: 5486801414117316892}
   - component: {fileID: 3609651016474207609}
   - component: {fileID: 8880582685080995894}
+  - component: {fileID: 4182781579524009226}
   m_Layer: 0
   m_Name: '[Manager]UIManager'
   m_TagString: Untagged
@@ -1573,6 +1573,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBagPanel: {fileID: 8098312485022705567}
   toggleKey: 9
+--- !u!114 &4182781579524009226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775549143135775410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6e3c747f1f3ad48bf122a33ac8c1ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptPanel: {fileID: 6598396535932136334}
+  promptText: {fileID: 2065859867095909455}
 --- !u!1 &808600524136313844
 GameObject:
   m_ObjectHideFlags: 0
@@ -4751,7 +4765,7 @@ GameObject:
   - component: {fileID: 1808759543024097091}
   - component: {fileID: 2065859867095909455}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Prompt Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6246,6 +6260,7 @@ Transform:
   - {fileID: 3245679823336002408}
   - {fileID: 6318424518825707021}
   - {fileID: 3089327327259577105}
+  - {fileID: 250641219469536242}
   - {fileID: 3552847713137809822}
   - {fileID: 2792401203903642155}
   - {fileID: 4050761244204073454}
@@ -6671,6 +6686,50 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &5357081304250780852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 250641219469536242}
+  - component: {fileID: 3981546976062822080}
+  m_Layer: 0
+  m_Name: '[Manager]InputManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &250641219469536242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357081304250780852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7074822179238064517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3981546976062822080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357081304250780852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f7ddb35cd448149b9f13d00123a13a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5434904012171507182
 GameObject:
   m_ObjectHideFlags: 0
@@ -8375,7 +8434,7 @@ GameObject:
   - component: {fileID: 8031009634397101453}
   - component: {fileID: 1679550557081976658}
   m_Layer: 5
-  m_Name: InteractionUI
+  m_Name: PromptUI
   m_TagString: InteractionUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

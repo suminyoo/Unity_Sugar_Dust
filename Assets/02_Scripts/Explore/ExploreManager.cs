@@ -145,7 +145,7 @@ public class ExploreManager : MonoBehaviour
 
         if (resultMessageText != null) resultMessageText.text = "탐사 성공! 무사히 귀환합니다.";
 
-        if (player != null) player.Wait();
+        InputControlManager.Instance.LockInput();
 
         ShowResultItems();
 

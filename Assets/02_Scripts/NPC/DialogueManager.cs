@@ -39,6 +39,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (data == null) return;
 
+        InputControlManager.Instance.LockInput();
+
         isDialogueActive = true;
         onDialogueEnded = callback; // 끝날 때 실행할 함수 저장
 
@@ -76,5 +78,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
 
         onDialogueEnded?.Invoke();
+
+        InputControlManager.Instance.UnlockInput();
     }
 }

@@ -9,26 +9,18 @@ public interface IInteractable
 }
 public class InteractionSystem : MonoBehaviour
 {
-    public GameObject interactionPanel;
     public TextMeshProUGUI interactionText;
-    public float interactionRange = 10.0f; //안전장치용 거리이기때문에 넉넉히 10 이상(물체 크기 고려가능)
+    public float interactionRange = 10.0f; //안전장치용 거리이기때문에 넉넉히 10 이상(물체 크기 고려?)
 
     // 현재 범위 안에 있는 상호작용 가능한 물체들을 담을 리스트
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
     private IInteractable currentInteractable;
-
-    void Start()
-    {
-        interactionPanel.SetActive(false);
-        
-    }
 
     void Update()
     {
         //팝업창이 켜져 있다면 패널끔
         if (CommonConfirmPopup.Instance != null && CommonConfirmPopup.Instance.gameObject.activeSelf)
         {
-            if (interactionPanel != null) interactionPanel.SetActive(false);
             return; 
         }
 
@@ -67,7 +59,6 @@ public class InteractionSystem : MonoBehaviour
     {
         interactablesInRange.Clear(); // 리스트 비우기
         currentInteractable = null;   // 현재 타겟 해제
-        if (interactionPanel != null) interactionPanel.SetActive(false); // UI 끄기
     }
 
     // 리스트 중 가장 가까운 물체를 현재 타겟으로
@@ -78,17 +69,15 @@ public class InteractionSystem : MonoBehaviour
         if (interactablesInRange.Count == 0)
         {
             currentInteractable = null;
-            if (interactionPanel != null) interactionPanel.SetActive(false);
+            PromptUIManager.Instance.ClearInteractionPrompt();
             return;
         }
 
         currentInteractable = interactablesInRange[0];
 
-        if (interactionPanel != null)
-        {
-            interactionPanel.SetActive(true);
-            if (interactionText != null) interactionText.text = currentInteractable.GetInteractPrompt();
-        }
+        
+        PromptUIManager.Instance.SetInteractionPrompt(currentInteractable.GetInteractPrompt());
+        
     }
 
     void HandleInput()

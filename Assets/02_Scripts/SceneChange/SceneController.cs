@@ -87,6 +87,8 @@ public class SceneController : MonoBehaviour
         // Fade In
         yield return StartCoroutine(Fade(0f));
 
+        InputControlManager.Instance.UnlockInput();
+
     }
 
     private IEnumerator Fade(float finalAlpha)

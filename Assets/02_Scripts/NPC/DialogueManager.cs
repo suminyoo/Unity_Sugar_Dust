@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // NPCBrain에서 이 함수를 호출해서 대화시작
-    public void StartDialogue(DialogueData data, Action callback)
+    public void StartDialogue(DialogueData data, string speakerName, Action callback)
     {
         if (data == null) return;
 
@@ -45,7 +45,7 @@ public class DialogueManager : MonoBehaviour
         onDialogueEnded = callback; // 끝날 때 실행할 함수 저장
 
         dialoguePanel.SetActive(true);
-        nameText.text = data.speakerName;
+        nameText.text = speakerName;
 
         sentences.Clear();
         foreach (string sentence in data.sentences)

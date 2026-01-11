@@ -48,8 +48,8 @@ public class InteractionSystem : MonoBehaviour
 
             if (distance > interactionRange)
             {
-                // 트리거안에 있어도 중심점이 멀면 지워질 수 있음 문제발생시 로그 확인
-                //Debug.LogWarning($"[System] 거리 이탈로 삭제됨: {target.name} (거리: {distance:F2} > {interactionRange})");
+                // 트리거안에 있어도 중심점이 멀면 지워질 수 있음
+                //Debug.LogWarning($"상호작용물체와 멀어져서 삭제됨: {target.name} (거리: {distance:F2} > {interactionRange})");
                 interactablesInRange.RemoveAt(i);
             }
         }

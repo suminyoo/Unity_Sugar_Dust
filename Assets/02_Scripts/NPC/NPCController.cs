@@ -3,7 +3,7 @@ using UnityEngine;
 //NPCBrain은 NPCController에게만 말하고, NPCController가 Animation을 관리하는 구조
 public class NPCController : MonoBehaviour
 {
-    public NPCData data;
+    public NPCData npcData;
 
     public PatrolPath assignedPath;
 
@@ -26,7 +26,7 @@ public class NPCController : MonoBehaviour
         Animation.Init(Movement);
 
         // 데이터 적용 init
-        Movement.SetSpeed(data.moveSpeed);
+        Movement.SetSpeed(npcData.moveSpeed);
         
     }
 

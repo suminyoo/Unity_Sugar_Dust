@@ -10,7 +10,6 @@ public class ExploreManager : MonoBehaviour
     private bool isExploreStarted = false;
     private Transform playerSpawnPoint;
 
-
     [Header("References")]
     private PlayerController player;
     public GridMapSpawner mapSpawner;

@@ -129,6 +129,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // 좌클릭인 경우에만 아래 로직 수행
         if (eventData.button == PointerEventData.InputButton.Left)
         {
+            if (_managerUI.contextType == InventoryContext.NPCShop) return;
+
             // ==== Ctrl 좌클릭으로 한개 집기
             // 일반 좌클릭보다 특수 키 조합을 먼저 체크하여 중복 실행 방지
             if (Input.GetKey(KeyCode.LeftControl))
@@ -183,6 +185,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // 드래그 시작 (좌클릭)
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (_managerUI.contextType == InventoryContext.NPCShop) return;
+
         if (_slot.IsEmpty || eventData.button != PointerEventData.InputButton.Left) return;
 
         int amountToPick = _slot.amount;

@@ -10,6 +10,7 @@ public class PlayerAssetsManager : MonoBehaviour
     [SerializeField] private int currentMoney = 0;
 
 
+
     // 특수 장비/능력 (Key Items) 관리 (중복 방지를 위해 HashSet 사용)
     // 예: "Translator", "RunningShoes" 등의 문자열 ID로 관리
     //가구 증서? 등등
@@ -54,16 +55,30 @@ public class PlayerAssetsManager : MonoBehaviour
         Debug.Log($"[Money] {amount}원 획득 (현재: {currentMoney})");
     }
 
-    // 나중에 플레이어가 상점을 확장하거나 가구를 살 때 사용
     public bool TrySpendMoney(int amount)
     {
-        if (currentMoney >= amount)
+        if (CheckMoney(amount))
         {
             currentMoney -= amount;
             OnMoneyChanged?.Invoke(currentMoney);
             return true;
         }
         return false;
+    }
+
+    public bool CheckMoney(int amount)
+    {
+        if (currentMoney >= amount)
+        {
+            return true;
+        }
+        else
+        {
+            Debug.Log("돈이 부족합니다");
+            //TODO: 돈 부족하다는 알림창 메세지 보내서 띄우는 클래스 구현
+            return false;
+
+        }
     }
 
 

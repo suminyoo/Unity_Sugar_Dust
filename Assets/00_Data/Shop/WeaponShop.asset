@@ -14,4 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopName: "\uBB34\uAE30\uC0C1\uC810"
   itemsForSale:
-  - {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
+  - itemData: {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
+    priceOverride: -1
+    stockCount: 10
+    isInfinite: 0
+  - itemData: {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
+    priceOverride: 500
+    stockCount: 2
+    isInfinite: 0
+  - itemData: {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
+    priceOverride: 1000
+    stockCount: 3
+    isInfinite: 1
+  - itemData: {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
+    priceOverride: 0
+    stockCount: 3
+    isInfinite: 1

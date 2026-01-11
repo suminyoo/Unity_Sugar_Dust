@@ -243,9 +243,33 @@ public class InventoryUI : MonoBehaviour
                 break;
 
             case InventoryContext.NPCShop:
-                // 구매창 띄우기 (가격만 필요하면 인터페이스 그대로 사용)
-                int price = (currentShopSource != null) ? currentShopSource.GetPrice(slotIndex) : 0;
-                ItemUIPopupManager.Instance.ShowBuyConfirm(slot.itemData, price);
+                if (currentShopSource is NPCShop shop)
+                {
+                    // 비활성화 상태면 무시
+                    if (!shop.IsSlotActive(slotIndex)) return;
+
+                    int price = shop.GetPrice(slotIndex);
+
+                    // 구매 팝업 띄우기
+                    ItemUIPopupManager.Instance.ShowPurchaseInfo(
+                        slot.itemData,
+                        price,
+                        // 확인 버튼 콜백
+                        () =>
+                        {
+                            // 플레이어 인벤토리 찾기 (잠깐 찾는거니까 갠춘)
+                            var playerInv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+
+                            // 구매 시도
+                            bool success = shop.TryPurchaseItem(slotIndex, playerInv);
+
+                            if (success)
+                            {
+                                Debug.Log("구매 성공!");
+                            }
+                        }
+                    );
+                }
                 break;
         }
     }

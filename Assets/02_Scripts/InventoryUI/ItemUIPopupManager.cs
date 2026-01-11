@@ -8,7 +8,7 @@ public class ItemUIPopupManager : MonoBehaviour
     [Header("Panels")]
     public ItemUsageInfoUI usageInfoUI; // 기존 정보창
     public ItemPriceInfoUI priceInfoUI; // 가격 설정창
-    // public ShopBuyConfirmUI shopBuyUI;    // (새로 만들) 구매 확인창
+    public ItemPurchaseInfoUI purchaseInfoUI;    // 구매창
 
     private void Awake()
     {
@@ -30,16 +30,17 @@ public class ItemUIPopupManager : MonoBehaviour
     }
 
     // 상점용 아이템 창
-    public void ShowBuyConfirm(ItemData data, int price)
+    public void ShowPurchaseInfo(ItemData data, int currentPrice, Action onConfirm)
     {
-        // shopBuyUI.Open(data, price);
-        Debug.Log($"[Popup] 구매창 오픈: {data.itemName} ({price}G)");
+        purchaseInfoUI.OpenPanel(data, currentPrice, onConfirm);
     }
 
+    //TODO: 로직 수정??
     public void CloseAllPopups()
     {
         usageInfoUI.Close();
         priceInfoUI.Close();
+        purchaseInfoUI.Close();
         // shopBuyUI.Close();
     }
 }

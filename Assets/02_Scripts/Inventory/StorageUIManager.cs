@@ -32,7 +32,7 @@ public class StorageUIManager : MonoBehaviour
     private InventoryHolder _playerHolder;
     private InventoryHolder _currentOtherHolder; // 현재 거래 중인 Storage
     private InventoryUI _currentOtherUI;         // 현재 켜져 있는 Storage UI
-    private GameObject _currentOtherPanel;
+    private GameObject _currentOtherPanel;       // 현재 켜져 있는 Storage UI를 자식으로 두는 패널
 
     [Header("Others")]
     public float closeDistance = 3.0f;
@@ -151,15 +151,15 @@ public class StorageUIManager : MonoBehaviour
 
         // 상대ui 끄기
         // TODO: 상점 배경?과 상대ui 수정 고려
-        _currentOtherUI.gameObject.SetActive(false);
-        _currentOtherPanel.SetActive(false);
+        if (_currentOtherUI != null) _currentOtherUI.gameObject.SetActive(false);
+        if (_currentOtherPanel != null) _currentOtherPanel.SetActive(false);
 
         // 플레이어 가방 끄기
         playerBagPanel.SetActive(false);
 
-
         _currentOtherHolder = null;
         _currentOtherUI = null;
+        _currentOtherPanel = null;
 
         if (onCloseCallback != null)
         {
@@ -171,8 +171,11 @@ public class StorageUIManager : MonoBehaviour
     // 아이템 이동 요청 처리 (슬롯에서 호출)
     public void HandleItemTransfer(int slotIndex, InventoryUI clickedUI)
     {
-        // 스토리지?> 샵이 안 열려있으면 무시
+        // 스토리지 안 열려있으면 무시
         if (!rootCanvas.activeSelf) return;
+
+        // 상점에서는 아이템 이동 불가
+        if (clickedUI.contextType == InventoryContext.NPCShop) return;
 
         InventoryHolder fromHolder = null;
         InventoryHolder toHolder = null;
@@ -182,6 +185,10 @@ public class StorageUIManager : MonoBehaviour
         {
             fromHolder = _playerHolder;       // 플레이어
             toHolder = _currentOtherHolder;   // 현재 열린 스토리지
+
+
+            // 플레이어 인벤토리에서 상점으로 아이템 이동 금지 (기부행동 레전드)
+            if (_currentOtherUI != null && _currentOtherUI.contextType == InventoryContext.NPCShop) return;
         }
         // 현재열린상대방 UI를 클릭했느,ㄴ지
         else if (clickedUI == _currentOtherUI)
@@ -192,11 +199,7 @@ public class StorageUIManager : MonoBehaviour
 
         // 전송 실행
         if (fromHolder != null && toHolder != null)
-        {
-            // 여기서 NPC 상점이면 이동 막기 가능
-            // 그러면 클릭 구매만 되는것임 (구현 고려)
-            // 예: if (clickedUI.contextType == InventoryContext.NPCShop) return;
-
+        { 
             fromHolder.TransferTo(slotIndex, toHolder);
         }
     }

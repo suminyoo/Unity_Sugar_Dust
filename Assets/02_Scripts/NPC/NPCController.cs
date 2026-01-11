@@ -4,7 +4,6 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     public NPCData npcData;
-
     public PatrolPath assignedPath;
 
 
@@ -21,13 +20,15 @@ public class NPCController : MonoBehaviour
         Animation = GetComponent<NPCAnimation>(); // 추가됨
         Bubble = GetComponentInChildren<SpeechBubble>();
 
+    }
 
+    private void Start()
+    {
         // 애니메이션 컴포넌트 초기화 (Movement를 넘겨줌)
         Animation.Init(Movement);
-
         // 데이터 적용 init
         Movement.SetSpeed(npcData.moveSpeed);
-        
+
     }
 
     public void OnInteract()

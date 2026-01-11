@@ -14,7 +14,8 @@ public class NPCData : ScriptableObject
     public string promptText = $"[E] 대화하기"; // 상호작용 텍스트
     public DialogueData defaultDialogue;
 
-    public string defaultGreeting;
+    public string defaultGreetingMessage;
+    public string defaultGoodByeMessage;
     public float detectRange = 5.0f;
 
 }

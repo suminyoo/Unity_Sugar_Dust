@@ -42,10 +42,10 @@ public class NPCBrain : MonoBehaviour
             isPlayerInRange = true;
 
             // 인사
-            string msg = controller.npcData.defaultGreeting;
+            string msg = controller.npcData.defaultGreetingMessage;
             if (!string.IsNullOrEmpty(msg))
             {
-                controller.Bubble.ShowBubble(msg, 3f);
+                controller.Bubble.ShowBubble(msg);
             }
         }
         // 범위 밖에 나감. 나가는 반경 1.2배
@@ -82,7 +82,7 @@ public class NPCBrain : MonoBehaviour
         if (playerTransform != null) controller.Movement.LookAtTarget(playerTransform);
         if (controller.Animation != null) controller.Animation.PlayTalkRandom();
     }
-    protected IEnumerator DialogueProcess()
+    protected IEnumerator DialogueProcess(bool showAutoGoodbye = true)
     {
         //대화 데이터 가져오기 (SO연결 필요)
         DialogueData dialogueToPlay = controller.npcData.defaultDialogue;
@@ -99,13 +99,24 @@ public class NPCBrain : MonoBehaviour
             );
             //대화 끝날때까지 대기
             yield return new WaitUntil(() => dialogueFinished);
+
         }
-        else
+        if (showAutoGoodbye)
         {
-            // 데이터가 없음 
-            //TODO: 데이터 없을경우 말풍선 대사 리스트 따로 제작
-            controller.Bubble.ShowBubble("바쁜 외계인한테 말걸지마", 2f);
-            yield return new WaitForSeconds(2f);
+            ShowGoodbyeMessage();
+        }
+
+    }
+
+    // 굿바이 인사
+    protected void ShowGoodbyeMessage()
+    {
+        if (controller.npcData == null) return;
+
+        string msg = controller.npcData.defaultGoodByeMessage;
+        if (!string.IsNullOrEmpty(msg))
+        {
+            controller.Bubble.ShowBubble(msg);
         }
     }
 
@@ -116,11 +127,11 @@ public class NPCBrain : MonoBehaviour
         isInteracting = false;
     }
  
-    // 혼잣말 테스트용 함수
+    // 혼잣말 함수
     public void SayToSelf(string text)
     {
         if (controller.Bubble != null)
-            controller.Bubble.ShowBubble(text, 3f);
+            controller.Bubble.ShowBubble(text);
     }
 
 

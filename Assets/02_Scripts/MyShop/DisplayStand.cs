@@ -6,7 +6,6 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
     #region Variables & Data
 
     public PlayerData playerData; // SO 
-    private PlayerInventory playerInventory;
 
     private List<Transform> displayPoints = new List<Transform>();
     private List<GameObject> spawnedVisualItems = new List<GameObject>();
@@ -28,7 +27,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
 
     public void OnInteract()
     {
-        StorageUIManager.Instance.OpenStorage(playerInventory, this, "MyShop");
+        StorageUIManager.Instance.OpenStorage(this, "MyShop");
     }
     #endregion
 
@@ -73,8 +72,6 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
 
     private void Start()
     {
-        playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-
         LoadDisplayStandFromManager(); // 시작할 때 로드
 
         //사이즈 맞춰 진열대 배치

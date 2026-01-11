@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: NPC_Default_1
   m_EditorClassIdentifier: 
   npcName: "\uBCF4\uB77C\uC678\uACC4\uC778"
-  description: "\uB9C8\uC744 \uC8FC\uBBFC 1"
+  description: "\uB9C8\uC744 \uC8FC\uBBFC"
   moveSpeed: 3.5
   waitTimeAtPoint: 2
   promptText: "[E] \uB300\uD654\uD558\uAE30"
   defaultDialogue: {fileID: 11400000, guid: e38ef6338f78e644da98dd32a0febf85, type: 2}
-  defaultGreeting: "\uC548\uB155\uD558\uC138\uC694"
+  defaultGreetingMessage: "\uC548\uB155"
+  defaultGoodByeMessage: "\uC798\uAC00"
   detectRange: 5

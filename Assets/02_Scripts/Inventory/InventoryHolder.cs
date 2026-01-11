@@ -6,7 +6,7 @@ public class InventoryHolder : MonoBehaviour
     private int inventorySize;
     public Transform itemDropPosition; // 버릴 위치
 
-    //외부에서는 못건들고 구현하는 자식만 건들 수 있게
+    //구현하는 자식만 건들 수 있게
     [SerializeField] protected InventorySystem inventorySystem;
     public InventorySystem InventorySystem => inventorySystem; //얘는 public
 

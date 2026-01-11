@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 아직 미사용중
 public class StorageBox : InventoryHolder, IInteractable
 {
     public string boxID; // (Box_01, Box_Kitchen 등)
@@ -35,6 +36,6 @@ public class StorageBox : InventoryHolder, IInteractable
     public void OnInteract()
     {
         // 필요하다면 UI 타입을 "Box"로 설정 가능
-        StorageUIManager.Instance.OpenStorage(playerInventory, this, "Common");
+        StorageUIManager.Instance.OpenStorage(this, "Common");
     }
 }

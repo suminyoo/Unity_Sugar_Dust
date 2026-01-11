@@ -8776,7 +8776,7 @@ GameObject:
   - component: {fileID: 8551047649977282197}
   - component: {fileID: 763711314978499784}
   m_Layer: 5
-  m_Name: MyShopUI
+  m_Name: NPCShopUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8879,7 +8879,7 @@ MonoBehaviour:
   mouseItemData: {fileID: 2281678454508198926}
   slotPrefab: {fileID: 7153219060786524397, guid: 4f1466e4a78ae1949baebd7f87e9726d, type: 3}
   contentPanel: {fileID: 6904487569872492672}
-  contextType: 2
+  contextType: 3
 --- !u!1 &6047621030883717913
 GameObject:
   m_ObjectHideFlags: 0
@@ -9291,9 +9291,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInventoryUI: {fileID: 221583159101405152}
   playerBagPanel: {fileID: 8098312485022705567}
+  myShopPanel: {fileID: 1435851965925081447}
+  npcShopPanel: {fileID: 7583886629423911235}
+  commonStoragePanel: {fileID: 0}
   myShopUI: {fileID: 4433821743675569097}
+  npcShopUI: {fileID: 763711314978499784}
   commonStorageUI: {fileID: 0}
-  weaponShopUI: {fileID: 0}
   rootCanvas: {fileID: 6081492799921224555}
   closeDistance: 10
 --- !u!1 &6143510223119952387
@@ -11717,7 +11720,7 @@ GameObject:
   - component: {fileID: 914372312044681113}
   - component: {fileID: 3163706979896594834}
   m_Layer: 5
-  m_Name: ShopPanel
+  m_Name: NPCShopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14181,7 +14184,7 @@ GameObject:
   - component: {fileID: 7133311208851642572}
   - component: {fileID: 6207384097236230326}
   m_Layer: 5
-  m_Name: MyShopText
+  m_Name: NPCShopText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

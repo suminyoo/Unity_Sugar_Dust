@@ -13,6 +13,11 @@ public class CameraFollow : MonoBehaviour
     public float maxDistance = 20f;
     public float zoomSmoothTime = 0.2f;
 
+    [Header("Collision Settings")]
+    public LayerMask collisionLayers; // 벽으로 인식할 레이어 (Inspector에서 꼭 설정하세요!)
+    public float cameraRadius = 0.2f; // 감지할 카메라 두께
+    public float wallOffset = 0.1f;   // 벽에서 살짝 띄우는 거리
+
     private float currentXAngle = 0f;
     private float currentYAngle = 30f;
     private Vector3 currentVelocity = Vector3.zero; // SmoothDamp 용 변수 (변수유지해야 함수 쓸때 초기화 안됨)
@@ -65,20 +70,33 @@ public class CameraFollow : MonoBehaviour
         // 줌 거리 부드럽게 SmoothDamp
         currentDistance = Mathf.SmoothDamp(currentDistance, targetDistance, ref zoomVelocity, zoomSmoothTime);
 
+        //회전값
         Quaternion rotation = Quaternion.Euler(currentYAngle, currentXAngle, 0);
 
-        // 기존 offset.magnitude 대신 가변적인 currentDistance 사용
-        Vector3 rotatedOffset = rotation * new Vector3(0, 0, -currentDistance);
-        Vector3 targetPosition = target.position + rotatedOffset;
+        // 머리 높이 피봇
+        Vector3 pivot = target.position + Vector3.up * 1.5f;
+        Vector3 dir = rotation * Vector3.back; // 카메라뒷방향
 
-        // 카메라의 부드러운 이동, 관성 있게 smoothDamp
+        float finalDistance = currentDistance;
+
+        // 플레이어 머리에서 카메라 방향으로 SphereCast
+        RaycastHit hit;
+        if (Physics.SphereCast(pivot, cameraRadius, dir, out hit, currentDistance, collisionLayers))
+        {
+            // 벽에 닿았다면 거리를 벽까지의 거리로 짧게 줄임
+            // 최소 거리보다는 멀게 유지해야함
+            float distToWall = hit.distance - wallOffset;
+            finalDistance = Mathf.Clamp(distToWall, minDistance, currentDistance);
+        }
+
+        // 최종 위치 계산
+        // pivot에서 dir으로 finalDistance만큼
+        Vector3 targetPosition = pivot + (dir * finalDistance);
+
+        // 이동
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
-        //transform.position = Vector3.Lerp(
-        //    transform.position,
-        //    targetPosition,
-        //    1f - Mathf.Exp(-followSpeed * Time.deltaTime)
-        //    );
 
-        transform.LookAt(target.position + Vector3.up * 1.5f); //타겟 머리쪽 보기
+        // 타겟 바라보기
+        transform.LookAt(pivot);
     }
 }

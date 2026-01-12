@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d976102a3a3cf2f4d8cd84c8a54b49b2, type: 3}
-  m_Name: Mineral1Drop
+  m_Name: SugarDustChunk_3Drop
   m_EditorClassIdentifier: 
   dropList:
-  - itemPrefab: {fileID: 7526708260535565530, guid: a54a4fdb4fe9f2b42ab485333330d4f8, type: 3}
+  - itemPrefab: {fileID: 4261355973684887976, guid: ebaf7372a8c0ad746b4540883ef702bb, type: 3}
     dropChance: 100
-    minAmount: 2
-    maxAmount: 4
+    minAmount: 1
+    maxAmount: 3
+  spawnRadius: 2

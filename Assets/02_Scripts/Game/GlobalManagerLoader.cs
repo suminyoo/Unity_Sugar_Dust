@@ -12,7 +12,7 @@ public class GlobalManagerLoader : MonoBehaviour
 
     private void Awake()
     {
-        // 매니저 생성 (없을 경우에만)
+        // 매니저 생성 (없으면)
         if (GameManager.Instance == null)
         {
             GameObject managers = Instantiate(globalManagers);

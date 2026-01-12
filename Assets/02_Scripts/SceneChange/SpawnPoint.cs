@@ -1,4 +1,18 @@
 using UnityEngine;
+
+public enum SCENE_NAME
+{
+    None,
+    Title,
+    Town,
+    Explore,
+    PlayerHome,
+
+    HospitalRoom,
+    WeaponStoreRoom,
+    FurnitureStoreRoom,
+}
+
 public enum SPAWN_ID
 {
     None,

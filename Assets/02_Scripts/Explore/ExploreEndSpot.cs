@@ -4,7 +4,6 @@ using System;
 public class ExploreEndSpot : MonoBehaviour, IInteractable
 {
     public static event Action OnPlayerReturnToTown;   
-    public string townSceneName = "Town";
 
     public string GetInteractPrompt() => "[E] 우주선 부르기";
 

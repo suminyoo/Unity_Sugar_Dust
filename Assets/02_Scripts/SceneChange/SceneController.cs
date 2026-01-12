@@ -24,12 +24,12 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    public void LoadScene(string sceneName, SPAWN_ID spawnPointID)
+    public void LoadScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
         StartCoroutine(SceneTransitionCor(sceneName, spawnPointID));
     }
 
-    private IEnumerator SceneTransitionCor(string sceneName, SPAWN_ID spawnPointID)
+    private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
@@ -80,7 +80,7 @@ public class SceneController : MonoBehaviour
         }
 
         // 씬 로드
-        yield return SceneManager.LoadSceneAsync(sceneName);
+        yield return SceneManager.LoadSceneAsync(sceneName.ToString());
 
         yield return null;
 

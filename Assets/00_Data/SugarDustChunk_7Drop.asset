@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d976102a3a3cf2f4d8cd84c8a54b49b2, type: 3}
+  m_Name: SugarDustChunk_7Drop
+  m_EditorClassIdentifier: 
+  dropList:
+  - itemPrefab: {fileID: 6598014453381679472, guid: 1b8608c827db31440bcfc7fe15bc9f2d, type: 3}
+    dropChance: 100
+    minAmount: 1
+    maxAmount: 3
+  spawnRadius: 2

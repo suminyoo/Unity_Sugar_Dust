@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 {
-    [Header("Settings")]
     public GridMapSpawner mapSpawner;
 
     public string GetInteractPrompt() => "[E] 더 깊은 곳 탐사하기";

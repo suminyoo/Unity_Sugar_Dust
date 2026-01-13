@@ -110,6 +110,8 @@ public class SceneController : MonoBehaviour
         // ¾À ·Îµå
         yield return SceneManager.LoadSceneAsync(sceneName.ToString());
 
+        PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
+
         yield return null;
 
         // Fade In
@@ -168,10 +170,10 @@ public class SceneController : MonoBehaviour
 
     public void ChangeSceneAndAddScene(SCENE_NAME changeSceneName, SCENE_NAME addSceneName, SPAWN_ID spawnPos)
     {
-        StartCoroutine(FailSequenceCor(changeSceneName, addSceneName, spawnPos));
+        StartCoroutine(ChangeAndAddCor(changeSceneName, addSceneName, spawnPos));
     }
 
-    private IEnumerator FailSequenceCor(SCENE_NAME baseScene, SCENE_NAME additiveScene, SPAWN_ID targetID)
+    private IEnumerator ChangeAndAddCor(SCENE_NAME baseScene, SCENE_NAME additiveScene, SPAWN_ID targetID)
     {
         yield return StartCoroutine(SceneTransitionCor(baseScene, SPAWN_ID.NONE));
         yield return StartCoroutine(AdditiveLoadCor(additiveScene.ToString(), targetID, false));

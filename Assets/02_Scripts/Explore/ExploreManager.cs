@@ -9,6 +9,7 @@ public class ExploreManager : MonoBehaviour
     private bool isExplorationEnded = false;
     private bool isExploreStarted = false;
     private Transform playerSpawnPoint;
+    private bool isExploreSuccess = false;
 
     [Header("References")]
     private PlayerController player;
@@ -91,6 +92,7 @@ public class ExploreManager : MonoBehaviour
     {
         if (isExplorationEnded) return;
         isExplorationEnded = true;
+        isExploreSuccess = false; 
 
         if (resultMessageText != null) resultMessageText.text = "탐사 실패...";
 
@@ -137,6 +139,7 @@ public class ExploreManager : MonoBehaviour
     {
         if (isExplorationEnded) return;
         isExplorationEnded = true;
+        isExploreSuccess = true;
 
         Debug.Log("탐사 성공");
 
@@ -148,11 +151,25 @@ public class ExploreManager : MonoBehaviour
 
     }
 
+    // 탐사 완료 후 결과창 버튼에 할당
     public void ReturnToTown()
     {
-        Debug.Log($"SceneController : {SceneController.Instance}");
-        Debug.Log($"GameManager : {GameManager.Instance}");
-        SceneController.Instance.LoadScene(SCENE_NAME.Town, SPAWN_ID.Town_Center);
+        InputControlManager.Instance.UnlockInput();
+
+        if (isExploreSuccess)
+        {
+            // 성공: 마을 센터로 일반 이동
+            SceneController.Instance.ChangeScene(SCENE_NAME.TOWN, SPAWN_ID.TOWN_CENTER);
+        }
+        else
+        {
+            // 실패(플레이어죽음): 마을 로드 후 Additive 씬을 로드하고 플레이어 이동
+            SceneController.Instance.ChangeSceneAndAddScene(
+                SCENE_NAME.TOWN,
+                SCENE_NAME.HOSPITAL_ROOM,
+                SPAWN_ID.HOSPITAL_BED
+            );
+        }
     }
 
     public float GetCurrentTime()

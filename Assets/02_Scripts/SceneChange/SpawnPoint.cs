@@ -2,23 +2,33 @@ using UnityEngine;
 
 public enum SCENE_NAME
 {
-    None,
-    Title,
-    Town,
-    Explore,
-    PlayerHome,
+    NONE,
+    TITLE,
+    TOWN,
+    EXPLORE,
+    PLAYER_HOME,
 
-    HospitalRoom,
-    WeaponStoreRoom,
-    FurnitureStoreRoom,
+    HOSPITAL_ROOM,
+    WEAPON_STORE,
+    FURNITURE_STORE,
+    LIBRARY_ROOM,
+
+
+    
+
 }
 
 public enum SPAWN_ID
 {
-    None,
-    Town_Center,    // ¸¶À» ±¤Àå
-    Town_Hospital,  // º´¿ø
-    Explore_Start,  // Å½»ç ½ÃÀÛÁ¡
+    NONE = 0,
+    TOWN_CENTER = 100,    // ¸¶À» ±¤Àå
+
+    EXPLORE_START = 200,  // Å½»ç ½ÃÀÛÁ¡
+
+    ROOM_SCENE_ENTRY = 300,
+
+    HOSPITAL_BED = 310,
+    HOSPITAL_FRONTDOOR = 311,
 
 }
 

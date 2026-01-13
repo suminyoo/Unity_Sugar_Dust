@@ -11,7 +11,7 @@ public class ExploreStartInTown : MonoBehaviour, IInteractable
             "탐사를 시작하시겠습니까?",
             () => {
                 Debug.Log("탐사로 이동 중...");
-                SceneController.Instance.LoadScene(SCENE_NAME.Explore, SPAWN_ID.Explore_Start);
+                SceneController.Instance.ChangeScene(SCENE_NAME.EXPLORE, SPAWN_ID.EXPLORE_START);
                 //OnPlayerGoExplore?.Invoke();
             }
         );

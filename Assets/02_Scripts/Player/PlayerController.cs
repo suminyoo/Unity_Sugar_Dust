@@ -273,6 +273,7 @@ public class PlayerController : MonoBehaviour
 
         OnPlayerDied?.Invoke();
     }
+    
     private void HandleRevive()
     {
         if (currentState == PlayerState.Die)

@@ -114,6 +114,15 @@ public class SceneController : MonoBehaviour
 
         yield return null;
 
+        if (PlayerSpawnHandler.Instance != null)
+        {
+            PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
+        }
+        else
+        {
+            Debug.LogError("새로운 씬에 PlayerSpawnHandler가 없습니다!");
+        }
+
         // Fade In
         yield return StartCoroutine(Fade(0f));
 
@@ -163,7 +172,12 @@ public class SceneController : MonoBehaviour
         }
 
         // 플레이어 이동
-        PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
+        yield return null;
+
+        if (PlayerSpawnHandler.Instance != null)
+        {
+            PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
+        }
     }
 
     #endregion

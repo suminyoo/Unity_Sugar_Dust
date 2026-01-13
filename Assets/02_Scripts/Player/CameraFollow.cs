@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
+
     public Vector3 offset = new Vector3(-10, 10, 5);
     public float rotateSpeed = 200f;
     public float smoothTime = 0.05f;
@@ -22,6 +23,9 @@ public class CameraFollow : MonoBehaviour
     private float currentYAngle = 30f;
     private Vector3 currentVelocity = Vector3.zero; // SmoothDamp 용 변수 (변수유지해야 함수 쓸때 초기화 안됨)
 
+    private float minVerticalAngle = 10f; // 최저 각도
+    private float maxVerticalAngle = 80f;  // 최고 각도
+
     // 줌 제어 변수
     private float targetDistance;
     private float currentDistance;
@@ -32,6 +36,8 @@ public class CameraFollow : MonoBehaviour
         // 초기 거리는 설정된 offset의 길이로 시작
         targetDistance = offset.magnitude;
         currentDistance = targetDistance;
+        SnapToTarget();
+
     }
 
     void Update()
@@ -51,7 +57,7 @@ public class CameraFollow : MonoBehaviour
         {
             currentXAngle += Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime; //unscaledDeltaTime: timescale 무시하기위해
             currentYAngle -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.unscaledDeltaTime;
-            currentYAngle = Mathf.Clamp(currentYAngle, 10f, 80f); // 수직 각도 제한을 위한 clamp 함수
+            currentYAngle = Mathf.Clamp(currentYAngle, minVerticalAngle, maxVerticalAngle); // 수직 각도 제한을 위한 clamp 함수
         }
 
         // 휠 스크롤 입력 (줌인/줌아웃)
@@ -61,6 +67,52 @@ public class CameraFollow : MonoBehaviour
             targetDistance -= scrollInput * zoomSpeed;
             targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
         }
+    }
+
+    public void SnapToTarget()
+    {
+        if (target == null) return;
+
+        // 플레이어(모델)의 Y축 회전값 + 180f => 플레이어 정면
+        currentXAngle = target.eulerAngles.y + 180f;
+        currentYAngle = 10f;
+        targetDistance = 8f;
+        
+
+        // 내부 변수 및 물리 속도 초기화
+        currentDistance = targetDistance;
+        zoomVelocity = 0f;
+        currentVelocity = Vector3.zero;
+
+        Vector3 targetPos = CalculateCameraPosition(currentDistance);
+
+        // 이동 및 회전
+        transform.position = targetPos;
+
+        Vector3 pivot = target.position + Vector3.up * 1.5f;
+        transform.LookAt(pivot);
+
+        Debug.Log("카메라 위치 동기화 완료");
+    }
+
+    // 위치 계산 로직
+    private Vector3 CalculateCameraPosition(float dist)
+    {
+        Quaternion rotation = Quaternion.Euler(currentYAngle, currentXAngle, 0);
+        Vector3 pivot = target.position + Vector3.up * 1.5f;
+        Vector3 dir = rotation * Vector3.back;
+
+        float finalDistance = dist;
+
+        // 벽 충돌 체크
+        RaycastHit hit;
+        if (Physics.SphereCast(pivot, cameraRadius, dir, out hit, dist, collisionLayers))
+        {
+            float distToWall = hit.distance - wallOffset;
+            finalDistance = Mathf.Clamp(distToWall, minDistance, dist);
+        }
+
+        return pivot + (dir * finalDistance);
     }
 
     void FixedUpdate() // 이동처리, 카메라 떨리지 않게

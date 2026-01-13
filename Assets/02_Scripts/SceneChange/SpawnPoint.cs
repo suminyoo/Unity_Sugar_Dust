@@ -14,8 +14,6 @@ public enum SCENE_NAME
     LIBRARY_ROOM,
 
 
-    
-
 }
 
 public enum SPAWN_ID
@@ -36,4 +34,11 @@ public class SpawnPoint : MonoBehaviour
 {
     public SPAWN_ID spawnID; // 고유 번호
 
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
+        Gizmos.DrawRay(transform.position, transform.forward);
+    }
 }

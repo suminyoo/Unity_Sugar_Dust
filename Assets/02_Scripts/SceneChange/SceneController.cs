@@ -8,9 +8,6 @@ public class SceneController : MonoBehaviour
 
     private string currentLoadedInterior;
 
-    public CanvasGroup fadeCanvasGroup; //아직 미사용 페이드용 검은화면
-    public float fadeDuration = 1.0f;
-
     // 다음 씬으로 넘겨줄 목적지 ID
     public SPAWN_ID targetSpawnPointID { get; private set; }
 
@@ -26,26 +23,6 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private IEnumerator Fade(float finalAlpha)
-    {
-        if (fadeCanvasGroup == null) yield break;
-
-        fadeCanvasGroup.blocksRaycasts = true; // 클릭 방지
-        float startAlpha = fadeCanvasGroup.alpha;
-        float time = 0f;
-
-        while (time < fadeDuration)
-        {
-            time += Time.deltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, finalAlpha, time / fadeDuration);
-            yield return null;
-        }
-
-        fadeCanvasGroup.alpha = finalAlpha;
-
-        // 클릭가능
-        if (finalAlpha == 0f) fadeCanvasGroup.blocksRaycasts = false;
-    }
 
 
     #region Change Scene
@@ -57,16 +34,10 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
-        InputControlManager.Instance.LockInput();
+        yield return UIManager.Instance.FadeOut();
 
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
-
-        // 플레이어 조작 비활성화 (선택 사항)
-        // 플레이어 조작을 막고 싶다면 여기서 처리?
-
-        //Fade Out
-        yield return StartCoroutine(Fade(1f));
 
         // ====================================================
         // 데이터 저장
@@ -110,23 +81,11 @@ public class SceneController : MonoBehaviour
         // 씬 로드
         yield return SceneManager.LoadSceneAsync(sceneName.ToString());
 
-        PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
-
         yield return null;
 
-        if (PlayerSpawnHandler.Instance != null)
-        {
-            PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
-        }
-        else
-        {
-            Debug.LogError("새로운 씬에 PlayerSpawnHandler가 없습니다!");
-        }
+        yield return PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
 
-        // Fade In
-        yield return StartCoroutine(Fade(0f));
-
-        InputControlManager.Instance.UnlockInput();
+        yield return UIManager.Instance.FadeIn();
 
     }
 
@@ -141,6 +100,8 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting)
     {
+        yield return UIManager.Instance.FadeOut();
+
         //  나갈때: 기존 실내 언로드
         if (isExiting)
         {
@@ -174,10 +135,10 @@ public class SceneController : MonoBehaviour
         // 플레이어 이동
         yield return null;
 
-        if (PlayerSpawnHandler.Instance != null)
-        {
-            PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
-        }
+        yield return PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
+
+        yield return UIManager.Instance.FadeIn();
+
     }
 
     #endregion

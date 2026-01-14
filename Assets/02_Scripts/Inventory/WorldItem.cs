@@ -63,6 +63,8 @@ public class WorldItem : MonoBehaviour
     public void StopFollow(Transform player)
     {
         if (target == player) target = null;
+        startPos = transform.position; //아이템 이동 위치 저장
+
     }
     #endregion
 

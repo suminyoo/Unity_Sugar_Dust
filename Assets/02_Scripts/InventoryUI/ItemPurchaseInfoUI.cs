@@ -15,7 +15,6 @@ public class ItemPurchaseInfoUI : MonoBehaviour
     public TextMeshProUGUI purchasePriceText;
     public TextMeshProUGUI itemWeightText;
     public TextMeshProUGUI itemDescriptionText;
-    public Button purchaseButton;
 
     private Action onPurchased;
 
@@ -24,9 +23,6 @@ public class ItemPurchaseInfoUI : MonoBehaviour
     {
         itemInfoPanel.SetActive(false);
         defaultPanel.SetActive(true);
-
-        purchaseButton.onClick.RemoveAllListeners();
-        purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
     }
 
     public void OpenPanel(ItemData data, int price, Action onConfirm)
@@ -50,7 +46,7 @@ public class ItemPurchaseInfoUI : MonoBehaviour
     }
 
     //구매 버튼 클릭
-    private void OnPurchaseButtonClicked()
+    public void OnPurchaseButtonClicked()
     {
         onPurchased?.Invoke();
     }

@@ -22,51 +22,47 @@ public class PlayerInventory : InventoryHolder
 
     #endregion
 
+    #region Lifecycle & Initialization
 
     private void Start()
     {
-        // 인스펙터 연결이 끊겨 있으므로, 씬에서 '플레이어용 UI'를 직접 찾아서 변수에 넣습니다.
+        // 인스펙터 연결이 끊겨 있으면 씬에 존재하는 인벤토리 직접 연결
         if (inventoryUI == null)
         {
-            InventoryUI[] allUIs = FindObjectsOfType<InventoryUI>(true); // 비활성화된 것도 찾게 true
+            InventoryUI[] allUIs = FindObjectsOfType<InventoryUI>(true);
             foreach (var ui in allUIs)
             {
                 if (ui.contextType == InventoryContext.Player)
                 {
                     inventoryUI = ui;
-                    Debug.Log($"[PlayerInventory] 씬에서 InventoryUI({ui.name})를 찾아 연결했습니다.");
                     break;
                 }
             }
         }
 
-        // 데이터 로드 (이제 inventoryUI 변수가 있으니 연결이 성공함!)
         if (GameManager.Instance != null)
         {
             LoadInventoryFromManager();
         }
 
-        // 이벤트 구독
-        if (inventorySystem != null)
-            inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
-
-        if (mouseItemData != null)
-            mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
+        inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
+        mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
     }
+    private void OnDestroy()
+    {
+        inventorySystem.OnInventoryUpdated -= RefreshTotalWeight;
+        mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
+    }
+
     private void LoadInventoryFromManager()
     {
-        Debug.Log($"[PlayerInventory] 데이터 로드 시작");
-
         if (GameManager.Instance == null) return;
 
         GameData data = GameManager.Instance.LoadSceneSaveData();
 
-        // 새로 만들기 (여기가 핵심 포인트)
+        // 새로 만들기
         int size = playerData.GetInventorySize(data.inventorySize);
         inventorySystem = new InventorySystem(size);
-
-        // 생성된 시스템의 ID 확인
-        Debug.Log($"[PlayerInventory] 새로운 인벤토리 시스템 생성됨. (ID: {inventorySystem.GetHashCode()})");
 
         // 데이터 채우기
         var savedSlots = data.inventorySlots;
@@ -76,66 +72,16 @@ public class PlayerInventory : InventoryHolder
                 inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
         }
 
-        // UI 연결 시도
+        // ui에게 재연결
         if (inventoryUI != null)
         {
-            Debug.Log($"[PlayerInventory] 3. UI 변수가 연결되어 있음. UI에게 시스템 전달 시도.");
             inventoryUI.SetInventorySystem(this.inventorySystem);
-        }
-        else
-        {
-            // 여기가 문제일 확률 99%
-            Debug.LogError($"[PlayerInventory] 3. UI 변수(inventoryUI)가 NULL임! 화면에 연결할 수 없음.");
         }
 
         UpdateWeightUI();
+        Debug.Log("인벤토리 로드 및 UI 재연결 완료");
     }
 
-    #region Lifecycle & Initialization
-
-    //private void Start()
-    //{
-    //    if (GameManager.Instance != null)
-    //    {
-    //        LoadInventoryFromManager();
-    //    }
-
-    //    inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
-    //    mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
-    //}
-    //private void OnDestroy()
-    //{
-    //    inventorySystem.OnInventoryUpdated -= RefreshTotalWeight;
-    //    mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
-    //}
-
-    //private void LoadInventoryFromManager()
-    //{
-    //    if (GameManager.Instance == null) return;
-
-    //    GameData data = GameManager.Instance.LoadSceneSaveData();
-
-    //    // 새로 만들기
-    //    int size = playerData.GetInventorySize(data.inventorySize);
-    //    inventorySystem = new InventorySystem(size);
-
-    //    // 데이터 채우기
-    //    var savedSlots = data.inventorySlots;
-    //    for (int i = 0; i < inventorySystem.slots.Count; i++)
-    //    {
-    //        if (i < savedSlots.Count)
-    //            inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
-    //    }
-
-    //    // ui에게 재연결
-    //    if (inventoryUI != null)
-    //    {
-    //        inventoryUI.SetInventorySystem(this.inventorySystem);
-    //    }
-
-    //    UpdateWeightUI();
-    //    Debug.Log("인벤토리 로드 및 UI 재연결 완료");
-    //}
     #endregion
 
     #region Weight System (Calculation & UI)
@@ -178,6 +124,7 @@ public class PlayerInventory : InventoryHolder
     #endregion
 
     #region Inventory Holder Overrides
+
     // 아이템 얻을때 무게 계산 로직
     public override bool AddItem(ItemData item, int count)
     {

@@ -8,6 +8,9 @@ public class SceneController : MonoBehaviour
 
     private string currentLoadedInterior;
 
+    [SerializeField] private Color backgroundColor = new Color(110, 110, 160);
+
+
     // 다음 씬으로 넘겨줄 목적지 ID
     public SPAWN_ID targetSpawnPointID { get; private set; }
 
@@ -16,8 +19,6 @@ public class SceneController : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
-
-
 
     #region Change Scene
 
@@ -99,6 +100,8 @@ public class SceneController : MonoBehaviour
         //  나갈때: 기존 실내 언로드
         if (isExiting)
         {
+            Camera.main.clearFlags = CameraClearFlags.Skybox;
+
             if (!string.IsNullOrEmpty(currentLoadedInterior))
             {
                 yield return SceneManager.UnloadSceneAsync(currentLoadedInterior);
@@ -108,6 +111,9 @@ public class SceneController : MonoBehaviour
         else
         {
             // 들어갈떄: 새로운 실내 로드
+            Camera.main.backgroundColor = backgroundColor;
+            Camera.main.clearFlags = CameraClearFlags.SolidColor;
+
             if (!string.IsNullOrEmpty(currentLoadedInterior))
             {
                 yield return SceneManager.UnloadSceneAsync(currentLoadedInterior);
@@ -117,13 +123,12 @@ public class SceneController : MonoBehaviour
 
             currentLoadedInterior = sceneName;
 
-            // 로드 완료 후 해당씬 활성화 (lighting
-            // TODO: 라이팅 설정 확인
-            Scene newScene = SceneManager.GetSceneByName(sceneName);
-            if (newScene.IsValid())
-            {
-                SceneManager.SetActiveScene(newScene);
-            }
+            // 로드 완료 후 해당씬 활성화 -> lighting
+            //Scene newScene = SceneManager.GetSceneByName(sceneName);
+            //if (newScene.IsValid())
+            //{
+            //    SceneManager.SetActiveScene(newScene);
+            //}
         }
 
         // 플레이어 이동

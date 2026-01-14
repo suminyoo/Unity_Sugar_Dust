@@ -16,6 +16,7 @@ public class InputControlManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
     }
 
     // 입력을 막아야 할 때 호출 ( 대화 시작, 맵 로딩 시작, 컷씬)

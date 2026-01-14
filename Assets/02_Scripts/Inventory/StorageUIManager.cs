@@ -39,7 +39,9 @@ public class StorageUIManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
         rootCanvas.SetActive(false);
 
         _playerHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryHolder>();
@@ -76,9 +78,7 @@ public class StorageUIManager : MonoBehaviour
 
     // 외부(Storage)에서 호출해서 UI 열기
     // TODO: uiType -  Enum을 써서 상자별 다른 ui를 열도록 확장 가능
-    public void OpenStorage(InventoryHolder other, 
-                            string shopType = "Common", 
-                            Action onClosed = null)
+    public void OpenStorage(InventoryHolder other,  string shopType = "Common", Action onClosed = null)
     {
         _currentOtherHolder = other;
 

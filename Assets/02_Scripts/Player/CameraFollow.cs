@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     public float zoomSmoothTime = 0.2f;
 
     [Header("Collision Settings")]
-    public LayerMask collisionLayers; // 벽으로 인식할 레이어 (Inspector에서 꼭 설정하세요!)
+    public LayerMask collisionLayers; // 벽으로 인식할 레이어
     public float cameraRadius = 0.2f; // 감지할 카메라 두께
     public float wallOffset = 0.1f;   // 벽에서 살짝 띄우는 거리
 

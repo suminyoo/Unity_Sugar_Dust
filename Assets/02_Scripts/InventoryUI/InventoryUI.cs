@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 //가격 정보가 필요한 NPC Shop 이나 Display Stand가 구현해야함
 public interface IShopSource
@@ -44,19 +45,15 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         if (connectedInventory != null && connectedInventory.InventorySystem != null)
-        {
             connectedInventory.InventorySystem.OnInventoryUpdated += RefreshUI;
-
-            InitializeUI();
-        }
+        
     }
     void OnDestroy()
     {
         if (connectedInventory != null && connectedInventory.InventorySystem != null)
-        {
             connectedInventory.InventorySystem.OnInventoryUpdated -= RefreshUI;
-        }
     }
+
     void OnDisable()
     {
         // 선택된 슬롯 인덱스 초기화

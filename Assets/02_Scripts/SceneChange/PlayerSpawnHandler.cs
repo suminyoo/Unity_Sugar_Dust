@@ -11,7 +11,7 @@ public class PlayerSpawnHandler : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else if (Instance != this) Destroy(this);
+        else Destroy(gameObject);
     }
 
     public Coroutine SpawnPlayer(SPAWN_ID targetID)

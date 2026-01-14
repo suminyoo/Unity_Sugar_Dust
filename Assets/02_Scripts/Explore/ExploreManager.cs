@@ -26,6 +26,7 @@ public class ExploreManager : MonoBehaviour
     void Start()
     {
         ExploreEndSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
+        ExploreToTownPoint.OnPlayerReturnToTown += ExploreSuccess;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -39,6 +40,8 @@ public class ExploreManager : MonoBehaviour
     void OnDestroy()
     {
         ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
+        ExploreToTownPoint.OnPlayerReturnToTown -= ExploreSuccess;
+
         player.OnPlayerDied -= OnPlayerDeath;
         mapSpawner.OnMapGenerationComplete -= OnMapReady;
     }
@@ -88,19 +91,6 @@ public class ExploreManager : MonoBehaviour
         }
     }
 
-    void ExploreFail(bool shouldKillPlayer)
-    {
-        if (isExplorationEnded) return;
-        isExplorationEnded = true;
-        isExploreSuccess = false; 
-
-        if (resultMessageText != null) resultMessageText.text = "탐사 실패...";
-
-        //TODO: 아이템 소실 처리
-
-        ShowResultItems();
-
-    }
 
     void ShowResultItems()
     {
@@ -133,19 +123,53 @@ public class ExploreManager : MonoBehaviour
         resultUIPanel.SetActive(true);
 
     }
+    
+    private void LoseItems(bool loseAll)
+    {
+        if (!loseAll)
+        {
+            //TODO: 랜덤 아이템 잃기
+        }
+        else
+        {
+            //TODO: 아이템 모두 잃기
+        }
+    }
 
     // 탐사 성공
-    public void ExploreSuccess()
+    private void ExploreSuccess(bool isSafeReturn)
     {
         if (isExplorationEnded) return;
+
         isExplorationEnded = true;
         isExploreSuccess = true;
 
-        Debug.Log("탐사 성공");
+        if (isSafeReturn)
+        {
+            if (resultMessageText != null) resultMessageText.text = "탐사 성공! 무사히 귀환합니다.";
 
-        if (resultMessageText != null) resultMessageText.text = "탐사 성공! 무사히 귀환합니다.";
+        }
+        else
+        {
+            if (resultMessageText != null) resultMessageText.text = "탐사 완료! 걸어서 귀환합니다.";
+            LoseItems(false);
+        }
 
         InputControlManager.Instance.LockInput();
+
+        ShowResultItems();
+
+    }
+
+    private void ExploreFail(bool shouldKillPlayer)
+    {
+        if (isExplorationEnded) return;
+        isExplorationEnded = true;
+        isExploreSuccess = false;
+
+        if (resultMessageText != null) resultMessageText.text = "탐사 실패...";
+
+        LoseItems(true);
 
         ShowResultItems();
 

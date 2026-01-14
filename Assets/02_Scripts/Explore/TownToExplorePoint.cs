@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ExploreStartInTown : MonoBehaviour, IInteractable
+public class TownToExplorePoint : MonoBehaviour, IInteractable
 {
     //public static event Action OnPlayerGoExplore;
 

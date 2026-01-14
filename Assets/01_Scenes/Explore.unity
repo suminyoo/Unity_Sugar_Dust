@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 438688567}
   - component: {fileID: 438688570}
   m_Layer: 9
-  m_Name: NextMapPoint
+  m_Name: ExploreNextMapPoint
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -737,8 +737,9 @@ GameObject:
   - component: {fileID: 442040404}
   - component: {fileID: 442040403}
   - component: {fileID: 442040402}
+  - component: {fileID: 442040405}
   m_Layer: 9
-  m_Name: ToHomeMapPoint
+  m_Name: ExploreToTownPoint
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -830,6 +831,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442040400}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &442040405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442040400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80dd654290b01944eb937ec57f52ed76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &451347997
 PrefabInstance:
   m_ObjectHideFlags: 0

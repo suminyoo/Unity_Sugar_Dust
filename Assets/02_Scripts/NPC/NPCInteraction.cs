@@ -12,9 +12,11 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     public string GetInteractPrompt()
     {
         if (controller.npcData != null)
-            return controller.npcData.promptText;
-
-        return $"[E] {controller.npcData.npcName} 대화하기"; // 기본값
+            return $"[E] {controller.npcData.npcName} 대화하기"; 
+        else
+        
+            return controller.npcData.promptText; //기본
+        
     }
 
     public void OnInteract()

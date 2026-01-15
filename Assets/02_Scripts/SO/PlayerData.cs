@@ -10,7 +10,7 @@ public class PlayerData : ScriptableObject
     public float jumpForce = 5f;
     public float actionRotationSpeed = 20f;
 
-    [Header("Weight Penalty")]
+    [Header("Weight")]
     public float heavySpeed = 3f;
     public float tooHeavySpeed = 1f;
 

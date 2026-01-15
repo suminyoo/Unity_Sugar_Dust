@@ -91,7 +91,6 @@ public class ExploreManager : MonoBehaviour
         }
     }
 
-
     void ShowResultItems()
     {
         InventoryHolder inventoryHolder = player.GetComponent<InventoryHolder>();
@@ -135,6 +134,7 @@ public class ExploreManager : MonoBehaviour
             //TODO: 아이템 모두 잃기
         }
     }
+
 
     // 탐사 성공
     private void ExploreSuccess(bool isSafeReturn)

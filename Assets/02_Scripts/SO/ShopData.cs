@@ -16,7 +16,7 @@ public class ShopItemInfo
 
     [Header("Settings")]
     public int priceOverride = -1; // -1이면 아이템 기본 가격 사용
-    // 바가지나 할인에 사용할것. 여기에 적힌 가격으로 적용됨
+    // 바가지나 할인에 사용?. 여기에 적힌 가격으로 적용됨
 
     public int stockCount = 1; //판매할 수량 (초기설정)
 

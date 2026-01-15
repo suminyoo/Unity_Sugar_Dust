@@ -10,7 +10,6 @@ public class SceneController : MonoBehaviour
 
     [SerializeField] private Color backgroundColor = new Color(110, 110, 160);
 
-
     // 다음 씬으로 넘겨줄 목적지 ID
     public SPAWN_ID targetSpawnPointID { get; private set; }
 

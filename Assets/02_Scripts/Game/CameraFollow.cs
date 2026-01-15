@@ -23,7 +23,7 @@ public class CameraFollow : MonoBehaviour
     private float currentYAngle = 30f;
     private Vector3 currentVelocity = Vector3.zero; // SmoothDamp 용 변수 (변수유지해야 함수 쓸때 초기화 안됨)
 
-    private float minVerticalAngle = 10f; // 최저 각도
+    private float minVerticalAngle = 0f; // 최저 각도
     private float maxVerticalAngle = 80f;  // 최고 각도
 
     // 줌 제어 변수

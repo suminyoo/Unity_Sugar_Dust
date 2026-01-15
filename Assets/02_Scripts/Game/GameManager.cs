@@ -1,8 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+
+public enum GAME_TIME
+{
+    Morning,    // 아침
+    Day,        // 낮
+    Evening,    // 저녁
+    Night       // 밤
+}
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action<GAME_TIME> OnTimeChanged;
+
     public static GameManager Instance;
     public PlayerData playerData;
 
@@ -32,12 +43,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
+    //임시 디버깅용
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeTime(GAME_TIME.Morning);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeTime(GAME_TIME.Day);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeTime(GAME_TIME.Evening);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeTime(GAME_TIME.Night);
+    }
+
+    public void ChangeTime(GAME_TIME newTime)
+    {
+        Debug.Log($"시간 변경 알림: {newTime}");
+
+        OnTimeChanged?.Invoke(newTime);
+    }
+
+
+
     // 씬 넘어가기 전에 플레이어의 상태를 매니저에 기록
     // 업데이트 될때 부를지는 고민
 
+    #region [씬 세이브 로드]
+
     #region 자산 데이터 세이브로드
 
-    public void SaveAssets(int money, HashSet<string> keyItems)
+public void SaveAssets(int money, HashSet<string> keyItems)
     {
         savedData.money = money;
 
@@ -53,7 +86,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
 
     #region 플레이어 데이터 세이브로드
 
@@ -80,8 +112,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
-    #region 상점 진열대 데이터 세이브로드
+    #region 진열대 데이터 세이브로드
 
     public void SaveDisplayStand(List<InventorySlot> slots, List<int> prices)
     {
@@ -105,7 +136,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager: 진열대 (아이템 + 가격) 저장 완료");
     }
     #endregion
-
 
     #region 상자 데이터 세이브로드
 
@@ -149,4 +179,5 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #endregion
 }

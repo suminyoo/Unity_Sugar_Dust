@@ -102,10 +102,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // 슬롯 선택 효과 (테두리 켜기/끄기)
     public void SetSelected(bool isSelected)
     {
-        if (selectionBorder != null)
-        {
-            selectionBorder.gameObject.SetActive(isSelected);
-        }
+
+        selectionBorder.gameObject.SetActive(isSelected);
+
     }
 
     #endregion

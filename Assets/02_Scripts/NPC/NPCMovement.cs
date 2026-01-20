@@ -18,13 +18,13 @@ public class NPCMovement : MonoBehaviour
     }
 
     // 목적지로 이동
-    public void MoveTo(Vector3 destination)
+    public bool MoveTo(Vector3 destination)
     {
         // 이동 가능 상태로 변경
         if (agent.isStopped)
             agent.isStopped = false;
 
-        agent.SetDestination(destination);
+        return agent.SetDestination(destination);
     }
 
     // 그 자리에 멈춤 (대화 시작 시)

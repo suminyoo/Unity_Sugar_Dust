@@ -179,7 +179,7 @@ public class InventoryUI : MonoBehaviour
                 }
                 else
                 {
-                    uiSlots[i].SetSelected(false); // 다른 모드에선 선택 효과 끔 (TODO:고려)
+                    uiSlots[i].SetSelected(false);//다른 모드
                 }
             }
         }

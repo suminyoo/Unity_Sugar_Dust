@@ -174,11 +174,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7714308449150888017, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
+    - {fileID: 5782622977855353314, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4173886303037846521, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1645660339}
+    - targetCorrespondingSourceObject: {fileID: 4173886303037846521, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1645660338}
   m_SourcePrefab: {fileID: 100100000, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
+--- !u!1 &1645660337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4173886303037846521, guid: 1a89873a6ce06c346b0e0c2820731613, type: 3}
+  m_PrefabInstance: {fileID: 1645660336}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1645660338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645660337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeName: "\uBB34\uAE30\uC0C1\uC810"
+  targetSceneName: 2
+  targetSpawnId: 330
+  isExiting: 1
+--- !u!65 &1645660339
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645660337}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19917807, y: 1.7647499, z: 1.5555217}
+  m_Center: {x: -0.0036010742, y: 0.8657524, z: -0.0036112468}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

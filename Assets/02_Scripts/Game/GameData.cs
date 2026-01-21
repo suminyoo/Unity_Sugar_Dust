@@ -7,6 +7,9 @@ public class GameData
     public float currentHp = 100f;
     public float currentStamina = 50f;
 
+    // 탐사
+    public int explorationLevel = 1;
+
     // 자산
     public int money;
     public List<string> ownedKeyItems = new List<string>(); // 특수 아이템(업그레이드 등)
@@ -31,6 +34,8 @@ public class GameData
     {
         currentHp = maxHp;
         currentStamina = maxStamina;
+
+        explorationLevel = 1;
 
         money = 1000; //돈 초기 금액
 

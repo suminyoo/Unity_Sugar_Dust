@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisplayStand : InventoryHolder, IInteractable, IShopSource
+public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveable
 {
     #region Variables & Data
 
@@ -319,15 +319,22 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
     #endregion
 
     #region Data Persistence
+    public void SaveData()
+    {
+        if (GameSaveManager.Instance != null)
+        {
+            GameSaveManager.Instance.SaveDisplayStand(InventorySystem.slots, slotPrices);
+        }
+    }
 
     private void LoadDisplayStandFromManager()
     {
-        if (GameManager.Instance == null) return;
+        if (GameSaveManager.Instance == null) return;
 
-        GameData data = GameManager.Instance.LoadSceneSaveData();
+        var data = GameSaveManager.Instance.LoadDisplayStand();
 
         // 새로 만들기
-        int size = playerData.GetDisplayStandSize(data.displayStandSize);
+        int size = playerData.GetDisplayStandSize(data.size);
         inventorySystem = new InventorySystem(size);
 
         // 시스템이 바뀌었으니, 이벤트도 새 시스템에 재연결
@@ -340,22 +347,20 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
         slotActiveStates = new List<bool>(new bool[inventorySystem.slots.Count]); // 기본값 false
 
         // 데이터 채우기
-        var savedSlots = data.displayStandSlots;
+        var savedSlots = data.slots;
         for (int i = 0; i < inventorySystem.slots.Count; i++)
         {
             if (i < savedSlots.Count)
             {
                 inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
             }
-
         }
         
-
         //진열대 가격 정보 로드
         slotPrices.Clear();
-        if (data.displayStandPrices != null && data.displayStandPrices.Count > 0)
+        if (data.prices != null && data.prices.Count > 0)
         {
-            slotPrices.AddRange(data.displayStandPrices);
+            slotPrices.AddRange(data.prices);
         }
         else
         {
@@ -364,7 +369,6 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource
         }
 
         UpdateVisuals();
-
 
     }
 

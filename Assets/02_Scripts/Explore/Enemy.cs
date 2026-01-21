@@ -30,17 +30,24 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public GameObject attackHitbox;
 
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
-        attackHitbox.SetActive(false);
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        player.OnPlayerDied += ClearTarget;
-
-        Initialize();
+        if (attackHitbox != null) attackHitbox.SetActive(false);
     }
+
+    public void Setup(PlayerController playerRef)
+    {
+        this.player = playerRef;
+
+        if (this.player != null)
+        {
+            this.player.OnPlayerDied += ClearTarget;
+            Initialize();
+        }
+    }
+
     void OnDestroy()
     {
         if (player != null) player.OnPlayerDied -= ClearTarget;

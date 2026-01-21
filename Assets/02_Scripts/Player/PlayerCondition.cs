@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class PlayerCondition : MonoBehaviour
+public class PlayerCondition : MonoBehaviour, ISaveable
 {
     //이벤트
     public event Action<float, float> OnHpChanged;      // HP 변경
@@ -51,11 +51,11 @@ public class PlayerCondition : MonoBehaviour
 
     void LoadStatusFromManager()
     {
-        GameData data = GameManager.Instance.LoadSceneSaveData();
+        var data = GameSaveManager.Instance.LoadPlayerCondition();
 
         // 저장된 데이터 불러오기
-        currentHp = data.currentHp;
-        currentStamina = data.currentStamina;
+        currentHp = data.hp;
+        currentStamina = data.stamina;
 
         this.maxHp = playerData.maxHp;
         this.maxStamina = playerData.maxStamina;
@@ -152,5 +152,16 @@ public class PlayerCondition : MonoBehaviour
         if (ratio >= 1.0f) return data.tooHeavySpeed; // 과적
         if (ratio >= 0.8f) return data.heavySpeed;    // 무거움
         return data.walkSpeed;                        // 정상
+    }
+
+    public void SaveData()
+    {
+        if (GameSaveManager.Instance != null && inventory != null)
+        {
+            GameSaveManager.Instance.SavePlayerState(
+               currentHp,
+               currentStamina
+           );
+        }
     }
 }

@@ -5,7 +5,7 @@ public class ShopkeeperBrain : NPCBrain
 {
     private NPCShop myShop;
 
-    protected void Start()
+    protected override void Start()
     {
         base.Start();
 

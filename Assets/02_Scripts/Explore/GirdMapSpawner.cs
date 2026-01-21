@@ -16,32 +16,40 @@ public class GridMapSpawner : MonoBehaviour
     public NavMeshSurface navSurface;
 
     [Header("Objects")]
-    public List<ExploreObjectData> mapObjects;     // 배치할 맵요소 (장애물 광물 등)
-    public List<ExploreObjectData> enemyObjects;    // 배치할 적들
+    private List<ExploreObjectData> currentMapObjects;
+    private List<ExploreObjectData> currentMineralObjects;
+    private List<ExploreObjectData> currentEnemyObjects;
+
+    public Transform landingSpotSpawnPoint;
+    public GameObject landingSpotPrefab;
+    public GameObject defaultLandingSpotPrefab;
+
+    private PlayerController playerRef;
 
     [Header("UI")]
     public GameObject loadingPanel;
-    public TextMeshProUGUI statusText;         // 맵 생성 중 표시 텍스트
+    public TextMeshProUGUI statusText;  // 맵 생성 중 표시 텍스트
 
     private List<Vector2Int> allCoordinates;
 
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
     private bool[,] gridMap;
 
-    private void Start()
-    {
-        StartCoroutine(GenerateMapRoutine());
-    }
 
-    public void RestartMap()
+    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player)
     {
+        this.currentMapObjects = stageData.mapObjects;
+        this.currentMineralObjects = stageData.mineralObjects;
+        this.currentEnemyObjects = stageData.enemyObjects;
+
+        this.playerRef = player;
 
         CleanupMap();
         StopAllCoroutines();
-        StartCoroutine(GenerateMapRoutine());
+        StartCoroutine(GenerateMapRoutine(currentLevel));
     }
 
-    private IEnumerator GenerateMapRoutine()
+    private IEnumerator GenerateMapRoutine(int currentLevel)
     {
         yield return null;
 
@@ -49,53 +57,77 @@ public class GridMapSpawner : MonoBehaviour
         loadingPanel.SetActive(true);
         statusText.text = "맵 로딩중...";
 
-        InputControlManager.Instance.LockInput();
+        //InputControlManager.Instance.LockInput();
 
         InitializeMap();
 
         yield return new WaitForSeconds(0.5f);  //연출용 지연
 
         // ---맵 생성---
-        statusText.text = "기반암 생성 중...";
         GenerateGround();
-        yield return null;    //땅
+        yield return null;
 
-        statusText.text = "오브젝트 배치 중...";
+        // --- 착륙장 배치 ---
+        SpawnExitObject(currentLevel);
+        yield return null;
+
         // ---맵 오브젝트 배치---
-        foreach (var objData in mapObjects)
+        if (currentMapObjects != null)
         {
-            yield return null;
-            SpawnObject(objData);
+            foreach (var objData in currentMapObjects)
+            {
+                SpawnObject(objData);
+                yield return null;
+            }
         }
-        yield return null; //각 오브젝트
 
+        // --- 광물 배치 ---
+        if (currentMineralObjects != null)
+        {
+            foreach (var objData in currentMineralObjects)
+            {
+                SpawnObject(objData);
+                yield return null;
+            }
+        }
 
         // ---런타임 navmesh 베이크---
-        statusText.text = "지형 분석 및 경로 생성 중...";
         navSurface.RemoveData();
         navSurface.BuildNavMesh();
         yield return null;     // nav mesh 베이크
 
 
         //---적 배치---
-        statusText.text = "몬스터 배치 중...";
-        foreach (var objData in enemyObjects)
+        if (currentEnemyObjects != null)
         {
-            yield return null;
-            SpawnObject(objData);
+            foreach (var objData in currentEnemyObjects)
+            {
+                SpawnObject(objData);
+                yield return null;
+            }
         }
-        yield return null; // 적
-
-        OnMapGenerationComplete?.Invoke();
 
         // ---로딩 완료---
-        if (statusText != null) statusText.text = "준비 완료!";
+        OnMapGenerationComplete?.Invoke();
+
+        if (statusText != null) statusText.text = "탐사 준비 완료!";
         yield return new WaitForSeconds(1.0f); //로딩 완료 연출
 
         if (loadingPanel != null) loadingPanel.SetActive(false);
-        InputControlManager.Instance.UnlockInput();
+        //InputControlManager.Instance.UnlockInput(); //매니저에서 하도록
 
     }
+
+    // 착륙장 배치
+    private void SpawnExitObject(int level)
+    {
+        GameObject prefabToSpawn = (level == 1 || level % 5 == 0) ? landingSpotPrefab : defaultLandingSpotPrefab;
+        if (prefabToSpawn == null) return;
+
+        GameObject instance = Instantiate(prefabToSpawn, landingSpotSpawnPoint.position, prefabToSpawn.transform.rotation);
+        instance.transform.SetParent(this.transform);
+    }
+
     void CleanupMap()
     {
         foreach (Transform child in transform)
@@ -230,6 +262,13 @@ public class GridMapSpawner : MonoBehaviour
             GameObject go = Instantiate(data.prefab, finalPos, finalRot);
             go.transform.SetParent(this.transform);
             go.name = $"{data.objectName}_[{x},{y}]";
+
+            // 적이면 플레이어 정보 넘기면서 셋업
+            Enemy enemyScript = go.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.Setup(this.playerRef);
+            }
         }
     }
 

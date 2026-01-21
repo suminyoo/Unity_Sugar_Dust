@@ -10,7 +10,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     private List<CustomerBrain> waitingQueue = new List<CustomerBrain>();
 
     // 손님이 줄에 들어올 때
-    // 자리가 없으면 nul 리턴
+    // 자리가 없으면 null 리턴
     public Vector2? JoinQueue(CustomerBrain customer)
     { 
         // 자리 꽉 찼는지 확인

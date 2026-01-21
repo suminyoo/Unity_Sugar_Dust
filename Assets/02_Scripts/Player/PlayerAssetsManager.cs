@@ -3,20 +3,16 @@ using System;
 using System.Collections.Generic;
 
 // 영구 자산(돈, 특수 능력, 해금 요소)을 관리하는 매니저
-public class PlayerAssetsManager : MonoBehaviour
+public class PlayerAssetsManager : MonoBehaviour, ISaveable
 {
     public static PlayerAssetsManager Instance { get; private set; }
 
     [SerializeField] private int currentMoney = 0;
 
-
-
     // 특수 장비/능력 (Key Items) 관리 (중복 방지를 위해 HashSet 사용)
     // 예: "Translator", "RunningShoes" 등의 문자열 ID로 관리
     //가구 증서? 등등
     private HashSet<string> ownedKeyItems = new HashSet<string>();
-
-
 
     // UI 업데이트를 위한 이벤트
     // TODO: 상점 UI가 완성되면 이벤트를 구독하여 돈 값이 변할 때마다 화면의 텍스트가 갱신되도록
@@ -31,10 +27,10 @@ public class PlayerAssetsManager : MonoBehaviour
 
     private void Start()
     {
-        // 게임 시작 시 데이터 로드
-        if (GameManager.Instance != null)
+        // 데이터 로드
+        if (GameSaveManager.Instance != null)
         {
-            var data = GameManager.Instance.LoadAssets();
+            var data = GameSaveManager.Instance.LoadPlayerAssets();
             currentMoney = data.money;
 
             // 저장된 키 아이템 복구
@@ -98,6 +94,14 @@ public class PlayerAssetsManager : MonoBehaviour
     public bool HasKeyItem(string itemID)
     {
         return ownedKeyItems.Contains(itemID);
+    }
+
+    public void SaveData()
+    {
+        if (GameSaveManager.Instance != null)
+        {
+            GameSaveManager.Instance.SavePlayerAssets(currentMoney, ownedKeyItems);
+        }
     }
 }
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7074822179238064517}
+  - component: {fileID: 7486014836718176848}
   - component: {fileID: 8942570312190243682}
   - component: {fileID: 3539451241155705468}
   - component: {fileID: 572374818377129698}
@@ -34,6 +35,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7486014836718176848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5046600995907738205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8abfccb95147c44b2a1a311e25f8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8942570312190243682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,6 +63,7 @@ MonoBehaviour:
   savedData:
     currentHp: 0
     currentStamina: 0
+    explorationLevel: 1
     money: 0
     ownedKeyItems: []
     inventorySize: 0
@@ -57,6 +71,7 @@ MonoBehaviour:
     displayStandSize: 0
     displayStandSlots: []
     displayStandPrices: 
+  currentLevel: 1
 --- !u!114 &3539451241155705468
 MonoBehaviour:
   m_ObjectHideFlags: 0

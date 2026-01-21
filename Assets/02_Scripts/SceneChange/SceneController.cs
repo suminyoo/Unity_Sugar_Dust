@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Linq;
+
 
 public class SceneController : MonoBehaviour
 {
@@ -33,44 +35,17 @@ public class SceneController : MonoBehaviour
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
 
-        // ====================================================
-        // 데이터 저장
-        // 씬에 있는 플레이어를 찾아서 데이터 저장
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        // ================= 데이터 저장 =======================
+        // 현재 씬의 ISaveable 인터페이스를 가진 컴포넌트를 찾아서 저장
+        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+
+        foreach (var saveable in saveables)
         {
-            var condition = player.GetComponent<PlayerCondition>();
-            var inventory = player.GetComponent<PlayerInventory>();
-
-            Debug.Log($"condition{condition.currentHp} / {condition.currentStamina}");
-
-            if (condition.IsDead)
-            {
-                Debug.Log("플레이어 사망. 병원으로 이송합니다.");
-
-                // 목적지 병원
-                //targetSpawnPointID = SPAWN_ID.TOWN_HOSPITAL;
-
-                // TODO: 인벤토리 드랍 로직?
-            }
-
-            // 살아있음 평소 상태 저장
-            GameManager.Instance.SavePlayerState(
-                condition.currentHp,
-                condition.currentStamina,
-                inventory.InventorySystem.slots
-            );
-
+            saveable.SaveData();
         }
-        // ====================================================
-        // 씬에 있는 DisplayStand 스크립트 데이터 저장
-        DisplayStand displayStand = FindObjectOfType<DisplayStand>();
 
-        if (displayStand != null && GameManager.Instance != null)
-        {
-            // 진열대 인벤토리 슬롯 리스트를 매니저에게 전달
-            GameManager.Instance.SaveDisplayStand(displayStand.InventorySystem.slots, displayStand.slotPrices);
-        }
+        Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
+        // ===================================================
 
         // 씬 로드
         yield return SceneManager.LoadSceneAsync(sceneName.ToString());

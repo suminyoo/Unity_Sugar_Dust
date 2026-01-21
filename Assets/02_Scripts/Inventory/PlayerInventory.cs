@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 //플레이어 인벤토리, 인벤홀더 상속
-public class PlayerInventory : InventoryHolder
+public class PlayerInventory : InventoryHolder, ISaveable
 {
     #region Variables
 
@@ -40,7 +40,7 @@ public class PlayerInventory : InventoryHolder
             }
         }
 
-        if (GameManager.Instance != null)
+        if (GameSaveManager.Instance != null)
         {
             LoadInventoryFromManager();
         }
@@ -56,16 +56,16 @@ public class PlayerInventory : InventoryHolder
 
     private void LoadInventoryFromManager()
     {
-        if (GameManager.Instance == null) return;
+        if (GameSaveManager.Instance == null) return;
 
-        GameData data = GameManager.Instance.LoadSceneSaveData();
+        var data = GameSaveManager.Instance.LoadPlayerInventory();
 
         // 새로 만들기
-        int size = playerData.GetInventorySize(data.inventorySize);
+        int size = playerData.GetInventorySize(data.size);
         inventorySystem = new InventorySystem(size);
 
         // 데이터 채우기
-        var savedSlots = data.inventorySlots;
+        var savedSlots = data.slots;
         for (int i = 0; i < inventorySystem.slots.Count; i++)
         {
             if (i < savedSlots.Count)
@@ -167,4 +167,12 @@ public class PlayerInventory : InventoryHolder
 
     }
     #endregion
+
+    public void SaveData()
+    {
+        if (GameSaveManager.Instance != null)
+        {
+            GameSaveManager.Instance.SavePlayerInventory(InventorySystem.slots);
+        }
+    }
 }

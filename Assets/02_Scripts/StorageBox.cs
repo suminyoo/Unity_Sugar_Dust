@@ -24,13 +24,13 @@ public class StorageBox : InventoryHolder, IInteractable
     // 상자는 WorldObject 함수 사용
     private void LoadData()
     {
-        var data = GameManager.Instance.LoadWorldStorage(boxID);
+        var data = GameSaveManager.Instance.LoadWorldStorage(boxID);
         // 데이터 채우기 로직...
     }
 
     private void SaveData()
     {
-        GameManager.Instance.SaveWorldStorage(boxID, inventorySystem.slots);
+        GameSaveManager.Instance.SaveWorldStorage(boxID, inventorySystem.slots);
     }
 
     public void OnInteract()

@@ -51,9 +51,13 @@ public class PlayerController : MonoBehaviour
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>();
 
-        playerCondition.OnDie += HandleDie;
-        playerCondition.OnTakeDamage += HandleHit;
-        playerCondition.OnRevive += HandleRevive;
+        if(playerCondition != null)
+        {
+            playerCondition.OnDie += HandleDie;
+            playerCondition.OnTakeDamage += HandleHit;
+            playerCondition.OnRevive += HandleRevive;
+        }
+
 
         InputControlManager.Instance.OnInputStateChanged += HandleInputStateChange;
 
@@ -78,10 +82,12 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        playerCondition.OnDie -= HandleDie;
-        playerCondition.OnTakeDamage -= HandleHit;
-        playerCondition.OnRevive -= HandleRevive;
-
+        if (playerCondition != null)
+        {
+            playerCondition.OnDie -= HandleDie;
+            playerCondition.OnTakeDamage -= HandleHit;
+            playerCondition.OnRevive -= HandleRevive;
+        }
         InputControlManager.Instance.OnInputStateChanged -= HandleInputStateChange;
     }
 

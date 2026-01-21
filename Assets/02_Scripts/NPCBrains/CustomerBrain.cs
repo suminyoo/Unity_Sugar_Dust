@@ -38,7 +38,7 @@ public class CustomerBrain : NPCBrain
 
     protected override void Start()
     {
-        // 매니저에 의해 Setup 되므로 Start는 비워둠
+        
     }
 
     // 매니저에서 호출하는 셋업
@@ -56,10 +56,10 @@ public class CustomerBrain : NPCBrain
     // 메인 행동 루틴
     private IEnumerator CustomerRoutine()
     {
-        // 1. 배회 (가게 둘러보기)
+        // 배회
         yield return StartCoroutine(WanderPhase());
 
-        // 2. 물건 탐색
+        // 물건 탐색
         Transform itemPos = null;
         bool itemFound = false;
 
@@ -70,16 +70,14 @@ public class CustomerBrain : NPCBrain
 
         if (itemFound && itemPos != null)
         {
-            // 3. 물건 위치로 이동
+            // 물건 위치로 이동
             yield return StartCoroutine(MoveToItemPhase(itemPos));
 
-            // 4. 물건 집기 및 가격 판단 (공짜/비쌈/적당함 분기점)
-            // 여기서 결과에 따라 카운터로 갈지, 바로 나갈지 결정됨
+            // 물건 집기 및 가격 판단 (공짜/비쌈/적당함 분기)
             yield return StartCoroutine(PickUpAndCheckPricePhase(itemPos));
         }
         else
         {
-            // 살 물건이 없으면 퇴장
             SayToSelf("여긴 살만한게 없네");
             yield return new WaitForSeconds(2f);
             yield return StartCoroutine(ExitPhase());
@@ -93,7 +91,7 @@ public class CustomerBrain : NPCBrain
     {
         float timer = 0f;
 
-        // 지정된 시간 동안 랜덤하게 돌아다니기
+        // 지정된 시간 동안 랜덤배회
         while (timer < wanderDuration)
         {
             if (controller.Movement.HasArrived())
@@ -121,43 +119,40 @@ public class CustomerBrain : NPCBrain
         }
     }
 
-    // [핵심 변경] 물건을 보고 가격을 판단하는 단계
+    // 집기 및 가격 판단 (공짜/비쌈은 바로 퇴장, 적당함은 카운터로 이동)
     private IEnumerator PickUpAndCheckPricePhase(Transform itemPos)
     {
-        // 물건 바라보기 & 애니메이션
+        // 고민
         controller.Movement.LookAtTarget(itemPos);
-        controller.Animation.PlayEmotion(NPCAnimation.Emotion.LookDown); // 집는 시늉 혹은 고민
+        controller.Animation.PlayEmotion(NPCAnimation.Emotion.LookDown); 
 
         yield return new WaitForSeconds(thinkingTime);
 
         // 가격 정보 확인
         var slot = targetShop.InventorySystem.slots[targetSlotIndex];
-        int basePrice = slot.itemData.sellPrice;                // 원가
+        int basePrice = slot.itemData.sellPrice; // 원가
         int sellingPrice = targetShop.GetSlotPrice(targetSlotIndex); // 판매가
 
         // 비율 계산 (0으로 나누기 방지)
         float ratio = (basePrice == 0) ? 0 : (float)sellingPrice / (float)basePrice;
 
-        // --- 조건 분기 ---
 
-        // Case 1: 공짜 (0원) -> 바로 들고 나감
+        // Case 1: 공짜
         if (sellingPrice == 0)
         {
-            SayToSelf("와! 이거 공짜네? 득템!");
+            SayToSelf("와 공짜네? 아싸!");
             //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Happy);
 
-            // 즉시 구매 처리 (돈은 0원이지만 재고 감소)
             targetShop.TrySellItemToNPC(targetSlotIndex);
 
             yield return new WaitForSeconds(1.5f);
 
-            // 바로 퇴장
             yield return StartCoroutine(ExitPhase());
         }
-        // Case 2: 너무 비쌈 (> 2배) -> 안 사고 나감
+        // Case 2: 너무 비쌈 (> 2배)
         else if (ratio > 2.0f)
         {
-            SayToSelf($"뭐야? {sellingPrice}골드? 바가지잖아!");
+            SayToSelf($"{sellingPrice}골드? 바가지잖아!");
             //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Angry);
 
             yield return new WaitForSeconds(1.5f);
@@ -165,11 +160,11 @@ public class CustomerBrain : NPCBrain
             // 바로 퇴장
             yield return StartCoroutine(ExitPhase());
         }
-        // Case 3: 적당함 (<= 2배) -> 카운터로 가져감
+        // Case 3: 적당 -> 카운터로 가져감
         else
         {
-            SayToSelf("음, 가격 괜찮네. 계산하러 가야지.");
-            // TODO: 손에 물건 들기 연출 추가 가능 (Visual)
+            SayToSelf("음, 이거 사야지");
+            // TODO: 손에 물건 들기
 
             yield return new WaitForSeconds(1.0f);
 
@@ -179,21 +174,21 @@ public class CustomerBrain : NPCBrain
     }
 
     // 카운터 줄 서기 및 대기
-    // [수정됨] 카운터 줄 서기 및 대기
     private IEnumerator QueueAndTransactionPhase()
     {
-        // 1. 줄 서기 시도
+        // 줄 서기 시도
         Vector3? targetPos = counter.JoinQueue(this);
 
-        // 자리가 꽉 차서 null을 받았다면?
+        // 자리가 꽉참
         if (targetPos == null)
         {
             controller.Animation.PlayEmotion(NPCAnimation.Emotion.Disappointed); // 실망 모션
-            SayToSelf("줄이 너무 기네... 다음에 와야겠다.");
+            SayToSelf("줄 너무 긴데... 그냥 가야겠다");
+            //TODO: 손에 든 물건 버리기
 
             yield return new WaitForSeconds(2.0f);
 
-            // 퇴장 페이즈로 바로 전환
+            // 퇴장
             yield return StartCoroutine(ExitPhase());
             yield break; // 이 코루틴 종료
         }
@@ -201,8 +196,7 @@ public class CustomerBrain : NPCBrain
         // 자리가 있으면 할당받은 위치로 설정
         currentQueueTarget = targetPos.Value;
 
-        // [에러 해결 부분]
-        // 내가 맨 앞인지 판단하는 로직: "내 목표 지점이 줄의 0번(맨 앞) 포인트와 같은가?"
+        // 내가 줄의 맨 앞인지
         if (counter.queuePoints.Count > 0)
         {
             // Vector3 간의 거리가 아주 가까우면 같은 위치로 간주
@@ -216,10 +210,10 @@ public class CustomerBrain : NPCBrain
 
         IsReadyForTransaction = false;
 
-        // 줄 서기 루프 (거래가 끝날 때까지)
+        // 줄 서기
         while (true)
         {
-            // 이동 로직
+            // 이동
             if (Vector3.Distance(transform.position, currentQueueTarget) > 0.5f)
             {
                 controller.Movement.MoveTo(currentQueueTarget);
@@ -227,7 +221,6 @@ public class CustomerBrain : NPCBrain
             }
             else
             {
-                // 도착함 -> 멈춤
                 controller.Movement.Stop();
                 controller.Movement.LookAtTarget(counter.transform);
 
@@ -249,7 +242,7 @@ public class CustomerBrain : NPCBrain
     // 퇴장 로직
     private IEnumerator ExitPhase()
     {
-        // 혹시 줄을 서 있었다면 명단에서 제외 (안전장치)
+        // 줄을 서 있었다면 명단에서 제외
         if (counter != null) counter.LeaveQueue(this);
 
         // 입구로 이동
@@ -276,7 +269,7 @@ public class CustomerBrain : NPCBrain
 
     #region 상호작용 및 이벤트
 
-    // 카운터에서 호출: "앞 사람이 줄었으니 이 위치로 오세요"
+    // 카운터에서 호출하는 줄 위치 업데이트 함수
     public void UpdateQueueTarget(Vector3 newPos, bool amIFront)
     {
         currentQueueTarget = newPos;
@@ -285,7 +278,7 @@ public class CustomerBrain : NPCBrain
         IsReadyForTransaction = false;
     }
 
-    // 1. 플레이어가 카운터 클릭 시 호출됨 (진입점)
+    // 플레이어가 카운터 클릭 시 호출
     public void StartDialogueWithPlayer()
     {
         if (!IsReadyForTransaction) return;

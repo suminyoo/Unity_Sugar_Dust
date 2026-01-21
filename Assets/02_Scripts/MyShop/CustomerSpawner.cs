@@ -7,8 +7,6 @@ public class CustomerSpawner : MonoBehaviour
     [Header("References")]
     public GameObject customerPrefab;
     public Transform spawnPoint;
-
-    [Header("Scene Objects")]
     public DisplayStand displayStand;
     public CheckoutCounter counter;
 

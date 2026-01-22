@@ -20,7 +20,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     [Header("References")]
     private PlayerController player;
     public GridMapSpawner mapSpawner;
-    private Transform playerSpawnPoint;
+    private SPAWN_ID playerSpawnPointID = SPAWN_ID.EXPLORE_START;
 
     [Header("UI")]
     public TextMeshProUGUI timerText;
@@ -28,6 +28,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public TextMeshProUGUI resultMessageText; // 메시지 표시용
     public Transform resultItemContainer;
     public GameObject resultItemSlotPrefab;
+    public TextMeshProUGUI exploreLevelText;
+    public TextMeshProUGUI explorePathFamiliarityText;
 
 
     void Start()
@@ -37,7 +39,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
         mapSpawner.OnMapGenerationComplete += OnMapReady;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint").GetComponent<Transform>();
 
         if (resultUIPanel != null) resultUIPanel.SetActive(false);
 
@@ -57,6 +58,9 @@ public class ExploreManager : MonoBehaviour, ISaveable
     {
         // 로딩 중에는 시간 멈춤
         isExploreStarted = false;
+        InputControlManager.Instance.LockInput();
+
+        exploreLevelText.text = $"탐사 구역 {currentLevel:00}";
 
         ExploreStageData selectedData = GetStageDataForLevel(level);
         mapSpawner.InitAndGenerateMap(selectedData, level, player);
@@ -95,7 +99,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (player != null)
         {
-            player.transform.position = playerSpawnPoint.transform.position;
+            PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
+            //player.transform.position = playerSpawnPoint.transform.position;
             player.gameObject.SetActive(true);
             player.OnPlayerDied += OnPlayerDeath;
 
@@ -135,6 +140,19 @@ public class ExploreManager : MonoBehaviour, ISaveable
         if (isExplorationEnded) return;
         if (!isExploreStarted) return;
 
+        UpdateTimeUI();
+
+
+        //시간 초과 체크
+        if (currentTime <= 0)
+        {
+            //TODO: 얼어붙는 이펙트 활성화 
+            //TODO: 시간 초과시 플레이어에게 지속적인 피해 주기
+        }
+    }
+
+    public void UpdateTimeUI()
+    {
         //시간 감소
         currentTime -= Time.deltaTime;
 
@@ -145,14 +163,14 @@ public class ExploreManager : MonoBehaviour, ISaveable
             int seconds = Mathf.FloorToInt(displayTime % 60F);
             timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
         }
-
-        //시간 초과 체크
-        if (currentTime <= 0)
-        {
-            //TODO: 얼어붙는 이펙트 활성화 
-            //TODO: 시간 초과시 플레이어에게 지속적인 피해 주기
-        }
     }
+
+    public void UpdateExploreStateUI()
+    {
+        //Todo: 탐사 진척도에 따른 UI 업데이트
+        //explorePathFamiliarityText.text;
+    }
+
 
     void ShowResultItems()
     {

@@ -30,6 +30,8 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
+        InputControlManager.Instance.LockInput();
+
         yield return UIManager.Instance.FadeOut();
 
         // 이동할 목적지 ID
@@ -56,6 +58,9 @@ public class SceneController : MonoBehaviour
 
         yield return UIManager.Instance.FadeIn();
 
+        InputControlManager.Instance.UnlockInput();
+
+
     }
 
     #endregion
@@ -69,6 +74,8 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting)
     {
+        InputControlManager.Instance.LockInput();
+
         yield return UIManager.Instance.FadeOut();
 
         //  나갈때: 기존 실내 언로드
@@ -111,6 +118,8 @@ public class SceneController : MonoBehaviour
         yield return PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
 
         yield return UIManager.Instance.FadeIn();
+
+        InputControlManager.Instance.UnlockInput();
 
     }
 

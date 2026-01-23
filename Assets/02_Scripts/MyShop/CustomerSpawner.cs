@@ -11,26 +11,40 @@ public class CustomerSpawner : MonoBehaviour
     public CheckoutCounter counter;
 
     [Header("Settings")]
-    public float spawnInterval = 10f;
-    public int maxCustomers = 5;
+    public float minSpawnInterval = 3f; 
+    public float maxSpawnInterval = 10f;
+    public float shopStayDurationMin = 5f;
+    public float shopStayDurationMax = 15f;
+
+    public int maxCustomers = 10;
 
     private List<CustomerBrain> currentCustomers = new List<CustomerBrain>();
+    private Coroutine spawnCoroutine;
 
-    private void Start()
+    public void StartSpawning()
     {
-        if (spawnPoint == null) spawnPoint = transform;
-        StartCoroutine(SpawnRoutine());
+        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+        spawnCoroutine = StartCoroutine(SpawnRoutine());
+    }
+
+    public void StopSpawning()
+    {
+        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
     }
 
     private IEnumerator SpawnRoutine()
     {
         while (true)
         {
-            if (currentCustomers.Count < maxCustomers && customerPrefab != null)
+            // 랜덤 대기
+            float waitTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+            yield return new WaitForSeconds(waitTime);
+
+            // 최대 인원
+            if (currentCustomers.Count < maxCustomers)
             {
                 SpawnCustomer();
             }
-            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
@@ -45,6 +59,10 @@ public class CustomerSpawner : MonoBehaviour
 
             // 랜덤 성격 부여
             newCustomer.myType = (CustomerType)Random.Range(0, System.Enum.GetValues(typeof(CustomerType)).Length);
+            
+            // 랜덤 체류 시간
+            float randomStay = Random.Range(shopStayDurationMin, shopStayDurationMax);
+            newCustomer.wanderDuration = randomStay;
 
             // 초기화 (상점, 카운터, 입구, 파괴 콜백)
             newCustomer.Setup(displayStand, counter, spawnPoint, () =>

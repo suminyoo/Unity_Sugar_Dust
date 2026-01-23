@@ -15,30 +15,66 @@ public enum CustomerType
 
 public class CustomerBrain : NPCBrain
 {
-    [Header("Settings")]
-    public float wanderDuration = 5.0f; // 배회 시간
-    public float thinkingTime = 1.5f;   // 물건 보고 고민하는 시간
-
-    [Header("Personality")]
-    public CustomerType myType; // 내 진상 유형
-
-    // 외부 참조
+    [Header("References")]
     private DisplayStand targetShop;
     private CheckoutCounter counter; // 카운터 참조
     private Transform entrancePoint; // 상점 입구 좌표
     private System.Action onDespawnCallback; // 파괴 시 콜백
 
-    // 내부 상태
-    private int targetSlotIndex = -1;
+    [Header("Settings")]
+    public CustomerType myType; // 내 진상 유형
+
+    public float wanderDuration = 5.0f; // 배회 시간
+    public float thinkingTime = 1.5f;   // 물건 보고 고민하는 시간
+
     private Vector3 currentQueueTarget;
     private bool isFrontOfLine = false;
+    private int targetSlotIndex = -1;
 
-    // 카운터가 확인할 프로퍼티
+    public ItemData itemToBuy;
+    public Vector3 itemCarryPoint;
+
+    public bool IsInQueue => currentQueueTarget != Vector3.zero; // 줄 섰는지 확인용
+
     public bool IsReadyForTransaction { get; private set; } = false;
 
+    protected void Awake()
+    {
+        base.Awake();
+    }
     protected override void Start()
     {
-        
+        base.Start();
+    }
+
+    // 강제 퇴장
+    public void ForceLeave(bool dropItem)
+    {
+        StopAllCoroutines();
+
+        // 만약 물건을 집은 상태라면 (targetSlotIndex가 유효하다면)
+        if (dropItem && targetSlotIndex != -1)
+        {
+            DropItemOnFloor();
+        }
+
+        // 퇴장 코루틴 시작
+        StartCoroutine(ExitPhase());
+    }
+    private void DropItemOnFloor()
+    {
+        // 연출: 말풍선 띄우기
+        SayToSelf("에이, 문 닫았네.");
+        controller.Animation.PlayEmotion(NPCAnimation.Emotion.Disappointed);
+
+        // 아이템 바닥에 생성 (현재 위치)
+        // 실제로는 InventorySystem의 ItemData를 기반으로 프리팹을 생성해야 함
+        if (itemToBuy != null) // 혹은 targetShop.GetItemPrefab(...) 사용
+        {
+            Instantiate(itemToBuy.dropPrefab, itemCarryPoint, Quaternion.identity);
+        }
+
+        // (중요) 상점 재고는 다시 채워주거나, 아니면 바닥에 떨어진걸 플레이어가 주워서 채우게 기획
     }
 
     // 매니저에서 호출하는 셋업
@@ -53,7 +89,7 @@ public class CustomerBrain : NPCBrain
         StartCoroutine(CustomerRoutine());
     }
 
-    // 메인 행동 루틴
+    // 메인 루틴
     private IEnumerator CustomerRoutine()
     {
         // 배회
@@ -89,6 +125,12 @@ public class CustomerBrain : NPCBrain
     // 배회 로직
     private IEnumerator WanderPhase()
     {
+        // ▼▼▼ 디버깅 로그 추가 ▼▼▼
+        if (controller == null) Debug.LogError("범인 검거: controller가 NULL입니다! (초기화 타이밍 문제)");
+        else if (controller.Movement == null) Debug.LogError("범인 검거: controller.Movement가 NULL입니다!");
+
+        if (targetShop == null) Debug.LogError("범인 검거: targetShop이 NULL입니다! (Inspector 연결 문제)");
+        // ▲▲▲▲▲▲▲▲▲
         float timer = 0f;
 
         // 지정된 시간 동안 랜덤배회

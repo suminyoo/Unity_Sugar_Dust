@@ -5,6 +5,11 @@ public class ShopkeeperBrain : NPCBrain
 {
     private NPCShop myShop;
 
+
+    protected void Awake()
+    {
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();

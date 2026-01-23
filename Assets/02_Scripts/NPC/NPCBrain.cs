@@ -4,18 +4,21 @@ using UnityEngine;
 public class NPCBrain : MonoBehaviour
 {
     protected NPCController controller;
-    protected bool isInteracting = false;
     protected Transform playerTransform;
 
-    private Coroutine interactionCoroutine;
+    protected bool isInteracting = false;
+    public bool IsInteracting => isInteracting;
+
     private int currentPathIndex = 0;
 
     private bool isPlayerInRange = false;
 
-    protected virtual void Start()
+    protected void Awake()
     {
         controller = GetComponent<NPCController>();
-
+    }
+    protected virtual void Start()
+    {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         // 경로가 있으면 패트롤, 없으면 가만히

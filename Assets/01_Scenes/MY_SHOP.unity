@@ -1261,8 +1261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b23d2cb86eedf640b7050e1ae3b3423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopSceneName: 5
-  businessStartSpawnID: 0
 --- !u!65 &786729238
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1765,7 +1763,7 @@ GameObject:
   - component: {fileID: 1464588340}
   - component: {fileID: 1464588343}
   m_Layer: 0
-  m_Name: EntrancePoint
+  m_Name: Spawner/EntrancePoint
   m_TagString: EntrancePoint
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1850,10 +1848,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 2175322777703999182, guid: 29acafc0244c16146a92aeceefe64936, type: 3}
   spawnPoint: {fileID: 1464588342}
-  displayStand: {fileID: 0}
-  counter: {fileID: 0}
-  spawnInterval: 10
-  maxCustomers: 5
+  displayStand: {fileID: 562749871}
+  counter: {fileID: 7358804626782508867}
+  minSpawnInterval: 10
+  maxSpawnInterval: 20
+  shopStayDurationMin: 10
+  shopStayDurationMax: 20
+  maxCustomers: 15
 --- !u!1001 &1496040548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2185,6 +2186,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942531199}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1943669311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943669313}
+  - component: {fileID: 1943669312}
+  m_Layer: 0
+  m_Name: MyShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1943669312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943669311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70ddd4457b574949b97e5aebff4e8b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  businessDuration: 120
+  spawner: {fileID: 1464588343}
+  counter: {fileID: 7358804626782508867}
+  openCloseInteraction: {fileID: 786729237}
+  timerText: {fileID: 0}
+  timesUpPanel: {fileID: 0}
+--- !u!4 &1943669313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943669311}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2007035421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5719,4 +5770,5 @@ SceneRoots:
   - {fileID: 1119368883}
   - {fileID: 370146247}
   - {fileID: 1004853658}
+  - {fileID: 1943669313}
   - {fileID: 7467492963124101547}

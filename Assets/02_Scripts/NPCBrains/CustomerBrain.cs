@@ -6,7 +6,7 @@ public enum CustomerType
 {
     Normal,         // 일반 손님
     Haggler,        // 흥정 손님
-    Scammer,        // 사기꾼 (위조 지폐)
+    Scammer,        // 사기꾼 (위조 지폐..? 이건 좀 너무한듯)
     Indecisive,     // 카운터와서 안삼
     Beggar,         // 거지 (그냥 주세요)
     Thief,          // 도둑
@@ -28,17 +28,21 @@ public class CustomerBrain : NPCBrain
     public float thinkingTime = 1.5f;   // 물건 보고 고민하는 시간
 
     private Vector3 currentQueueTarget;
-    private bool isFrontOfLine = false;
+    private Quaternion currentQueueTargetRotation;
     private int targetSlotIndex = -1;
+    private bool isFrontOfQueue = false;
 
-    public ItemData itemToBuy;
-    public Vector3 itemCarryPoint;
 
     public bool IsInQueue => currentQueueTarget != Vector3.zero; // 줄 섰는지 확인용
+                                                                  
+    public bool IsReadyForTransaction { get; private set; } = false; // 결제 준비 완료 상태
 
-    public bool IsReadyForTransaction { get; private set; } = false;
+    public GameObject itemCarryPoint;
+    private ItemData itemToBuy;
+    private int itemToBuyAmount; 
+    private int itemToBuyPrice;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -52,29 +56,16 @@ public class CustomerBrain : NPCBrain
     {
         StopAllCoroutines();
 
-        // 만약 물건을 집은 상태라면 (targetSlotIndex가 유효하다면)
-        if (dropItem && targetSlotIndex != -1)
-        {
-            DropItemOnFloor();
-        }
+        // 만약 물건을 집은 상태라면 dropItemOnFloor 호출
+
 
         // 퇴장 코루틴 시작
         StartCoroutine(ExitPhase());
     }
+
     private void DropItemOnFloor()
     {
-        // 연출: 말풍선 띄우기
-        SayToSelf("에이, 문 닫았네.");
-        controller.Animation.PlayEmotion(NPCAnimation.Emotion.Disappointed);
-
-        // 아이템 바닥에 생성 (현재 위치)
-        // 실제로는 InventorySystem의 ItemData를 기반으로 프리팹을 생성해야 함
-        if (itemToBuy != null) // 혹은 targetShop.GetItemPrefab(...) 사용
-        {
-            Instantiate(itemToBuy.dropPrefab, itemCarryPoint, Quaternion.identity);
-        }
-
-        // (중요) 상점 재고는 다시 채워주거나, 아니면 바닥에 떨어진걸 플레이어가 주워서 채우게 기획
+        // 아이템 바닥에 생성 바닥에 놓을때 개수도 포함
     }
 
     // 매니저에서 호출하는 셋업
@@ -99,18 +90,15 @@ public class CustomerBrain : NPCBrain
         Transform itemPos = null;
         bool itemFound = false;
 
-        if (targetShop != null)
-        {
-            itemFound = targetShop.TryGetRandomSellableItem(out targetSlotIndex, out itemPos);
-        }
+        itemFound = targetShop.TryGetRandomSellableItem(out targetSlotIndex, out itemPos);
 
         if (itemFound && itemPos != null)
         {
             // 물건 위치로 이동
             yield return StartCoroutine(MoveToItemPhase(itemPos));
 
-            // 물건 집기 및 가격 판단 (공짜/비쌈/적당함 분기)
-            yield return StartCoroutine(PickUpAndCheckPricePhase(itemPos));
+            // 물건 집기 및 가격 판단
+            yield return StartCoroutine(PickUpItemPhase(itemPos));
         }
         else
         {
@@ -125,12 +113,6 @@ public class CustomerBrain : NPCBrain
     // 배회 로직
     private IEnumerator WanderPhase()
     {
-        // ▼▼▼ 디버깅 로그 추가 ▼▼▼
-        if (controller == null) Debug.LogError("범인 검거: controller가 NULL입니다! (초기화 타이밍 문제)");
-        else if (controller.Movement == null) Debug.LogError("범인 검거: controller.Movement가 NULL입니다!");
-
-        if (targetShop == null) Debug.LogError("범인 검거: targetShop이 NULL입니다! (Inspector 연결 문제)");
-        // ▲▲▲▲▲▲▲▲▲
         float timer = 0f;
 
         // 지정된 시간 동안 랜덤배회
@@ -138,8 +120,14 @@ public class CustomerBrain : NPCBrain
         {
             if (controller.Movement.HasArrived())
             {
-                // 상점 근처 랜덤 위치
-                Vector3 wanderTarget = GetRandomPointAround(targetShop.transform.position, 4f);
+                // 잠깐 멈춤
+                controller.Movement.Stop();
+
+                float waitTime = Random.Range(1.5f, 4f);
+                yield return new WaitForSeconds(waitTime);
+
+                // 새 목적지
+                Vector3 wanderTarget = GetRandomPointOnNavMesh();
                 controller.Movement.MoveTo(wanderTarget);
             }
 
@@ -153,8 +141,13 @@ public class CustomerBrain : NPCBrain
     // 아이템 위치로 이동
     private IEnumerator MoveToItemPhase(Transform itemPos)
     {
-        controller.Movement.MoveTo(itemPos.position);
+        float stoppingDistance = 1.5f;
+        Vector2 randomCircle = Random.insideUnitCircle.normalized * stoppingDistance;
+        Vector3 randomOffset = new Vector3(randomCircle.x, 0, randomCircle.y);
 
+        Vector3 finalTarget = itemPos.position + randomOffset;
+
+        controller.Movement.MoveTo(finalTarget);
         while (!controller.Movement.HasArrived())
         {
             yield return null;
@@ -162,7 +155,7 @@ public class CustomerBrain : NPCBrain
     }
 
     // 집기 및 가격 판단 (공짜/비쌈은 바로 퇴장, 적당함은 카운터로 이동)
-    private IEnumerator PickUpAndCheckPricePhase(Transform itemPos)
+    private IEnumerator PickUpItemPhase(Transform itemPos)
     {
         // 고민
         controller.Movement.LookAtTarget(itemPos);
@@ -170,47 +163,48 @@ public class CustomerBrain : NPCBrain
 
         yield return new WaitForSeconds(thinkingTime);
 
-        // 가격 정보 확인
+        // 정보 확인
         var slot = targetShop.InventorySystem.slots[targetSlotIndex];
-        int basePrice = slot.itemData.sellPrice; // 원가
-        int sellingPrice = targetShop.GetSlotPrice(targetSlotIndex); // 판매가
+        if (slot.IsEmpty)
+            yield break; // 누가 먼저 사갔을떄 처리 후 종료
 
-        // 비율 계산 (0으로 나누기 방지)
-        float ratio = (basePrice == 0) ? 0 : (float)sellingPrice / (float)basePrice;
+        itemToBuy = slot.itemData;
+        itemToBuyPrice = targetShop.GetSlotPrice(targetSlotIndex);
+        itemToBuyAmount = 1; //TODO: 여러개 살 수 있게 확장
+
+        float ratio = (itemToBuy.sellPrice == 0) ? 0 : (float)itemToBuyPrice / itemToBuy.sellPrice;
 
 
         // Case 1: 공짜
-        if (sellingPrice == 0)
+        if (itemToBuyPrice == 0)
         {
             SayToSelf("와 공짜네? 아싸!");
             //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Happy);
 
-            targetShop.TrySellItemToNPC(targetSlotIndex);
+            targetShop.TryTakeItemFromStand(targetSlotIndex, itemToBuyAmount);
 
             yield return new WaitForSeconds(1.5f);
-
             yield return StartCoroutine(ExitPhase());
         }
         // Case 2: 너무 비쌈 (> 2배)
         else if (ratio > 2.0f)
         {
-            SayToSelf($"{sellingPrice}골드? 바가지잖아!");
+            SayToSelf($"{itemToBuyPrice}골드? 바가지잖아!");
             //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Angry);
 
             yield return new WaitForSeconds(1.5f);
-
-            // 바로 퇴장
             yield return StartCoroutine(ExitPhase());
         }
-        // Case 3: 적당 -> 카운터로 가져감
+        // Case 3: 적당
         else
         {
             SayToSelf("음, 이거 사야지");
-            // TODO: 손에 물건 들기
+            targetShop.TryTakeItemFromStand(targetSlotIndex, itemToBuyAmount);
+            GameObject item = Instantiate(itemToBuy.dropPrefab, itemCarryPoint.transform.position, Quaternion.identity, itemCarryPoint.transform
+);
+            item.GetComponent<WorldItem>().enabled = false;
 
             yield return new WaitForSeconds(1.0f);
-
-            // 카운터 이동 및 줄 서기 시작
             yield return StartCoroutine(QueueAndTransactionPhase());
         }
     }
@@ -224,9 +218,8 @@ public class CustomerBrain : NPCBrain
         // 자리가 꽉참
         if (targetPos == null)
         {
-            controller.Animation.PlayEmotion(NPCAnimation.Emotion.Disappointed); // 실망 모션
             SayToSelf("줄 너무 긴데... 그냥 가야겠다");
-            //TODO: 손에 든 물건 버리기
+            //TODO: 손에 든 물건 버리기 DropItemOnFloor
 
             yield return new WaitForSeconds(2.0f);
 
@@ -238,47 +231,20 @@ public class CustomerBrain : NPCBrain
         // 자리가 있으면 할당받은 위치로 설정
         currentQueueTarget = targetPos.Value;
 
-        // 내가 줄의 맨 앞인지
-        if (counter.queuePoints.Count > 0)
+        controller.Movement.MoveTo(currentQueueTarget);
+        while (!controller.Movement.HasArrived())
         {
-            // Vector3 간의 거리가 아주 가까우면 같은 위치로 간주
-            float distToFirstPoint = Vector3.Distance(currentQueueTarget, counter.queuePoints[0].position);
-            isFrontOfLine = (distToFirstPoint < 0.1f);
-        }
-        else
-        {
-            isFrontOfLine = false;
-        }
-
-        IsReadyForTransaction = false;
-
-        // 줄 서기
-        while (true)
-        {
-            // 이동
-            if (Vector3.Distance(transform.position, currentQueueTarget) > 0.5f)
-            {
-                controller.Movement.MoveTo(currentQueueTarget);
-                IsReadyForTransaction = false;
-            }
-            else
-            {
-                controller.Movement.Stop();
-                controller.Movement.LookAtTarget(counter.transform);
-
-                // 맨 앞자리라면
-                if (isFrontOfLine)
-                {
-                    // 거래 준비 상태가 아니었다면 준비 상태로 전환
-                    if (!IsReadyForTransaction)
-                    {
-                        IsReadyForTransaction = true;
-                        SayToSelf("계산해주세요.");
-                    }
-                }
-            }
             yield return null;
         }
+        transform.rotation = Quaternion.Slerp(transform.rotation, currentQueueTargetRotation, Time.deltaTime * 5f);
+
+        if (isFrontOfQueue && !IsReadyForTransaction)
+        {
+
+            IsReadyForTransaction = true;
+            SayToSelf("계산좀");
+        }
+        
     }
 
     // 퇴장 로직
@@ -312,18 +278,16 @@ public class CustomerBrain : NPCBrain
     #region 상호작용 및 이벤트
 
     // 카운터에서 호출하는 줄 위치 업데이트 함수
-    public void UpdateQueueTarget(Vector3 newPos, bool amIFront)
+    public void UpdateQueueTarget(Vector3 newPos, Quaternion newRot, bool isFront)
     {
         currentQueueTarget = newPos;
-        isFrontOfLine = amIFront;
-        // 이동을 위해 준비 상태 해제
-        IsReadyForTransaction = false;
+        currentQueueTargetRotation = newRot;
+        isFrontOfQueue = isFront;
     }
 
     // 플레이어가 카운터 클릭 시 호출
     public void StartDialogueWithPlayer()
     {
-        if (!IsReadyForTransaction) return;
 
         // 이동 완전 정지
         controller.Movement.Stop();
@@ -362,7 +326,6 @@ public class CustomerBrain : NPCBrain
             //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Happy);
 
             // 실제 아이템 판매 처리 (재고 감소 및 돈 증가)
-            targetShop.TrySellItemToNPC(targetSlotIndex);
         }
         else
         {
@@ -380,19 +343,26 @@ public class CustomerBrain : NPCBrain
 
     #endregion
 
-    #region 유틸리티
-
-    // 랜덤 위치 찾기
-    private Vector3 GetRandomPointAround(Vector3 center, float range)
+    Vector3 GetRandomPointOnNavMesh()
     {
-        Vector3 randomPoint = center + Random.insideUnitSphere * range;
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, range, NavMesh.AllAreas))
+        NavMeshTriangulation navMeshData = NavMesh.CalculateTriangulation();
+
+        int index = Random.Range(0, navMeshData.indices.Length / 3) * 3;
+
+        Vector3 v1 = navMeshData.vertices[navMeshData.indices[index]];
+        Vector3 v2 = navMeshData.vertices[navMeshData.indices[index + 1]];
+        Vector3 v3 = navMeshData.vertices[navMeshData.indices[index + 2]];
+
+        float r1 = Random.value;
+        float r2 = Random.value;
+
+        if (r1 + r2 >= 1f)
         {
-            return hit.position;
+            r1 = 1 - r1;
+            r2 = 1 - r2;
         }
-        return center;
+
+        return v1 + r1 * (v2 - v1) + r2 * (v3 - v1);
     }
 
-    #endregion
 }

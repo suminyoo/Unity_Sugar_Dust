@@ -6,7 +6,7 @@ public class ShopkeeperBrain : NPCBrain
     private NPCShop myShop;
 
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }

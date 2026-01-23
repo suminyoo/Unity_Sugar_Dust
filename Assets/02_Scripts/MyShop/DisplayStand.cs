@@ -260,10 +260,10 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
         for (int i = 0; i < inventorySystem.slots.Count; i++)
         {
-            // 시각적 위치(displayPoints) 범위 내에 있고, 아이템이 존재하는지 확인
             if (i < displayPoints.Count &&
                 !inventorySystem.slots[i].IsEmpty &&
-                inventorySystem.slots[i].amount > 0)
+                inventorySystem.slots[i].amount > 0 &&
+                IsSlotActive(i))
             {
                 validIndices.Add(i);
             }
@@ -286,8 +286,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         return true;
     }
 
-    //NPC 구매 확정시 호출
-    public bool TrySellItemToNPC(int slotIndex)
+    public bool TryTakeItemFromStand(int slotIndex, int amount)
     {
         // 인덱스 검증
         if (slotIndex < 0 || slotIndex >= inventorySystem.slots.Count) return false;
@@ -297,23 +296,17 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
         var slot = inventorySystem.slots[slotIndex];
 
-        // 더블 체크 (NPC가 오는 사이에 플레이어가 빼면 안됨)
-        if (!slot.IsEmpty && slot.amount > 0)
+        if (!slot.IsEmpty && slot.amount >= amount)
         {
-            // 가격 
-            int finalPrice = GetSlotPrice(slotIndex);
-
             // 물건차감
-            // TODO: 개수 정하는 로직?
-            inventorySystem.RemoveItemAtIndex(slotIndex, 1);
-
-            // 돈 추가
-            PlayerAssetsManager.Instance.AddMoney(finalPrice);
-
-            return true; // 판매 성공
+            if(slot.amount < amount)
+            {
+                amount = slot.amount;
+            }
+            inventorySystem.RemoveItemAtIndex(slotIndex, amount);
+            return true;
         }
-
-        return false; // 판매 실패
+        return false;
     }
 
     #endregion

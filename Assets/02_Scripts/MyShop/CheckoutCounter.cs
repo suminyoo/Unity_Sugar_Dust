@@ -6,7 +6,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     public List<Transform> queuePoints; // 계산 줄 위치들
 
     // 계산줄 리스트
-    private List<CustomerBrain> waitingQueue = new List<CustomerBrain>();
+    public List<CustomerBrain> waitingQueue = new List<CustomerBrain>();
     public string GetInteractPrompt() => "[E] 물건 결제해주기";
 
     // 상호작용
@@ -15,10 +15,12 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         if (waitingQueue.Count > 0)
         {
             CustomerBrain frontCustomer = waitingQueue[0];
+
             if (frontCustomer.IsReadyForTransaction)
             {
                 frontCustomer.StartDialogueWithPlayer();
             }
+
         }
         else
         {
@@ -28,7 +30,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
 
     // 줄에 들어옴
     // 자리가 없으면 null
-    public Vector2? JoinQueue(CustomerBrain customer)
+    public Vector3? JoinQueue(CustomerBrain customer)
     { 
         // 자리 꽉 찼는지 확인
         if (waitingQueue.Count >= queuePoints.Count)
@@ -57,11 +59,8 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     {
         for (int i = 0; i < waitingQueue.Count; i++)
         {
-            // 이동
-            Vector3 newPos = queuePoints[i].position;
             bool isFront = (i == 0);
-
-            waitingQueue[i].UpdateQueueTarget(newPos, isFront);
+            waitingQueue[i].UpdateQueueTarget(queuePoints[i].position, queuePoints[i].rotation, isFront);
         }
     }
 

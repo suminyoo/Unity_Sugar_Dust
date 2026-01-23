@@ -13,7 +13,7 @@ public class NPCBrain : MonoBehaviour
 
     private bool isPlayerInRange = false;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         controller = GetComponent<NPCController>();
     }

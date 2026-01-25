@@ -118,7 +118,7 @@ public class MyShopManager : MonoBehaviour
         yield return null;
     }
 
-    // 4. 플레이어가 문을 눌러서 완전히 나가려고 할 때 체크
+    // 플레이어가 문을 눌러서 완전히 나가려고 할 때 체크
     public bool CanExitShop()
     {
         // 아직 손님이 남아있는지 확인

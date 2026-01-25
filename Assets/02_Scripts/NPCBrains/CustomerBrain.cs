@@ -16,6 +16,8 @@ public enum CustomerType
 
 public class CustomerBrain : NPCBrain
 {
+    public event Action<CustomerBrain> OnArrivedAtCounter;
+
     [Header("References")]
     private DisplayStand targetShop;
     private CheckoutCounter counter; // 카운터 참조
@@ -287,6 +289,8 @@ public class CustomerBrain : NPCBrain
         {
             IsReadyForTransaction = true;
             SayToSelf("계산해주세요");
+
+            OnArrivedAtCounter?.Invoke(this);
         }
     }
 

@@ -63,9 +63,11 @@ public class CounterUIManager : MonoBehaviour
         }
     }
 
-    public void ShowWaitingUI()
+    public void ShowWaitingUI(Action onExit)
     {
         currentCustomer = null;
+        this.onExitPressed = onExit;
+
         counterRootPanel.SetActive(true);
         counterTransactionPanel.SetActive(false);
 

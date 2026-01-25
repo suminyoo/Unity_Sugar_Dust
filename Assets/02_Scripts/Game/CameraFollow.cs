@@ -31,17 +31,22 @@ public class CameraFollow : MonoBehaviour
     private float currentDistance;
     private float zoomVelocity;
 
+    private bool isOverrideActive = false;
+    private Transform overrideTarget;
+    private float overrideTransitionSpeed = 5f;
+
     void Start()
     {
         // 초기 거리는 설정된 offset의 길이로 시작
         targetDistance = offset.magnitude;
         currentDistance = targetDistance;
         SnapToTarget();
-
     }
 
     void Update()
     {
+        if (isOverrideActive) return;
+
         // 휠 클릭 제어 (화면회전)
         if (Input.GetMouseButtonDown(2))
         {
@@ -67,6 +72,14 @@ public class CameraFollow : MonoBehaviour
             targetDistance -= scrollInput * zoomSpeed;
             targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isOverrideActive)
+            HandleOverrideMovement();
+        else
+            HandleStandardMovement();
     }
 
     public void SnapToTarget()
@@ -95,27 +108,29 @@ public class CameraFollow : MonoBehaviour
         Debug.Log("카메라 위치 동기화 완료");
     }
 
-    // 위치 계산 로직
-    private Vector3 CalculateCameraPosition(float dist)
+    public void HandleOverrideMovement()
     {
-        Quaternion rotation = Quaternion.Euler(currentYAngle, currentXAngle, 0);
-        Vector3 pivot = target.position + Vector3.up * 1.5f;
-        Vector3 dir = rotation * Vector3.back;
+        if (overrideTarget == null) return;
 
-        float finalDistance = dist;
-
-        // 벽 충돌 체크
-        RaycastHit hit;
-        if (Physics.SphereCast(pivot, cameraRadius, dir, out hit, dist, collisionLayers))
-        {
-            float distToWall = hit.distance - wallOffset;
-            finalDistance = Mathf.Clamp(distToWall, minDistance, dist);
-        }
-
-        return pivot + (dir * finalDistance);
+        transform.position = Vector3.Lerp(transform.position, overrideTarget.position, Time.fixedDeltaTime * overrideTransitionSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, overrideTarget.rotation, Time.fixedDeltaTime * overrideTransitionSpeed);
     }
 
-    void FixedUpdate() // 이동처리, 카메라 떨리지 않게
+    public void StartOverrideView(Transform viewPoint, float speed = 5f)
+    {
+        overrideTarget = viewPoint;
+        overrideTransitionSpeed = speed;
+        isOverrideActive = true;
+        currentVelocity = Vector3.zero;
+    }
+
+    public void ExitOverrideView()
+    {
+        isOverrideActive = false;
+        overrideTarget = null;
+    }
+
+    public void HandleStandardMovement() // 이동처리, 카메라 떨리지 않게
     {
         if (target == null) return;
 
@@ -151,4 +166,26 @@ public class CameraFollow : MonoBehaviour
         // 타겟 바라보기
         transform.LookAt(pivot);
     }
+
+    // 위치 계산 로직
+    private Vector3 CalculateCameraPosition(float dist)
+    {
+        Quaternion rotation = Quaternion.Euler(currentYAngle, currentXAngle, 0);
+        Vector3 pivot = target.position + Vector3.up * 1.5f;
+        Vector3 dir = rotation * Vector3.back;
+
+        float finalDistance = dist;
+
+        // 벽 충돌 체크
+        RaycastHit hit;
+        if (Physics.SphereCast(pivot, cameraRadius, dir, out hit, dist, collisionLayers))
+        {
+            float distToWall = hit.distance - wallOffset;
+            finalDistance = Mathf.Clamp(distToWall, minDistance, dist);
+        }
+
+        return pivot + (dir * finalDistance);
+    }
+
+   
 }

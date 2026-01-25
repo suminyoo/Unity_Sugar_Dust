@@ -106,7 +106,7 @@ public class WorldItem : MonoBehaviour
             {
                 if (inventory.AddItem(itemData, amount))
                 {
-                    Debug.Log($"{itemData.itemName} È¹µæ");
+                    //Debug.Log($"{itemData.itemName} È¹µæ");
                     Destroy(gameObject);
                 }
             }

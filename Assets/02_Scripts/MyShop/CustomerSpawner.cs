@@ -11,12 +11,11 @@ public class CustomerSpawner : MonoBehaviour
     public CheckoutCounter counter;
 
     [Header("Settings")]
-    public float minSpawnInterval = 3f; 
-    public float maxSpawnInterval = 10f;
-    public float shopStayDurationMin = 5f;
-    public float shopStayDurationMax = 15f;
-
-    public int maxCustomers = 10;
+    [SerializeField] float minSpawnInterval = 3f;
+    [SerializeField] float maxSpawnInterval = 10f;
+    [SerializeField] float shopStayDurationMin = 5f;
+    [SerializeField] float shopStayDurationMax = 15f;
+    [SerializeField] int maxCustomers = 10;
 
     private List<CustomerBrain> currentCustomers = new List<CustomerBrain>();
     private Coroutine spawnCoroutine;
@@ -50,27 +49,28 @@ public class CustomerSpawner : MonoBehaviour
 
     private void SpawnCustomer()
     {
-        GameObject go = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
-        CustomerBrain newCustomer = go.GetComponent<CustomerBrain>();
+        GameObject customer = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
+        CustomerBrain newCustomer = customer.GetComponent<CustomerBrain>();
 
         if (newCustomer != null)
         {
             currentCustomers.Add(newCustomer);
 
-            // 랜덤 성격 부여
-            newCustomer.myType = (CustomerType)Random.Range(0, System.Enum.GetValues(typeof(CustomerType)).Length);
-            
-            // 랜덤 체류 시간
+            CustomerType randomType = (CustomerType)Random.Range(0, System.Enum.GetValues(typeof(CustomerType)).Length);
             float randomStay = Random.Range(shopStayDurationMin, shopStayDurationMax);
-            newCustomer.wanderDuration = randomStay;
 
-            // 초기화 (상점, 카운터, 입구, 파괴 콜백)
-            newCustomer.Setup(displayStand, counter, spawnPoint, () =>
-            {
-                if (currentCustomers.Contains(newCustomer))
-                    currentCustomers.Remove(newCustomer);
-                Destroy(go);
-            });
+            newCustomer.Setup(
+                displayStand,
+                counter,
+                spawnPoint,
+                randomType,
+                randomStay,
+                () => {
+                    if (currentCustomers.Contains(newCustomer))
+                        currentCustomers.Remove(newCustomer);
+                    Destroy(customer);
+                }
+            );
         }
     }
 }

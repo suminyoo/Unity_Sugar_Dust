@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
 
     private Action onDialogueEnded;
     private bool isDialogueActive = false;
+    private bool shouldAutoClose = true;
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // NPCBrain에서 이 함수를 호출해서 대화시작
-    public void StartDialogue(DialogueData data, string speakerName, Action callback)
+    public void StartDialogue(DialogueData data, string speakerName, Action callback, bool autoClose = true)
     {
         if (data == null) return;
 
@@ -43,6 +44,7 @@ public class DialogueManager : MonoBehaviour
 
         isDialogueActive = true;
         onDialogueEnded = callback; // 끝날 때 실행할 함수 저장
+        shouldAutoClose = autoClose;
 
         dialoguePanel.SetActive(true);
         nameText.text = speakerName;
@@ -60,7 +62,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndDialogue();
+            if (shouldAutoClose)
+            {
+                EndDialogue();
+            }
             return;
         }
 
@@ -72,8 +77,10 @@ public class DialogueManager : MonoBehaviour
         // StartCoroutine(TypeSentence(sentence));
     }
 
-    private void EndDialogue()
+    public void EndDialogue()
     {
+        if (!isDialogueActive) return;
+
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
 

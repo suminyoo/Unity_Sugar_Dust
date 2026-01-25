@@ -30,14 +30,12 @@ public class MyShopManager : MonoBehaviour
     {
         if (IsShopMode)
         {
-            //상점 영업 모드
-            StartShop();
+            RealShopMode();  //상점 영업 모드
             IsShopMode = false;
         }
         else
         {
-            // 단순 내 상점 방문 (Additive)
-            InitialShopMode();
+            TempShopMode();  // 단순 내 상점 방문 (Additive)
         }
     }
 
@@ -47,16 +45,14 @@ public class MyShopManager : MonoBehaviour
         {
             UpdateTimeUI();
 
-            // 시간 종료 체크
             if (currentTime <= 0)
             {
-                EndShop();
+                EndShopMode();
             }
         }
     }
     public void UpdateTimeUI()
     {
-        //시간 감소
         currentTime -= Time.deltaTime;
 
         if (timerText != null)
@@ -67,7 +63,7 @@ public class MyShopManager : MonoBehaviour
             timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
         }
     }
-    private void InitialShopMode()
+    private void TempShopMode()
     {
         IsShopOpen = false;
         if (timerText != null) timerText.text = "";
@@ -75,7 +71,7 @@ public class MyShopManager : MonoBehaviour
 
     }
 
-    public void StartShop()
+    public void RealShopMode()
     {
         IsShopOpen = true;
         currentTime = businessDuration;
@@ -87,7 +83,7 @@ public class MyShopManager : MonoBehaviour
     }
 
     // 영업 시간 종료
-    private void EndShop()
+    private void EndShopMode()
     {
         IsShopOpen = false;
         if (timerText != null) timerText.text = "CLOSED";

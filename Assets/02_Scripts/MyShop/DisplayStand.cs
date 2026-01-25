@@ -286,27 +286,23 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         return true;
     }
 
-    public bool TryTakeItemFromStand(int slotIndex, int amount)
+    public int TryTakeItemFromStand(int slotIndex, int requestAmount)
     {
         // 인덱스 검증
-        if (slotIndex < 0 || slotIndex >= inventorySystem.slots.Count) return false;
+        if (slotIndex < 0 || slotIndex >= inventorySystem.slots.Count) return 0;
 
-        //활성화 체크
-        if (!IsSlotActive(slotIndex)) return false;
+        // 활성화 체크
+        if (!IsSlotActive(slotIndex)) return 0;
 
         var slot = inventorySystem.slots[slotIndex];
 
-        if (!slot.IsEmpty && slot.amount >= amount)
-        {
-            // 물건차감
-            if(slot.amount < amount)
-            {
-                amount = slot.amount;
-            }
-            inventorySystem.RemoveItemAtIndex(slotIndex, amount);
-            return true;
-        }
-        return false;
+        if (slot.IsEmpty) return 0;
+        int amountToTake = Mathf.Min(slot.amount, requestAmount);
+
+        // 물건 차감
+        inventorySystem.RemoveItemAtIndex(slotIndex, amountToTake);
+
+        return amountToTake;
     }
 
     #endregion

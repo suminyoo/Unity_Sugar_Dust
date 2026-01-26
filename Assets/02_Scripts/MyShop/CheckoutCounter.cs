@@ -170,7 +170,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
             LeaveQueue(customer);
 
             // °­Α¦ Επΐε
-            customer.ForceLeave(dropItem: true);
+            customer.ForceLeave();
         }
     }
 

@@ -49,13 +49,12 @@ public class CustomerSpawner : MonoBehaviour
 
     private void SpawnCustomer()
     {
-        GameObject customer = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject customer = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
         CustomerBrain newCustomer = customer.GetComponent<CustomerBrain>();
 
         if (newCustomer != null)
         {
             currentCustomers.Add(newCustomer);
-
             CustomerType randomType = (CustomerType)Random.Range(0, System.Enum.GetValues(typeof(CustomerType)).Length);
             float randomStay = Random.Range(shopStayDurationMin, shopStayDurationMax);
 

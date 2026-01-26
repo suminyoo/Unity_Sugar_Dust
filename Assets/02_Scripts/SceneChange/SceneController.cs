@@ -25,14 +25,13 @@ public class SceneController : MonoBehaviour
 
     public void ChangeScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
-        StartCoroutine(SceneTransitionCor(sceneName, spawnPointID));
+        StartCoroutine(SceneTransitionCor(sceneName, spawnPointID, true));
     }
 
-    private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
+    private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool useFade = true)
     {
-        InputControlManager.Instance.LockInput();
-
-        yield return UIManager.Instance.FadeOut();
+        if (useFade) InputControlManager.Instance.LockInput();
+        if (useFade) yield return FadeUIManager.Instance.FadeOut();
 
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;
@@ -52,13 +51,14 @@ public class SceneController : MonoBehaviour
         // 씬 로드
         yield return SceneManager.LoadSceneAsync(sceneName.ToString());
 
+        currentLoadedInterior = null;
+
         yield return null;
 
         yield return PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
 
-        yield return UIManager.Instance.FadeIn();
-
-        InputControlManager.Instance.UnlockInput();
+        if (useFade) yield return FadeUIManager.Instance.FadeIn();
+        if (useFade) InputControlManager.Instance.UnlockInput();
 
 
     }
@@ -69,14 +69,13 @@ public class SceneController : MonoBehaviour
 
     public void AddSceneAndMoveTo(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isExiting)
     {
-        StartCoroutine(AdditiveLoadCor(sceneName.ToString(), spawnPointID, isExiting));
+        StartCoroutine(AdditiveLoadCor(sceneName.ToString(), spawnPointID, isExiting, true));
     }
 
-    private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting)
+    private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting, bool useFade = true)
     {
-        InputControlManager.Instance.LockInput();
-
-        yield return UIManager.Instance.FadeOut();
+        if (useFade) InputControlManager.Instance.LockInput();
+        if (useFade) yield return FadeUIManager.Instance.FadeOut();
 
         //  나갈때: 기존 실내 언로드
         if (isExiting)
@@ -99,6 +98,8 @@ public class SceneController : MonoBehaviour
             {
                 yield return SceneManager.UnloadSceneAsync(currentLoadedInterior);
             }
+
+
             Debug.Log($"로드 시도 중인 씬 이름: {sceneName.ToString()}");
             yield return SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 
@@ -117,9 +118,8 @@ public class SceneController : MonoBehaviour
 
         yield return PlayerSpawnHandler.Instance.SpawnPlayer(spawnPointID);
 
-        yield return UIManager.Instance.FadeIn();
-
-        InputControlManager.Instance.UnlockInput();
+        if (useFade) yield return FadeUIManager.Instance.FadeIn();
+        if (useFade) InputControlManager.Instance.UnlockInput();
 
     }
 
@@ -132,8 +132,14 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator ChangeAndAddCor(SCENE_NAME baseScene, SCENE_NAME additiveScene, SPAWN_ID targetID)
     {
-        yield return StartCoroutine(SceneTransitionCor(baseScene, SPAWN_ID.NONE));
-        yield return StartCoroutine(AdditiveLoadCor(additiveScene.ToString(), targetID, false));
+        InputControlManager.Instance.LockInput();
+        yield return FadeUIManager.Instance.FadeOut();
+
+        yield return StartCoroutine(SceneTransitionCor(baseScene, SPAWN_ID.NONE, false));
+        yield return StartCoroutine(AdditiveLoadCor(additiveScene.ToString(), targetID, false, false));
+
+        yield return FadeUIManager.Instance.FadeIn();
+        InputControlManager.Instance.UnlockInput();
     }
 
 

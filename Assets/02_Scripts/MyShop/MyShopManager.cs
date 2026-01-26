@@ -17,7 +17,6 @@ public class MyShopManager : MonoBehaviour
     public OpenCloseMyShop openCloseInteraction;
 
     public TextMeshProUGUI timerText;
-    public GameObject timesUpPanel;
 
     public static bool IsShopMode = false; // 씬 체인지로 영업모드로 바뀔때
 
@@ -67,13 +66,15 @@ public class MyShopManager : MonoBehaviour
     {
         IsShopOpen = false;
         if (timerText != null) timerText.text = "";
-        if (timesUpPanel != null) timesUpPanel.SetActive(false);
 
     }
 
     public void RealShopMode()
     {
         IsShopOpen = true;
+
+        NotificationUIManager.Instance.ShowNotification("영업이 시작되었습니다");
+
         currentTime = businessDuration;
 
         // 스포너 가동
@@ -86,8 +87,10 @@ public class MyShopManager : MonoBehaviour
     private void EndShopMode()
     {
         IsShopOpen = false;
+
+        NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
+
         if (timerText != null) timerText.text = "CLOSED";
-        if (timesUpPanel != null) timesUpPanel.SetActive(true);
 
         spawner.StopSpawning();
 
@@ -104,33 +107,15 @@ public class MyShopManager : MonoBehaviour
         CustomerBrain[] allCustomers = FindObjectsOfType<CustomerBrain>();
         foreach (var customer in allCustomers)
         {
-            // 아직 거래 중이지 않고, 줄도 안 섰다면 바로 퇴장
             if (!customer.IsInteracting && !customer.IsInQueue)
             {
-                customer.ForceLeave(dropItem: true); // 물건 들고 있었으면 떨구고 감
+                customer.ForceLeave();
             }
         }
 
-        // 마지막 손님(계산 중인 사람)이 나갈 때까지 대기하거나,
-        // 플레이어가 문을 클릭할 수 있게 상태 변경
         openCloseInteraction.SetState(OpenCloseMyShop.MyShopState.SHOP_CLOSED);
 
         yield return null;
     }
 
-    // 플레이어가 문을 눌러서 완전히 나가려고 할 때 체크
-    public bool CanExitShop()
-    {
-        // 아직 손님이 남아있는지 확인
-        CustomerBrain[] remainingCustomers = FindObjectsOfType<CustomerBrain>();
-
-        if (remainingCustomers.Length > 0)
-        {
-            // (옵션) 강제로 다 삭제하거나, 기다리라는 메시지 띄우기
-            Debug.Log("아직 손님이 남아있습니다. 다 나갈 때까지 기다리세요.");
-            return false;
-        }
-
-        return true;
-    }
 }

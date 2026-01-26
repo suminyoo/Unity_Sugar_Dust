@@ -37,6 +37,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         ExploreEndSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
         ExploreToTownPoint.OnPlayerReturnToTown += ExploreSuccess;
         mapSpawner.OnMapGenerationComplete += OnMapReady;
+        if(timerText == null) timerText = GameObject.FindGameObjectWithTag("ClockText").GetComponent<TextMeshProUGUI>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -191,7 +192,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
             // 프리팹 생성
             GameObject slotUI = Instantiate(resultItemSlotPrefab, resultItemContainer);
-            Debug.Log($"[ResultUI] 아이템 슬롯 생성됨 - 아이템: {slot.itemData.name}, 수량: {slot.amount}");
+            //Debug.Log($"[ResultUI] 아이템 슬롯 생성됨 - 아이템: {slot.itemData.name}, 수량: {slot.amount}");
 
             var uiScript = slotUI.GetComponent<ResultItemSlotUI>();
             if (uiScript != null)
@@ -203,16 +204,46 @@ public class ExploreManager : MonoBehaviour, ISaveable
         resultUIPanel.SetActive(true);
 
     }
-    
+
     private void LoseItems(bool loseAll)
     {
-        if (!loseAll)
+        // 플레이어에게서 PlayerInventory 컴포넌트를 가져옵니다.
+        InventorySystem invSystem = player.GetComponent<InventoryHolder>().InventorySystem;
+
+        // 아이템 삭제
+        if (loseAll)
         {
-            //TODO: 랜덤 아이템 잃기
+            for (int i = 0; i < invSystem.slots.Count; i++)
+            {
+                if (!invSystem.slots[i].IsEmpty)
+                    invSystem.RemoveItemAtIndex(i, invSystem.slots[i].amount);
+            }
+            Debug.Log("탐사 실패: 모든 아이템을 잃었습니다.");
         }
         else
         {
-            //TODO: 아이템 모두 잃기
+            // 1. 아이템이 있는 슬롯의 인덱스만 수집
+            List<int> occupiedIndices = new List<int>();
+            for (int i = 0; i < invSystem.slots.Count; i++)
+            {
+                if (!invSystem.slots[i].IsEmpty) occupiedIndices.Add(i);
+            }
+
+            if (occupiedIndices.Count > 0)
+            {
+                int loseCount = Mathf.Min(Random.Range(1, 5), occupiedIndices.Count);
+
+                for (int i = 0; i < loseCount; i++)
+                {
+                    int listIndex = Random.Range(0, occupiedIndices.Count);
+                    int targetSlotIndex = occupiedIndices[listIndex];
+
+                    invSystem.RemoveItemAtIndex(targetSlotIndex, invSystem.slots[targetSlotIndex].amount);
+
+                    // 중복 방지를 위해 리스트에서 뽑힌 인덱스 제거
+                    occupiedIndices.RemoveAt(listIndex);
+                }
+            }
         }
     }
 

@@ -61,20 +61,23 @@ public class CustomerBrain : NPCBrain
     }
 
     // 강제 퇴장
-    public void ForceLeave(bool dropItem)
+    public void ForceLeave()
     {
         StopAllCoroutines();
 
-        // 만약 물건을 집은 상태라면 dropItemOnFloor 호출
-
-
-        // 퇴장 코루틴 시작
+        if(itemToBuy != null)
+            DropItemOnFloor();
+        
         StartCoroutine(ExitPhase());
     }
 
     private void DropItemOnFloor()
     {
-        // 아이템 바닥에 생성 바닥에 놓을때 개수도 포함
+        GameObject droppedObj = Instantiate(itemToBuy.dropPrefab, transform.position, Quaternion.identity);
+
+        // 바닥에 떨어진 아이템에 개수 전달
+        var worldItem = droppedObj.GetComponent<WorldItem>();
+        if (worldItem != null) worldItem.Initialize(itemToBuy, itemToBuyAmount);
     }
 
     // 매니저에서 호출하는 셋업
@@ -349,7 +352,7 @@ public class CustomerBrain : NPCBrain
 
         if (selectedDialogue != null)
         {
-            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.npcData.npcName, null);
+            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.npcData.npcName, null, false);
         }
         else
         {
@@ -363,7 +366,9 @@ public class CustomerBrain : NPCBrain
 
         if (isSuccess) SayToSelf("감사합니다.");
         else SayToSelf("쳇 뭐야.");
-        
+
+        DropItemOnFloor();
+
         counter.LeaveQueue(this);
 
         StartCoroutine(ExitPhase());

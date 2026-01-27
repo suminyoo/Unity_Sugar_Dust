@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public enum CustomerType
 {
@@ -41,6 +42,7 @@ public class CustomerBrain : NPCBrain
     private int minItemPickupAmount = 1;
     private int maxItemPickupAmount = 20;
 
+    private GameObject itemObjInhand;
     private ItemData itemToBuy;
     private int itemToBuyAmount; 
     private int itemToBuyPrice;
@@ -73,11 +75,20 @@ public class CustomerBrain : NPCBrain
 
     private void DropItemOnFloor()
     {
-        GameObject droppedObj = Instantiate(itemToBuy.dropPrefab, transform.position, Quaternion.identity);
+
+        Vector3 itemDropPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        GameObject droppedObj = Instantiate(itemToBuy.dropPrefab, itemDropPosition, Quaternion.identity);
 
         // 바닥에 떨어진 아이템에 개수 전달
         var worldItem = droppedObj.GetComponent<WorldItem>();
         if (worldItem != null) worldItem.Initialize(itemToBuy, itemToBuyAmount);
+
+
+        itemToBuy = null;
+        itemToBuyAmount = 0;
+        itemToBuyPrice = 0;
+        Destroy(itemObjInhand);
+
     }
 
     // 매니저에서 호출하는 셋업
@@ -214,9 +225,9 @@ public class CustomerBrain : NPCBrain
 
                 if (itemToBuy.dropPrefab != null)
                 {
-                    GameObject itemObj = Instantiate(itemToBuy.dropPrefab, itemCarryPoint.transform.position, Quaternion.identity, itemCarryPoint.transform);
-                    if (itemObj.GetComponent<WorldItem>() != null)
-                        itemObj.GetComponent<WorldItem>().enabled = false;
+                    itemObjInhand = Instantiate(itemToBuy.dropPrefab, itemCarryPoint.transform.position, Quaternion.identity, itemCarryPoint.transform);
+                    if (itemObjInhand.GetComponent<WorldItem>() != null)
+                        itemObjInhand.GetComponent<WorldItem>().enabled = false;
                 }
 
                 if (itemToBuyPrice == 0)
@@ -364,16 +375,19 @@ public class CustomerBrain : NPCBrain
     {
         DialogueManager.Instance.EndDialogue();
 
-        if (isSuccess) SayToSelf("감사합니다.");
-        else SayToSelf("쳇 뭐야.");
-
-        DropItemOnFloor();
+        if (isSuccess)
+        {
+            SayToSelf("감사합니다.");
+        }
+        else
+        {
+            SayToSelf("쳇 뭐야.");
+            DropItemOnFloor();
+        }
 
         counter.LeaveQueue(this);
-
         StartCoroutine(ExitPhase());
     }
-
     #endregion
 
     Vector3 GetRandomPointOnNavMesh()

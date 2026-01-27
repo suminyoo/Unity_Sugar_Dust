@@ -36,8 +36,8 @@ public class InventoryHolder : MonoBehaviour
         // 프리팹 생성
         if (slot.itemData.dropPrefab != null)
         {
-            Vector3 pos = itemDropPosition != null ? itemDropPosition.position : transform.position + transform.forward;
-            GameObject droppedObj = Instantiate(slot.itemData.dropPrefab, pos, Quaternion.identity);
+            //Vector3 pos = itemDropPosition != null ? itemDropPosition.position : transform.position + transform.forward;
+            GameObject droppedObj = Instantiate(slot.itemData.dropPrefab, itemDropPosition.position, Quaternion.identity);
 
             // 바닥에 떨어진 아이템에 개수 전달
             var worldItem = droppedObj.GetComponent<WorldItem>();

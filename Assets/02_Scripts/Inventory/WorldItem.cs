@@ -10,6 +10,7 @@ public class WorldItem : MonoBehaviour
 
     [Header("Item Settings")]
     private Transform target;
+    [SerializeField] private Transform visualChild;
 
     private readonly float moveSpeed = 5f;
     private readonly float rotateSpeed = 50f;
@@ -43,6 +44,8 @@ public class WorldItem : MonoBehaviour
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+        if (visualChild == null && transform.childCount > 0)
+            visualChild = transform.GetChild(0);
 
         startPos = transform.position;
         isFloating = true;
@@ -55,9 +58,7 @@ public class WorldItem : MonoBehaviour
     public void StartFollow(Transform player)
     {
         if (Time.time < enablePickupTime) return;
-
         target = player;
-        if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
     }
 
     public void StopFollow(Transform player)
@@ -70,10 +71,20 @@ public class WorldItem : MonoBehaviour
 
     private void Update()
     {
-        // 회전
-        if (isFloating || target != null)
+        if (visualChild == null) return;
+        visualChild.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+
+        if (target == null && isFloating)
         {
-            transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+            float newY = Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+            visualChild.localPosition = new Vector3(0, newY, 0);
+            visualChild.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+
+        }
+        else
+        {
+            // 따라가는 중에는 둥둥거림을 멈추고 자식을 부모 중심으로 서서히 정렬
+            visualChild.localPosition = Vector3.Lerp(visualChild.localPosition, Vector3.zero, Time.deltaTime * 5f);
         }
 
         // 이동
@@ -85,12 +96,6 @@ public class WorldItem : MonoBehaviour
                 target.position,
                 moveSpeed * Time.deltaTime
             );
-        }
-        else if (isFloating)
-        {
-            // 둥둥 모드
-            float newY = startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
-            transform.position = new Vector3(startPos.x, newY, startPos.z);
         }
     }
 

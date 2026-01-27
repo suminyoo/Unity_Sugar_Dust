@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class CounterUIManager : MonoBehaviour
+public class CounterUI : MonoBehaviour
 {
-    public static CounterUIManager Instance;
+    //public static CounterUIManager Instance;
     private Action<bool> onTransactionCompleted;
     private Action onExitPressed;
 
@@ -25,10 +25,9 @@ public class CounterUIManager : MonoBehaviour
     public Button refuseButton;
     public Button exitButton;
 
-
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        //if (Instance == null) Instance = this;
 
         confirmButton.onClick.AddListener(OnClickConfirm);
         refuseButton.onClick.AddListener(OnClickRefuse);
@@ -40,6 +39,7 @@ public class CounterUIManager : MonoBehaviour
 
     public void ShowCounterUI(CustomerBrain customer, Action<bool> onComplete, Action onExit)
     {
+        Cursor.visible = true;
         currentCustomer = customer;
 
         this.onTransactionCompleted = onComplete;
@@ -65,6 +65,7 @@ public class CounterUIManager : MonoBehaviour
 
     public void ShowWaitingUI(Action onExit)
     {
+        Cursor.visible = true;
         currentCustomer = null;
         this.onExitPressed = onExit;
 

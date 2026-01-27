@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour
 
         InputControlManager.Instance.LockInput();
 
+        Cursor.visible = true;
         isDialogueActive = true;
         onDialogueEnded = callback; // 끝날 때 실행할 함수 저장
         shouldAutoClose = autoClose;

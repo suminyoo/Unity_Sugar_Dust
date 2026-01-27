@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 public class CheckoutCounter : MonoBehaviour, IInteractable
 {
-    // 카메라
+    public CounterUI counterUI;
+
     private CameraFollow mainCamera;
 
     public Transform counterViewPoint; //카운터뷰
@@ -46,7 +46,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         InputControlManager.Instance.LockInput();
         mainCamera.StartOverrideView(counterViewPoint, transitionSpeed);
 
-        CounterUIManager.Instance.ShowWaitingUI(() => StopCounterMode());
+        counterUI.ShowWaitingUI(() => StopCounterMode());
 
         if (waitingQueue.Count > 0)
         {
@@ -77,7 +77,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         customer.StartTransactionDialogue();
 
         // UI에 손님 정보 표시
-        CounterUIManager.Instance.ShowCounterUI(
+        counterUI.ShowCounterUI(
             customer,
             (isSuccess) => HandleTransactionResult(customer, isSuccess), // 거래 완료 시 실행할 행동
             () => StopCounterMode() // 나가기 버튼 누르면 실행할 행동
@@ -96,16 +96,21 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
 
         // 카운터 상태 초기화
         isTransactionActive = false;
-        CounterUIManager.Instance.ShowWaitingUI(() => StopCounterMode());
+        counterUI.ShowWaitingUI(() => StopCounterMode());
     }
 
     // 나가기 버튼
     public void StopCounterMode()
     {
+        if (!isCounterMode) return;
+
+        DialogueManager.Instance.EndDialogue();
+
         isCounterMode = false; // while 루프 종료 조건
+        isTransactionActive = false;
 
         // UI 끄기
-        CounterUIManager.Instance.CloseCounterUI();
+        counterUI.CloseCounterUI();
 
         // 카메라 복귀
         if (mainCamera != null) mainCamera.ExitOverrideView();

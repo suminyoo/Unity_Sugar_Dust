@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 22327632392457304}
   - component: {fileID: 4944551089940101172}
   - component: {fileID: 390967288839638453}
+  - component: {fileID: -3272362506688755723}
   m_Layer: 9
   m_Name: NPCAlien
   m_TagString: Untagged
@@ -817,6 +818,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19bcc3e4d44ab9646b98e39f6f83e967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &-3272362506688755723
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873675435981070874}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6532964606776442070
 GameObject:
   m_ObjectHideFlags: 0

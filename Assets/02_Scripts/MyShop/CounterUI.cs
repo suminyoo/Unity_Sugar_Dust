@@ -5,7 +5,6 @@ using System;
 
 public class CounterUI : MonoBehaviour
 {
-    //public static CounterUIManager Instance;
     private Action<bool> onTransactionCompleted;
     private Action onExitPressed;
 
@@ -27,8 +26,6 @@ public class CounterUI : MonoBehaviour
 
     private void Awake()
     {
-        //if (Instance == null) Instance = this;
-
         confirmButton.onClick.AddListener(OnClickConfirm);
         refuseButton.onClick.AddListener(OnClickRefuse);
         exitButton.onClick.AddListener(OnClickExit);

@@ -41,6 +41,7 @@ public class CustomerBrain : NPCBrain
     private int targetItemSlotIndex;
     private int minItemPickupAmount = 1;
     private int maxItemPickupAmount = 20;
+    private bool isExiting = false;
 
     private GameObject itemObjInhand;
     private ItemData itemToBuy;
@@ -69,8 +70,8 @@ public class CustomerBrain : NPCBrain
 
         if(itemToBuy != null)
             DropItemOnFloor();
-        
-        StartCoroutine(ExitPhase());
+
+        ExitPhase();
     }
 
     private void DropItemOnFloor()
@@ -132,7 +133,7 @@ public class CustomerBrain : NPCBrain
         {
             SayToSelf("여긴 살만한게 없네");
             yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(ExitPhase());
+            ExitPhase();
         }
     }
 
@@ -209,7 +210,7 @@ public class CustomerBrain : NPCBrain
 
             // 재고를 건드리지 않고 바로 퇴장
             yield return new WaitForSeconds(1.5f);
-            yield return StartCoroutine(ExitPhase());
+            ExitPhase();
         }
         // Case B: 공짜거나 가격이 적당함
         else
@@ -234,7 +235,7 @@ public class CustomerBrain : NPCBrain
                 {
                     SayToSelf("와 공짜네? 아싸!");
                     yield return new WaitForSeconds(1.5f);
-                    yield return StartCoroutine(ExitPhase());
+                    ExitPhase();
                 }
                 else
                 {
@@ -248,7 +249,7 @@ public class CustomerBrain : NPCBrain
             {
                 SayToSelf("어? 재고가 없네...");
                 yield return new WaitForSeconds(1.0f);
-                yield return StartCoroutine(ExitPhase());
+                ExitPhase();
             }
         }
     }
@@ -264,7 +265,7 @@ public class CustomerBrain : NPCBrain
             SayToSelf("줄 너무 긴데... 그냥 가야겠다");
             // TODO: 물건 버리기
             yield return new WaitForSeconds(2.0f);
-            yield return StartCoroutine(ExitPhase());
+            ExitPhase();
             yield break;
         }
 
@@ -309,25 +310,37 @@ public class CustomerBrain : NPCBrain
     }
 
     // 퇴장 로직
-    private IEnumerator ExitPhase()
+    private void ExitPhase()
     {
+        if (isExiting) return;
+
         if (counter != null) counter.LeaveQueue(this);
 
         // 입구로 이동
         if (entrancePoint != null)
         {
+            isExiting = true;
             controller.Movement.MoveTo(entrancePoint.position);
-
-            while (!controller.Movement.HasArrived())
-            {
-                yield return null;
-            }
         }
+    }
 
-        SayToSelf("다음에 또 올게요");
+    private void OnTriggerEnter(Collider other)
+    {
+        // 나가는 중이고, 닿은 물체가 Exit 구역일 때
+        if (isExiting && other.CompareTag("EntrancePoint"))
+        {
+            StartCoroutine(ProcessDespawn());
+        }
+    }
+
+    private IEnumerator ProcessDespawn()
+    {
+        isExiting = false; // 중복 실행 방지
+
         controller.Movement.Stop();
+        SayToSelf("다음에 또 올게요");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         onDespawnCallback?.Invoke();
     }
@@ -386,7 +399,7 @@ public class CustomerBrain : NPCBrain
         }
 
         counter.LeaveQueue(this);
-        StartCoroutine(ExitPhase());
+        ExitPhase();
     }
     #endregion
 

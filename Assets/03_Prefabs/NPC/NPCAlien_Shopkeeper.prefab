@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 1696313028251174309}
   - component: {fileID: 3393035493452327458}
   - component: {fileID: 7496568630985391088}
+  - component: {fileID: 5174989968773590526}
   m_Layer: 9
   m_Name: NPCAlien_Shopkeeper
   m_TagString: Untagged
@@ -320,6 +321,33 @@ MonoBehaviour:
     slots: []
     maxSlots: 0
   shopData: {fileID: 11400000, guid: 037af495239bcd14d9b867f20bfe567f, type: 2}
+--- !u!54 &5174989968773590526
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820278831577023185}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2876591150978276552
 GameObject:
   m_ObjectHideFlags: 0

@@ -199,7 +199,12 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
                     displayPoints[i]
                 );
 
-                visualObj.GetComponent<Collider>().enabled = false; //콜라이더끄기?
+                visualObj.GetComponent<Collider>().enabled = false;
+                visualObj.GetComponent<WorldItem>().enabled = false;
+                if (visualObj.TryGetComponent<WorldItem>(out var worldItem))
+                {
+                    Destroy(worldItem);
+                }
 
                 spawnedVisualItems.Add(visualObj);
             }

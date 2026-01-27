@@ -51,6 +51,7 @@ public class CustomerSpawner : MonoBehaviour
     {
         GameObject customer = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
         CustomerBrain newCustomer = customer.GetComponent<CustomerBrain>();
+        NPCVisualUtility.ApplyRandomColor(customer);
 
         if (newCustomer != null)
         {

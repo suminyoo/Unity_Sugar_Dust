@@ -62,8 +62,8 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9006932667723966948}
   - {fileID: 7340496858100426369}
+  - {fileID: 9006932667723966948}
   m_Father: {fileID: 6952896806704945327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3443450431312653258
@@ -320,7 +320,6 @@ MonoBehaviour:
     slots: []
     maxSlots: 0
   shopData: {fileID: 11400000, guid: 037af495239bcd14d9b867f20bfe567f, type: 2}
-  priceMarkup: 1
 --- !u!1 &2876591150978276552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,8 +1221,8 @@ Transform:
   m_GameObject: {fileID: 9210234453007860904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000020104747, y: -0.00000004476168, z: -0.000000018626446}
-  m_LocalScale: {x: 0.9999998, y: 0.9999998, z: 1.0000008}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5107206248071235138}

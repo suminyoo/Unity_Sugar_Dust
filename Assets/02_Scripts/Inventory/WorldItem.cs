@@ -17,7 +17,7 @@ public class WorldItem : MonoBehaviour
     private readonly float floatSpeed = 2f;
     private readonly float floatHeight = 0.25f;
 
-    public float pickupDelay = 2f;
+    private float pickupDelay = 2f;
     private float enablePickupTime;  // 줍기 가능 타임
 
     private bool isFloating = false;

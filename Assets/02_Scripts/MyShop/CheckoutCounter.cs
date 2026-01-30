@@ -14,7 +14,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     public List<CustomerBrain> waitingQueue = new List<CustomerBrain>(); // 계산줄 리스트
 
     private bool isCounterMode = false; 
-    private bool isTransactionActive = false; // 지금 계산 중인가? (대화/UI 떠있는 상태)
+    private bool isTransactionActive = false; // 지금 계산 중인지
 
     public string GetInteractPrompt() => "[E] 물건 결제해주기";
 

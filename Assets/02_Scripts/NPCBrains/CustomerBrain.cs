@@ -1,18 +1,21 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public enum CustomerType
 {
-    Normal,         // 일반 손님
-    Haggler,        // 흥정 손님
-    Scammer,        // 사기꾼 (위조 지폐..? 이건 좀 너무한듯)
-    Indecisive,     // 카운터와서 안삼
-    Beggar,         // 거지 (그냥 주세요)
-    //Thief,          // 도둑
-    //Impatient,      // 빨리 계산안하면 감
+    Normal_Exact,       // 딱 맞춰 돈 지불
+    Normal_BigBill,     // 금액보다 살짝 높은 고액권으로 지불
+    Scammer,            // 사기꾼
+    Haggler,            // 흥정꾼
+    Impatient,          // 참을성 없음
+    CoinOnly,        // 잔돈 지옥
+    Disturber,          // 방해꾼
+    Beggar,             // 거지
+    Tipper              // 팁 주는 손님
 }
 
 public class CustomerBrain : NPCBrain
@@ -30,6 +33,8 @@ public class CustomerBrain : NPCBrain
 
     [Header("Settings")]
     [SerializeField] private CustomerType myType; // 내 진상 유형
+    public CustomerType MyType => myType;
+
     private Coroutine moveCoroutine;
 
     private Vector3 currentQueueTargetPosition;
@@ -43,6 +48,8 @@ public class CustomerBrain : NPCBrain
     private int maxItemPickupAmount = 20;
     private bool isExiting = false;
 
+
+    [Header("Item Info")]
     private GameObject itemObjInhand;
     private ItemData itemToBuy;
     private int itemToBuyAmount; 
@@ -51,8 +58,18 @@ public class CustomerBrain : NPCBrain
     public int ItemToBuyAmount => itemToBuyAmount;
     public int ItemToBuyPrice => itemToBuyPrice;
 
+
+    [Header("Transaction Info")]
+    private List<int> customerMoneyList = new List<int>(); // 손님이 낸 지폐/동전 리스트
+    private int paidTotalAmount = 0; // 손님이 낸 총액
+
+    public List<int> OfferedMoneyList => customerMoneyList;
+    public int OfferedTotalAmount => paidTotalAmount;
+
     public bool IsInQueue => currentQueueTargetPosition != Vector3.zero; // 줄 섰는지
     public bool IsReadyForTransaction = false;
+
+
 
     protected override void Awake()
     {
@@ -63,34 +80,6 @@ public class CustomerBrain : NPCBrain
         base.Start();
     }
 
-    // 강제 퇴장
-    public void ForceLeave()
-    {
-        StopAllCoroutines();
-
-        if(itemToBuy != null)
-            DropItemOnFloor();
-
-        ExitPhase();
-    }
-
-    private void DropItemOnFloor()
-    {
-
-        Vector3 itemDropPosition = new Vector3(transform.position.x, 0, transform.position.z);
-        GameObject droppedObj = Instantiate(itemToBuy.dropPrefab, itemDropPosition, Quaternion.identity);
-
-        // 바닥에 떨어진 아이템에 개수 전달
-        var worldItem = droppedObj.GetComponent<WorldItem>();
-        if (worldItem != null) worldItem.Initialize(itemToBuy, itemToBuyAmount);
-
-
-        itemToBuy = null;
-        itemToBuyAmount = 0;
-        itemToBuyPrice = 0;
-        Destroy(itemObjInhand);
-
-    }
 
     // 매니저에서 호출하는 셋업
     public void Setup(DisplayStand shop, CheckoutCounter checkout, Transform entrance,
@@ -240,6 +229,9 @@ public class CustomerBrain : NPCBrain
                 else
                 {
                     SayToSelf("음, 가격 괜찮네. 사야지.");
+
+                    PreparePayment();
+
                     yield return new WaitForSeconds(1.0f);
 
                     yield return StartCoroutine(QueueAndTransactionPhase());
@@ -254,6 +246,21 @@ public class CustomerBrain : NPCBrain
         }
     }
 
+    private void PreparePayment()
+    {
+        int finalPrice = itemToBuyPrice * itemToBuyAmount;
+
+        // 지불할 돈 생성
+        customerMoneyList = CustomerPaymentSystem.GeneratePayment(finalPrice, myType);
+
+        // 총액 계산
+        paidTotalAmount = 0;
+        foreach (int money in customerMoneyList)
+        {
+            paidTotalAmount += money;
+        }
+    }
+
     // 카운터 줄 서기 및 대기
     private IEnumerator QueueAndTransactionPhase()
     {
@@ -263,7 +270,7 @@ public class CustomerBrain : NPCBrain
         if (queueInfo == null)
         {
             SayToSelf("줄 너무 긴데... 그냥 가야겠다");
-            // TODO: 물건 버리기
+            DropItemOnFloor();
             yield return new WaitForSeconds(2.0f);
             ExitPhase();
             yield break;
@@ -397,11 +404,42 @@ public class CustomerBrain : NPCBrain
             SayToSelf("쳇 뭐야.");
             DropItemOnFloor();
         }
-
         counter.LeaveQueue(this);
         ExitPhase();
     }
+
+    // 강제 퇴장
+    public void ForceLeave()
+    {
+        StopAllCoroutines();
+
+        if (itemToBuy != null)
+            DropItemOnFloor();
+
+        ExitPhase();
+    }
+
+    private void DropItemOnFloor()
+    {
+
+        Vector3 itemDropPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        GameObject droppedObj = Instantiate(itemToBuy.dropPrefab, itemDropPosition, Quaternion.identity);
+
+        // 바닥에 떨어진 아이템에 개수 전달
+        var worldItem = droppedObj.GetComponent<WorldItem>();
+        if (worldItem != null) worldItem.Initialize(itemToBuy, itemToBuyAmount);
+
+
+        itemToBuy = null;
+        itemToBuyAmount = 0;
+        itemToBuyPrice = 0;
+        Destroy(itemObjInhand);
+
+    }
+
     #endregion
+
+
 
     Vector3 GetRandomPointOnNavMesh()
     {

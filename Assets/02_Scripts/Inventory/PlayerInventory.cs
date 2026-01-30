@@ -131,13 +131,6 @@ public class PlayerInventory : InventoryHolder, ISaveable
         float extraCapacity = maxWeight * (0.8f / Mathf.Log(maxWeight + 1, 10));
         float limit = maxWeight + extraCapacity;
 
-        // 무게 체크
-        if (currentWeight + (item.weight * count) > limit)
-        {
-            Debug.Log($"무게 초과로 습득 불가 (현재: {currentWeight}, 한계: {limit})");
-            return false;
-        }
-
         return base.AddItem(item, count);
     }
 

@@ -67,7 +67,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             if (!slot.IsEmpty)
             {
                 priceTagGroup.SetActive(true);
-                priceText.text = $"{price} G";
+                priceText.text = $"{price} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
             }
             else
             {
@@ -87,7 +87,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (priceTagGroup.activeSelf)
         {
             // 가격 텍스트 갱신
-            priceText.text = $"{price:N0} G";
+            priceText.text = $"{price:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
 
             // 배경 색상 변경
             if (priceBgImage != null)

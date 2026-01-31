@@ -22,6 +22,7 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
+        // 영업 시작
         string popupMsg = "";
         string itemNotify = $"<color={warningColor}>진열대에 놓이지 않은 아이템은 인벤토리로 회수</color>됩니다";
 
@@ -29,44 +30,45 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
         {
             popupMsg = "영업을 시작하겠습니까?";
 
+            popupMsg = "영업을 시작하겠습니까?";
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
-                () => {
-                    MyShopManager.IsShopMode = true; // 씬 로드되면 장사 시작하도록
-                    SceneController.Instance.ChangeScene(SCENE_NAME.MY_SHOP, SPAWN_ID.MYSHOP_OPEN);
-                }
+                () => { StartBusiness(); } // ★ 깔끔해진 호출
             );
             return;
         }
 
-        // 조기 마감
+        // 영업 마감
         if (currentState == MyShopState.SHOP_OPEN)
         {
-            popupMsg = $"아직 영업 중입니다.\n{itemNotify}\n마감하겠습니까?";
+            popupMsg = $"아직 영업 중입니다.\n{itemNotify}\n지금 마감하고 정산하겠습니까?";
         }
-        // 정상 마감
         else if (currentState == MyShopState.SHOP_CLOSED)
         {
-            popupMsg = $"오늘 영업을 마치겠습니까?\n{itemNotify}\n)";
-            
+            popupMsg = $"영업이 종료되었습니다.\n{itemNotify}\n오늘의 정산 내역을 확인하겠습니까?";
         }
-
-        // 메시지가 설정된 경우만 팝업
         if (!string.IsNullOrEmpty(popupMsg))
         {
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
-                () => { FinishBusinessAndGoTown(); }
+                () => { FinishBusiness(); }
             );
         }
     }
 
-    public void FinishBusinessAndGoTown()
+    public void StartBusiness()
     {
-        SceneController.Instance.ChangeSceneAndAddScene(
-            SCENE_NAME.TOWN, 
-            SCENE_NAME.MY_SHOP, 
-            SPAWN_ID.ROOM_SCENE_ENTRY
-        );
+        MyShopManager.IsShopMode = true;
+        SceneController.Instance.ChangeScene(SCENE_NAME.MY_SHOP, SPAWN_ID.MYSHOP_OPEN);
     }
+
+    public void FinishBusiness()
+    {
+        if (currentState == MyShopState.SHOP_OPEN)
+        {
+            MyShopManager.Instance.ForceEarlyClose();
+        }
+        MyShopManager.Instance.OpenSettlementUI();
+    }
+
 }

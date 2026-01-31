@@ -21,6 +21,7 @@ public class CounterUI : MonoBehaviour
     public TextMeshProUGUI itemAmountText;
     public TextMeshProUGUI itempriceText;
     public TextMeshProUGUI totalPriceText;
+    public TextMeshProUGUI playerZoneTotalText;
 
     [Header("Buttons")]
     public Button confirmButton;
@@ -73,9 +74,9 @@ public class CounterUI : MonoBehaviour
             itemIconImage.sprite = customer.ItemToBuy.icon;
             itemIconImage.gameObject.SetActive(true);
             itemNameText.text = customer.ItemToBuy.itemName;
-            itempriceText.text = $"등록한 가격: {customer.ItemToBuyPrice:N0}G";
-            itemAmountText.text = $"가져온 개수: {customer.ItemToBuyAmount}개";
-            totalPriceText.text = $"받은 금액: {customer.ItemToBuyPrice * customer.ItemToBuyAmount:N0}G";
+            itempriceText.text = $"등록한 가격: {customer.ItemToBuyPrice:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
+            itemAmountText.text = $"가져온 개수: {customer.ItemToBuyAmount} 개";
+            totalPriceText.text = $"{customer.ItemToBuyPrice * customer.ItemToBuyAmount:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         }
 
         // 돈 표시 함수 호출
@@ -111,6 +112,7 @@ public class CounterUI : MonoBehaviour
     {
         int index = playerMonies.Count;
         SpawnMoneyInternal(amount, playerMoneyZone, playerMonies, 0f, true, false, index);
+        UpdatePlayerTotalText();
     }
 
     //돈 생성 공통 로직
@@ -143,7 +145,12 @@ public class CounterUI : MonoBehaviour
         }
         // 초기화
         script.Initialize(amount, spriteToUse, data.size, dragLayer, isMine, parentZone, (deletedMoney) => {
-            if (targetList.Contains(deletedMoney)) targetList.Remove(deletedMoney);
+            if (targetList.Contains(deletedMoney))
+            {
+                targetList.Remove(deletedMoney);
+                if (isMine) 
+                    UpdatePlayerTotalText();
+            }
         });
 
         // 위치 잡기
@@ -155,6 +162,14 @@ public class CounterUI : MonoBehaviour
         {
             PlaceMoneyStacked(moneyObj.GetComponent<RectTransform>(), index);
         }
+    }
+
+    private void UpdatePlayerTotalText()
+    {
+        if (playerZoneTotalText == null) return;
+
+        int total = CalculateTotal(playerMonies);
+        playerZoneTotalText.text = $"{total:N0}"; // "1,500" 처럼 쉼표 포맷
     }
 
     // 스태킹 위치 계산
@@ -205,16 +220,22 @@ public class CounterUI : MonoBehaviour
     {
         if (currentCustomer == null) return;
 
-        // A. 받아야 할 돈 (물건값)
+        int acceptedFakeTotal = 0;
+        foreach (var money in customerMonies)
+        {
+            if (money.isFake) acceptedFakeTotal += money.amount;
+        }
+
+        // 받아야 할 돈
         int itemPrice = currentCustomer.ItemToBuyPrice * currentCustomer.ItemToBuyAmount;
 
-        // B. 손님이 낸 돈 총액 (CustomerZone에 있는 돈 합계)
+        // 손님이 낸 총액
         int customerPayTotal = CalculateTotal(customerMonies);
 
-        // C. 내가 준 거스름돈 총액 (PlayerZone에 있는 돈 합계)
+        // 거스름돈 총액
         int playerChangeTotal = CalculateTotal(playerMonies);
 
-        // D. 검증: (낸 돈 - 물건값) == 거스름돈
+        // 거스름돈 검증
         int requiredChange = customerPayTotal - itemPrice;
 
         if (currentCustomer.MyType == CustomerType.Tipper && playerChangeTotal <= requiredChange)
@@ -225,15 +246,14 @@ public class CounterUI : MonoBehaviour
         // 장부에 기록 
         if (SalesManager.Instance != null)
         {
-            SalesManager.Instance.RecordTransaction(itemPrice, requiredChange, playerChangeTotal);
+            SalesManager.Instance.RecordSuccessTransaction(itemPrice, requiredChange, playerChangeTotal, acceptedFakeTotal);
         }
 
         onTransactionCompleted?.Invoke(true);
 
-        ClearAllMoney();
     }
 
-    // 리스트 합계 계산 헬퍼
+    // 리스트 합계
     private int CalculateTotal(List<DraggableMoney> list)
     {
         int sum = 0;
@@ -264,6 +284,8 @@ public class CounterUI : MonoBehaviour
         foreach (var money in playerMonies)
             if (money != null) Destroy(money.gameObject);
         playerMonies.Clear();
+
+        if (playerZoneTotalText != null) playerZoneTotalText.text = "0";
     }
 
     public void CloseCounterUI()
@@ -271,7 +293,7 @@ public class CounterUI : MonoBehaviour
         counterRootPanel.SetActive(false);
         //counterTransactionPanel.SetActive(false);
 
-        ClearAllMoney();
+        //ClearAllMoney();
 
         currentCustomer = null;
         onTransactionCompleted = null;
@@ -285,6 +307,12 @@ public class CounterUI : MonoBehaviour
     private void OnClickRefuse()
     {
         if (currentCustomer == null) return;
+
+        if (SalesManager.Instance != null)
+        {
+            SalesManager.Instance.RecordRefusal(currentCustomer.MyType);
+        }
+
         onTransactionCompleted?.Invoke(false);
     }
 

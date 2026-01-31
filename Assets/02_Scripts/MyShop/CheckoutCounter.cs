@@ -68,7 +68,6 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         }
     }
 
-
     // 거래 시작
     private void BeginTransaction(CustomerBrain customer)
     {
@@ -87,11 +86,6 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     // 거래 결과 처리
     private void HandleTransactionResult(CustomerBrain customer, bool isSuccess)
     {
-        if (isSuccess)
-        {
-            int totalGain = customer.ItemToBuyPrice * customer.ItemToBuyAmount;
-            PlayerAssetsManager.Instance.AddMoney(totalGain);
-        }
         customer.OnTransactionDialogueFinished(isSuccess);
 
         // 카운터 상태 초기화
@@ -115,7 +109,6 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         // 카메라 복귀
         if (mainCamera != null) mainCamera.ExitOverrideView();
 
-        // 입력 잠금 해제
         InputControlManager.Instance.UnlockInput();
     }
 

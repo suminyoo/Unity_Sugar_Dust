@@ -12,7 +12,7 @@ public enum CustomerType
     Scammer,            // »ç±â²Û
     Haggler,            // ÈïÁ¤²Û
     Impatient,          // ÂüÀ»¼º ¾øÀ½
-    CoinOnly,        // ÀÜµ· Áö¿Á
+    CoinOnly,           // ÀÜµ· Áö¿Á
     Disturber,          // ¹æÇØ²Û
     Beggar,             // °ÅÁö
     Tipper              // ÆÁ ÁÖ´Â ¼Õ´Ô
@@ -45,7 +45,7 @@ public class CustomerBrain : NPCBrain
     private float thinkingTime = 2.5f;
     private int targetItemSlotIndex;
     private int minItemPickupAmount = 1;
-    private int maxItemPickupAmount = 20;
+    private int maxItemPickupAmount = 10;
     private bool isExiting = false;
 
 

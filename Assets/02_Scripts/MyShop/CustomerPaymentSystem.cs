@@ -4,6 +4,8 @@ using System.Linq;
 
 public static class CustomerPaymentSystem
 {
+    public const string CURRENCY_SYMBOL = "P";
+
     public static readonly int[] AvailableCurrency = { 50000, 10000, 5000, 1000, 500, 100, 50, 10 };
 
     public static List<int> GeneratePayment(int price, CustomerType type)
@@ -55,28 +57,46 @@ public static class CustomerPaymentSystem
         return result;
     }
 
-    // 금액 결정 딱 떨어지면 그대로, 아니면 올림
-    private static List<int> GetOverPayment(int targetAmount)
+    /// 가격보다 큰 단위 중 가장 합리적인(가까운) 단위를 선택하거나,
+    // 최고액권보다 비싼 경우 최고액권을 여러 장 사용하여 지불 총액을 결정
+    private static List<int> GetOverPayment(int price)
     {
-        int[] roundUnits = { 1000, 5000, 10000, 50000 };
-        List<int> potentialTotals = new List<int>();
+        int[] paymentUnits = { 1000, 5000, 10000, 50000 };
 
-        foreach (int unit in roundUnits)
+        // 가격보다 큰 화폐 단위 필터링
+        var largerUnits = paymentUnits.Where(unit => unit > price).ToList();
+
+        long finalAmountLong = 0;
+
+        if (largerUnits.Count > 0)
         {
-            int nextAmount;
-            if (targetAmount % unit == 0) nextAmount = targetAmount;
-            else nextAmount = ((targetAmount / unit) + 1) * unit;
+            // Case 1: 물건값보다 큰 단일 화폐가 존재하는 경우 
+            // 가장 가까운 단위 1~2개 중에서만 선택
+            int candidateCount = Mathf.Min(largerUnits.Count, 2);
+            var candidates = largerUnits.Take(candidateCount).ToList();
 
-            potentialTotals.Add(nextAmount);
+            int selectedUnit = candidates[Random.Range(0, candidates.Count)];
+
+            // 해당 단위 1장으로 지불
+            finalAmountLong = selectedUnit;
+        }
+        else
+        {
+            // Case 2: 물건값이 최고액권(5만원)보다 비싼 경우
+            // 최고액권을 기준으로 올림(Ceiling) 처리
+            int maxUnit = paymentUnits.Last();
+
+            if (price % maxUnit == 0)
+            {
+                finalAmountLong = price;
+            }
+            else
+            {
+                finalAmountLong = ((long)(price / maxUnit) + 1) * maxUnit;
+            }
         }
 
-        potentialTotals = potentialTotals.Distinct().ToList();
-
-        // 후보 중 하나 랜덤 선택
-        int finalTotal = potentialTotals[Random.Range(0, potentialTotals.Count)];
-
-        // 선택된 총액 그리디
-        return GetExactPayment(finalTotal);
+        return GetExactPayment((int)finalAmountLong);
     }
 
     private static List<int> GetHagglerPayment(int originalPrice)

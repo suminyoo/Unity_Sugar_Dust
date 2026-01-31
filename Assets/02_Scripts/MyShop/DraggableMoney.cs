@@ -13,11 +13,13 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private RectTransform myLimitZone;
 
     public int amount;
+    public bool isFake;
     public bool isPlayerMoney;
     public Action<DraggableMoney> OnMoneyDestroyed;
 
     private Vector3 startPosition;
     private bool isReturning = false;
+
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         {
             image.sprite = sprite;
             image.preserveAspect = true;
+
+            // 지정된 사이즈가 있으면 적용, 없으면 이미지 원본 크기 사용
             if (definedSize != Vector2.zero) rectTransform.sizeDelta = definedSize;
             else image.SetNativeSize();
         }
@@ -70,6 +74,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         canvasGroup.blocksRaycasts = true;
 
+        // 마우스 아래에 있는 오브젝트 확인
         GameObject hitObject = eventData.pointerCurrentRaycast.gameObject;
         bool isValidDrop = false;
 
@@ -83,10 +88,12 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         if (isValidDrop)
         {
+            // 해당 구역에 안착
             transform.SetParent(myLimitZone);
         }
         else
         {
+            // 원래 위치로 되돌아가기
             StartCoroutine(ReturnRoutine());
         }
     }
@@ -111,6 +118,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             yield return null;
         }
 
+        // 도착 완료 후 상태 복구
         transform.position = startPosition;
         transform.SetParent(myLimitZone);
 
@@ -123,6 +131,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+            // 플레이어가 꺼낸 돈만 삭제 가능
             if (isPlayerMoney)
             {
                 OnMoneyDestroyed?.Invoke(this);

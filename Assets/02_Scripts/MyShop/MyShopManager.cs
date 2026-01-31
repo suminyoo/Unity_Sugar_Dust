@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using TMPro;
 
 public class MyShopManager : MonoBehaviour
@@ -15,6 +14,7 @@ public class MyShopManager : MonoBehaviour
     public CustomerSpawner spawner;
     public CheckoutCounter counter;
     public OpenCloseMyShop openCloseInteraction;
+    public ClosingReceiptUI closingReceiptUI;
 
     public TextMeshProUGUI timerText;
 
@@ -27,6 +27,8 @@ public class MyShopManager : MonoBehaviour
 
     private void Start()
     {
+        SalesManager.Instance.StartNewShop();
+
         if (IsShopMode)
         {
             RealShopMode();  //상점 영업 모드
@@ -77,7 +79,6 @@ public class MyShopManager : MonoBehaviour
 
         currentTime = businessDuration;
 
-        // 스포너 가동
         spawner.StartSpawning();
 
         openCloseInteraction.SetState(OpenCloseMyShop.MyShopState.SHOP_OPEN);
@@ -86,36 +87,37 @@ public class MyShopManager : MonoBehaviour
     // 영업 시간 종료
     private void EndShopMode()
     {
+        if (!IsShopOpen) return;
         IsShopOpen = false;
-
-        NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
 
         if (timerText != null) timerText.text = "CLOSED";
 
+        NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
+
         spawner.StopSpawning();
 
-        StartCoroutine(CloseShopProcess());
-    }
-
-    // 마감 프로세스
-    private IEnumerator CloseShopProcess()
-    {
-        // 줄 클리어
-        counter.ClearQueueOnClose();
-
         // 손님 내보내기
+        counter.ClearQueueOnClose();
         CustomerBrain[] allCustomers = FindObjectsOfType<CustomerBrain>();
         foreach (var customer in allCustomers)
         {
-            if (!customer.IsInteracting && !customer.IsInQueue)
-            {
-                customer.ForceLeave();
-            }
+            customer.ForceLeave();
         }
-
         openCloseInteraction.SetState(OpenCloseMyShop.MyShopState.SHOP_CLOSED);
-
-        yield return null;
     }
 
+    public void OpenSettlementUI()
+    {
+        
+        closingReceiptUI.ShowReceipt();
+        
+    }
+    public void ForceEarlyClose()
+    {
+        if (!IsShopOpen) return;
+
+        EndShopMode();
+
+        NotificationUIManager.Instance.ShowNotification("영업을 조기 마감합니다.");
+    }
 }

@@ -100,7 +100,7 @@ public class ItemPriceInfoUI : MonoBehaviour
     private void UpdateUI()
     {
         // 가격 표시
-        sellingPriceText.text = $"{currentSellingPrice:N0} G";
+        sellingPriceText.text = $"{currentSellingPrice:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
 
         // 활성화 버튼 상태 표시
         if (isCurrentActive)

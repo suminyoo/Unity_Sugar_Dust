@@ -34,7 +34,7 @@ public class ItemPurchaseInfoUI : MonoBehaviour
 
         itemIcon.sprite = data.icon;
         itemNameText.text = data.itemName;
-        purchasePriceText.text = $"가격: {price:N0} G";
+        purchasePriceText.text = $"가격: {price:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         itemWeightText.text = $"무게: {data.weight:F1}kg";
         itemDescriptionText.text = data.description;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class CheckoutCounter : MonoBehaviour, IInteractable
 {
-    public CounterUI counterUI;
+    public TransactionUI counterUI;
 
     private CameraFollow mainCamera;
 
@@ -98,7 +98,10 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     {
         if (!isCounterMode) return;
 
-        DialogueManager.Instance.EndDialogue();
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.EndDialogue();
+        }
 
         isCounterMode = false; // while 루프 종료 조건
         isTransactionActive = false;

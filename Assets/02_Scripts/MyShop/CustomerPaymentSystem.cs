@@ -57,11 +57,11 @@ public static class CustomerPaymentSystem
         return result;
     }
 
-    /// 가격보다 큰 단위 중 가장 합리적인(가까운) 단위를 선택하거나,
+    // 가격보다 큰 단위 중 가장 합리적인(가까운) 단위를 선택하거나,
     // 최고액권보다 비싼 경우 최고액권을 여러 장 사용하여 지불 총액을 결정
     private static List<int> GetOverPayment(int price)
     {
-        int[] paymentUnits = { 1000, 5000, 10000, 50000 };
+        int[] paymentUnits = { 500, 1000, 5000, 10000, 50000 };
 
         // 가격보다 큰 화폐 단위 필터링
         var largerUnits = paymentUnits.Where(unit => unit > price).ToList();
@@ -118,10 +118,25 @@ public static class CustomerPaymentSystem
     private static List<int> GetCoinOnlyPayment(int targetAmount)
     {
         List<int> result = new List<int>();
-        int remain = targetAmount;
 
-        // 동전만
+        // 5% ~ 10% 사이 랜덤 비율 변경 가능
+        float randomRate = UnityEngine.Random.Range(0.05f, 0.10f);
+
+        // 오차 금액
+        int errorAmount = Mathf.RoundToInt(targetAmount * randomRate);
+
+        if (UnityEngine.Random.value > 0.5f)
+            errorAmount = -errorAmount;
+        
+        int actualPayAmount = targetAmount + errorAmount;
+
+        // 10의 배수로 정리와 0 이하 방지
+        actualPayAmount = (actualPayAmount / 10) * 10;
+        if (actualPayAmount < 0) actualPayAmount = 0;
+
+        // 동전 변환 로직 (그리디)
         int[] coins = { 500, 100, 50, 10 };
+        int remain = actualPayAmount;
 
         foreach (int coin in coins)
         {
@@ -131,6 +146,7 @@ public static class CustomerPaymentSystem
                 result.Add(coin);
             }
         }
+
         return result;
     }
 }

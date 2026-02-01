@@ -22,10 +22,10 @@ public class CustomerSpawner : MonoBehaviour
 
     private Dictionary<CustomerType, int> spawnProbabilities = new Dictionary<CustomerType, int>()
     {
-        { CustomerType.Normal_Exact, 25 },
-        { CustomerType.Normal_BigBill, 25 },
-        { CustomerType.Scammer, 20 },
-        { CustomerType.Haggler, 15 },
+        { CustomerType.Normal_Exact, 15 },
+        { CustomerType.Normal_BigBill, 20 },
+        { CustomerType.Scammer, 30 },
+        { CustomerType.Haggler, 10 },
         { CustomerType.Impatient, 5 },
         { CustomerType.CoinOnly, 5 },
         { CustomerType.Disturber, 3 },

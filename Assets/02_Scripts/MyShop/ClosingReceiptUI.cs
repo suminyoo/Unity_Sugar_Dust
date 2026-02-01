@@ -5,11 +5,19 @@ using UnityEngine.UI;
 public class ClosingReceiptUI : MonoBehaviour
 {
     public GameObject panelRoot;
+
     public TextMeshProUGUI totalSalesText;
-    public TextMeshProUGUI rentText;
-    public TextMeshProUGUI penaltyText;
-    public TextMeshProUGUI fakeMoneyText;
-    public TextMeshProUGUI finalProfitText;
+    public TextMeshProUGUI[] fakeBillCountTexts;
+
+    public TextMeshProUGUI totalFakeLossText;
+
+    public TextMeshProUGUI baseRentText;          // 기본 임대료
+
+    public TextMeshProUGUI refusalPenaltyText;     // 손님 거절
+    public TextMeshProUGUI mistakePenaltyText;     // 계산 실수
+
+    public TextMeshProUGUI totalRentText;          // 총 임대료
+    public TextMeshProUGUI netProfitText;          // 총 수익
 
     public Button confirmButton;
     private int finalAmountToAdd = 0;
@@ -26,44 +34,58 @@ public class ClosingReceiptUI : MonoBehaviour
 
         SettlementData data = SalesManager.Instance.CalculateCloseReceipt();
         finalAmountToAdd = data.netProfit;
-
-        // 확장 메서드 활용 (숫자 포맷팅)
         string symbol = CustomerPaymentSystem.CURRENCY_SYMBOL;
 
-        totalSalesText.text = $"총 매출: +{data.totalSales:N0} {symbol}";
+        // 총 매출
+        totalSalesText.text = $"+{data.totalSales:N0} {symbol}";
 
-        rentText.text = $"기본 임대료 ({data.baseRate:F0}%): -{data.baseRentCost:N0} {symbol}";
+        // 위조 화폐 각 개수 표기 (8개 텍스트박스 설정한 화폐단위랑 순서 맞춰야함)
+        int[] units = CustomerPaymentSystem.AvailableCurrency;
 
-        if (data.penaltyRentCost > 0)
+        for (int i = 0; i < fakeBillCountTexts.Length; i++)
         {
-            penaltyText.text = $"평판 페널티 (+{data.penaltyRate:F0}%): -{data.penaltyRentCost:N0} {symbol}";
-            penaltyText.color = Color.red;
-        }
-        else
-        {
-            penaltyText.text = "평판 페널티 없음 (완벽!)";
-            penaltyText.color = Color.green;
+            if (i < units.Length)
+            {
+                int unit = units[i];
+                int count = 0;
+                if (data.fakeBillCounts.ContainsKey(unit)) count = data.fakeBillCounts[unit];
+
+                // 표기 형식: "1000 x 1"
+                fakeBillCountTexts[i].text = $"{unit:N0} x {count}";
+            }
+            else
+            {
+                fakeBillCountTexts[i].text = "-";
+            }
         }
 
-        fakeMoneyText.text = $"위조지폐 손실: -{data.fakeMoneyTotal:N0} {symbol}";
+        // 총 차감 금액 (위폐손실)
+        totalFakeLossText.text = $"- {data.totalFakeLoss:N0} {symbol}";
 
-        finalProfitText.text = $"최종 순수익: {data.netProfit:N0} {symbol}";
-        finalProfitText.color = (data.netProfit >= 0) ? Color.blue : Color.red;
+        // 손님 거절 페널티
+        refusalPenaltyText.text = $"({data.refusalCount}회) - {data.refusalRatePercent:F0}%";
+
+        // 계산 실수 페널티
+        mistakePenaltyText.text = $"({data.mistakeCount}회) - {data.mistakeRatePercent:F0}%";
+
+        // 총 임대료: 총 임대료 (기본+거절+실수 %) : -금액
+        totalRentText.text = $"- {data.totalRentRatePercent:F0}% : -{data.totalRentCost:N0} {symbol}";
+
+        // 총 수익
+        netProfitText.text = $"{data.netProfit:N0} {symbol}";
+        netProfitText.color = (data.netProfit >= 0) ? Color.blue : Color.red;
 
         panelRoot.SetActive(true);
     }
+
     private void OnConfirmReceipt()
     {
-        // 돈 지급
         PlayerAssetsManager.Instance.AddMoney(finalAmountToAdd);
-        Debug.Log($"정산 완료! {finalAmountToAdd} 획득.");
 
-        // 마을로 복귀
         SceneController.Instance.ChangeSceneAndAddScene(
             SCENE_NAME.TOWN,
             SCENE_NAME.MY_SHOP,
             SPAWN_ID.ROOM_SCENE_ENTRY
         );
     }
-
 }

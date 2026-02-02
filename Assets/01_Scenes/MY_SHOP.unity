@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.62731093, g: 0.54788184, b: 0.6792453, a: 1}
+  m_Color: {r: 0.646789, g: 0.5309719, b: 0.7169812, a: 0.9019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6989,7 +6989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5035155, g: 0.5306489, b: 0.6886792, a: 1}
+  m_Color: {r: 0.49724102, g: 0.52299386, b: 0.6981132, a: 0.9019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7974,6 +7974,8 @@ MonoBehaviour:
   maxSpawnInterval: 15
   shopStayDurationMin: 10
   shopStayDurationMax: 15
+  minGenerosity: 0.8
+  maxGenerosity: 1.2
   maxCustomers: 5
 --- !u!114 &1464588344
 MonoBehaviour:
@@ -14132,9 +14134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d643d50f985f44fa4f020b1c938b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterUI: {fileID: 508789805}
+  transactionUI: {fileID: 508789805}
   counterViewPoint: {fileID: 1388494945}
-  transitionSpeed: 4
   queuePoints:
   - {fileID: 525488861}
   - {fileID: 1074221300}
@@ -14147,6 +14148,7 @@ MonoBehaviour:
   - {fileID: 2138515676}
   - {fileID: 1942531200}
   waitingQueue: []
+  transitionSpeed: 4
 --- !u!1001 &7368817930102373180
 PrefabInstance:
   m_ObjectHideFlags: 0

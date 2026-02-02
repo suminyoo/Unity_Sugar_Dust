@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CustomerType
+{
+    Normal_Exact,       // µü ¸ÂÃç µ· ÁöºÒ
+    Normal_BigBill,     // ±İ¾×º¸´Ù »ìÂ¦ ³ôÀº °í¾×±ÇÀ¸·Î ÁöºÒ
+    Scammer,            // »ç±â²Û
+    Haggler,            // ÈïÁ¤²Û
+    Impatient,          // ÂüÀ»¼º ¾øÀ½
+    CoinOnly,           // ÀÜµ· Áö¿Á
+    Disturber,          // ¹æÇØ²Û
+    Beggar,             // °ÅÁö
+    Tipper              // ÆÁ ÁÖ´Â ¼Õ´Ô
+}
+
 public class CustomerSpawner : MonoBehaviour
 {
     [Header("References")]
@@ -13,8 +26,11 @@ public class CustomerSpawner : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float minSpawnInterval = 3f;
     [SerializeField] float maxSpawnInterval = 10f;
+
     [SerializeField] float shopStayDurationMin = 5f;
     [SerializeField] float shopStayDurationMax = 15f;
+    [SerializeField] float minGenerosity = 0.8f;
+    [SerializeField] float maxGenerosity = 1.2f;
     [SerializeField] int maxCustomers = 10;
 
     private List<CustomerBrain> currentCustomers = new List<CustomerBrain>();
@@ -71,6 +87,7 @@ public class CustomerSpawner : MonoBehaviour
             currentCustomers.Add(newCustomer);
             CustomerType selectedType = GetWeightedRandomType();
             float randomStay = Random.Range(shopStayDurationMin, shopStayDurationMax);
+            float randomGenerosity = Random.Range(minGenerosity, maxGenerosity);
 
             newCustomer.Setup(
                 displayStand,
@@ -78,6 +95,7 @@ public class CustomerSpawner : MonoBehaviour
                 spawnPoint,
                 selectedType,
                 randomStay,
+                randomGenerosity,
                 () => {
                     if (currentCustomers.Contains(newCustomer))
                         currentCustomers.Remove(newCustomer);

@@ -3,20 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
-public enum CustomerType
-{
-    Normal_Exact,       // 딱 맞춰 돈 지불
-    Normal_BigBill,     // 금액보다 살짝 높은 고액권으로 지불
-    Scammer,            // 사기꾼
-    Haggler,            // 흥정꾼
-    Impatient,          // 참을성 없음
-    CoinOnly,           // 잔돈 지옥
-    Disturber,          // 방해꾼
-    Beggar,             // 거지
-    Tipper              // 팁 주는 손님
-}
 
 public class CustomerBrain : NPCBrain
 {
@@ -47,7 +34,7 @@ public class CustomerBrain : NPCBrain
     private int minItemPickupAmount = 1;
     private int maxItemPickupAmount = 10;
     private bool isExiting = false;
-
+    private float priceGenerosity = 1.0f;
 
     [Header("Item Info")]
     private GameObject itemObjInhand;
@@ -69,8 +56,6 @@ public class CustomerBrain : NPCBrain
     public bool IsInQueue => currentQueueTargetPosition != Vector3.zero; // 줄 섰는지
     public bool IsReadyForTransaction = false;
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -83,7 +68,7 @@ public class CustomerBrain : NPCBrain
 
     // 매니저에서 호출하는 셋업
     public void Setup(DisplayStand shop, CheckoutCounter checkout, Transform entrance,
-                          CustomerType type, float duration, Action onDespawn)
+                      CustomerType type, float duration, float generosity, Action onDespawn)
     {
         this.targetShop = shop;
         this.counter = checkout;
@@ -93,6 +78,7 @@ public class CustomerBrain : NPCBrain
         this.wanderTime = duration;
 
         this.onDespawnCallback = onDespawn;
+        this.priceGenerosity = generosity;
 
         IsReadyForTransaction = false;
 
@@ -190,16 +176,26 @@ public class CustomerBrain : NPCBrain
         }
         ItemData potentialItem = slot.itemData;
         int potentialPrice = targetShop.GetSlotPrice(targetItemSlotIndex);
+
+        float costPrice = Mathf.Max(1f, potentialItem.sellPrice);
+
+        // 로그 기반 배수 계산: 가격이 높을수록 배수가 낮아짐
+        float baseMaxRatio = 1.2f + (5.0f / (Mathf.Log10(costPrice + 10f) + 1f));
+
+        float finalMaxRatio = baseMaxRatio * priceGenerosity;
+        float currentRatio = (float)potentialPrice / costPrice;
+
         float ratio = (potentialItem.sellPrice == 0) ? 0 : (float)potentialPrice / potentialItem.sellPrice;
 
         // Case A: 너무 비쌈 (> 2배) -> 안 삼
-        if (ratio > 2.0f && potentialPrice > 0)
+        if (potentialPrice > 0 && currentRatio > finalMaxRatio)
         {
             SayToSelf($"{potentialPrice}골드? 완전 바가지잖아!");
 
             // 재고를 건드리지 않고 바로 퇴장
             yield return new WaitForSeconds(1.5f);
             ExitPhase();
+            yield break;
         }
         // Case B: 공짜거나 가격이 적당함
         else
@@ -354,7 +350,7 @@ public class CustomerBrain : NPCBrain
 
     #endregion
 
-    #region 상호작용 및 이벤트
+    #region 거래 로직
 
     // 카운터에서 호출하는 줄 위치 업데이트 함수
     public void UpdateQueueTarget(Vector3 newPos, Quaternion newRot, bool isFront)

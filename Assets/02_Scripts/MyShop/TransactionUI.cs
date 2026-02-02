@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class TransactionUI : MonoBehaviour
 {
-    private Action<bool> onTransactionCompleted;
+    private Action<bool> onCompleted;
     private Action onExitPressed;
 
     private CustomerBrain currentCustomer;
@@ -57,13 +57,13 @@ public class TransactionUI : MonoBehaviour
         //counterTransactionPanel.SetActive(false);
     }
 
-    public void ShowCounterUI(CustomerBrain customer, Action<bool> onComplete, Action onExit)
+    public void ShowCounterUI(CustomerBrain customer, Action<bool> onTransactionComplete, Action onCounterModeExit)
     {
         Cursor.visible = true;
         currentCustomer = customer;
 
-        this.onTransactionCompleted = onComplete;
-        this.onExitPressed = onExit;
+        this.onCompleted = onTransactionComplete;
+        this.onExitPressed = onCounterModeExit;
 
         counterRootPanel.SetActive(true);
         //counterTransactionPanel.SetActive(true);
@@ -261,13 +261,12 @@ public class TransactionUI : MonoBehaviour
         // 장부에 기록 (매개변수가 List<int>로 바뀜)
         if (SalesManager.Instance != null)
         {
-            // ★ 수정됨: acceptedFakeBills 리스트를 전달
             SalesManager.Instance.RecordSuccessTransaction(itemPrice, requiredChange, playerChangeTotal, acceptedFakeBills);
         }
 
         UpdateTotalSalesUI();
 
-        onTransactionCompleted?.Invoke(true);
+        onCompleted?.Invoke(true);
     }
 
     // 리스트 합계
@@ -313,7 +312,7 @@ public class TransactionUI : MonoBehaviour
         //ClearAllMoney();
 
         currentCustomer = null;
-        onTransactionCompleted = null;
+        onCompleted = null;
         onExitPressed = null;
 
         // 돈 오브젝트 정리
@@ -327,7 +326,7 @@ public class TransactionUI : MonoBehaviour
 
         SalesManager.Instance.RecordRefusal(currentCustomer.MyType);
 
-        onTransactionCompleted?.Invoke(false);
+        onCompleted?.Invoke(false);
     }
 
     private void OnClickExit()

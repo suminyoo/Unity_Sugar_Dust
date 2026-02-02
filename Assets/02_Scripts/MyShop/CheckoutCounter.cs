@@ -3,20 +3,28 @@ using System.Collections.Generic;
 
 public class CheckoutCounter : MonoBehaviour, IInteractable
 {
-    public TransactionUI counterUI;
-
+    public TransactionUI transactionUI;
     private CameraFollow mainCamera;
-
     public Transform counterViewPoint; //카운터뷰
-    public float transitionSpeed = 5.0f;
 
     public List<Transform> queuePoints; // 계산 줄 위치들
     public List<CustomerBrain> waitingQueue = new List<CustomerBrain>(); // 계산줄 리스트
+
+    public float transitionSpeed = 5.0f;
 
     private bool isCounterMode = false; 
     private bool isTransactionActive = false; // 지금 계산 중인지
 
     public string GetInteractPrompt() => "[E] 물건 결제해주기";
+
+    // 상호작용
+    public void OnInteract()
+    {
+        if (isCounterMode) return;
+        StartCounterMode();
+    }
+
+    #region Unity Lifecycle
 
     private void Start()
     {
@@ -30,23 +38,18 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         }
     }
 
-    // 상호작용
-    public void OnInteract()
-    {
-        if (isCounterMode) return;
-        StartCounterMode();
-    }
+    #endregion
+
+    #region Counter Mode Management
 
     private void StartCounterMode()
     {
         isCounterMode = true;
         isTransactionActive = false;
 
-        // 입력 잠금 및 카메라 이동
         InputControlManager.Instance.LockInput();
         mainCamera.StartOverrideView(counterViewPoint, transitionSpeed);
-
-        counterUI.ShowWaitingUI(() => StopCounterMode());
+        transactionUI.ShowWaitingUI(() => StopCounterMode());
 
         if (waitingQueue.Count > 0)
         {
@@ -58,28 +61,50 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         }
     }
 
-    private void TryStartTransaction(CustomerBrain customer)
+    // 나가기 버튼
+    public void StopCounterMode()
     {
         if (!isCounterMode) return;
-        if (isTransactionActive) return;
+
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.EndDialogue();
+
+        isCounterMode = false;
+        isTransactionActive = false;
+
+        // UI 끄기
+        transactionUI.CloseCounterUI();
+
+        // 카메라 복귀
+        mainCamera.ExitOverrideView();
+
+        InputControlManager.Instance.UnlockInput();
+    }
+    #endregion
+
+    #region Transaction Management
+
+    private void TryStartTransaction(CustomerBrain customer)
+    {
+        if (!isCounterMode || isTransactionActive) return;
         if (waitingQueue.Count > 0 && waitingQueue[0] == customer)
         {
-            BeginTransaction(customer);
+            StartTransaction(customer);
         }
     }
 
     // 거래 시작
-    private void BeginTransaction(CustomerBrain customer)
+    private void StartTransaction(CustomerBrain customer)
     {
         isTransactionActive = true;
 
         customer.StartTransactionDialogue();
 
         // UI에 손님 정보 표시
-        counterUI.ShowCounterUI(
+        transactionUI.ShowCounterUI(
             customer,
-            (isSuccess) => HandleTransactionResult(customer, isSuccess), // 거래 완료 시 실행할 행동
-            () => StopCounterMode() // 나가기 버튼 누르면 실행할 행동
+            (isSuccess) => HandleTransactionResult(customer, isSuccess), // 거래 완료 시
+            () => StopCounterMode() // 나가기 시
         );
     }
 
@@ -90,36 +115,18 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
 
         // 카운터 상태 초기화
         isTransactionActive = false;
-        counterUI.ShowWaitingUI(() => StopCounterMode());
+        transactionUI.ShowWaitingUI(() => StopCounterMode());
     }
 
-    // 나가기 버튼
-    public void StopCounterMode()
-    {
-        if (!isCounterMode) return;
+    #endregion
 
-        if (DialogueManager.Instance != null)
-        {
-            DialogueManager.Instance.EndDialogue();
-        }
-
-        isCounterMode = false; // while 루프 종료 조건
-        isTransactionActive = false;
-
-        // UI 끄기
-        counterUI.CloseCounterUI();
-
-        // 카메라 복귀
-        if (mainCamera != null) mainCamera.ExitOverrideView();
-
-        InputControlManager.Instance.UnlockInput();
-    }
+    #region Queue Management
 
     // 줄에 들어옴
     // 자리가 없으면 null
     public (Vector3 position, Quaternion rotation)? JoinQueue(CustomerBrain customer)
     { 
-        // 자리 꽉 찼는지 확인
+        // 자리 꽉 찼는지
         if (waitingQueue.Count >= queuePoints.Count)
         {
             return null;
@@ -174,5 +181,6 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
             customer.ForceLeave();
         }
     }
+    #endregion
 
 }

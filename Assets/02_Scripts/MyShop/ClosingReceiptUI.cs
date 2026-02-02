@@ -37,7 +37,7 @@ public class ClosingReceiptUI : MonoBehaviour
         string symbol = CustomerPaymentSystem.CURRENCY_SYMBOL;
 
         // 총 매출
-        totalSalesText.text = $"+{data.totalSales:N0} {symbol}";
+        totalSalesText.text = $"+ {data.totalSales:N0} {symbol}";
 
         // 위조 화폐 각 개수 표기 (8개 텍스트박스 설정한 화폐단위랑 순서 맞춰야함)
         int[] units = CustomerPaymentSystem.AvailableCurrency;
@@ -69,7 +69,7 @@ public class ClosingReceiptUI : MonoBehaviour
         mistakePenaltyText.text = $"({data.mistakeCount}회) - {data.mistakeRatePercent:F0}%";
 
         // 총 임대료: 총 임대료 (기본+거절+실수 %) : -금액
-        totalRentText.text = $"- {data.totalRentRatePercent:F0}% : -{data.totalRentCost:N0} {symbol}";
+        totalRentText.text = $"- {data.totalRentRatePercent:F0}% : - {data.totalRentCost:N0} {symbol}";
 
         // 총 수익
         netProfitText.text = $"{data.netProfit:N0} {symbol}";

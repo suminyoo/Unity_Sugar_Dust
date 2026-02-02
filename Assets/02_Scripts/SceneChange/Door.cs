@@ -11,6 +11,13 @@ public class Door : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
+        if (isExiting && MyShopManager.Instance != null && MyShopManager.Instance.IsShopOpen)
+        {
+            NotificationUIManager.Instance.ShowNotification("영업 중에는 나갈 수 없습니다.");
+            return;
+        }
+
         SceneController.Instance.AddSceneAndMoveTo(targetSceneName, targetSpawnId, isExiting);
     }
 }
+

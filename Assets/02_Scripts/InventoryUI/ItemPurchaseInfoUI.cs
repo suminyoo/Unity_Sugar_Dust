@@ -15,6 +15,8 @@ public class ItemPurchaseInfoUI : MonoBehaviour
     public TextMeshProUGUI purchasePriceText;
     public TextMeshProUGUI itemWeightText;
     public TextMeshProUGUI itemDescriptionText;
+    public TextMeshProUGUI itemStockAmountText;
+
 
     private Action onPurchased;
 
@@ -25,7 +27,7 @@ public class ItemPurchaseInfoUI : MonoBehaviour
         defaultPanel.SetActive(true);
     }
 
-    public void OpenPanel(ItemData data, int price, Action onConfirm)
+    public void OpenPanel(ItemData data, int price, int stockAmount, Action onConfirm)
     {
         onPurchased = onConfirm;
 
@@ -37,7 +39,10 @@ public class ItemPurchaseInfoUI : MonoBehaviour
         purchasePriceText.text = $"가격: {price:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         itemWeightText.text = $"무게: {data.weight:F1}kg";
         itemDescriptionText.text = data.description;
-
+        if(stockAmount == -1)
+            itemStockAmountText.text = "재고: 무제한";
+        else
+            itemStockAmountText.text = $"재고: {stockAmount}개"; 
     }
     public void Close()
     {

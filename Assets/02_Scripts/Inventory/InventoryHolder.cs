@@ -88,10 +88,6 @@ public class InventoryHolder : MonoBehaviour
             int actualSent = amountToSend - remaining;
             inventorySystem.RemoveItemAtIndex(fromIndex, actualSent);
         }
-        //else // 하나도 못 옮김
-        //{
-        //    //NotificationUIManager.Instance.ShowNotification("공간이 부족합니다.");
-        //}
     }
     
     #endregion

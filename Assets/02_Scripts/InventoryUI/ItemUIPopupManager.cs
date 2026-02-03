@@ -30,9 +30,9 @@ public class ItemUIPopupManager : MonoBehaviour
     }
 
     // 상점용 아이템 창
-    public void ShowPurchaseInfo(ItemData data, int currentPrice, Action onConfirm)
+    public void ShowPurchaseInfo(ItemData data, int currentPrice, int currentAmount, Action onConfirm)
     {
-        purchaseInfoUI.OpenPanel(data, currentPrice, onConfirm);
+        purchaseInfoUI.OpenPanel(data, currentPrice, currentAmount, onConfirm);
     }
 
     //TODO: 로직 수정??

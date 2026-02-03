@@ -60,6 +60,18 @@ public class NPCShop : InventoryHolder, IShopSource
         return info.itemData.basePrice;
     }
 
+    //재고 개수를 반환. 만약 무한대라면 -1 반환
+    public int GetStockAmount(int slotIndex)
+    {
+        if (!IsValidIndex(slotIndex)) return 0;
+
+        var info = shopData.itemsForSale[slotIndex];
+        if (info.isInfinite) // 무한대
+            return -1; 
+        var slot = inventorySystem.slots[slotIndex];
+        return slot.amount;
+    }
+
     public bool IsSlotActive(int slotIndex)
     {
         if (!IsValidIndex(slotIndex)) return false;
@@ -95,8 +107,6 @@ public class NPCShop : InventoryHolder, IShopSource
         }
         else
         {
-            // 공간 부족
-            //NotificationUIManager.Instance.ShowNotification($"인벤토리 공간이 부족합니다.");
             return false;
         }
 

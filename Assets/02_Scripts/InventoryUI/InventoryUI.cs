@@ -246,11 +246,13 @@ public class InventoryUI : MonoBehaviour
                     if (!shop.IsSlotActive(slotIndex)) return;
 
                     int price = shop.GetPrice(slotIndex);
+                    int amount = shop.GetStockAmount(slotIndex);
 
                     // 구매 팝업 띄우기
                     ItemUIPopupManager.Instance.ShowPurchaseInfo(
                         slot.itemData,
                         price,
+                        amount,
                         // 확인 버튼 콜백
                         () =>
                         {

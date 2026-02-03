@@ -262,7 +262,7 @@ public class InventoryUI : MonoBehaviour
 
                             if (success)
                             {
-                                Debug.Log("구매 성공!");
+                                NotificationUIManager.Instance.ShowNotification($"{slot.itemData.itemName}를 구매했습니다.");
                             }
                         }
                     );

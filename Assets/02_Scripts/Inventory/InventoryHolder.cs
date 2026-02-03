@@ -22,7 +22,7 @@ public class InventoryHolder : MonoBehaviour
     #region 인벤토리 아이템 관리
 
     // 아이템 넣기
-    public virtual bool AddItem(ItemData item, int count)   
+    public virtual int AddItem(ItemData item, int count)   
     {
         return inventorySystem.AddItemToSlots(item, count);
     }
@@ -58,11 +58,6 @@ public class InventoryHolder : MonoBehaviour
         {
             //  소모
             inventorySystem.ConsumeItem(item, count);
-            Debug.Log($"{item.name} {count}개 소모 완료");
-        }
-        else
-        {
-            Debug.Log($"아이템이 부족합니다! (보유: {currentCount}, 필요: {count})");
         }
     }
 
@@ -79,23 +74,24 @@ public class InventoryHolder : MonoBehaviour
         ItemData itemToSend = fromSlot.itemData;
         int amountToSend = fromSlot.amount;
 
+        int remaining = toHolder.AddItem(itemToSend, amountToSend);
+
         // 받는 인벤토리 시스템
         InventorySystem toSystem = toHolder.InventorySystem;
 
-        // 상대방에게 성공적으로 다 들어간 경우
-        if (toSystem.AddItemToSlots(itemToSend, amountToSend))
+        if (remaining == 0) // 전체 성공
         {
-            // 내 인벤토리에서 해당 개수제거
             inventorySystem.RemoveItemAtIndex(fromIndex, amountToSend);
         }
-        else
+        else if (remaining < amountToSend) // 일부만 성공
         {
-            // 실패 (꽉 참? 등)
-
-            // TODO: 일부만 들어가는 로직은 AddItemToSlots가 남은 개수를 반환해ㅑ야함(현재 bool값만 리턴)
-
-            Debug.Log("상대방 공간이 부족합니다!");
+            int actualSent = amountToSend - remaining;
+            inventorySystem.RemoveItemAtIndex(fromIndex, actualSent);
         }
+        //else // 하나도 못 옮김
+        //{
+        //    //NotificationUIManager.Instance.ShowNotification("공간이 부족합니다.");
+        //}
     }
     
     #endregion

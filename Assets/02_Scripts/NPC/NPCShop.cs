@@ -77,26 +77,26 @@ public class NPCShop : InventoryHolder, IShopSource
         var slot = inventorySystem.slots[slotIndex];
         int price = GetPrice(slotIndex);
 
-        if (!PlayerAssetsManager.Instance.CheckMoney(price))
-        {
-            return false;
-        }
-        if (player.InventorySystem.AddItemToSlots(slot.itemData, 1))
+        if (!PlayerAssetsManager.Instance.CheckMoney(price)) return false;
+
+        int remaining = player.AddItem(slot.itemData, 1);
+
+        if (remaining == 0) // 성공
         {
             PlayerAssetsManager.Instance.TrySpendMoney(price); // 돈 차감
 
-            if (!info.isInfinite) // 무한 재고는 아무것도 안함
-
+            if (!info.isInfinite)
             {
-                // 수량 한정
-                // 상점 인벤토리에서 1개 제거
+                // 한정 수량일 때만 상점에서 제거
                 inventorySystem.RemoveItemAtIndex(slotIndex, 1);
             }
-
+            NotificationUIManager.Instance.ShowNotification($"{slot.itemData.itemName}을(를) 구매했습니다.");
             return true;
         }
         else
         {
+            // 공간 부족
+            //NotificationUIManager.Instance.ShowNotification($"인벤토리 공간이 부족합니다.");
             return false;
         }
 

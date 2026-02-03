@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 //인벤 한칸
@@ -92,37 +93,46 @@ public class InventorySystem
     #region Add Logic
     // ADD: 이미 있으면 갯수 더하기, 없으면 슬롯 리스트에 새로 추가
     // auto라서 빈곳부터 채움 (지정 인덱스로 넣지 않음)
-    public bool AddItemToSlots(ItemData item, int count)
+    public int AddItemToSlots(ItemData item, int count)
     {
-        // 있는 경우
+        // 중첩 가능한 아이템인 경우 기존 슬롯 먼저 채우기
+        int remainingCount = count;
         if (item.isStackable)
         {
-            // 순서대로 탐색, 가장 앞쪽에 있는 슬롯부터 채우기
             for (int i = 0; i < slots.Count; i++)
             {
-                //비어있지 않음, 아이템 같음, 꽉차지 않음
                 if (!slots[i].IsEmpty && slots[i].itemData == item && slots[i].amount < item.maxStackAmount)
                 {
-                    slots[i].AddAmount(count);
-                    OnInventoryUpdated?.Invoke();
-                    return true;
+                    int canAdd = item.maxStackAmount - slots[i].amount;
+                    int amountToAdd = Mathf.Min(remainingCount, canAdd);
+
+                    slots[i].AddAmount(amountToAdd);
+                    remainingCount -= amountToAdd;
+
+                    if (remainingCount <= 0) break;
                 }
             }
         }
 
-        // 없는 경우
-        for (int i = 0; i < slots.Count; i++)
+        // 남은 수량이 있다면 빈 슬롯 찾아서 넣기
+        if (remainingCount > 0)
         {
-            if (slots[i].IsEmpty) // 비어있는 첫 번째 칸
+            for (int i = 0; i < slots.Count; i++)
             {
-                slots[i].UpdateSlot(item, count); //빈 슬롯 내용 바꾸기
-                OnInventoryUpdated?.Invoke();
-                return true;
+                if (slots[i].IsEmpty)
+                {
+                    int amountToAdd = Mathf.Min(remainingCount, item.maxStackAmount);
+                    slots[i].UpdateSlot(item, amountToAdd);
+                    remainingCount -= amountToAdd;
+
+                    if (remainingCount <= 0) break;
+                }
             }
         }
 
-        //꽉참
-        return false;
+        if (remainingCount < count) OnInventoryUpdated?.Invoke();
+        return remainingCount; // 0이면 다 들어감, 0보다 크면 공간 부족으로 남은 것
+    
     }
     #endregion
 
@@ -179,8 +189,10 @@ public class InventorySystem
     #region Search & Consume Item
     // 제작/퀘스트용: 아이템 데이터로 찾아서 개수만큼 소모
     // 위치 상관없이 인벤에서 꺼내서 없앰
-    public void ConsumeItem(ItemData item, int count)
+    public bool ConsumeItem(ItemData item, int count)
     {
+        if (GetItemCount(item) < count) return false;
+
         for (int i = 0; i < slots.Count; i++)
         {
             // 필요한 개수를 다 채웠으면 중단
@@ -202,13 +214,14 @@ public class InventorySystem
                 else
                 {
                     count -= slots[i].amount;
-                    slots[i].Clear(); //ㅑ슬롯 비우기
+                    slots[i].Clear(); //슬롯 비우기
                 }
             }
         }
 
         // 작업이 끝났으니 UI 갱신 알림
         OnInventoryUpdated?.Invoke();
+        return true;
     }
 
     //아이템 몇개 있는지

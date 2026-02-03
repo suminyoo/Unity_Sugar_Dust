@@ -1,21 +1,24 @@
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 using System;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
     [Header("UI Components")]
-    public GameObject dialoguePanel;
+    public GameObject dialogueRootPanel;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+
+    public GameObject dialogueUI;
 
     private Queue<string> sentences = new Queue<string>();
 
     private Action onDialogueEnded;
-    private bool isDialogueActive = false;
+    public bool isDialogueActive = false;
     private bool shouldAutoClose = true;
 
     private void Awake()
@@ -23,17 +26,17 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        dialoguePanel.SetActive(false); 
+        dialogueRootPanel.SetActive(false); 
     }
 
-    private void Update()
-    {
-        // 대화 중일 때 마우스 클릭하면 다음 대사
-        if (isDialogueActive && Input.GetMouseButtonDown(0))
-        {
-            DisplayNextSentence();
-        }
-    }
+    //private void Update()
+    //{
+    //    // 대화 중일 때 마우스 클릭하면 다음 대사
+    //    if (isDialogueActive && Input.GetMouseButtonDown(0))
+    //    {
+    //        DisplayNextSentence();
+    //    }
+    //}
 
     // NPCBrain에서 이 함수를 호출해서 대화시작
     public void StartDialogue(DialogueData data, string speakerName, Action callback, bool autoClose = true)
@@ -47,7 +50,7 @@ public class DialogueManager : MonoBehaviour
         onDialogueEnded = callback; // 끝날 때 실행할 함수 저장
         shouldAutoClose = autoClose;
 
-        dialoguePanel.SetActive(true);
+        dialogueRootPanel.SetActive(true);
         nameText.text = speakerName;
 
         sentences.Clear();
@@ -83,7 +86,7 @@ public class DialogueManager : MonoBehaviour
         if (!isDialogueActive) return;
 
         isDialogueActive = false;
-        dialoguePanel.SetActive(false);
+        dialogueRootPanel.SetActive(false);
 
         onDialogueEnded?.Invoke();
 

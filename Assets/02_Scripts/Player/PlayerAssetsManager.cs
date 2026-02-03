@@ -70,8 +70,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         }
         else
         {
-            Debug.Log("돈이 부족합니다");
-            //TODO: 돈 부족하다는 알림창 메세지 보내서 띄우는 클래스 구현
+            NotificationUIManager.Instance.ShowNotification("돈이 부족합니다.");
             return false;
 
         }

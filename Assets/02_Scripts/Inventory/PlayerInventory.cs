@@ -126,12 +126,21 @@ public class PlayerInventory : InventoryHolder, ISaveable
     #region Inventory Holder Overrides
 
     // 아이템 얻을때 무게 계산 로직
-    public override bool AddItem(ItemData item, int count)
+    public override int AddItem(ItemData item, int count)
     {
         float extraCapacity = maxWeight * (0.8f / Mathf.Log(maxWeight + 1, 10));
         float limit = maxWeight + extraCapacity;
 
-        return base.AddItem(item, count);
+        int remaining = inventorySystem.AddItemToSlots(item, count);
+
+        // [핵심 로직]
+        if (remaining == count)
+        {
+            // 하나도 못 넣은 경우에만 알림
+            NotificationUIManager.Instance.ShowNotification("인벤토리 공간이 부족합니다.");
+        }
+
+        return remaining;
     }
 
     // 바닥에 버릴 때 무게 감소
@@ -146,18 +155,12 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
     public override void ConsumeItem(ItemData item, int count)
     {
-        // 실제 시스템에 아이템이 충분한지 확인
-        int currentCount = inventorySystem.GetItemCount(item);
-        if (currentCount >= count)
-        {
-            base.ConsumeItem(item, count);
-            Debug.Log($"{item.itemName} {count}개 소비 완료");
-        }
-        else
-        {
-            Debug.LogWarning("소비할 아이템 수량이 부족합니다.");
-        }
+        bool success = inventorySystem.ConsumeItem(item, count);
 
+        if (!success)
+        {
+            NotificationUIManager.Instance.ShowNotification($"{item.itemName}이(가) 부족합니다.");
+        }
     }
     #endregion
 

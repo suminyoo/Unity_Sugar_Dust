@@ -12,12 +12,12 @@ public class WorldItem : MonoBehaviour
     private Transform target;
     [SerializeField] private Transform visualChild;
 
-    private readonly float moveSpeed = 5f;
+    private readonly float moveSpeed = 3f;
     private readonly float rotateSpeed = 50f;
     private readonly float floatSpeed = 2f;
     private readonly float floatHeight = 0.25f;
 
-    private float pickupDelay = 2f;
+    private float pickupDelay = 1f;
     private float enablePickupTime;  // 줍기 가능 타임
 
     private bool isFloating = false;
@@ -109,10 +109,15 @@ public class WorldItem : MonoBehaviour
 
             if (inventory != null)
             {
-                if (inventory.AddItem(itemData, amount))
+                int remaining = inventory.AddItem(itemData, amount);
+
+                if (remaining <= 0)  //다 들어감
                 {
-                    //Debug.Log($"{itemData.itemName} 획득");
                     Destroy(gameObject);
+                }
+                else if (remaining < amount)  // 일부만 들어감
+                {
+                    amount = remaining; 
                 }
             }
         }

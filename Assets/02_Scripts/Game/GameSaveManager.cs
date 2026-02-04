@@ -88,14 +88,14 @@ public class GameSaveManager : MonoBehaviour
 
     #region 플레이어 인벤토리 데이터 세이브로드
 
-    public void SavePlayerInventory(List<InventorySlot> slots)
+    public void SavePlayerInventory(IReadOnlyList<InventorySlot> slots)
     {
         // 아이템 슬롯 리스트 저장
         savedData.inventorySlots.Clear();
         foreach (var slot in slots)
         {
             // 빈 슬롯이든 아이템이든 그대로 상태 복사
-            savedData.inventorySlots.Add(new InventorySlot(slot.itemData, slot.amount));
+            savedData.inventorySlots.Add(new InventorySlot(slot.ItemData, slot.Amount));
         }
         Debug.Log("GameManager: 플레이어 인벤토리 저장 완료");
 
@@ -109,13 +109,13 @@ public class GameSaveManager : MonoBehaviour
 
     #region 진열대 데이터 세이브로드
 
-    public void SaveDisplayStand(List<InventorySlot> slots, List<int> prices)
+    public void SaveDisplayStand(IReadOnlyList<InventorySlot> slots, List<int> prices)
     {
         // 아이템 슬롯 리스트 저장
         savedData.displayStandSlots.Clear();
         foreach (var slot in slots)
         {
-            savedData.displayStandSlots.Add(new InventorySlot(slot.itemData, slot.amount));
+            savedData.displayStandSlots.Add(new InventorySlot(slot.ItemData, slot.Amount));
         }
 
         // 가격 리스트 저장
@@ -141,7 +141,7 @@ public class GameSaveManager : MonoBehaviour
     #region 상자 데이터 세이브로드
 
     // 세이브
-    public void SaveWorldStorage(string objectID, List<InventorySlot> slots)
+    public void SaveWorldStorage(string objectID, IReadOnlyList<InventorySlot> slots)
     {
         if (string.IsNullOrEmpty(objectID)) return;
 
@@ -149,7 +149,7 @@ public class GameSaveManager : MonoBehaviour
         List<InventorySlot> slotsToSave = new List<InventorySlot>();
         foreach (var slot in slots)
         {
-            slotsToSave.Add(new InventorySlot(slot.itemData, slot.amount));
+            slotsToSave.Add(new InventorySlot(slot.ItemData, slot.Amount));
         }
 
         // 딕셔너리에 저장 (이미 있으면 덮어쓰기)

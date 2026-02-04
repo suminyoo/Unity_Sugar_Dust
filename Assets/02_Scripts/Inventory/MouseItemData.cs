@@ -7,7 +7,8 @@ public class MouseItemData : MonoBehaviour
 {
     public Image itemSprite;
     public TextMeshProUGUI amountText;
-    public InventorySlot mouseSlot;
+    [SerializeField] private InventorySlot mouseSlot;
+    public InventorySlot MouseSlot => mouseSlot;
 
     public event Action OnMouseItemChanged;
 
@@ -18,19 +19,30 @@ public class MouseItemData : MonoBehaviour
         amountText.text = "";
     }
 
-    public void UpdateMouseSlot(InventorySlot slot)
+    public void UpdateMouseSlot(ItemData item, int amount)
     {
-        mouseSlot.UpdateSlot(slot.itemData, slot.amount); // 데이터 복사
-        itemSprite.sprite = slot.itemData.icon;
-        itemSprite.color = Color.white;
-        amountText.text = slot.amount > 1 ? slot.amount.ToString() : "";
+        mouseSlot.UpdateSlot(item, amount);
+        RefreshUI();
+    }
 
+    private void RefreshUI()
+    {
+        if (HasItem)
+        {
+            itemSprite.sprite = mouseSlot.ItemData.icon;
+            itemSprite.color = Color.white;
+            amountText.text = mouseSlot.Amount > 1 ? mouseSlot.Amount.ToString() : "";
+        }
+        else
+        {
+            ClearSlot();
+        }
         OnMouseItemChanged?.Invoke();
     }
 
     public void ClearSlot()
     {
-        mouseSlot.Clear();
+        mouseSlot.ClearSlot();
         itemSprite.color = Color.clear;
         itemSprite.sprite = null;
         amountText.text = "";
@@ -41,11 +53,11 @@ public class MouseItemData : MonoBehaviour
     //마우스 아이템 무게
     public float GetMouseItemWeight()
     {
-        if (HasItem) return mouseSlot.itemData.weight * mouseSlot.amount;
+        if (HasItem) return mouseSlot.ItemData.weight * mouseSlot.Amount;
         return 0f;
     }
 
-    public bool HasItem => mouseSlot != null && mouseSlot.itemData != null;
+    public bool HasItem => mouseSlot != null && mouseSlot.ItemData != null;
 
     void Update()
     {

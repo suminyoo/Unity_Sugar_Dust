@@ -68,8 +68,8 @@ public class NPCShop : InventoryHolder, IShopSource
         var info = shopData.itemsForSale[slotIndex];
         if (info.isInfinite) // 무한대
             return -1; 
-        var slot = inventorySystem.slots[slotIndex];
-        return slot.amount;
+        var slot = inventorySystem.Slots[slotIndex];
+        return slot.Amount;
     }
 
     public bool IsSlotActive(int slotIndex)
@@ -77,7 +77,7 @@ public class NPCShop : InventoryHolder, IShopSource
         if (!IsValidIndex(slotIndex)) return false;
 
         // 품절
-        return !inventorySystem.slots[slotIndex].IsEmpty;
+        return !inventorySystem.Slots[slotIndex].IsEmpty;
     }
 
     // 구매 눌렀을 때 호출
@@ -86,12 +86,12 @@ public class NPCShop : InventoryHolder, IShopSource
         if (!IsSlotActive(slotIndex)) return false;
 
         var info = shopData.itemsForSale[slotIndex];
-        var slot = inventorySystem.slots[slotIndex];
+        var slot = inventorySystem.Slots[slotIndex];
         int price = GetPrice(slotIndex);
 
         if (!PlayerAssetsManager.Instance.CheckMoney(price)) return false;
 
-        int remaining = player.AddItem(slot.itemData, 1);
+        int remaining = player.AddItem(slot.ItemData, 1);
 
         if (remaining == 0) // 성공
         {
@@ -102,7 +102,7 @@ public class NPCShop : InventoryHolder, IShopSource
                 // 한정 수량일 때만 상점에서 제거
                 inventorySystem.RemoveItemAtIndex(slotIndex, 1);
             }
-            NotificationUIManager.Instance.ShowNotification($"{slot.itemData.itemName}을(를) 구매했습니다.");
+            NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}을(를) 구매했습니다.");
             return true;
         }
         else

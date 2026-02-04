@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -66,10 +67,10 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         // 데이터 채우기
         var savedSlots = data.slots;
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             if (i < savedSlots.Count)
-                inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
+                inventorySystem.Slots[i].UpdateSlot(savedSlots[i].ItemData, savedSlots[i].Amount);
         }
 
         // ui에게 재연결
@@ -88,11 +89,11 @@ public class PlayerInventory : InventoryHolder, ISaveable
     public void RefreshTotalWeight()
     {
         float totalWeight = 0f;
-        foreach (var slot in inventorySystem.slots)
+        foreach (var slot in inventorySystem.Slots)
         {
             if (!slot.IsEmpty)
             {
-                float slotWeight = slot.itemData.weight * slot.amount;
+                float slotWeight = slot.ItemData.weight * slot.Amount;
                 totalWeight += slotWeight;
                 //Debug.Log($"슬롯: {slot.itemData.itemName} x {slot.amount} = {slotWeight:F1}kg");
             }
@@ -147,7 +148,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
     public override void DropItemAtIndex(int index, int count)
     {
         // 인덱스 안전 검사
-        if (index < 0 || index >= inventorySystem.slots.Count) return;
+        if (index < 0 || index >= inventorySystem.Slots.Count) return;
 
         base.DropItemAtIndex(index, count);
     }
@@ -168,7 +169,47 @@ public class PlayerInventory : InventoryHolder, ISaveable
     {
         if (GameSaveManager.Instance != null)
         {
-            GameSaveManager.Instance.SavePlayerInventory(InventorySystem.slots);
+            GameSaveManager.Instance.SavePlayerInventory(InventorySystem.Slots);
         }
     }
+
+    #region Exploration Penalty
+
+    // 모든 아이템 삭제 (탐사 실패 시)
+    public void ClearAllInventory()
+    {
+        for (int i = 0; i < inventorySystem.MaxSlots; i++)
+        {
+            if (!inventorySystem.Slots[i].IsEmpty)
+            {
+                inventorySystem.RemoveItemAtIndex(i, inventorySystem.Slots[i].Amount);
+            }
+        }
+    }
+
+    // 무작위 아이템 분실 (탐사 완료 후 걸어서 귀환 시)
+    public void LoseRandomItems(int minLoss, int maxLoss)
+    {
+        List<int> occupiedIndices = new List<int>();
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
+        {
+            if (!inventorySystem.Slots[i].IsEmpty) occupiedIndices.Add(i);
+        }
+
+        if (occupiedIndices.Count == 0) return;
+
+        int loseCount = Mathf.Min(Random.Range(minLoss, maxLoss + 1), occupiedIndices.Count);
+
+        for (int i = 0; i < loseCount; i++)
+        {
+            int randomIndex = Random.Range(0, occupiedIndices.Count);
+            int targetSlotIndex = occupiedIndices[randomIndex];
+
+            // 수량 전량 삭제
+            inventorySystem.RemoveItemAtIndex(targetSlotIndex, inventorySystem.Slots[targetSlotIndex].Amount);
+            occupiedIndices.RemoveAt(randomIndex);
+        }
+    }
+
+    #endregion
 }

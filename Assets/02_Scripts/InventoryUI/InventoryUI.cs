@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 //가격 정보가 필요한 NPC Shop 이나 Display Stand가 구현해야함
 public interface IShopSource
@@ -81,7 +80,7 @@ public class InventoryUI : MonoBehaviour
         uiSlots.Clear();
 
         // 인벤토리 최대 크기만큼 슬롯 생성
-        int size = connectedInventory.InventorySystem.maxSlots;
+        int size = connectedInventory.InventorySystem.MaxSlots;
         for (int i = 0; i < size; i++)
         {
             GameObject newSlot = Instantiate(slotPrefab, contentPanel);
@@ -137,9 +136,9 @@ public class InventoryUI : MonoBehaviour
         if (system == null) return;
 
         // 선택된 슬롯이 비었으면 팝업닫기
-        if (selectedSlotIndex != -1 && selectedSlotIndex < system.slots.Count)
+        if (selectedSlotIndex != -1 && selectedSlotIndex < system.Slots.Count)
         {
-            if (system.slots[selectedSlotIndex].IsEmpty)
+            if (system.Slots[selectedSlotIndex].IsEmpty)
             {
                 selectedSlotIndex = -1; // 선택 해제
                 ItemUIPopupManager.Instance.CloseAllPopups(); // 팝업 닫기
@@ -148,7 +147,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < uiSlots.Count; i++)
         {
-            if (i < system.slots.Count)
+            if (i < system.Slots.Count)
             {
                 int itemPrice = 0;
                 bool isActive = false;
@@ -169,7 +168,7 @@ public class InventoryUI : MonoBehaviour
                 }
 
                 // 슬롯에 데이터 전달
-                uiSlots[i].DecideSlotVisual(system.slots[i], contextType, itemPrice);
+                uiSlots[i].DecideSlotVisual(system.Slots[i], contextType, itemPrice);
 
                 // 색상 업데이트 (진열대일 때만)
                 if (contextType == InventoryContext.MyShop)
@@ -191,7 +190,7 @@ public class InventoryUI : MonoBehaviour
     //우클릭 이벤트 분기 처리 
     public void HandleSlotRightClick(int slotIndex)
     {
-        var slot = connectedInventory.InventorySystem.slots[slotIndex];
+        var slot = connectedInventory.InventorySystem.Slots[slotIndex];
         if (slot.IsEmpty) return;
 
         //이전 선택된 슬롯 효과 끄고 새 슬롯 선택 효과 적용
@@ -205,7 +204,7 @@ public class InventoryUI : MonoBehaviour
             case InventoryContext.Player:
             case InventoryContext.Chest:
                 // 플레이어나 상자: 정보창
-                ItemUIPopupManager.Instance.ShowItemInfo(slot.itemData);
+                ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData);
                 break;
 
             case InventoryContext.MyShop:
@@ -218,7 +217,7 @@ public class InventoryUI : MonoBehaviour
                     bool currentActive = stand.IsSlotActive(slotIndex);
 
                     ItemUIPopupManager.Instance.ShowPriceInfo(
-                        slot.itemData,
+                        slot.ItemData,
                         currentPrice,
                         currentActive,
 
@@ -250,7 +249,7 @@ public class InventoryUI : MonoBehaviour
 
                     // 구매 팝업 띄우기
                     ItemUIPopupManager.Instance.ShowPurchaseInfo(
-                        slot.itemData,
+                        slot.ItemData,
                         price,
                         amount,
                         // 확인 버튼 콜백
@@ -264,7 +263,7 @@ public class InventoryUI : MonoBehaviour
 
                             if (success)
                             {
-                                NotificationUIManager.Instance.ShowNotification($"{slot.itemData.itemName}를 구매했습니다.");
+                                NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}를 구매했습니다.");
                             }
                         }
                     );

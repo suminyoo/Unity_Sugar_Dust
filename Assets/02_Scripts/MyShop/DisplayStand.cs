@@ -45,11 +45,11 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
     public bool IsSlotActive(int slotIndex)
     {
         // 인벤토리 시스템 자체가 없거나, 인덱스가 범위를 벗어나면 false
-        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.slots.Count)
+        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.Slots.Count)
             return false;
 
         // 아이템이 비어있으면 false
-        if (inventorySystem.slots[slotIndex].IsEmpty)
+        if (inventorySystem.Slots[slotIndex].IsEmpty)
             return false;
 
         // 활성화 리스트의 범위를 벗어나면 false (아직 초기화 안 된 경우 등)
@@ -81,8 +81,8 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
 
         // 리스트 크기 맞추기 (가격 & 활성화 상태)
-        while (slotPrices.Count < inventorySystem.slots.Count) slotPrices.Add(0); //일단 0원으로 초기화
-        while (slotActiveStates.Count < inventorySystem.slots.Count) slotActiveStates.Add(false); // 기본 false
+        while (slotPrices.Count < inventorySystem.Slots.Count) slotPrices.Add(0); //일단 0원으로 초기화
+        while (slotActiveStates.Count < inventorySystem.Slots.Count) slotActiveStates.Add(false); // 기본 false
     }
 
     private void OnEnable()
@@ -112,7 +112,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
         if (displayStandPrefab == null || gridOrigin == null) return;
 
-        int totalCount = inventorySystem.slots.Count;
+        int totalCount = inventorySystem.Slots.Count;
         if (totalCount == 0) return;
 
         // 행 개수
@@ -159,10 +159,10 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     private void HandleInventoryUpdate()
     {
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             // 아이템이 없는데 활성화 되어있거나 가격이 남아있다면 초기화
-            if (inventorySystem.slots[i].IsEmpty)
+            if (inventorySystem.Slots[i].IsEmpty)
             {
                 // 
                 slotActiveStates[i] = false; // 아이템 없으면 판매 중지
@@ -182,18 +182,18 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         spawnedVisualItems.Clear();
 
         // 인벤토리 슬롯 돌면서 모델 생성
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             // 진열대 부족하면 중단 (부족하지 않아야함 수가 같음)
             if (i >= displayPoints.Count) break;
 
-            var slot = inventorySystem.slots[i];
+            var slot = inventorySystem.Slots[i];
 
-            if (!slot.IsEmpty && slot.itemData.dropPrefab != null)
+            if (!slot.IsEmpty && slot.ItemData.dropPrefab != null)
             {
                 // 아이템 진열대에 생성
                 GameObject visualObj = Instantiate(
-                    slot.itemData.dropPrefab,
+                    slot.ItemData.dropPrefab,
                     displayPoints[i].position,
                     Quaternion.identity,
                     displayPoints[i]
@@ -243,11 +243,11 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
     public int GetSlotPrice(int slotIndex)
     {
         // 인벤토리 시스템 자체가 없거나, 인덱스가 범위를 벗어나면 0원
-        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.slots.Count)
+        if (inventorySystem == null || slotIndex < 0 || slotIndex >= inventorySystem.Slots.Count)
             return 0;
 
         // 아이템이 비어있으면 0원
-        if (inventorySystem.slots[slotIndex].IsEmpty)
+        if (inventorySystem.Slots[slotIndex].IsEmpty)
             return 0;
 
         // slotPrices의 범위를 벗어나면 0원 (리스트 싱크가 안 맞을 때)
@@ -263,11 +263,11 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         // 현재 판매 가능한(비어있지 않은) 모든 슬롯의 인덱스를 수집
         List<int> validIndices = new List<int>();
 
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             if (i < displayPoints.Count &&
-                !inventorySystem.slots[i].IsEmpty &&
-                inventorySystem.slots[i].amount > 0 &&
+                !inventorySystem.Slots[i].IsEmpty &&
+                inventorySystem.Slots[i].Amount > 0 &&
                 IsSlotActive(i))
             {
                 validIndices.Add(i);
@@ -294,15 +294,15 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
     public int TryTakeItemFromStand(int slotIndex, int requestAmount)
     {
         // 인덱스 검증
-        if (slotIndex < 0 || slotIndex >= inventorySystem.slots.Count) return 0;
+        if (slotIndex < 0 || slotIndex >= inventorySystem.Slots.Count) return 0;
 
         // 활성화 체크
         if (!IsSlotActive(slotIndex)) return 0;
 
-        var slot = inventorySystem.slots[slotIndex];
+        var slot = inventorySystem.Slots[slotIndex];
 
         if (slot.IsEmpty) return 0;
-        int amountToTake = Mathf.Min(slot.amount, requestAmount);
+        int amountToTake = Mathf.Min(slot.Amount, requestAmount);
 
         // 물건 차감
         inventorySystem.RemoveItemAtIndex(slotIndex, amountToTake);
@@ -317,7 +317,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
     {
         if (GameSaveManager.Instance != null)
         {
-            GameSaveManager.Instance.SaveDisplayStand(InventorySystem.slots, slotPrices);
+            GameSaveManager.Instance.SaveDisplayStand(InventorySystem.Slots, slotPrices);
         }
     }
 
@@ -337,16 +337,16 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         inventorySystem.OnInventoryUpdated += HandleInventoryUpdate;
 
         //가격 정보
-        slotPrices = new List<int>(new int[inventorySystem.slots.Count]); //기본 0으로 된 리스트
-        slotActiveStates = new List<bool>(new bool[inventorySystem.slots.Count]); // 기본값 false
+        slotPrices = new List<int>(new int[inventorySystem.Slots.Count]); //기본 0으로 된 리스트
+        slotActiveStates = new List<bool>(new bool[inventorySystem.Slots.Count]); // 기본값 false
 
         // 데이터 채우기
         var savedSlots = data.slots;
-        for (int i = 0; i < inventorySystem.slots.Count; i++)
+        for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             if (i < savedSlots.Count)
             {
-                inventorySystem.slots[i].UpdateSlot(savedSlots[i].itemData, savedSlots[i].amount);
+                inventorySystem.Slots[i].UpdateSlot(savedSlots[i].ItemData, savedSlots[i].Amount);
             }
         }
         
@@ -359,7 +359,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         else
         {
             // 데이터가 없으면 슬롯 수만큼 0으로 초기화
-            for (int i = 0; i < inventorySystem.slots.Count; i++) slotPrices.Add(0);
+            for (int i = 0; i < inventorySystem.Slots.Count; i++) slotPrices.Add(0);
         }
 
         UpdateVisuals();

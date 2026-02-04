@@ -175,9 +175,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     void ShowResultItems()
     {
-        InventoryHolder inventoryHolder = player.GetComponent<InventoryHolder>();
-
-        if (inventoryHolder == null) return;
+        InventoryHolder holder = player.GetComponent<InventoryHolder>();
+        if (holder == null) return;
 
         // 초기화
         foreach (Transform child in resultItemContainer)
@@ -185,65 +184,32 @@ public class ExploreManager : MonoBehaviour, ISaveable
             Destroy(child.gameObject);
         }
 
-        foreach (var slot in inventoryHolder.InventorySystem.slots)
+        foreach (var slot in holder.GetOccupiedSlots())
         {
-            // 빈 슬롯은 건너뜀
-            if (slot.itemData == null || slot.amount == 0) continue;
-
-            // 프리팹 생성
             GameObject slotUI = Instantiate(resultItemSlotPrefab, resultItemContainer);
-            //Debug.Log($"[ResultUI] 아이템 슬롯 생성됨 - 아이템: {slot.itemData.name}, 수량: {slot.amount}");
-
             var uiScript = slotUI.GetComponent<ResultItemSlotUI>();
             if (uiScript != null)
             {
-                uiScript.SetData(slot.itemData, slot.amount);
+                uiScript.SetData(slot.ItemData, slot.Amount);
             }
         }
-
         resultUIPanel.SetActive(true);
 
     }
 
     private void LoseItems(bool loseAll)
     {
-        // 플레이어에게서 PlayerInventory 컴포넌트를 가져옵니다.
-        InventorySystem invSystem = player.GetComponent<InventoryHolder>().InventorySystem;
+        // GetComponent를 통해 PlayerInventory로 가져옵니다.
+        PlayerInventory playerInv = player.GetComponent<PlayerInventory>();
+        if (playerInv == null) return;
 
-        // 아이템 삭제
         if (loseAll)
         {
-            for (int i = 0; i < invSystem.slots.Count; i++)
-            {
-                if (!invSystem.slots[i].IsEmpty)
-                    invSystem.RemoveItemAtIndex(i, invSystem.slots[i].amount);
-            }
-            Debug.Log("탐사 실패: 모든 아이템을 잃었습니다.");
+            playerInv.ClearAllInventory();
         }
         else
         {
-            // 1. 아이템이 있는 슬롯의 인덱스만 수집
-            List<int> occupiedIndices = new List<int>();
-            for (int i = 0; i < invSystem.slots.Count; i++)
-            {
-                if (!invSystem.slots[i].IsEmpty) occupiedIndices.Add(i);
-            }
-
-            if (occupiedIndices.Count > 0)
-            {
-                int loseCount = Mathf.Min(Random.Range(1, 5), occupiedIndices.Count);
-
-                for (int i = 0; i < loseCount; i++)
-                {
-                    int listIndex = Random.Range(0, occupiedIndices.Count);
-                    int targetSlotIndex = occupiedIndices[listIndex];
-
-                    invSystem.RemoveItemAtIndex(targetSlotIndex, invSystem.slots[targetSlotIndex].amount);
-
-                    // 중복 방지를 위해 리스트에서 뽑힌 인덱스 제거
-                    occupiedIndices.RemoveAt(listIndex);
-                }
-            }
+            playerInv.LoseRandomItems(1, 4);
         }
     }
 

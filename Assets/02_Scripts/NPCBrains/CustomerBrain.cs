@@ -166,15 +166,15 @@ public class CustomerBrain : NPCBrain
         yield return new WaitForSeconds(thinkingTime);
 
         // 정보 확인
-        var slot = targetShop.InventorySystem.slots[targetItemSlotIndex];
-        if (slot.IsEmpty || slot.itemData == null)
+        var slot = targetShop.InventorySystem.Slots[targetItemSlotIndex];
+        if (slot.IsEmpty || slot.ItemData == null)
         {
             SayToSelf("어? 물건이 그새 없어졌네");
             yield return new WaitForSeconds(1.0f);
             yield return StartCoroutine(WanderPhase());
             yield break;
         }
-        ItemData potentialItem = slot.itemData;
+        ItemData potentialItem = slot.ItemData;
         int potentialPrice = targetShop.GetSlotPrice(targetItemSlotIndex);
 
         float costPrice = Mathf.Max(1f, potentialItem.sellPrice);

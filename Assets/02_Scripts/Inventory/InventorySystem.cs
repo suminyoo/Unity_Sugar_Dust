@@ -6,8 +6,11 @@ using UnityEngine.Events;
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemData itemData;
-    public int amount;
+    public ItemData ItemData => itemData;
+    private ItemData itemData;
+
+    public int Amount => amount;
+    private int amount;
 
     //초기화용
     public InventorySlot() // 빈 슬롯으로 시작시
@@ -16,8 +19,7 @@ public class InventorySlot
         amount = 0;
     }
 
-    //생성 및 복사
-    //세이브나 이미 아이템정보 가 있을때
+    //생성 및 복사. 세이브나 이미 아이템정보가 있을때
     public InventorySlot(ItemData item, int count)
     {
         itemData = item;
@@ -34,14 +36,14 @@ public class InventorySlot
 
     //삭제용
     //아이템을 바닥에 다 버렸거나, 전부 소모할경우
-    public void Clear()
+    public void ClearSlot()
     {
         itemData = null;
         amount = 0;
     }
 
     public bool IsEmpty => itemData == null;
-
+    public void SetAmount(int value) => amount = value;
     public void AddAmount(int value) => amount += value;
     public void RemoveAmount(int value) => amount -= value;
 }
@@ -54,10 +56,13 @@ public class InventorySlot
 public class InventorySystem
 {
     //List지만 고정된 크기로 사용 인덱스가 중요해서
-    public List<InventorySlot> slots = new List<InventorySlot>();
-    public int maxSlots; // 최대 칸 수
+    [SerializeField] private List<InventorySlot> slots = new List<InventorySlot>();
+    public IReadOnlyList<InventorySlot> Slots => slots;
 
-    public UnityAction OnInventoryUpdated;
+    [SerializeField] private int maxSlots;
+    public int MaxSlots => maxSlots;
+
+    public event UnityAction OnInventoryUpdated;
 
     #region Initialization
 
@@ -73,24 +78,10 @@ public class InventorySystem
         }
     }
 
-    public void RestoreData(int newSize)
-    {
-        maxSlots = newSize;
-        slots.Clear(); // 기존 슬롯 다 지우고
-
-        // 새 크기만큼 빈 슬롯 채우기
-        for (int i = 0; i < maxSlots; i++)
-        {
-            slots.Add(new InventorySlot());
-        }
-
-        // 여기서 OnInventoryUpdated를 호출하지 않아도 됨 
-        // (데이터 채워넣은 뒤에 한 번만 호출하면 되니까)
-    }
-
     #endregion
 
     #region Add Logic
+
     // ADD: 이미 있으면 갯수 더하기, 없으면 슬롯 리스트에 새로 추가
     // auto라서 빈곳부터 채움 (지정 인덱스로 넣지 않음)
     public int AddItemToSlots(ItemData item, int count)
@@ -101,9 +92,9 @@ public class InventorySystem
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                if (!slots[i].IsEmpty && slots[i].itemData == item && slots[i].amount < item.maxStackAmount)
+                if (!slots[i].IsEmpty && slots[i].ItemData == item && slots[i].Amount < item.maxStackAmount)
                 {
-                    int canAdd = item.maxStackAmount - slots[i].amount;
+                    int canAdd = item.maxStackAmount - slots[i].Amount;
                     int amountToAdd = Mathf.Min(remainingCount, canAdd);
 
                     slots[i].AddAmount(amountToAdd);
@@ -148,38 +139,37 @@ public class InventorySystem
         OnInventoryUpdated?.Invoke();
     }
 
-    // 아이템 제ㅣ거 
+    // 아이템 제거 
     //아이템위치 중요: 사용자의 마우스 드래그나 슬롯 클릭시 사용
     public void RemoveItemAtIndex(int index, int count)
     {
         //유효성 검사 (범위 밖이거나 빈칸)) 이면
         if (index < 0 || index >= slots.Count || slots[index].IsEmpty) return;
 
-        slots[index].amount -= count;
+        slots[index].RemoveAmount(count);
 
-        if (slots[index].amount <= 0)
+        if (slots[index].Amount <= 0)
         {
-            slots[index].Clear(); // 내용비우기
+            slots[index].ClearSlot(); // 내용비우기
         }
 
         OnInventoryUpdated?.Invoke();
     }
 
-    //스왑, 드래그앤 드롭
-    //인벤토리 내부 스왑용
+    //스왑, 드래그앤 드롭 인벤토리 내부 스왑용 (현재미사용)
     public void SwapItems(int indexA, int indexB)
     {
         if (indexA == indexB) return;
         if (indexA >= slots.Count || indexB >= slots.Count) return;
 
         //임시 변수에 A데이터를 복사
-        InventorySlot temp = new InventorySlot(slots[indexA].itemData, slots[indexA].amount);
+        InventorySlot temp = new InventorySlot(slots[indexA].ItemData, slots[indexA].Amount);
 
         // A에 B 내용 덮어쓰기
-        slots[indexA].UpdateSlot(slots[indexB].itemData, slots[indexB].amount);
+        slots[indexA].UpdateSlot(slots[indexB].ItemData, slots[indexB].Amount);
 
         // B에 Temp(A) 내용 덮기
-        slots[indexB].UpdateSlot(temp.itemData, temp.amount);
+        slots[indexB].UpdateSlot(temp.ItemData, temp.Amount);
 
         OnInventoryUpdated?.Invoke();
     }
@@ -199,22 +189,22 @@ public class InventorySystem
             if (count <= 0) break;
 
             // 슬롯에서 아이템 찾기
-            if (!slots[i].IsEmpty && slots[i].itemData == item)
+            if (!slots[i].IsEmpty && slots[i].ItemData == item)
             {
                 // 아이템 개수 충분
-                if (slots[i].amount >= count)
+                if (slots[i].Amount >= count)
                 {
-                    slots[i].amount -= count;
+                    slots[i].RemoveAmount(count);
                     count = 0;
 
                     // 개수가 0이 되면 슬롯 비우기
-                    if (slots[i].amount == 0) slots[i].Clear();
+                    if (slots[i].Amount == 0) slots[i].ClearSlot();
                 }
                 // 아이템 개수 부족
                 else
                 {
-                    count -= slots[i].amount;
-                    slots[i].Clear(); //슬롯 비우기
+                    count -= slots[i].Amount;
+                    slots[i].ClearSlot(); //슬롯 비우기
                 }
             }
         }
@@ -231,12 +221,96 @@ public class InventorySystem
         int total = 0;
         foreach (var slot in slots)
         {
-            if (!slot.IsEmpty && slot.itemData == item)
+            if (!slot.IsEmpty && slot.ItemData == item)
             {
-                total += slot.amount;
+                total += slot.Amount;
             }
         }
         return total;
     }
     #endregion
+
+    #region External Slot Interaction
+
+    // 인덱스 위치의 슬롯에서 1개를 꺼내서 전달받은 외부 슬롯(마우스)에 넣어주는 규칙
+    public void PickOneToExternal(int index, InventorySlot externalSlot)
+    {
+        InventorySlot mySlot = slots[index];
+        if (mySlot.IsEmpty) return;
+
+        // 외부 슬롯이 비었거나 같은 아이템일 때만 1개 이동
+        if (externalSlot.IsEmpty || externalSlot.ItemData == mySlot.ItemData)
+        {
+            // 외부 데이터 갱신
+            externalSlot.UpdateSlot(mySlot.ItemData, externalSlot.Amount + 1);
+
+            // 내부 리스트 갱신
+            RemoveItemAtIndex(index, 1);
+        }
+    }
+
+    // 인덱스 위치의 슬롯과 외부 슬롯을 통째로 교환하거나 합치는 규칙
+    public void SwapWithExternal(int index, InventorySlot externalSlot)
+    {
+        // [방어 코드] 인덱스 범위 확인 및 외부 슬롯 존재 확인
+        if (index < 0 || index >= slots.Count || externalSlot == null) return;
+
+        InventorySlot mySlot = slots[index];
+
+        // 같은 아이템 합치기
+        if (!mySlot.IsEmpty && !externalSlot.IsEmpty &&
+            mySlot.ItemData == externalSlot.ItemData && mySlot.ItemData.isStackable)
+        {
+            int maxStack = mySlot.ItemData.maxStackAmount;
+            int currentAmount = mySlot.Amount;
+
+            // 남은 공간 계산 후 옮기기
+            int canAddCount = maxStack - currentAmount;
+
+            int amountToAdd = Mathf.Min(canAddCount, externalSlot.Amount); // 실제로 옮길 개수 (여유 공간과 마우스가 가진 개수 중 작은 값)
+
+            if (amountToAdd > 0)
+            {
+                UpdateSlotAtIndex(index, mySlot.ItemData, currentAmount + amountToAdd);
+
+                // 외부 슬롯 업데이트
+                int remaining = externalSlot.Amount - amountToAdd;
+                if (remaining > 0)
+                    externalSlot.UpdateSlot(externalSlot.ItemData, remaining);
+                else
+                    externalSlot.ClearSlot();
+            }
+            else
+            {
+                // 합칠 수 없는 경우 Swap
+                Swap(index, externalSlot);
+            }
+        }
+        // 아예 다른 아이템이거나 빈칸인 경우 swpap
+        else
+        {
+            Swap(index, externalSlot);
+        }
+    }
+
+    // 순수 교환 로직
+    private void Swap(int index, InventorySlot externalSlot)
+    {
+        InventorySlot mySlot = slots[index];
+
+        // 임시 저장
+        ItemData tempItem = mySlot.ItemData;
+        int tempAmount = mySlot.Amount;
+
+        // 1. 내 슬롯을 외부 데이터로 교체
+        UpdateSlotAtIndex(index, externalSlot.ItemData, externalSlot.Amount);
+
+        // 2. 외부 슬롯을 내 원래 데이터로 교체
+        if (tempItem != null)
+            externalSlot.UpdateSlot(tempItem, tempAmount);
+        else
+            externalSlot.ClearSlot();
+    }
+    #endregion
+
 }

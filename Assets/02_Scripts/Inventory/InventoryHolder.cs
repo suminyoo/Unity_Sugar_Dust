@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryHolder : MonoBehaviour
@@ -21,6 +22,17 @@ public class InventoryHolder : MonoBehaviour
 
     #region 인벤토리 아이템 관리
 
+    // 공통 기능: UI 결과창이나 리스트 보여주기용 (상점, 상자, 플레이어 공통)
+    public List<InventorySlot> GetOccupiedSlots()
+    {
+        List<InventorySlot> occupied = new List<InventorySlot>();
+        foreach (var slot in inventorySystem.Slots) // IReadOnlyList 사용
+        {
+            if (!slot.IsEmpty) occupied.Add(slot);
+        }
+        return occupied;
+    }
+
     // 아이템 넣기
     public virtual int AddItem(ItemData item, int count)   
     {
@@ -30,18 +42,18 @@ public class InventoryHolder : MonoBehaviour
     // 아이템 빼기 : 바닥에 버리기, 다른 인벤토리로 옮기기 등 
     public virtual void DropItemAtIndex(int index, int count)
     {
-        var slot = inventorySystem.slots[index];
-        if (slot.IsEmpty || slot.amount < count) return;
+        var slot = inventorySystem.Slots[index];
+        if (slot.IsEmpty || slot.Amount < count) return;
 
         // 프리팹 생성
-        if (slot.itemData.dropPrefab != null)
+        if (slot.ItemData.dropPrefab != null)
         {
             //Vector3 pos = itemDropPosition != null ? itemDropPosition.position : transform.position + transform.forward;
-            GameObject droppedObj = Instantiate(slot.itemData.dropPrefab, itemDropPosition.position, Quaternion.identity);
+            GameObject droppedObj = Instantiate(slot.ItemData.dropPrefab, itemDropPosition.position, Quaternion.identity);
 
             // 바닥에 떨어진 아이템에 개수 전달
             var worldItem = droppedObj.GetComponent<WorldItem>();
-            if (worldItem != null) worldItem.Initialize(slot.itemData, count);
+            if (worldItem != null) worldItem.Initialize(slot.ItemData, count);
         }
 
         // 인벤토리 데이터 삭제
@@ -56,7 +68,7 @@ public class InventoryHolder : MonoBehaviour
 
         if (currentCount >= count)
         {
-            //  소모
+            // 소모
             inventorySystem.ConsumeItem(item, count);
         }
     }
@@ -65,14 +77,14 @@ public class InventoryHolder : MonoBehaviour
     public virtual void TransferTo(int fromIndex, InventoryHolder toHolder)
     {
         // 내 슬롯 데이터 가져오기
-        InventorySlot fromSlot = inventorySystem.slots[fromIndex];
+        InventorySlot fromSlot = inventorySystem.Slots[fromIndex];
 
         if (fromSlot.IsEmpty) return; // 빈칸 패스
 
         // 받는 쪽에 넣기 시도 
         // 보내려는 아이템과 개수
-        ItemData itemToSend = fromSlot.itemData;
-        int amountToSend = fromSlot.amount;
+        ItemData itemToSend = fromSlot.ItemData;
+        int amountToSend = fromSlot.Amount;
 
         int remaining = toHolder.AddItem(itemToSend, amountToSend);
 
@@ -91,4 +103,6 @@ public class InventoryHolder : MonoBehaviour
     }
     
     #endregion
+
+
 }

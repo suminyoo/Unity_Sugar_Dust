@@ -30,7 +30,7 @@ public class StorageBox : InventoryHolder, IInteractable
 
     private void SaveData()
     {
-        GameSaveManager.Instance.SaveWorldStorage(boxID, inventorySystem.slots);
+        GameSaveManager.Instance.SaveWorldStorage(boxID, inventorySystem.Slots);
     }
 
     public void OnInteract()

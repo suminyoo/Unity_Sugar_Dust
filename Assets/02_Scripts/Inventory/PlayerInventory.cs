@@ -147,7 +147,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
     // 바닥에 버릴 때 무게 감소
     public override void DropItemAtIndex(int index, int count)
     {
-        // 인덱스 안전 검사
+        // 인덱스 검사
         if (index < 0 || index >= inventorySystem.Slots.Count) return;
 
         base.DropItemAtIndex(index, count);

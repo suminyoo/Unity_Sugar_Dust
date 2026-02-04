@@ -36,6 +36,8 @@ public class StorageUIManager : MonoBehaviour
 
     [Header("Others")]
     public float closeDistance = 3.0f;
+    public bool IsAnyStorageUIOpen => playerBagPanel.activeSelf || (_currentOtherPanel != null && _currentOtherPanel.activeSelf);
+
 
     private void Awake()
     {
@@ -157,6 +159,8 @@ public class StorageUIManager : MonoBehaviour
         // 플레이어 가방 끄기
         playerBagPanel.SetActive(false);
 
+        TryClearMouseItem();
+
         _currentOtherHolder = null;
         _currentOtherUI = null;
         _currentOtherPanel = null;
@@ -201,6 +205,18 @@ public class StorageUIManager : MonoBehaviour
         if (fromHolder != null && toHolder != null)
         { 
             fromHolder.TransferTo(slotIndex, toHolder);
+        }
+    }
+
+    public void TryClearMouseItem()
+    {
+        if (!IsAnyStorageUIOpen)
+        {
+            var mouseItem = playerInventoryUI.mouseItemData;
+            if (mouseItem != null && mouseItem.HasItem)
+            {
+                mouseItem.DropItemAndClear();
+            }
         }
     }
 }

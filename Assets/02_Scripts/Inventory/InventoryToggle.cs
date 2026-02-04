@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryToggle : MonoBehaviour
@@ -19,6 +20,10 @@ public class InventoryToggle : MonoBehaviour
                 bool isActive = !playerBagPanel.activeSelf;
                 playerBagPanel.SetActive(isActive);
 
+                if (!isActive)
+                {
+                    StorageUIManager.Instance.TryClearMouseItem();
+                }
             }
         }
     }

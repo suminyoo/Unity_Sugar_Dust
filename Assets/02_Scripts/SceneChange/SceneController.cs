@@ -8,6 +8,7 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
 
+    private bool isChangingScene = false;
     private string currentLoadedInterior;
 
     [SerializeField] private Color backgroundColor = new Color(110, 110, 160);
@@ -25,11 +26,15 @@ public class SceneController : MonoBehaviour
 
     public void ChangeScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
     {
+        if (isChangingScene) return;
+
         StartCoroutine(SceneTransitionCor(sceneName, spawnPointID, true));
     }
 
     private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool useFade = true)
     {
+        isChangingScene = true;
+
         if (useFade) InputControlManager.Instance.LockInput();
         if (useFade) yield return FadeUIManager.Instance.FadeOut();
 
@@ -60,6 +65,8 @@ public class SceneController : MonoBehaviour
         if (useFade) yield return FadeUIManager.Instance.FadeIn();
         if (useFade) InputControlManager.Instance.UnlockInput();
 
+        isChangingScene = false;
+
 
     }
 
@@ -69,11 +76,15 @@ public class SceneController : MonoBehaviour
 
     public void AddSceneAndMoveTo(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isExiting)
     {
+        if (isChangingScene) return;
+
         StartCoroutine(AdditiveLoadCor(sceneName.ToString(), spawnPointID, isExiting, true));
     }
 
     private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting, bool useFade = true)
     {
+        isChangingScene = true;
+
         if (useFade) InputControlManager.Instance.LockInput();
         if (useFade) yield return FadeUIManager.Instance.FadeOut();
 
@@ -120,6 +131,8 @@ public class SceneController : MonoBehaviour
 
         if (useFade) yield return FadeUIManager.Instance.FadeIn();
         if (useFade) InputControlManager.Instance.UnlockInput();
+
+        isChangingScene = false;
 
     }
 

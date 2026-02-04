@@ -63,4 +63,24 @@ public class MouseItemData : MonoBehaviour
     {
         if (HasItem) transform.position = Input.mousePosition;
     }
+
+
+    // 마우스에 든 아이템을 강제로 버림
+    public void DropItemAndClear()
+    {
+        if (!HasItem) return;
+
+        if (mouseSlot.ItemData.dropPrefab != null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector3 dropTransform = player.GetComponent<PlayerInventory>().itemDropPosition.position;
+
+            GameObject droppedObj = Instantiate(mouseSlot.ItemData.dropPrefab, dropTransform, Quaternion.identity);
+
+            var worldItem = droppedObj.GetComponent<WorldItem>();
+            if (worldItem != null) worldItem.Initialize(mouseSlot.ItemData, mouseSlot.Amount);
+        }
+
+        ClearSlot();
+    }
 }

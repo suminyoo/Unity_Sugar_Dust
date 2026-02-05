@@ -24,12 +24,20 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     [Header("UI")]
     public TextMeshProUGUI timerText;
-    public GameObject resultUIPanel;
-    public TextMeshProUGUI resultMessageText; // 메시지 표시용
-    public Transform resultItemContainer;
-    public GameObject resultItemSlotPrefab;
     public TextMeshProUGUI exploreLevelText;
     public TextMeshProUGUI explorePathFamiliarityText;
+
+    [Header("Result")]
+    public GameObject resultUIPanel;
+    public GameObject resultItemSlotPrefab;
+
+    public TextMeshProUGUI resultTitleText;
+    public TextMeshProUGUI resultInfoText;
+
+    public Transform earnedItemContainer;
+    public Transform lostItemContainer;
+
+    private List<InventorySlot> lostItemsList;
 
 
     void Start()
@@ -84,7 +92,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
         return null;
     }
 
-
     void OnDestroy()
     {
         ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
@@ -121,7 +128,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public void GoToNextStage()
     {
         currentLevel++;
-        Debug.Log($"다음 스테이지로 이동합니다. 현재 레벨: {currentLevel}");
+        //Debug.Log($"다음 스테이지로 이동합니다. 현재 레벨: {currentLevel}");
 
         isExploreStarted = false;
 
@@ -178,23 +185,32 @@ public class ExploreManager : MonoBehaviour, ISaveable
         InventoryHolder holder = player.GetComponent<InventoryHolder>();
         if (holder == null) return;
 
+        // 얻은 아이템 UI 생성
         // 초기화
-        foreach (Transform child in resultItemContainer)
-        {
+        foreach (Transform child in earnedItemContainer) 
             Destroy(child.gameObject);
-        }
 
         foreach (var slot in holder.GetOccupiedSlots())
         {
-            GameObject slotUI = Instantiate(resultItemSlotPrefab, resultItemContainer);
-            var uiScript = slotUI.GetComponent<ResultItemSlotUI>();
-            if (uiScript != null)
+            GameObject slotUI = Instantiate(resultItemSlotPrefab, earnedItemContainer);
+            slotUI.GetComponent<ResultItemSlotUI>()?.SetData(slot.ItemData, slot.Amount);
+        }
+
+        // 잃은 아이템 UI 생성
+        if (lostItemContainer != null && lostItemsList != null)
+        {
+            foreach (Transform child in lostItemContainer) 
+                Destroy(child.gameObject);
+
+            // 리스트를 돌며 생성
+            foreach (var slot in lostItemsList)
             {
-                uiScript.SetData(slot.ItemData, slot.Amount);
+                GameObject slotUI = Instantiate(resultItemSlotPrefab, lostItemContainer);
+                slotUI.GetComponent<ResultItemSlotUI>()?.SetData(slot.ItemData, slot.Amount);
             }
         }
-        resultUIPanel.SetActive(true);
 
+        resultUIPanel.SetActive(true);
     }
 
     private void LoseItems(bool loseAll)
@@ -205,14 +221,17 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (loseAll)
         {
+            lostItemsList = new List<InventorySlot>();
+            foreach (var slot in playerInv.GetOccupiedSlots())
+                lostItemsList.Add(new InventorySlot(slot.ItemData, slot.Amount)); //새로운 리스트로 생성
+            
             playerInv.ClearAllInventory();
         }
         else
         {
-            playerInv.LoseRandomItems(1, 4);
+            lostItemsList = playerInv.LoseRandomItems(1, 4);
         }
     }
-
 
     // 탐사 성공
     private void ExploreSuccess(bool isSafeReturn)
@@ -224,12 +243,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (isSafeReturn)
         {
-            if (resultMessageText != null) resultMessageText.text = "탐사 성공! 무사히 귀환합니다.";
-
+            resultTitleText.text = "탐사 성공";
+            resultInfoText.text = "우주선을 타고 마을로 무사히 귀환합니다.";
         }
         else
         {
-            if (resultMessageText != null) resultMessageText.text = "탐사 완료! 걸어서 귀환합니다.";
+            resultTitleText.text = "탐사 완료";
+            resultInfoText.text = "걸어서 마을로 귀환합니다.\n돌아가는 길에 몇몇 아이템을 잃어버렸습니다."; 
             LoseItems(false);
         }
 
@@ -245,10 +265,10 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isExplorationEnded = true;
         isExploreSuccess = false;
 
-        if (resultMessageText != null) resultMessageText.text = "탐사 실패...";
+        resultTitleText.text = "탐사 실패";
+        resultInfoText.text = "구조대에 의해\n병원으로 이송됩니다.\n아이템을 모두 잃어버렸습니다.";
 
         LoseItems(true);
-
         ShowResultItems();
 
     }

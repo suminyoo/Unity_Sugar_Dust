@@ -8,6 +8,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
     public static PlayerAssetsManager Instance { get; private set; }
 
     [SerializeField] private int currentMoney = 0;
+    public int CurrentMoney => currentMoney;
 
     // 특수 장비/능력 (Key Items) 관리 (중복 방지를 위해 HashSet 사용)
     // 예: "Translator", "RunningShoes" 등의 문자열 ID로 관리

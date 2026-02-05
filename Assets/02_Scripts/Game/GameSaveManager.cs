@@ -71,7 +71,7 @@ public class GameSaveManager : MonoBehaviour
 
     #region 플레이어 상태 데이터 세이브로드
 
-    public void SavePlayerState(float hp, float stamina)
+    public void SavePlayerCondition(float hp, float stamina)
     {
         savedData.currentHp = hp;
         savedData.currentStamina = stamina;

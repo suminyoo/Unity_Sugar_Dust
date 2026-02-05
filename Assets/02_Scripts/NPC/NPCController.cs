@@ -8,10 +8,10 @@ public class NPCController : MonoBehaviour
 
 
     // ÂüÁ¶
-    [HideInInspector] public NPCMovement Movement;
-    [HideInInspector] public NPCBrain Brain;
-    [HideInInspector] public NPCAnimation Animation;
-    [HideInInspector] public SpeechBubble Bubble;
+    [HideInInspector] public NPCMovement Movement { get; private set; }
+    [HideInInspector] public NPCBrain Brain { get; private set; }
+    [HideInInspector] public NPCAnimation Animation { get; private set; }
+    [HideInInspector] public SpeechBubble Bubble { get; private set; }
 
     private void Awake()
     {

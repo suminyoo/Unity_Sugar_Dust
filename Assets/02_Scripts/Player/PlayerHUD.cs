@@ -30,14 +30,23 @@ public class PlayerHUD : MonoBehaviour
 
     void Start()
     {
-        playerCondition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCondition>();
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
 
-        playerCondition.OnHpChanged += UpdateHpUI;
-        playerCondition.OnStaminaChanged += UpdateStaminaUI;
+        if (playerObj != null)
+        {
+            playerCondition = playerObj.GetComponent<PlayerCondition>();
+
+            // 이벤트를 구독
+            playerCondition.OnHpChanged += UpdateHpUI;
+            playerCondition.OnStaminaChanged += UpdateStaminaUI;
+
+            // 구독 직후 UI 수동 초기화
+            UpdateHpUI(playerCondition.currentHp, playerCondition.playerData.maxHp);
+            UpdateStaminaUI(playerCondition.currentStamina, playerCondition.playerData.maxStamina);
+        }
 
         PlayerAssetsManager.Instance.OnMoneyChanged += UpdateMoneyUI;
-
-        staminaSlider.gameObject.SetActive(staminaSlider.value < 1f);
+        UpdateMoneyUI(PlayerAssetsManager.Instance.CurrentMoney);
 
     }
 
@@ -54,6 +63,7 @@ public class PlayerHUD : MonoBehaviour
     #region HP & Stamina 
     private void UpdateHpUI(float curHp, float maxHp)
     {
+        Debug.Log($"[PlayerHUD] HP UI 업데이트: {curHp} / {maxHp}");
         hpSlider.value = curHp / maxHp;
         hpText.text = $"{(int)curHp} / {(int)maxHp}";
     }

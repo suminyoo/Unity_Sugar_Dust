@@ -88,6 +88,8 @@ public class CustomerSpawner : MonoBehaviour
             CustomerType selectedType = GetWeightedRandomType();
             float randomStay = Random.Range(shopStayDurationMin, shopStayDurationMax);
             float randomGenerosity = Random.Range(minGenerosity, maxGenerosity);
+            int randomPriority = Random.Range(1, 101);
+
 
             newCustomer.Setup(
                 displayStand,
@@ -96,6 +98,7 @@ public class CustomerSpawner : MonoBehaviour
                 selectedType,
                 randomStay,
                 randomGenerosity,
+                randomPriority,
                 () => {
                     if (currentCustomers.Contains(newCustomer))
                         currentCustomers.Remove(newCustomer);

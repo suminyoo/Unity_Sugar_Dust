@@ -81,4 +81,11 @@ public class NPCMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direction);
         }
     }
+
+    public void SetAvoidancePriority(int priority)
+    {
+        agent.avoidancePriority = Mathf.Clamp(priority, 0, 99); //범위 제한
+        
+    }
+
 }

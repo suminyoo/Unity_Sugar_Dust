@@ -67,8 +67,8 @@ public class CustomerBrain : NPCBrain
 
 
     // 매니저에서 호출하는 셋업
-    public void Setup(DisplayStand shop, CheckoutCounter checkout, Transform entrance,
-                      CustomerType type, float duration, float generosity, Action onDespawn)
+    public void Setup(DisplayStand shop, CheckoutCounter checkout, Transform entrance, CustomerType type, 
+                      float duration, float generosity, int randomPriority, Action onDespawn)
     {
         this.targetShop = shop;
         this.counter = checkout;
@@ -79,6 +79,7 @@ public class CustomerBrain : NPCBrain
 
         this.onDespawnCallback = onDespawn;
         this.priceGenerosity = generosity;
+        controller.Movement.SetAvoidancePriority(randomPriority);
 
         IsReadyForTransaction = false;
 

@@ -188,15 +188,16 @@ public class PlayerInventory : InventoryHolder, ISaveable
     }
 
     // 무작위 아이템 분실 (탐사 완료 후 걸어서 귀환 시)
-    public void LoseRandomItems(int minLoss, int maxLoss)
+    public List<InventorySlot> LoseRandomItems(int minLoss, int maxLoss)
     {
+        List<InventorySlot> lostItems = new List<InventorySlot>();
         List<int> occupiedIndices = new List<int>();
         for (int i = 0; i < inventorySystem.Slots.Count; i++)
         {
             if (!inventorySystem.Slots[i].IsEmpty) occupiedIndices.Add(i);
         }
 
-        if (occupiedIndices.Count == 0) return;
+        if (occupiedIndices.Count == 0) return lostItems;
 
         int loseCount = Mathf.Min(Random.Range(minLoss, maxLoss + 1), occupiedIndices.Count);
 
@@ -205,10 +206,14 @@ public class PlayerInventory : InventoryHolder, ISaveable
             int randomIndex = Random.Range(0, occupiedIndices.Count);
             int targetSlotIndex = occupiedIndices[randomIndex];
 
+            var targetSlot = inventorySystem.Slots[targetSlotIndex];
+            lostItems.Add(new InventorySlot(targetSlot.ItemData, targetSlot.Amount));
+
             // 수량 전량 삭제
             inventorySystem.RemoveItemAtIndex(targetSlotIndex, inventorySystem.Slots[targetSlotIndex].Amount);
             occupiedIndices.RemoveAt(randomIndex);
         }
+        return lostItems;
     }
 
     #endregion

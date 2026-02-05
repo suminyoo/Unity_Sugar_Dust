@@ -63,6 +63,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         OnHpChanged?.Invoke(currentHp, maxHp);
         OnStaminaChanged?.Invoke(maxStamina, maxStamina); // 꽉 채워서 (버그방지)
 
+
         Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
     }
 
@@ -158,7 +159,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (GameSaveManager.Instance != null && inventory != null)
         {
-            GameSaveManager.Instance.SavePlayerState(
+            GameSaveManager.Instance.SavePlayerCondition(
                currentHp,
                currentStamina
            );

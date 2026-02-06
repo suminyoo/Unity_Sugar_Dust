@@ -6,7 +6,6 @@ public class EnemyData : ScriptableObject
     [Header("Basic Info")]
     public string enemyName;
     public float maxHp = 100f;
-    public GameObject deathEffect;
 
     [Header("Movement")]
     public float moveSpeed = 1.5f; 
@@ -20,5 +19,21 @@ public class EnemyData : ScriptableObject
     [Header("AI Perception")]
     public float detectRange = 6f; 
     public float patrolRadius = 5f; 
-    public float patrolWaitTime = 2f; 
+    public float patrolWaitTime = 2f;
+
+    [Header("VFX")]
+    public GameObject hitEffect;
+    public GameObject attackEffect;
+    public GameObject detectEffect;
+    public GameObject patrolEffect;
+    public GameObject dieEffect;
+
+    [Header("SFX")]
+    public AudioClip hitSound;
+    public AudioClip attackSound;
+    public GameObject detectSound;
+    public GameObject patrolSound;
+    public AudioClip dieSound;
+
+
 }

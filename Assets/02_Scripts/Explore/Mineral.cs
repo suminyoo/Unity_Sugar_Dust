@@ -6,13 +6,12 @@ public class Mineral : MonoBehaviour, IMineable
     public string mineralName;
     public float health = 100f;
     public GameObject hitEffectPrefab;
-
-    [Header("Loot System")]
     [SerializeField] private DropItemTable lootTable;
 
     public void OnMine(float power)
     {
         health -= power;
+        GetComponent<HitEffect>().PlayHitFlash();
 
         if (hitEffectPrefab)
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);

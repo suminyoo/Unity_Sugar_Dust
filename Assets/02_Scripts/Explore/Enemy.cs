@@ -181,6 +181,9 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return;
 
         currentHp -= damage;
+        GetComponent<HitEffect>().PlayHitFlash();
+        EffectManager.Instance.PlayEffect(data.hitEffect, transform.position, 1f);
+
         Debug.Log($"HP: {currentHp}");
 
         if (currentHp <= 0)
@@ -200,7 +203,7 @@ public class Enemy : MonoBehaviour, IDamageable
         agent.isStopped = true;
         // animator.SetTrigger("Hit"); 
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         if (!isDead)
         {
@@ -221,11 +224,6 @@ public class Enemy : MonoBehaviour, IDamageable
         GetComponent<Collider>().enabled = false;
 
         // animator.SetTrigger("Die"); 
-
-        if (data.deathEffect != null)
-        {
-            Instantiate(data.deathEffect, transform.position, Quaternion.identity);
-        }
 
         Destroy(gameObject, 2f);
     }

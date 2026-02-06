@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1222488820406699901}
   - component: {fileID: 6850991067882841699}
   - component: {fileID: 2981909198773187936}
+  - component: {fileID: -5914368369734881389}
   m_Layer: 6
   m_Name: SugarDustChunk_2
   m_TagString: Untagged
@@ -118,7 +119,29 @@ MonoBehaviour:
   mineralName: SugarDustChunk2
   health: 150
   hitEffectPrefab: {fileID: 0}
-  lootTable: {fileID: 11400000, guid: d91457606cf204e4fb52e8776e21f34f, type: 2}
+  lootTable: {fileID: 11400000, guid: 448dccbacc349254688581aff1b64242, type: 2}
+--- !u!114 &-5914368369734881389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799571525481591663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74e55ad13062d64fa07fac0c9cd7a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 909510076135909213}
+  - {fileID: 907698298000525013}
+  - {fileID: 909506838629841435}
+  - {fileID: 907776727985923247}
+  - {fileID: 909705966481791937}
+  - {fileID: 909161439636718121}
+  - {fileID: 909291897715132997}
+  flashDuration: 0.2
+  flashIntensity: 5
 --- !u!1001 &922126426739958441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -256,6 +279,41 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+--- !u!23 &907698298000525013 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23863609249080444, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &907776727985923247 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23959486488266246, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &909161439636718121 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23064018852929664, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &909291897715132997 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23214197968365804, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &909506838629841435 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23427018612021426, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &909510076135909213 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23423450667140596, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &909705966481791937 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23610744149293416, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}
+  m_PrefabInstance: {fileID: 922126426739958441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &919818721749373859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4458899494531338, guid: ee88617da51e3e8479a812f9d58a94be, type: 3}

@@ -3643,6 +3643,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Essential]PlayerSystems'
       objectReference: {fileID: 0}
+    - target: {fileID: 3005155421933746466, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 35.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005155421933746466, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005155421933746466, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4988543604152387689, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5693,7 +5705,7 @@ GameObject:
   - component: {fileID: 1025608984}
   - component: {fileID: 1025608983}
   m_Layer: 0
-  m_Name: DamageTextManager
+  m_Name: '[Manager]DamageTextManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12532,9 +12544,9 @@ SceneRoots:
   - {fileID: 1307198476}
   - {fileID: 786815688}
   - {fileID: 275351538}
+  - {fileID: 1025608984}
   - {fileID: 1666746712}
   - {fileID: 1661169972}
   - {fileID: 1500413163}
   - {fileID: 545037110}
   - {fileID: 631926680}
-  - {fileID: 1025608984}

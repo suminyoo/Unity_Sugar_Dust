@@ -31,8 +31,8 @@ public class EnemyData : ScriptableObject
     [Header("SFX")]
     public AudioClip hitSound;
     public AudioClip attackSound;
-    public GameObject detectSound;
-    public GameObject patrolSound;
+    public AudioClip detectSound;
+    public AudioClip patrolSound;
     public AudioClip dieSound;
 
 

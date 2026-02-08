@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour, IDamageable
         EffectManager.Instance.PlayEffect(data.hitEffect, transform.position, 1f);
 
         Vector3 spawnPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
-        DamageTextManager.Instance.ShowDamage(damage, transform.position + Vector3.up, isCritical);
+        DamageTextManager.Instance.ShowDamage(damage, spawnPos, isCritical);
         healthBar.UpdateHealth(currentHp, data.maxHp);
 
         if (currentHp <= 0) Die();
@@ -205,7 +205,7 @@ public class Enemy : MonoBehaviour, IDamageable
         agent.isStopped = true;
         // animator.SetTrigger("Hit"); 
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         if (!isDead)
         {

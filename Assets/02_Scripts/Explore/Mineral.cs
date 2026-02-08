@@ -2,30 +2,46 @@ using UnityEngine;
 
 public class Mineral : MonoBehaviour, IMineable
 {
-    [Header("Settings")]
-    public string mineralName;
-    public float health = 100f;
-    public GameObject hitEffectPrefab;
-    [SerializeField] private DropItemTable lootTable;
+    public MineralData data;
+    public HealthBar healthBar;
 
-    public void OnMine(float power)
+    private float currentHealth;
+
+    void Start()
     {
-        health -= power;
-        GetComponent<HitEffect>().PlayHitFlash();
-
-        if (hitEffectPrefab)
-            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-
-        if (health <= 0)
-            Break();
+        Initialize();
     }
 
-    void Break()
+    public void Initialize()
     {
-        if (lootTable != null)
+        currentHealth = data.maxHealth;
+        healthBar.UpdateHealth(currentHealth, data.maxHealth);
+    }
+
+    public void OnMine(float power, bool isCritical)
+    {
+        if (data == null) return;
+
+        currentHealth -= power;
+
+        DamageTextManager.Instance.ShowDamage(power, transform.position + Vector3.up, isCritical);
+        healthBar.UpdateHealth(currentHealth, data.maxHealth);
+        
+        if (data.hitEffectPrefab != null) Instantiate(data.hitEffectPrefab, transform.position, Quaternion.identity);
+        if (data.mineSound != null) SoundManager.Instance.PlaySFX(data.mineSound, transform.position);
+        
+
+        GetComponent<HitEffect>()?.PlayHitFlash();
+
+        if (currentHealth <= 0)
         {
-            lootTable.SpawnItem(transform.position);
+            DestoryMineral();
         }
+    }
+
+    void DestoryMineral()
+    {
+        if (data.lootTable != null) data.lootTable.SpawnItem(transform.position);
 
         Destroy(gameObject);
     }

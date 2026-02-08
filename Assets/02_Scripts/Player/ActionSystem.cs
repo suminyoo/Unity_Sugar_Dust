@@ -2,8 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public interface IMineable { void OnMine(float power); }
-public interface IDamageable { void TakeDamage(float damage); }
+public interface IMineable { void OnMine(float power, bool isCritical); }
+public interface IDamageable { void TakeDamage(float damage, bool isCritical); }
 
 public class ActionSystem : MonoBehaviour
 {
@@ -15,33 +15,31 @@ public class ActionSystem : MonoBehaviour
 
     [Header("Settings")]
     public Transform firePoint;
-    public float actionRange = 2f;
+    public Transform handHolder;    // 무기가 생성될 손 위치 (부모)
     public LayerMask actionLayer;
 
-    public float attackDamage = 10f;
-    public float miningPower = 20f;
+    [Header("Tool Data")]
+    public ToolData currentSwordData;   // 현재 장착된 검 데이터
+    public ToolData currentPickaxeData; // 현재 장착된 곡괭이 데이터
+    private ToolData activeToolData;    // 현재 행동에 사용될 데이터 캐싱
+    private float currentCooldownTimer = 0f;
 
-    public float attackCooldown = 1f;
-    public float mineCooldown = 1f;
-
-    private float attackTimer = 0f;
-    private float mineTimer = 0f;
-
+    [Header("System Info")]
     private PlayerController playerController;
     private ActionType currentActionType; //현재행동
 
-    public GameObject sword;
-    public GameObject pickaxe;
+    // 생성된 무기 모델을 관리하기 위한 변수
+    private GameObject instantiatedWeaponModel;
+    private ActionType lastEquippedType; // 마지막으로 든 무기 타입을 기억
 
     private bool isActionLocked = false; //입력 차단
-
     private RaycastHit currentHit; // 레이캐스트 결과를 저장할 변수
     private bool hasTarget;        // 타겟이 잡혔는지 여부
 
     void Start()
     {
         playerController = GetComponent<PlayerController>();
-
+        EquipTool(ActionType.Attack);
         InputControlManager.Instance.OnInputStateChanged += (canInput) =>
         {
             isActionLocked = !canInput;
@@ -55,132 +53,152 @@ public class ActionSystem : MonoBehaviour
         // 레이로 물체감지
         UpdateRaycast();
 
-
         HandleActionInput();
         
+    }
+    // 도구 외형 및 데이터 교체 (중요!)
+    // 상점에서 업그레이드 하거나, 공격/채광 모드 전환 시 호출
+    public void EquipTool(ActionType actionType)
+    {
+
+        if (instantiatedWeaponModel != null) Destroy(instantiatedWeaponModel);
+
+        if (actionType == ActionType.Attack)
+            activeToolData = currentSwordData;
+        else
+            activeToolData = currentPickaxeData;
+
+
+        // 생성
+        if (activeToolData != null && activeToolData.toolPrefab != null && handHolder != null)
+        {
+            instantiatedWeaponModel = Instantiate(activeToolData.toolPrefab, handHolder);
+        }
+
+        lastEquippedType = actionType;
     }
 
     // 레이로 타겟 감지 하고 텍스트 변경요청
     void UpdateRaycast()
     {
         if (firePoint == null) return;
+        float range = activeToolData != null ? activeToolData.range : 2f;
 
         Ray ray = new Ray(firePoint.position, firePoint.forward);
 
-        // 레이어 마스크를 통해 적/광물만 걸러냄
-        if (Physics.Raycast(ray, out currentHit, actionRange, actionLayer))
+        // 레이어 마스크
+        if (Physics.Raycast(ray, out currentHit, range, actionLayer))
         {
             hasTarget = true;
 
-            // 적 IDamageable 확인
+            // 적 IDamageable
             if (currentHit.collider.GetComponentInParent<IDamageable>() != null)
             {
                 PromptUIManager.Instance.SetActionPrompt("[LMB] 공격");
             }
-            // 광물 IMineable 확인
+            // 광물 IMineable
             else if (currentHit.collider.GetComponentInParent<IMineable>() != null)
             {
                 PromptUIManager.Instance.SetActionPrompt("[RMB] 채광");
             }
             else
             {
-                // 액션 레이어지만 상호작용 대상 아니면 요청 취소 (미사용
                 PromptUIManager.Instance.ClearActionPrompt();
             }
         }
         else
         {
             hasTarget = false;
-            // 타겟없으면요청 취소
             PromptUIManager.Instance.ClearActionPrompt();
-        }
-    }
-
-    void DrawDebugRay()
-    {
-        if (firePoint == null) return;
-        Ray ray = new Ray(firePoint.position, firePoint.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, actionRange, actionLayer))
-            Debug.DrawLine(ray.origin, hit.point, Color.green);
-        else
-            Debug.DrawRay(ray.origin, ray.direction * actionRange, Color.red);
-    }
-
-    void HandleToolVisibility(ActionType actionType)
-    {
-        switch (actionType)
-        {
-            case ActionType.Attack:
-                sword.SetActive(true);
-                pickaxe.SetActive(false);
-                break;
-
-            case ActionType.Mine:
-                sword.SetActive(false);
-                pickaxe.SetActive(true);
-                break;
         }
     }
 
     void HandleActionInput()
     {
-        // UI 클릭 체크 , 액션 락 체크
         if (isActionLocked) return;
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
-        
 
-        if (attackTimer > 0) attackTimer -= Time.deltaTime;
-        if (mineTimer > 0) mineTimer -= Time.deltaTime;
+        // 쿨타임
+        if (currentCooldownTimer > 0) currentCooldownTimer -= Time.deltaTime;
 
-        // 쿨타임 체크 및 애니메이션 시작 요청만 함
-        if (Input.GetMouseButton(0) && attackTimer <= 0f)
+        // 좌클릭: 공격
+        if (Input.GetMouseButton(0) && currentCooldownTimer <= 0f)
         {
+            if (currentActionType != ActionType.Attack) EquipTool(ActionType.Attack);
+
             StartAction(ActionType.Attack);
-            attackTimer = attackCooldown;
         }
 
-        if (Input.GetMouseButton(1) && mineTimer <= 0f)
+        // 우클릭: 채광
+        if (Input.GetMouseButton(1) && currentCooldownTimer <= 0f)
         {
+            if (currentActionType != ActionType.Mine) EquipTool(ActionType.Mine);
+
             StartAction(ActionType.Mine);
-            mineTimer = mineCooldown;
         }
     }
 
     void StartAction(ActionType actionType)
     {
         currentActionType = actionType;
-        HandleToolVisibility(actionType); //도구 보이기/숨기기
-        playerController.HandleWield(actionType); //플레이어 애니메이션
+
+        // 데이터에서 쿨타임 가져오기
+        currentCooldownTimer = activeToolData != null ? activeToolData.cooldown : 1f;
+
+        playerController.HandleWield(actionType); // 애니메이션 재생
     }
 
+    // 애니메이션 이벤트에서 호출될 실제 실행 함수
     public void ExecuteAction()
     {
-        if (!hasTarget) return;
+        if (!hasTarget || activeToolData == null) return;
 
+        // 치명타 계산 로직
+        bool isCritical = Random.value < activeToolData.criticalChance;
+        float finalDamage = activeToolData.power;
 
-        // TODO: 소리 재생
+        if (isCritical)
+        {
+            finalDamage *= activeToolData.criticalMultiplier;
+        }
 
         switch (currentActionType)
         {
             case ActionType.Attack:
-                IDamageable target = currentHit.collider.GetComponent<IDamageable>();
+                IDamageable target = currentHit.collider.GetComponentInParent<IDamageable>();
                 if (target != null)
                 {
-                    target.TakeDamage(attackDamage);
-                    Debug.Log("공격 적중");
+                    target.TakeDamage(finalDamage, isCritical);
                 }
                 break;
 
             case ActionType.Mine:
-                IMineable mineral = currentHit.collider.GetComponent<IMineable>();
+                IMineable mineral = currentHit.collider.GetComponentInParent<IMineable>();
                 if (mineral != null)
                 {
-                    mineral.OnMine(miningPower);
-                    Debug.Log("채광 성공");
+                    mineral.OnMine(finalDamage, isCritical);
                 }
                 break;
+        }
+    }
+
+    // 디버그 레이 (데이터 범위 반영)
+    void DrawDebugRay()
+    {
+        if (firePoint == null) return;
+        float range = activeToolData != null ? activeToolData.range : 2f;
+        Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.red);
+    }
+
+    // 상점에서 무기 업그레이드 시 호출용
+    public void UpgradeTool(ToolData newToolData, ActionType type)
+    {
+        if (type == ActionType.Attack) currentSwordData = newToolData;
+        else currentPickaxeData = newToolData;
+
+        if (lastEquippedType == type)
+        {
+            EquipTool(type);
         }
     }
 }

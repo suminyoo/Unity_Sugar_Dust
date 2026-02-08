@@ -30,6 +30,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public GameObject attackHitbox;
 
+    [Header("UI")]
+    public HealthBar healthBar;
+    public Transform damageTextPos;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -65,7 +69,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
         spawnPosition = transform.position;
         currentState = EnemyState.Patrol;
-
+        
+        healthBar.UpdateHealth(currentHp, data.maxHp);
         MoveToRandomLocation();
     }
 
@@ -176,24 +181,21 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isCritical)
     {
         if (isDead) return;
 
         currentHp -= damage;
-        GetComponent<HitEffect>().PlayHitFlash();
+
+        GetComponent<HitEffect>()?.PlayHitFlash();
         EffectManager.Instance.PlayEffect(data.hitEffect, transform.position, 1f);
 
-        Debug.Log($"HP: {currentHp}");
+        Vector3 spawnPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
+        DamageTextManager.Instance.ShowDamage(damage, transform.position + Vector3.up, isCritical);
+        healthBar.UpdateHealth(currentHp, data.maxHp);
 
-        if (currentHp <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            StartCoroutine(OnHitRoutine());
-        }
+        if (currentHp <= 0) Die();
+        else StartCoroutine(OnHitRoutine());
     }
 
     IEnumerator OnHitRoutine()

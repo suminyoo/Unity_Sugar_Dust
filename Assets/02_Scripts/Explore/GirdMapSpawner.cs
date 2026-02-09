@@ -27,7 +27,7 @@ public class GridMapSpawner : MonoBehaviour
     private PlayerController playerRef;
 
     [Header("UI")]
-    public GameObject loadingPanel;
+    //public GameObject loadingPanel;
     public TextMeshProUGUI statusText;  // 맵 생성 중 표시 텍스트
 
     private List<Vector2Int> allCoordinates;
@@ -52,9 +52,10 @@ public class GridMapSpawner : MonoBehaviour
     private IEnumerator GenerateMapRoutine(int currentLevel)
     {
         yield return null;
+        yield return FadeUIManager.Instance.FadeOut();
+        FadeUIManager.Instance.SetLoadingIcon(true);
 
         // 로딩 시작 
-        loadingPanel.SetActive(true);
         statusText.text = "맵 로딩중...";
 
         //InputControlManager.Instance.LockInput();
@@ -107,13 +108,13 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
-        // ---로딩 완료---
-        OnMapGenerationComplete?.Invoke();
-
         if (statusText != null) statusText.text = "탐사 준비 완료!";
         yield return new WaitForSeconds(1.0f); //로딩 완료 연출
 
-        if (loadingPanel != null) loadingPanel.SetActive(false);
+        // ---로딩 완료---
+        OnMapGenerationComplete?.Invoke();
+
+        FadeUIManager.Instance.FadeIn();
         //InputControlManager.Instance.UnlockInput(); //매니저에서 하도록
 
     }

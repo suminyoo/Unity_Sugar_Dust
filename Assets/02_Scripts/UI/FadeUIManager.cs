@@ -6,7 +6,9 @@ public class FadeUIManager : MonoBehaviour
     public static FadeUIManager Instance;
 
     public CanvasGroup fadeCanvasGroup;
-    public float defaultFadeDuration = 1.0f;
+
+    public GameObject loadingIcon;
+    private float defaultFadeDuration = 0.5f;
 
     private void Awake()
     {
@@ -23,8 +25,14 @@ public class FadeUIManager : MonoBehaviour
             fadeCanvasGroup.alpha = 0f;
             fadeCanvasGroup.gameObject.SetActive(true); // 혹시 꺼져있을까봐 켬
         }
-    }
 
+        if (loadingIcon != null) loadingIcon.SetActive(false);
+    }
+    public void SetLoadingIcon(bool isActive)
+    {
+        if (loadingIcon != null)
+            loadingIcon.SetActive(isActive);
+    }
     public Coroutine FadeOut(float duration = -1)
     {
         float time = duration < 0 ? defaultFadeDuration : duration;
@@ -33,6 +41,8 @@ public class FadeUIManager : MonoBehaviour
 
     public Coroutine FadeIn(float duration = -1)
     {
+        SetLoadingIcon(false);
+
         float time = duration < 0 ? defaultFadeDuration : duration;
         return StartCoroutine(FadeCor(0f, time)); //투명
     }
@@ -41,15 +51,10 @@ public class FadeUIManager : MonoBehaviour
     {
         InputControlManager.Instance.LockInput();
 
-        if (fadeCanvasGroup == null)
-        {
-            Debug.LogError(" CanvasGroup이 없습니다");
-            yield break;
-        }
-
-        Debug.Log($" 페이드 목표 Alpha: {targetAlpha} / 시간: {duration}초");
+        if (fadeCanvasGroup == null) yield break;
 
         fadeCanvasGroup.blocksRaycasts = true;
+
         float startAlpha = fadeCanvasGroup.alpha;
         float time = 0f;
 

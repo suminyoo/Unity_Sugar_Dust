@@ -49,6 +49,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private int targetProgressCount;
     private int currentProgressCount;
     private float currentSuccessProb;
+    private bool isRetrying = false;
 
     private void OnEnable()
     {
@@ -107,7 +108,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         }
     }
 
-    void LoadStage(int level)
+    void LoadStage(int level, bool isRetry = false)
     {
         // 로딩 중에는 시간 멈춤
         isExploreStarted = false;
@@ -116,6 +117,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
 
         ExploreStageData selectedData = GetStageDataForLevel(level);
+
+        if (!isRetry) currentProgressCount = 0;
 
         CalculateProgressTargetCount(selectedData);
 
@@ -127,7 +130,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
     void CalculateProgressTargetCount(ExploreStageData data)
     {
         targetProgressCount = 0;
-        currentProgressCount = 0;
 
         // 진척도를 위한 광물 개수
         foreach (var info in data.mineralObjects)
@@ -177,7 +179,12 @@ public class ExploreManager : MonoBehaviour, ISaveable
             //player.transform.position = playerSpawnPoint.transform.position;
             player.gameObject.SetActive(true);
             player.OnPlayerDied += OnPlayerDeath;
+        }
 
+        if (isRetrying)
+        {
+            NotificationUIManager.Instance.ShowNotification("복잡한 길 때문에 되돌아왔다…");
+            isRetrying = false;
         }
 
         StartCoroutine(ResumeTimer());
@@ -187,6 +194,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     {
         if (Random.Range(0f, 100f) <= currentSuccessProb)
         {
+            isRetrying = false;
             GoToNextStage();
 
             int lastMax = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
@@ -197,7 +205,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         }
         else
         {
-            NotificationUIManager.Instance.ShowNotification("복잡한 길 때문에 되돌아왔다…");
+            isRetrying = true;
             LoadStage(currentExplorationLevel);
 
         }
@@ -232,33 +240,30 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     public void UpdateExploreStateUI()
     {
-        // 탐사도 점수 (마리당 10점)
-        int score = currentProgressCount * 10;
-
-        // 기본 성공 확률 및 메시지 설정
-        string msg = "아직 길이 헷갈린다…";
-        currentSuccessProb = 10f;
+        float ratio = 0f;
+        if (targetProgressCount > 0)
+            ratio = (float)currentProgressCount / (float)targetProgressCount;
+        else
+            ratio = 1f;
 
         int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+        bool isCleared = currentExplorationLevel < maxLevel;
 
-        if (currentExplorationLevel < maxLevel || (targetProgressCount > 0 && currentProgressCount >= targetProgressCount))
+        if (isCleared || ratio >= 0.7f)
         {
-            msg = "이제 길을 확실히 알 것 같다.";
             currentSuccessProb = 100f;
+            explorePathText.text = "이제 길을 확실히 알 것 같다.";
         }
-        else if (score >= 70)
+        else if (ratio >= 0.4f)
         {
-            msg = "이제 길을 확실히 알 것 같다.";
-            currentSuccessProb = 100f;
-        }
-        else if (score >= 30)
-        {
-            msg = "어느 정도 길이 익숙해졌다.";
             currentSuccessProb = 50f;
+            explorePathText.text = "어느 정도 길이 익숙해졌다.";
         }
-
-        if(exploreLevelText != null)
-            explorePathText.text = msg;
+        else
+        {
+            currentSuccessProb = 10f;
+            explorePathText.text = "아직 길이 헷갈린다…";
+        }
     }
     #endregion
 

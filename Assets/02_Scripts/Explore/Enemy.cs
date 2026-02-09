@@ -227,6 +227,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         // animator.SetTrigger("Die"); 
 
+        ExploreEvents.OnMonsterDefeated?.Invoke();
         Destroy(gameObject, 2f);
     }
 

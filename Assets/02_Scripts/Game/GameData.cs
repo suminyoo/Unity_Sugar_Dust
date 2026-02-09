@@ -8,18 +8,18 @@ public class GameData
     public float currentStamina = 50f;
 
     // 탐사
-    public int explorationLevel = 1;
+    public int exploreMaxUnlockedLevel;
 
     // 자산
     public int money;
     public List<string> ownedKeyItems = new List<string>(); // 특수 아이템(업그레이드 등)
 
     // 플레이어 인벤토리
-    public int inventorySize;
+    public int inventorySizeLevel;
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
     //상점 진열대
-    public int displayStandSize; 
+    public int displayStandSizeLevel; 
     public List<InventorySlot> displayStandSlots = new List<InventorySlot>();
     public List<int> displayStandPrices = new List<int>(); //진열대 별 가격
 
@@ -35,16 +35,16 @@ public class GameData
         currentHp = maxHp;
         currentStamina = maxStamina;
 
-        explorationLevel = 1;
+        exploreMaxUnlockedLevel = 0;
 
         money = 1000; //돈 초기 금액
 
-        inventorySize = invSize;
+        inventorySizeLevel = invSize;
         inventorySlots.Clear();
         inventorySlots = new List<InventorySlot>();
         for (int i = 0; i < invSize; i++) inventorySlots.Add(new InventorySlot());
 
-        displayStandSize = dsSize;
+        displayStandSizeLevel = dsSize;
         displayStandSlots.Clear();
         displayStandPrices.Clear();
         displayStandSlots = new List<InventorySlot>();

@@ -16,9 +16,9 @@ public class GridMapSpawner : MonoBehaviour
     public NavMeshSurface navSurface;
 
     [Header("Objects")]
-    private List<ExploreObjectData> currentMapObjects;
-    private List<ExploreObjectData> currentMineralObjects;
-    private List<ExploreObjectData> currentEnemyObjects;
+    private List<SpawnInfo> currentMapObjects;
+    private List<SpawnInfo> currentMineralObjects;
+    private List<SpawnInfo> currentEnemyObjects;
 
     public Transform landingSpotSpawnPoint;
     public GameObject landingSpotPrefab;
@@ -74,9 +74,9 @@ public class GridMapSpawner : MonoBehaviour
         // ---맵 오브젝트 배치---
         if (currentMapObjects != null)
         {
-            foreach (var objData in currentMapObjects)
+            foreach (var info in currentMapObjects)
             {
-                SpawnObject(objData);
+                SpawnObject(info.objectData, info.spawnCount);
                 yield return null;
             }
         }
@@ -84,9 +84,9 @@ public class GridMapSpawner : MonoBehaviour
         // --- 광물 배치 ---
         if (currentMineralObjects != null)
         {
-            foreach (var objData in currentMineralObjects)
+            foreach (var info in currentMineralObjects)
             {
-                SpawnObject(objData);
+                SpawnObject(info.objectData, info.spawnCount);
                 yield return null;
             }
         }
@@ -100,9 +100,9 @@ public class GridMapSpawner : MonoBehaviour
         //---적 배치---
         if (currentEnemyObjects != null)
         {
-            foreach (var objData in currentEnemyObjects)
+            foreach (var info in currentEnemyObjects)
             {
-                SpawnObject(objData);
+                SpawnObject(info.objectData, info.spawnCount);
                 yield return null;
             }
         }
@@ -187,7 +187,7 @@ public class GridMapSpawner : MonoBehaviour
         ground.transform.localPosition = new Vector3(totalWidth * 0.5f, 0f, totalHeight * 0.5f);
     }
 
-    void SpawnObject(ExploreObjectData data)
+    void SpawnObject(ExploreObjectData data, int count)
     {
         if (data.prefab == null) return;
         int spawnedCount = 0;
@@ -196,7 +196,7 @@ public class GridMapSpawner : MonoBehaviour
 
         foreach (Vector2Int cor in allCoordinates)
         {
-            if (spawnedCount >= data.spawnCount) break;
+            if (spawnedCount >= count) break;
 
             int x = cor.x;
             int y = cor.y;
@@ -210,9 +210,9 @@ public class GridMapSpawner : MonoBehaviour
                 spawnedCount++;
             }
         }
-        if (spawnedCount < data.spawnCount)
+        if (spawnedCount < count)
         {
-            Debug.Log($"공간이 부족하여 {data.objectName} {data.spawnCount - spawnedCount}개를 배치하지 못했습니다.");
+            Debug.Log($"공간이 부족하여 {data.objectName} {count - spawnedCount}개를 배치하지 못했습니다.");
         }
     
 

@@ -18,9 +18,6 @@ public class ExploreObjectData : ScriptableObject
     [Header("Grid Setting")]
     public Vector2Int size = new Vector2Int(1, 1);
 
-    [Header("Spawn Setting")]
-    public int spawnCount = 5;
-
     [Header("Variation")]
     [Tooltip("회전 방식을 선택하세요")]
     public RotationType rotationType = RotationType.RandomFull;

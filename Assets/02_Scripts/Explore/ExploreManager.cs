@@ -3,10 +3,16 @@ using TMPro;
 using System.Collections.Generic;
 using System.Collections;
 
+public static class ExploreEvents
+{
+    public static System.Action OnMonsterDefeated;
+    public static System.Action OnMineralDestroyed;
+}
+
 public class ExploreManager : MonoBehaviour, ISaveable
 {
     [Header("Exploration Data")]
-    public int currentLevel;
+    public int currentExplorationLevel;
     public List<ExploreStageData> stageProfiles; // 레벨별 스테이지 데이터 리스트
 
     [Header("Exploration Settings")]
@@ -25,7 +31,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     [Header("UI")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI exploreLevelText;
-    public TextMeshProUGUI explorePathFamiliarityText;
+    public TextMeshProUGUI explorePathText;
 
     [Header("Result")]
     public GameObject resultUIPanel;
@@ -39,6 +45,28 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     private List<InventorySlot> lostItemsList;
 
+    [Header("Exploration Logic")]
+    private int targetProgressCount;
+    private int currentProgressCount;
+    private float currentSuccessProb;
+
+    private void OnEnable()
+    {
+        ExploreEvents.OnMonsterDefeated += AddExplorationProgress;
+        ExploreEvents.OnMineralDestroyed += AddExplorationProgress;
+    }
+
+    void OnDisable()
+    {
+        ExploreEvents.OnMonsterDefeated -= AddExplorationProgress;
+        ExploreEvents.OnMineralDestroyed -= AddExplorationProgress;
+
+        ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
+        ExploreToTownPoint.OnPlayerReturnToTown -= ExploreSuccess;
+
+        player.OnPlayerDied -= OnPlayerDeath;
+        mapSpawner.OnMapGenerationComplete -= OnMapReady;
+    }
 
     void Start()
     {
@@ -55,92 +83,12 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         // 저장된 레벨 불러오기
         if (GameSaveManager.Instance != null)
-            currentLevel = GameSaveManager.Instance.LoadExploreLevel();
+            currentExplorationLevel = GameSaveManager.Instance.LoadSelectedExploreLevel();
         else
-            currentLevel = 1; 
+            currentExplorationLevel = 1; 
         
 
-        LoadStage(currentLevel);
-    }
-
-    void LoadStage(int level)
-    {
-        // 로딩 중에는 시간 멈춤
-        isExploreStarted = false;
-        InputControlManager.Instance.LockInput();
-
-        exploreLevelText.text = $"탐사 구역 {currentLevel:00}";
-
-        ExploreStageData selectedData = GetStageDataForLevel(level);
-        mapSpawner.InitAndGenerateMap(selectedData, level, player);
-    }
-
-    ExploreStageData GetStageDataForLevel(int level)
-    {
-        // 우선 20레벨마다 데이터가 바뀜
-        // index 0: 1~19 / index 1: 20~39
-        int index = (level - 1) / 20;
-
-        if (stageProfiles != null && index < stageProfiles.Count)
-        {
-            return stageProfiles[index];
-        }
-
-        // 데이터가 모자라면 마지막 데이터 사용
-        if (stageProfiles.Count > 0) return stageProfiles[stageProfiles.Count - 1];
-
-        return null;
-    }
-
-    void OnDestroy()
-    {
-        ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
-        ExploreToTownPoint.OnPlayerReturnToTown -= ExploreSuccess;
-
-        player.OnPlayerDied -= OnPlayerDeath;
-        mapSpawner.OnMapGenerationComplete -= OnMapReady;
-    }
-
-    void OnMapReady()
-    {
-        Debug.Log("맵 준비 완료 신호 수신");
-
-        if (player != null)
-        {
-            PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
-            //player.transform.position = playerSpawnPoint.transform.position;
-            player.gameObject.SetActive(true);
-            player.OnPlayerDied += OnPlayerDeath;
-
-        }
-
-        StartCoroutine(ResumeTimer());
-    }
-    IEnumerator ResumeTimer()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        isExploreStarted = true;
-
-        InputControlManager.Instance.UnlockInput();
-    }
-
-    public void GoToNextStage()
-    {
-        currentLevel++;
-        //Debug.Log($"다음 스테이지로 이동합니다. 현재 레벨: {currentLevel}");
-
-        isExploreStarted = false;
-
-        player.gameObject.SetActive(false);
-
-        LoadStage(currentLevel);
-    }
-
-    void OnPlayerDeath()
-    {
-        if (isExplorationEnded) return;
-        ExploreFail(false);
+        LoadStage(currentExplorationLevel);
     }
 
     void Update()
@@ -159,6 +107,115 @@ public class ExploreManager : MonoBehaviour, ISaveable
         }
     }
 
+    void LoadStage(int level)
+    {
+        // 로딩 중에는 시간 멈춤
+        isExploreStarted = false;
+        InputControlManager.Instance.LockInput();
+
+        exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
+
+        ExploreStageData selectedData = GetStageDataForLevel(level);
+
+        CalculateProgressTargetCount(selectedData);
+
+        mapSpawner.InitAndGenerateMap(selectedData, level, player);
+
+        UpdateExploreStateUI();
+    }
+
+    void CalculateProgressTargetCount(ExploreStageData data)
+    {
+        targetProgressCount = 0;
+        currentProgressCount = 0;
+
+        // 진척도를 위한 광물 개수
+        foreach (var info in data.mineralObjects)
+            targetProgressCount += info.spawnCount;
+
+        // 진척도를 위한 적 개수
+        foreach (var info in data.enemyObjects)
+            targetProgressCount += info.spawnCount;
+
+        int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+        if (currentExplorationLevel < maxLevel)
+        {
+            currentProgressCount = targetProgressCount;
+        }
+    }
+
+    public void AddExplorationProgress()
+    {
+        currentProgressCount++;
+        UpdateExploreStateUI();
+    }
+
+    ExploreStageData GetStageDataForLevel(int level)
+    {
+        // 우선 5레벨마다 데이터가 바뀜
+        // index 0: 1~19 / index 1: 20~39
+        int index = (level - 1) / 5;
+
+        if (stageProfiles != null && index < stageProfiles.Count)
+        {
+            return stageProfiles[index];
+        }
+
+        // 데이터가 모자라면 마지막 데이터 사용
+        if (stageProfiles.Count > 0) return stageProfiles[stageProfiles.Count - 1];
+
+        return null;
+    }
+
+    void OnMapReady()
+    {
+        Debug.Log("맵 준비 완료 신호 수신");
+
+        if (player != null)
+        {
+            PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
+            //player.transform.position = playerSpawnPoint.transform.position;
+            player.gameObject.SetActive(true);
+            player.OnPlayerDied += OnPlayerDeath;
+
+        }
+
+        StartCoroutine(ResumeTimer());
+    }
+
+    public void AttemptMoveToNextStage()
+    {
+        if (Random.Range(0f, 100f) <= currentSuccessProb)
+        {
+            GoToNextStage();
+
+            int lastMax = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+            if (currentExplorationLevel > lastMax)
+            {
+                GameSaveManager.Instance.SaveExploreMaxUnlockedLevel(currentExplorationLevel);
+            }
+        }
+        else
+        {
+            NotificationUIManager.Instance.ShowNotification("복잡한 길 때문에 되돌아왔다…");
+            LoadStage(currentExplorationLevel);
+
+        }
+    }
+    public void GoToNextStage()
+    {
+        currentExplorationLevel++;
+        //Debug.Log($"다음 스테이지로 이동합니다. 현재 레벨: {currentLevel}");
+
+        isExploreStarted = false;
+
+        player.gameObject.SetActive(false);
+
+        LoadStage(currentExplorationLevel);
+    }
+
+    #region UI
+
     public void UpdateTimeUI()
     {
         //시간 감소
@@ -175,10 +232,43 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     public void UpdateExploreStateUI()
     {
-        //Todo: 탐사 진척도에 따른 UI 업데이트
-        //explorePathFamiliarityText.text;
-    }
+        // 탐사도 점수 (마리당 10점)
+        int score = currentProgressCount * 10;
 
+        // 기본 성공 확률 및 메시지 설정
+        string msg = "아직 길이 헷갈린다…";
+        currentSuccessProb = 10f;
+
+        int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+
+        if (currentExplorationLevel < maxLevel || (targetProgressCount > 0 && currentProgressCount >= targetProgressCount))
+        {
+            msg = "이제 길을 확실히 알 것 같다.";
+            currentSuccessProb = 100f;
+        }
+        else if (score >= 70)
+        {
+            msg = "이제 길을 확실히 알 것 같다.";
+            currentSuccessProb = 100f;
+        }
+        else if (score >= 30)
+        {
+            msg = "어느 정도 길이 익숙해졌다.";
+            currentSuccessProb = 50f;
+        }
+
+        if(exploreLevelText != null)
+            explorePathText.text = msg;
+    }
+    #endregion
+
+    #region Result 
+
+    void OnPlayerDeath()
+    {
+        if (isExplorationEnded) return;
+        ExploreFail(false);
+    }
 
     void ShowResultItems()
     {
@@ -294,21 +384,28 @@ public class ExploreManager : MonoBehaviour, ISaveable
         }
     }
 
-    public float GetCurrentTime()
+    #endregion
+
+    #region Timer
+    IEnumerator ResumeTimer()
     {
-        return currentTime;
+        yield return new WaitForSeconds(1.0f);
+
+        isExploreStarted = true;
+
+        InputControlManager.Instance.UnlockInput();
     }
 
-    public float GetTimeLimit()
-    {
-        return timeLimit;
-    }
+    public float GetCurrentTime() => currentTime;
+    public float GetTimeLimit() => timeLimit;
+
+    #endregion 
 
     public void SaveData()
     {
         if (GameSaveManager.Instance != null)
         {
-            GameSaveManager.Instance.SaveExploreLevel(currentLevel);
+            GameSaveManager.Instance.SaveExploreMaxUnlockedLevel(currentExplorationLevel);
         }
     }
 }

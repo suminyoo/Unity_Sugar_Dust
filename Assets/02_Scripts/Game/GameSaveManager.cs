@@ -10,17 +10,16 @@ public class GameSaveManager : MonoBehaviour
 {
     public static GameSaveManager Instance;
     public PlayerData playerData;
+    private int selectedExploreLevel;
 
     // 씬이 넘어가도 살아있는 데이터 보관함
     public GameData savedData = new GameData();
-    public int currentLevel = 1;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-
             InitData();
         }
         else
@@ -103,7 +102,7 @@ public class GameSaveManager : MonoBehaviour
     
     public (int size, List<InventorySlot> slots) LoadPlayerInventory()
     {
-        return (savedData.inventorySize, savedData.inventorySlots);
+        return (savedData.inventorySizeLevel, savedData.inventorySlots);
     }
     #endregion
 
@@ -133,7 +132,7 @@ public class GameSaveManager : MonoBehaviour
     
     public (int size, List<InventorySlot> slots, List<int> prices) LoadDisplayStand()
     {
-        return (savedData.displayStandSize, savedData.displayStandSlots, savedData.displayStandPrices);
+        return (savedData.displayStandSizeLevel, savedData.displayStandSlots, savedData.displayStandPrices);
     }
 
     #endregion
@@ -182,15 +181,28 @@ public class GameSaveManager : MonoBehaviour
 
     #region 탐사 레벨 세이브 로드
 
-    public void SaveExploreLevel(int level)
+    public void SaveSelectedExploreLevel(int level)
     {
-        savedData.explorationLevel = level;
-        Debug.Log($"[SaveManager] 탐사 레벨 저장됨: {level}");
+        selectedExploreLevel = level;
+        Debug.Log($"[GameManager] 탐사 시도 레벨 설정: {level}");
     }
 
-    public int LoadExploreLevel()
+    public int LoadSelectedExploreLevel()
     {
-        return savedData.explorationLevel;
+        return selectedExploreLevel;
+    }
+
+    public void SaveExploreMaxUnlockedLevel(int level)
+    {
+        if (level > savedData.exploreMaxUnlockedLevel)
+        {
+            savedData.exploreMaxUnlockedLevel = level;
+        }
+    }
+
+    public int LoadExploreMaxUnlockedLevel()
+    {
+        return savedData.exploreMaxUnlockedLevel;
     }
 
     #endregion

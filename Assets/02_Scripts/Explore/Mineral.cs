@@ -44,7 +44,7 @@ public class Mineral : MonoBehaviour, IMineable
     void DestoryMineral()
     {
         if (data.lootTable != null) data.lootTable.SpawnItem(transform.position);
-
+        ExploreEvents.OnMineralDestroyed?.Invoke();
         Destroy(gameObject);
     }
 }

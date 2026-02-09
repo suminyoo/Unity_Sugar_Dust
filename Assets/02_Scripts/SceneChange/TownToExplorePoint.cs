@@ -6,15 +6,16 @@ public class TownToExplorePoint : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        // 팝업을 열면서 메시지와 할 일(람다식) 전달
+        int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+
+        // 테스트용:s 지금은 일단 최고 레벨로 가게 설정
         CommonConfirmPopup.Instance.OpenPopup(
-            "탐사를 시작하시겠습니까?",
+            $"{maxLevel:00} 구역 탐사를 시작하시겠습니까?",
             () => {
-                Debug.Log("탐사로 이동 중...");
+                GameSaveManager.Instance.SaveSelectedExploreLevel(1);
                 SceneController.Instance.ChangeScene(SCENE_NAME.EXPLORE, SPAWN_ID.EXPLORE_START);
-                //OnPlayerGoExplore?.Invoke();
             }
-        );
+        ); ;
     }
 
     public string GetInteractPrompt() => "[E] 우주선 타기";

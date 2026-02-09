@@ -14,7 +14,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
             {
                 if (exploreManager != null)
                 {
-                    exploreManager.GoToNextStage();
+                    exploreManager.AttemptMoveToNextStage();
                 }
                 else
                 {

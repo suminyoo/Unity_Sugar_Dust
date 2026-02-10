@@ -18,8 +18,8 @@ public class GridMapSpawner : MonoBehaviour
     public List<GameObject> preLoadedMapEnvironments;
     private GameObject groundPrefab;
     private List<SpawnInfo> currentMapObjects;
-    private List<SpawnInfo> currentMineralObjects;
-    private List<SpawnInfo> currentEnemyObjects;
+    private List<DynamicSpawnInfo> currentMineralObjects;
+    private List<DynamicSpawnInfo> currentEnemyObjects;
 
     public Transform landingSpotSpawnPoint;
     public GameObject landingSpotPrefab;
@@ -37,7 +37,7 @@ public class GridMapSpawner : MonoBehaviour
     private bool[,] gridMap;
 
 
-    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int environmentInterval)
+    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int levelsPerStageData, int levelsPerEnvironment)
     {
         this.groundPrefab = stageData.groundObject;
         this.currentMapObjects = stageData.mapObjects;
@@ -47,10 +47,10 @@ public class GridMapSpawner : MonoBehaviour
         this.playerRef = player;
 
         StopAllCoroutines();
-        StartCoroutine(GenerateMapRoutine(currentLevel, environmentInterval));
+        StartCoroutine(GenerateMapRoutine(currentLevel, levelsPerStageData, levelsPerEnvironment));
     }
 
-    private IEnumerator GenerateMapRoutine(int currentLevel, int environmentInterval)
+    private IEnumerator GenerateMapRoutine(int currentLevel, int levelsPerStageData, int levelsPerEnvironment)
     {
         yield return null;
         yield return FadeUIManager.Instance.FadeOut();
@@ -68,7 +68,7 @@ public class GridMapSpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);  //¿¬Ãâ¿ë Áö¿¬
 
         // ---¸Ê »ý¼º---
-        GenerateWorld(currentLevel, environmentInterval);
+        GenerateWorld(currentLevel, levelsPerEnvironment);
         yield return null;
 
         // --- Âø·úÀå ¹èÄ¡ ---
@@ -85,12 +85,15 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
+        int localLevelIndex = (currentLevel - 1) % levelsPerStageData + 1;
+
         // --- ±¤¹° ¹èÄ¡ ---
         if (currentMineralObjects != null)
         {
             foreach (var info in currentMineralObjects)
             {
-                SpawnObject(info.objectData, info.spawnCount);
+                int count = Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
+                SpawnObject(info.objectData, count);
                 yield return null;
             }
         }
@@ -106,7 +109,8 @@ public class GridMapSpawner : MonoBehaviour
         {
             foreach (var info in currentEnemyObjects)
             {
-                SpawnObject(info.objectData, info.spawnCount);
+                int count = Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
+                SpawnObject(info.objectData, count);
                 yield return null;
             }
         }

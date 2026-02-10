@@ -125,7 +125,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         CalculateProgressTargetCount(selectedData);
 
-        mapSpawner.InitAndGenerateMap(selectedData, level, player, levelsPerEnvironment);
+        mapSpawner.InitAndGenerateMap(selectedData, level, player, levelsPerStageData, levelsPerEnvironment);
 
         //UpdateExploreStateUI();
     }
@@ -133,14 +133,14 @@ public class ExploreManager : MonoBehaviour, ISaveable
     void CalculateProgressTargetCount(ExploreStageData data)
     {
         targetProgressCount = 0;
+        int localLevelIndex = (currentExplorationLevel - 1) % levelsPerStageData + 1;
 
         // 진척도를 위한 광물 개수
         foreach (var info in data.mineralObjects)
-            targetProgressCount += info.spawnCount;
-
+            targetProgressCount += Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
         // 진척도를 위한 적 개수
         foreach (var info in data.enemyObjects)
-            targetProgressCount += info.spawnCount;
+            targetProgressCount += Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
 
         int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
         if (currentExplorationLevel < maxLevel)

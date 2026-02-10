@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ES_ExploreStage_5
   m_EditorClassIdentifier: 
   stageName: "\uD0D0\uC0AC\uC9C0\uC5ED 5"
+  groundObject: {fileID: 0}
   mapObjects:
   - objectData: {fileID: 11400000, guid: 7c89ac6a5f1a7414da8c9c592d5941a9, type: 2}
     spawnCount: 4
@@ -54,7 +55,53 @@ MonoBehaviour:
     spawnCount: 2
   mineralObjects:
   - objectData: {fileID: 11400000, guid: 6f74f9c5d3d3b2b4ca661964f1213262, type: 2}
-    spawnCount: 5
+    spawnRateCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 5
+        inSlope: 0.71428573
+        outSlope: 0.71428573
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 15
+        value: 15
+        inSlope: 0.71428573
+        outSlope: 0.71428573
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   enemyObjects:
-  - objectData: {fileID: 11400000, guid: eb49aca498024774c8b0a97f12009df0, type: 2}
-    spawnCount: 5
+  - objectData: {fileID: 11400000, guid: 3af6632ce332b8941b96d3b4b9dacee4, type: 2}
+    spawnRateCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 5
+        inSlope: 0.71428573
+        outSlope: 0.71428573
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 15
+        value: 15
+        inSlope: 0.71428573
+        outSlope: 0.71428573
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

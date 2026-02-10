@@ -31,7 +31,7 @@ public class FadeUIManager : MonoBehaviour
     {
         fadeRequestCount++;
 
-        // [핵심] 최초 요청 시에만 인풋을 잠급니다.
+        // 최초 요청 시에만 인풋 잠그기
         if (fadeRequestCount == 1)
         {
             InputControlManager.Instance.LockInput();
@@ -51,7 +51,7 @@ public class FadeUIManager : MonoBehaviour
 
         if (loadingIcon != null) loadingIcon.SetActive(false);
 
-        // [핵심] 마지막 요청일 때만 페이드 인 애니메이션을 실행하고 인풋을 해제합니다.
+        // 마지막 요청일 때만 페이드 인 애니메이션을 실행하고 인풋 해제
         if (fadeRequestCount == 0)
         {
             if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
@@ -79,11 +79,11 @@ public class FadeUIManager : MonoBehaviour
 
         fadeCanvasGroup.alpha = targetAlpha;
 
-        // [핵심] 페이드 인(0f)이 완전히 끝난 시점에만 인풋과 레이캐스트를 해제합니다.
+        // 페이드 인이 완전히 끝난 시점에만 인풋과 레이캐스트를 해제
         if (targetAlpha == 0f)
         {
             fadeCanvasGroup.blocksRaycasts = false;
-            InputControlManager.Instance.UnlockInput(); // 여기서 확실히 해제
+            InputControlManager.Instance.UnlockInput();
         }
 
         currentFadeCoroutine = null;

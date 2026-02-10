@@ -12,7 +12,7 @@ public class TownToExplorePoint : MonoBehaviour, IInteractable
         CommonConfirmPopup.Instance.OpenPopup(
             $"{maxLevel:00} 구역 탐사를 시작하시겠습니까?",
             () => {
-                GameSaveManager.Instance.SaveSelectedExploreLevel(1);
+                GameSaveManager.Instance.SaveSelectedExploreLevel(31);
                 SceneController.Instance.ChangeScene(SCENE_NAME.EXPLORE, SPAWN_ID.EXPLORE_START);
             }
         ); ;

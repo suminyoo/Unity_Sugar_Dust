@@ -12,13 +12,16 @@ public static class ExploreEvents
 public class ExploreManager : MonoBehaviour, ISaveable
 {
     [Header("Exploration Data")]
-    public int currentExplorationLevel;
     public List<ExploreStageData> stageProfiles; // 레벨별 스테이지 데이터 리스트
+    public int currentExplorationLevel;
+
 
     [Header("Exploration Settings")]
     public float timeLimit = 300f;
-    private float currentTime;
+    public int levelsPerStageData = 15;    // 스테이지 데이터 변경 주기
+    public int levelsPerEnvironment = 30;  // 월드 배경 변경 주기
 
+    private float currentTime;
     private bool isExplorationEnded = false;
     private bool isExploreStarted = false;
     private bool isExploreSuccess = false;
@@ -114,7 +117,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isExploreStarted = false;
         InputControlManager.Instance.LockInput();
 
-        exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
+        //exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
 
         ExploreStageData selectedData = GetStageDataForLevel(level);
 
@@ -122,9 +125,9 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         CalculateProgressTargetCount(selectedData);
 
-        mapSpawner.InitAndGenerateMap(selectedData, level, player);
+        mapSpawner.InitAndGenerateMap(selectedData, level, player, levelsPerEnvironment);
 
-        UpdateExploreStateUI();
+        //UpdateExploreStateUI();
     }
 
     void CalculateProgressTargetCount(ExploreStageData data)
@@ -149,14 +152,12 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public void AddExplorationProgress()
     {
         currentProgressCount++;
-        UpdateExploreStateUI();
+        UpdateExploreProgressUI();
     }
 
     ExploreStageData GetStageDataForLevel(int level)
     {
-        // 우선 5레벨마다 데이터가 바뀜
-        // index 0: 1~19 / index 1: 20~39
-        int index = (level - 1) / 5;
+        int index = (level - 1) / levelsPerStageData;
 
         if (stageProfiles != null && index < stageProfiles.Count)
         {
@@ -172,7 +173,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
     void OnMapReady()
     {
         Debug.Log("맵 준비 완료 신호 수신");
-
+        exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
+        UpdateExploreProgressUI();
         if (player != null)
         {
             PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
@@ -216,9 +218,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
         //Debug.Log($"다음 스테이지로 이동합니다. 현재 레벨: {currentLevel}");
 
         isExploreStarted = false;
-
-        player.gameObject.SetActive(false);
-
         LoadStage(currentExplorationLevel);
     }
 
@@ -238,7 +237,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         }
     }
 
-    public void UpdateExploreStateUI()
+    public void UpdateExploreProgressUI()
     {
         float ratio = 0f;
         if (targetProgressCount > 0)

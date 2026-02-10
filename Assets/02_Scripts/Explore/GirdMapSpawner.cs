@@ -15,7 +15,7 @@ public class GridMapSpawner : MonoBehaviour
     public NavMeshSurface navSurface;
 
     [Header("Objects")]
-    private GameObject worldPrefab;
+    public List<GameObject> preLoadedMapEnvironments;
     private GameObject groundPrefab;
     private List<SpawnInfo> currentMapObjects;
     private List<SpawnInfo> currentMineralObjects;
@@ -29,7 +29,7 @@ public class GridMapSpawner : MonoBehaviour
 
     [Header("UI")]
     //public GameObject loadingPanel;
-    public TextMeshProUGUI statusText;  // 맵 생성 중 표시 텍스트
+    //public TextMeshProUGUI statusText;  // 맵 생성 중 표시 텍스트
 
     private List<Vector2Int> allCoordinates;
 
@@ -37,9 +37,8 @@ public class GridMapSpawner : MonoBehaviour
     private bool[,] gridMap;
 
 
-    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player)
+    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int environmentInterval)
     {
-        this.worldPrefab = stageData.worldObject;
         this.groundPrefab = stageData.groundObject;
         this.currentMapObjects = stageData.mapObjects;
         this.currentMineralObjects = stageData.mineralObjects;
@@ -47,19 +46,20 @@ public class GridMapSpawner : MonoBehaviour
 
         this.playerRef = player;
 
-        CleanupMap();
         StopAllCoroutines();
-        StartCoroutine(GenerateMapRoutine(currentLevel));
+        StartCoroutine(GenerateMapRoutine(currentLevel, environmentInterval));
     }
 
-    private IEnumerator GenerateMapRoutine(int currentLevel)
+    private IEnumerator GenerateMapRoutine(int currentLevel, int environmentInterval)
     {
         yield return null;
         yield return FadeUIManager.Instance.FadeOut();
         //FadeUIManager.Instance.SetLoadingIcon(true);
 
         // 로딩 시작 
-        statusText.text = "맵 로딩중...";
+        //statusText.text = "맵 로딩중...";
+
+        CleanupMap();
 
         //InputControlManager.Instance.LockInput();
 
@@ -68,7 +68,7 @@ public class GridMapSpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);  //연출용 지연
 
         // ---맵 생성---
-        GenerateWorld();
+        GenerateWorld(currentLevel, environmentInterval);
         yield return null;
 
         // --- 착륙장 배치 ---
@@ -111,7 +111,7 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
-        if (statusText != null) statusText.text = "탐사 준비 완료!";
+        //if (statusText != null) statusText.text = "탐사 준비 완료!";
         yield return new WaitForSeconds(1.0f); //로딩 완료 연출
 
         // ---로딩 완료---
@@ -167,11 +167,33 @@ public class GridMapSpawner : MonoBehaviour
         }
     }
 
-    void GenerateWorld()
+    void GenerateWorld(int currentLevel, int environmentInterval)
     {
-        if (worldPrefab == null) return;
-        GameObject world = Instantiate(worldPrefab, transform);
-        world.name = "Exploration_World";
+        
+        if (preLoadedMapEnvironments == null || preLoadedMapEnvironments.Count == 0) return;
+        
+        int worldIndex = (currentLevel - 1) / environmentInterval;
+        worldIndex = Mathf.Clamp(worldIndex, 0, preLoadedMapEnvironments.Count - 1);
+
+
+        for (int i = 0; i < preLoadedMapEnvironments.Count; i++)
+        {
+            if (i == worldIndex)
+            {
+                if (!preLoadedMapEnvironments[i].activeSelf)
+                {
+                    preLoadedMapEnvironments[i].SetActive(true);
+
+                }
+            }
+            else
+            {
+                if (preLoadedMapEnvironments[i].activeSelf)
+                {
+                    preLoadedMapEnvironments[i].SetActive(false);
+                }
+            }
+        }
 
         if (groundPrefab == null) return;
 

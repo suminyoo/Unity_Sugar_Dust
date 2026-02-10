@@ -8,7 +8,7 @@ public class GameData
     public float currentStamina = 50f;
 
     // Å½»ç
-    public int exploreMaxUnlockedLevel;
+    public int exploreMaxUnlockedLevel = 1;
 
     // ÀÚ»ê
     public int money;
@@ -35,7 +35,7 @@ public class GameData
         currentHp = maxHp;
         currentStamina = maxStamina;
 
-        exploreMaxUnlockedLevel = 0;
+        exploreMaxUnlockedLevel = 1;
 
         money = 1000; //µ· ÃÊ±â ±Ý¾×
 

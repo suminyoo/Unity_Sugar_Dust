@@ -4,83 +4,93 @@ using System.Collections;
 public class FadeUIManager : MonoBehaviour
 {
     public static FadeUIManager Instance;
-
     public CanvasGroup fadeCanvasGroup;
-
     public GameObject loadingIcon;
     private float defaultFadeDuration = 0.5f;
 
+    private int fadeRequestCount = 0;
+    private Coroutine currentFadeCoroutine; // 현재 실행 중인 코루틴 추적
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else Destroy(gameObject);
 
-        // 연결 확인 로그
-        if (fadeCanvasGroup == null)
-        {
-            Debug.LogError("Fade Canvas Group이 연결되지 않았습니다");
-        }
-        else
+        if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.alpha = 0f;
-            fadeCanvasGroup.gameObject.SetActive(true); // 혹시 꺼져있을까봐 켬
+            fadeCanvasGroup.gameObject.SetActive(true);
         }
+    }
 
-        if (loadingIcon != null) loadingIcon.SetActive(false);
-    }
-    public void SetLoadingIcon(bool isActive)
-    {
-        if (loadingIcon != null)
-            loadingIcon.SetActive(isActive);
-    }
     public Coroutine FadeOut(float duration = -1)
     {
-        float time = duration < 0 ? defaultFadeDuration : duration;
-        return StartCoroutine(FadeCor(1f, time)); // 불투명
+        fadeRequestCount++;
+
+        // [핵심] 최초 요청 시에만 인풋을 잠급니다.
+        if (fadeRequestCount == 1)
+        {
+            InputControlManager.Instance.LockInput();
+
+            if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
+            float time = duration < 0 ? defaultFadeDuration : duration;
+            return currentFadeCoroutine = StartCoroutine(FadeCor(1f, time));
+        }
+
+        return StartCoroutine(EmptyCor());
     }
 
     public Coroutine FadeIn(float duration = -1)
     {
-        SetLoadingIcon(false);
+        fadeRequestCount--;
+        if (fadeRequestCount < 0) fadeRequestCount = 0;
 
-        float time = duration < 0 ? defaultFadeDuration : duration;
-        return StartCoroutine(FadeCor(0f, time)); //투명
+        if (loadingIcon != null) loadingIcon.SetActive(false);
+
+        // [핵심] 마지막 요청일 때만 페이드 인 애니메이션을 실행하고 인풋을 해제합니다.
+        if (fadeRequestCount == 0)
+        {
+            if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
+            float time = duration < 0 ? defaultFadeDuration : duration;
+            return currentFadeCoroutine = StartCoroutine(FadeCor(0f, time));
+        }
+
+        return StartCoroutine(EmptyCor());
     }
 
     private IEnumerator FadeCor(float targetAlpha, float duration)
     {
-        InputControlManager.Instance.LockInput();
-
         if (fadeCanvasGroup == null) yield break;
 
         fadeCanvasGroup.blocksRaycasts = true;
-
         float startAlpha = fadeCanvasGroup.alpha;
         float time = 0f;
 
         while (time < duration)
         {
             time += Time.unscaledDeltaTime;
-            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, time / duration);
-
-            fadeCanvasGroup.alpha = newAlpha;
-
+            fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / duration);
             yield return null;
         }
 
         fadeCanvasGroup.alpha = targetAlpha;
 
+        // [핵심] 페이드 인(0f)이 완전히 끝난 시점에만 인풋과 레이캐스트를 해제합니다.
         if (targetAlpha == 0f)
         {
             fadeCanvasGroup.blocksRaycasts = false;
-            Debug.Log("페이드 인 완료");
-        }
-        else
-        {
-            Debug.Log("페이드 아웃 완료");
+            InputControlManager.Instance.UnlockInput(); // 여기서 확실히 해제
         }
 
-        InputControlManager.Instance.UnlockInput();
+        currentFadeCoroutine = null;
+    }
 
+    private IEnumerator EmptyCor()
+    {
+        yield break;
     }
 }

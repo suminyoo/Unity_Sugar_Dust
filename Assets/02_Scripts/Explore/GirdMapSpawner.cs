@@ -12,10 +12,11 @@ public class GridMapSpawner : MonoBehaviour
     [Header("Map Settings")]
     public Vector2Int mapSize = new Vector2Int(20, 20);
     public float cellSize = 3.0f;
-    public GameObject groundPrefab;
     public NavMeshSurface navSurface;
 
     [Header("Objects")]
+    private GameObject worldPrefab;
+    private GameObject groundPrefab;
     private List<SpawnInfo> currentMapObjects;
     private List<SpawnInfo> currentMineralObjects;
     private List<SpawnInfo> currentEnemyObjects;
@@ -38,6 +39,8 @@ public class GridMapSpawner : MonoBehaviour
 
     public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player)
     {
+        this.worldPrefab = stageData.worldObject;
+        this.groundPrefab = stageData.groundObject;
         this.currentMapObjects = stageData.mapObjects;
         this.currentMineralObjects = stageData.mineralObjects;
         this.currentEnemyObjects = stageData.enemyObjects;
@@ -53,7 +56,7 @@ public class GridMapSpawner : MonoBehaviour
     {
         yield return null;
         yield return FadeUIManager.Instance.FadeOut();
-        FadeUIManager.Instance.SetLoadingIcon(true);
+        //FadeUIManager.Instance.SetLoadingIcon(true);
 
         // 로딩 시작 
         statusText.text = "맵 로딩중...";
@@ -65,7 +68,7 @@ public class GridMapSpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);  //연출용 지연
 
         // ---맵 생성---
-        GenerateGround();
+        GenerateWorld();
         yield return null;
 
         // --- 착륙장 배치 ---
@@ -164,8 +167,12 @@ public class GridMapSpawner : MonoBehaviour
         }
     }
 
-    void GenerateGround()
+    void GenerateWorld()
     {
+        if (worldPrefab == null) return;
+        GameObject world = Instantiate(worldPrefab, transform);
+        world.name = "Exploration_World";
+
         if (groundPrefab == null) return;
 
         // 생성

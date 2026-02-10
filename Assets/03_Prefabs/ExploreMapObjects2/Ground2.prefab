@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2310514774154243031, guid: ef96cffd262e11a4ba5c0aa970ecd5db, type: 3}
+  - {fileID: 2100000, guid: c3a8b7b8d92c3eb43bfaf8c939d001df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5834684218005109920}
   - component: {fileID: 388699070864399098}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Ground2
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -255,7 +255,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2310514774154243031, guid: 8738213648823904fb91aec3cd3a8dca, type: 3}
+  - {fileID: 2100000, guid: c3a8b7b8d92c3eb43bfaf8c939d001df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -338,7 +338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2310514774154243031, guid: dd649952d9bd5fa4582239dd815c670f, type: 3}
+  - {fileID: 2100000, guid: c3a8b7b8d92c3eb43bfaf8c939d001df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,7 +421,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2310514774154243031, guid: 0e4b95c150afb364f94f4f13c9cb2c7e, type: 3}
+  - {fileID: 2100000, guid: 271125ab66405cc4aa34d7f55afd0b46, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -451,6 +451,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6391747296316992210}
     m_Modifications:
+    - target: {fileID: 734675904362641268, guid: f1ca28fd0dd51524890ffa1e108b1a91, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b1d055df0f341b245800925c88b94ef8, type: 2}
     - target: {fileID: 1239311952224540321, guid: f1ca28fd0dd51524890ffa1e108b1a91, type: 3}
       propertyPath: m_Name
       value: SP_Ground01

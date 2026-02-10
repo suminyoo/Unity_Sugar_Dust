@@ -6,6 +6,12 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 
     public string GetInteractPrompt() => "[E] ´õ ±íÀº °÷ Å½»çÇÏ±â";
 
+
+    void Start()
+    {
+        exploreManager = Object.FindAnyObjectByType<ExploreManager>();
+    }
+
     public void OnInteract()
     {
         CommonConfirmPopup.Instance.OpenPopup(

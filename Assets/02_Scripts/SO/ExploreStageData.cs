@@ -17,7 +17,10 @@ public class ExploreStageData : ScriptableObject
     public string stageName = "초원 지대";
 
     [Header("Spawn Objects")]
+    public GameObject worldObject;
+    public GameObject groundObject;
     public List<SpawnInfo> mapObjects;
     public List<SpawnInfo> mineralObjects;
     public List<SpawnInfo> enemyObjects;
+
 }

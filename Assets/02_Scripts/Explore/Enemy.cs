@@ -170,7 +170,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (Time.time - lastAttackTime > data.attackCooldown)
         {
             lastAttackTime = Time.time;
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("Attack1");
         }
 
         float distToPlayer = Vector3.Distance(transform.position, target.position);
@@ -203,7 +203,7 @@ public class Enemy : MonoBehaviour, IDamageable
         EnemyState previousState = currentState;
         currentState = EnemyState.Damaged;
         agent.isStopped = true;
-        // animator.SetTrigger("Hit"); 
+        animator.SetTrigger("Hit"); 
 
         yield return new WaitForSeconds(0.5f);
 
@@ -225,7 +225,7 @@ public class Enemy : MonoBehaviour, IDamageable
         agent.enabled = false;
         GetComponent<Collider>().enabled = false;
 
-        // animator.SetTrigger("Die"); 
+        animator.SetTrigger("Die"); 
 
         ExploreEvents.OnMonsterDefeated?.Invoke();
         Destroy(gameObject, 2f);

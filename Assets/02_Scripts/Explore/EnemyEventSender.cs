@@ -8,12 +8,9 @@ public class EnemyEventSender : MonoBehaviour
     {
         enemy = GetComponentInParent<Enemy>();
     }
-    public void EnableAttackHitBox() => EnableHitBox();
+    public void EnableAttackHitBox() => enemy.EnableAttackHitBox();
 
-    public void DisableAttackHitBox() => DisableHitBox();
+    public void DisableAttackHitBox() => enemy.DisableAttackHitBox();
 
-    private void EnableHitBox() => enemy.EnableAttackHitBox();
-    
-    private void DisableHitBox() => enemy.DisableAttackHitBox();
     
 }

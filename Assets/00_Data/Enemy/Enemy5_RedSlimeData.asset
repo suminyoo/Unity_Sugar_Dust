@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f636f58d8ca8f3419b7a5c98a5ce695, type: 3}
-  m_Name: Enemy_BlueSlimeData
+  m_Name: Enemy5_RedSlimeData
   m_EditorClassIdentifier: 
-  enemyName: "\uD30C\uB791\uC2AC\uB77C\uC784"
-  maxHp: 50
-  moveSpeed: 1.5
-  runSpeed: 3
-  attackDamage: 10
-  attackCooldown: 1.5
-  attackRange: 2
-  detectRange: 8
-  patrolRadius: 8
-  patrolWaitTime: 2
-  hitEffect: {fileID: 3237748116200754267, guid: 783d9e95c2369774f947bf80985408a8, type: 3}
+  enemyName: "\uBD89\uC740\uC2AC\uB77C\uC784"
+  maxHp: 250
+  moveSpeed: 2.5
+  runSpeed: 4
+  attackDamage: 30
+  attackCooldown: 0.8
+  attackRange: 2.3
+  detectRange: 12
+  patrolRadius: 10
+  patrolWaitTime: 1
+  hitEffect: {fileID: 3237748116200754267, guid: 3d490ce6e32f58746b4d6fb15aaa5919, type: 3}
   attackEffect: {fileID: 0}
   detectEffect: {fileID: 0}
   patrolEffect: {fileID: 0}

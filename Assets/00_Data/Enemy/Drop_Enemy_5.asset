@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d976102a3a3cf2f4d8cd84c8a54b49b2, type: 3}
+  m_Name: Drop_Enemy_5
+  m_EditorClassIdentifier: 
+  dropList:
+  - itemPrefab: {fileID: 8874107760562521977, guid: dc90cb42ba780644087b6d87e5d8d992, type: 3}
+    dropChance: 80
+    minAmount: 2
+    maxAmount: 3
+  - itemPrefab: {fileID: 6484329946252748197, guid: 07f88c7dd0ff8e74a9253a75595f641b, type: 3}
+    dropChance: 40
+    minAmount: 1
+    maxAmount: 2
+  - itemPrefab: {fileID: 3247134415341774259, guid: 9c13094b4175e014295e127e377a3e90, type: 3}
+    dropChance: 5
+    minAmount: 1
+    maxAmount: 1
+  spawnRadius: 2

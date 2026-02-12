@@ -129,6 +129,7 @@ public class GridMapSpawner : MonoBehaviour
     // Âø·úÀå ¹èÄ¡
     private void SpawnExitObject(int level)
     {
+        //TODO: Âø·úÀå ¹èÄ¡ ·ÎÁ÷ ¼öÁ¤
         GameObject prefabToSpawn = (level == 1 || level % 5 == 0) ? landingSpotPrefab : defaultLandingSpotPrefab;
         if (prefabToSpawn == null) return;
 

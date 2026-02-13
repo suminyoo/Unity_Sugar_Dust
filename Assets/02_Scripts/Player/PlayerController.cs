@@ -153,16 +153,18 @@ public class PlayerController : MonoBehaviour
         }
 
         // 회전 (액션중, 이동중)
-        isInteracting = Input.GetMouseButton(0) || Input.GetMouseButton(1);
+        //isInteracting = Input.GetMouseButton(0) || Input.GetMouseButton(1);
 
-        if (isInteracting)
-        {
-            LookAtMouse(playerData.actionRotationSpeed);
-        }
-        else if (moveInput != Vector3.zero)
-        {
-            LookAtMoveDirection(playerData.rotationSpeed);
-        }
+        //if (isInteracting)
+        //{
+        //    LookAtMouse(playerData.actionRotationSpeed);
+        //}
+        //else if (moveInput != Vector3.zero)
+        //{
+        //    LookAtMoveDirection(playerData.rotationSpeed);
+        //}
+
+        LookAtMouse(playerData.rotationSpeed);
     }
 
     void UpdateStateAndAnimation()

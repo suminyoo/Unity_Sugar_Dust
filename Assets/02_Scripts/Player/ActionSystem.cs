@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +16,7 @@ public class ActionSystem : MonoBehaviour
     public Transform firePoint;
     public Transform handHolder;    // 무기가 생성될 손 위치 (부모)
     public LayerMask actionLayer;
+    public PlayerAttackZone attackZone;
 
     [Header("Tool Data")]
     public ToolData currentSwordData;   // 현재 장착된 검 데이터
@@ -34,7 +34,6 @@ public class ActionSystem : MonoBehaviour
 
     private bool isActionLocked = false; //입력 차단
     private RaycastHit currentHit; // 레이캐스트 결과를 저장할 변수
-    private bool hasTarget;        // 타겟이 잡혔는지 여부
 
     void Start()
     {
@@ -45,11 +44,31 @@ public class ActionSystem : MonoBehaviour
             isActionLocked = !canInput;
         };
     }
+    // 애니메이션 이벤트: EnableAttackHitBox 일 때 호출
+    public void OnAttackStart()
+    {
+        if (activeToolData == null || attackZone == null) return;
+
+        // 데미지 계산
+        bool isCritical = UnityEngine.Random.value < activeToolData.criticalChance;
+        float finalDamage = activeToolData.power;
+        if (isCritical) finalDamage *= activeToolData.criticalMultiplier;
+
+        // 히트박스 켜기! (데미지 정보 전달)
+        attackZone.EnableZone(finalDamage, isCritical, currentActionType);
+    }
+
+    // 애니메이션 이벤트: DisableAttackHitBox 일 때 호출
+    public void OnAttackEnd()
+    {
+        if (attackZone != null)
+        {
+            attackZone.DisableZone();
+        }
+    }
 
     void Update()
     {
-        DrawDebugRay(); // 디버그용
-
         // 레이로 물체감지
         UpdateRaycast();
 
@@ -89,7 +108,6 @@ public class ActionSystem : MonoBehaviour
         // 레이어 마스크
         if (Physics.Raycast(ray, out currentHit, range, actionLayer))
         {
-            hasTarget = true;
 
             // 적 IDamageable
             if (currentHit.collider.GetComponentInParent<IDamageable>() != null)
@@ -108,7 +126,6 @@ public class ActionSystem : MonoBehaviour
         }
         else
         {
-            hasTarget = false;
             PromptUIManager.Instance.ClearActionPrompt();
         }
     }
@@ -146,48 +163,6 @@ public class ActionSystem : MonoBehaviour
         currentCooldownTimer = activeToolData != null ? activeToolData.cooldown : 1f;
 
         playerController.HandleWield(actionType); // 애니메이션 재생
-    }
-
-    // 애니메이션 이벤트에서 호출될 실제 실행 함수
-    public void ExecuteAction()
-    {
-        if (!hasTarget || activeToolData == null) return;
-
-        // 치명타 계산 로직
-        bool isCritical = Random.value < activeToolData.criticalChance;
-        float finalDamage = activeToolData.power;
-
-        if (isCritical)
-        {
-            finalDamage *= activeToolData.criticalMultiplier;
-        }
-
-        switch (currentActionType)
-        {
-            case ActionType.Attack:
-                IDamageable target = currentHit.collider.GetComponentInParent<IDamageable>();
-                if (target != null)
-                {
-                    target.TakeDamage(finalDamage, isCritical);
-                }
-                break;
-
-            case ActionType.Mine:
-                IMineable mineral = currentHit.collider.GetComponentInParent<IMineable>();
-                if (mineral != null)
-                {
-                    mineral.OnMine(finalDamage, isCritical);
-                }
-                break;
-        }
-    }
-
-    // 디버그 레이 (데이터 범위 반영)
-    void DrawDebugRay()
-    {
-        if (firePoint == null) return;
-        float range = activeToolData != null ? activeToolData.range : 2f;
-        Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.red);
     }
 
     // 상점에서 무기 업그레이드 시 호출용

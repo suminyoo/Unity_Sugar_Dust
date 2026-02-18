@@ -20,22 +20,3 @@ public class ExploreEndSpot : MonoBehaviour, IInteractable
     }
 
 }
-
-
-//==========//=============================
-//public class BedInteractable// Mo//Behaviour, IInteractable
-//{
-//    publi//CommonConfirmPopup popupUI;
-
-///    pu//ic void OnInteract()
-//    //
-//        popupUI.OpenPopup(
-//  //        "잠을 자고 하루를 마치//습니까?",
-//            () => {
-//                //bug.Log("Zzz... 아침이 되었습니다.");
-//                // //meManager.Insta//e.NextDay();////       //   }
-//        );
-//    }
-
-//    public strin//GetInteractPrompt() => "잠자기";
-//}

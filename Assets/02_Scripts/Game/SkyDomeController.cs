@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SkyDome : MonoBehaviour
+public class SkyDomeController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private MeshRenderer skyRenderer;

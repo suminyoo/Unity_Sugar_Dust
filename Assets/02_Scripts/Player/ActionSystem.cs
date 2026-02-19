@@ -133,6 +133,7 @@ public class ActionSystem : MonoBehaviour
     void HandleActionInput()
     {
         if (isActionLocked) return;
+
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
         // ÄðÅ¸ÀÓ

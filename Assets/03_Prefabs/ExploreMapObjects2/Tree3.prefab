@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2742805267906878246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,10 @@ PrefabInstance:
     - target: {fileID: 1298949544503508, guid: 9384a9cf18e2a574186830c72b490a9c, type: 3}
       propertyPath: m_Name
       value: EA_Fruit_01b_Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298949544503508, guid: 9384a9cf18e2a574186830c72b490a9c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4668585270239996, guid: 9384a9cf18e2a574186830c72b490a9c, type: 3}
       propertyPath: m_LocalScale.x
@@ -97,6 +101,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8995716982212745891, guid: 9384a9cf18e2a574186830c72b490a9c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -118,6 +126,10 @@ PrefabInstance:
     - target: {fileID: 1302634588037408, guid: ef58c30d9dc06a842ba94e365f157dae, type: 3}
       propertyPath: m_Name
       value: EA_Plant_01b_Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302634588037408, guid: ef58c30d9dc06a842ba94e365f157dae, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4428814811540788, guid: ef58c30d9dc06a842ba94e365f157dae, type: 3}
       propertyPath: m_LocalScale.x
@@ -170,6 +182,10 @@ PrefabInstance:
     - target: {fileID: 4428814811540788, guid: ef58c30d9dc06a842ba94e365f157dae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008495167421817515, guid: ef58c30d9dc06a842ba94e365f157dae, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

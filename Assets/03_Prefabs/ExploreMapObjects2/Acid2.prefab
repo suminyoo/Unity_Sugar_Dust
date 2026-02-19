@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2121473236528060079}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Acid2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,10 @@ PrefabInstance:
     - target: {fileID: 1363801279913228, guid: b74f3d307eaadbc4294cd716ebca0f58, type: 3}
       propertyPath: m_Name
       value: EA_Puddle_01a_Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363801279913228, guid: b74f3d307eaadbc4294cd716ebca0f58, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4497577245460230, guid: b74f3d307eaadbc4294cd716ebca0f58, type: 3}
       propertyPath: m_LocalScale.x
@@ -97,6 +101,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2978190131158213387, guid: b74f3d307eaadbc4294cd716ebca0f58, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8648747765096734412, guid: b74f3d307eaadbc4294cd716ebca0f58, type: 3}
       propertyPath: m_Convex
       value: 0
@@ -126,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 1698966261317364, guid: fe13a08c5eedda44c9e76e972f2f57e5, type: 3}
       propertyPath: m_Name
       value: EA_Fruit_PRE (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698966261317364, guid: fe13a08c5eedda44c9e76e972f2f57e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4377628036321862, guid: fe13a08c5eedda44c9e76e972f2f57e5, type: 3}
       propertyPath: m_LocalScale.x
@@ -186,6 +198,10 @@ PrefabInstance:
     - target: {fileID: 3006926721991892522, guid: fe13a08c5eedda44c9e76e972f2f57e5, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058228736886153745, guid: fe13a08c5eedda44c9e76e972f2f57e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

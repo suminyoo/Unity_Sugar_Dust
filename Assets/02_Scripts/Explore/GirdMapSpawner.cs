@@ -12,11 +12,12 @@ public class GridMapSpawner : MonoBehaviour
     [Header("Map Settings")]
     public Vector2Int mapSize = new Vector2Int(20, 20);
     public float cellSize = 3.0f;
-    public NavMeshSurface navSurface;
+    //public NavMeshSurface navSurface;
 
     [Header("Objects")]
     public List<GameObject> preLoadedMapEnvironments;
-    private GameObject groundPrefab;
+    public List<GameObject> preLoadedGrounds;
+
     private List<SpawnInfo> currentMapObjects;
     private List<DynamicSpawnInfo> currentMineralObjects;
     private List<DynamicSpawnInfo> currentEnemyObjects;
@@ -39,7 +40,6 @@ public class GridMapSpawner : MonoBehaviour
 
     public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int levelsPerStageData, int levelsPerEnvironment)
     {
-        this.groundPrefab = stageData.groundObject;
         this.currentMapObjects = stageData.mapObjects;
         this.currentMineralObjects = stageData.mineralObjects;
         this.currentEnemyObjects = stageData.enemyObjects;
@@ -99,9 +99,9 @@ public class GridMapSpawner : MonoBehaviour
         }
 
         // ---런타임 navmesh 베이크---
-        navSurface.RemoveData();
-        navSurface.BuildNavMesh();
-        yield return null;     // nav mesh 베이크
+        //navSurface.RemoveData();
+        //navSurface.BuildNavMesh();
+        //yield return null;     // nav mesh 베이크
 
 
         //---적 배치---
@@ -141,6 +141,7 @@ public class GridMapSpawner : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            if (preLoadedGrounds.Contains(child.gameObject)) continue;
             Destroy(child.gameObject);
         }
     }
@@ -181,45 +182,22 @@ public class GridMapSpawner : MonoBehaviour
         worldIndex = Mathf.Clamp(worldIndex, 0, preLoadedMapEnvironments.Count - 1);
 
 
+        // 미리 로드된 환경(배경/오브젝트) 켜기/끄기
         for (int i = 0; i < preLoadedMapEnvironments.Count; i++)
         {
-            if (i == worldIndex)
-            {
-                if (!preLoadedMapEnvironments[i].activeSelf)
-                {
-                    preLoadedMapEnvironments[i].SetActive(true);
+            preLoadedMapEnvironments[i].SetActive(i == worldIndex);
+        }
 
-                }
-            }
-            else
+        // 미리 로드된 땅(Ground) 켜기/끄기
+        if (preLoadedGrounds != null && preLoadedGrounds.Count > 0)
+        {
+            int groundIndex = Mathf.Min(worldIndex, preLoadedGrounds.Count - 1);
+            for (int i = 0; i < preLoadedGrounds.Count; i++)
             {
-                if (preLoadedMapEnvironments[i].activeSelf)
-                {
-                    preLoadedMapEnvironments[i].SetActive(false);
-                }
+                preLoadedGrounds[i].SetActive(i == groundIndex);
             }
         }
 
-        if (groundPrefab == null) return;
-
-        // 생성
-        GameObject ground = Instantiate(groundPrefab, transform);
-        ground.name = "Exploration_Ground";
-
-        // 레이어설정 
-        int groundLayerIndex = LayerMask.NameToLayer("Ground");
-        if (groundLayerIndex != -1)
-            ground.layer = groundLayerIndex;
-
-        // 스케일 계산 
-        float totalWidth = mapSize.x * cellSize;  // 가로
-        float totalHeight = mapSize.y * cellSize; // 세로
-
-        ground.transform.localScale = new Vector3(totalWidth / 10f, 1f, totalHeight / 10f); // 10으로 나눠야 정확한 스케일
-
-        // 위치 보정
-        // Grid는 (0,0)에서 ground Pivot은 중앙 (0.5)만큼
-        ground.transform.localPosition = new Vector3(totalWidth * 0.5f, 0f, totalHeight * 0.5f);
     }
 
     void SpawnObject(ExploreObjectData data, int count)

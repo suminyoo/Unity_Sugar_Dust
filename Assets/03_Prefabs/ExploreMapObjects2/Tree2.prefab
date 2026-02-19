@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7602132782451436885}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,10 @@ PrefabInstance:
     - target: {fileID: 1511573847091138, guid: b538f75a90be6b94a9a6b2347fe7bf87, type: 3}
       propertyPath: m_Name
       value: EA_Plant_01c_Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511573847091138, guid: b538f75a90be6b94a9a6b2347fe7bf87, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4862790751044594, guid: b538f75a90be6b94a9a6b2347fe7bf87, type: 3}
       propertyPath: m_LocalScale.x
@@ -97,6 +101,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5200145596228658715, guid: b538f75a90be6b94a9a6b2347fe7bf87, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -118,6 +126,10 @@ PrefabInstance:
     - target: {fileID: 1998329173153952, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}
       propertyPath: m_Name
       value: EA_Fruit_01a_Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998329173153952, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4581689480944772, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}
       propertyPath: m_LocalScale.x
@@ -170,6 +182,10 @@ PrefabInstance:
     - target: {fileID: 4581689480944772, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100579172052894209, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2242269113057908763, guid: bef3b77a398cd4848ae57a0c51bd1b55, type: 3}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44c24b539a396145ae5831a96150e87, type: 3}
+  m_Name: Item_E2_BlueHeart
+  m_EditorClassIdentifier: 
+  itemName: "\uD478\uB978 \uC2EC\uC7A5"
+  description: "\uB530\uB4EF\uD558\uAC8C \uBC15\uB3D9\uD558\uACE0 \uC788\uB294 \uC2EC\uC7A5.
+    \uB208\uC54C\uC774 \uC0AC\uBC29\uC744 \uB178\uB824\uBCF8\uB2E4."
+  icon: {fileID: -2837080447172163765, guid: ebb3d78afb23fa94d9c6919ba8f66f24, type: 3}
+  weight: 1.2
+  basePrice: 300
+  isStackable: 1
+  maxStackAmount: 99
+  dropPrefab: {fileID: 2780335468750960036, guid: 4c0e1b9a8f7a58344acba5e2b22ecc76, type: 3}
+  sellPrice: 750

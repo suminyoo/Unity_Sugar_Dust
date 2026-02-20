@@ -21,6 +21,9 @@ public class EnemyData : ScriptableObject
     public float patrolRadius = 5f; 
     public float patrolWaitTime = 2f;
 
+    [Header("Loot")]
+    public DropItemTable lootTable;
+
     [Header("VFX")]
     public GameObject hitEffect;
     public GameObject attackEffect;

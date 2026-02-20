@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44c24b539a396145ae5831a96150e87, type: 3}
+  m_Name: Item_E4_StarCap
+  m_EditorClassIdentifier: 
+  itemName: "\uBCC4\uB4F1 \uB69C\uAED1"
+  description: "\uB531\uB531\uD55C \uB69C\uAED1 \uAC19\uB2E4."
+  icon: {fileID: -2837080447172163765, guid: ebb3d78afb23fa94d9c6919ba8f66f24, type: 3}
+  weight: 1
+  basePrice: 450
+  isStackable: 1
+  maxStackAmount: 99
+  dropPrefab: {fileID: 9123072453420809246, guid: 7b13512d02f6cd343be1809cd91ec005, type: 3}
+  sellPrice: 1130

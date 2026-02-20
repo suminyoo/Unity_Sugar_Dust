@@ -225,8 +225,9 @@ public class Enemy : MonoBehaviour, IDamageable
         agent.enabled = false;
         GetComponent<Collider>().enabled = false;
 
-        animator.SetTrigger("Die"); 
+        animator.SetTrigger("Die");
 
+        if (data.lootTable != null) data.lootTable.SpawnItem(transform.position);
         ExploreEvents.OnMonsterDefeated?.Invoke();
         Destroy(gameObject, 2f);
     }

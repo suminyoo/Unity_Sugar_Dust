@@ -12,7 +12,9 @@ public class GridMapSpawner : MonoBehaviour
     [Header("Map Settings")]
     public Vector2Int mapSize = new Vector2Int(20, 20);
     public float cellSize = 3.0f;
-    //public NavMeshSurface navSurface;
+
+    public LayerMask layerToBake;
+    private NavMeshSurface activeNavSurface;
 
     [Header("Objects")]
     public List<GameObject> preLoadedMapEnvironments;
@@ -98,11 +100,16 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
-        // ---런타임 navmesh 베이크---
-        //navSurface.RemoveData();
-        //navSurface.BuildNavMesh();
-        //yield return null;     // nav mesh 베이크
+        if (activeNavSurface != null)
+        {
+            activeNavSurface.collectObjects = CollectObjects.All;
+            activeNavSurface.layerMask = layerToBake;
 
+            activeNavSurface.RemoveData();
+            activeNavSurface.BuildNavMesh();
+            Debug.Log($"{activeNavSurface.gameObject.name}에서 내브매시 베이크 완료");
+        }
+        yield return null;
 
         //---적 배치---
         if (currentEnemyObjects != null)
@@ -188,13 +195,19 @@ public class GridMapSpawner : MonoBehaviour
             preLoadedMapEnvironments[i].SetActive(i == worldIndex);
         }
 
-        // 미리 로드된 땅(Ground) 켜기/끄기
+        // Ground 설정 및 서페이스 참조 저장
         if (preLoadedGrounds != null && preLoadedGrounds.Count > 0)
         {
             int groundIndex = Mathf.Min(worldIndex, preLoadedGrounds.Count - 1);
             for (int i = 0; i < preLoadedGrounds.Count; i++)
             {
-                preLoadedGrounds[i].SetActive(i == groundIndex);
+                bool isActive = (i == groundIndex);
+                preLoadedGrounds[i].SetActive(isActive);
+
+                if (isActive)
+                {
+                    activeNavSurface = preLoadedGrounds[i].GetComponent<NavMeshSurface>();
+                }
             }
         }
 

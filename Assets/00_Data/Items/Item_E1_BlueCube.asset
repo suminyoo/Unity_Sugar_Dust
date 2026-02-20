@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44c24b539a396145ae5831a96150e87, type: 3}
+  m_Name: Item_E1_BlueCube
+  m_EditorClassIdentifier: 
+  itemName: "\uD478\uB978 \uC824\uB9AC \uC870\uAC01"
+  description: "\uC2DC\uC6D0\uD55C \uB290\uB08C\uC758 \uD30C\uB780 \uC824\uB9AC \uC870\uAC01\uC774\uB2E4. "
+  icon: {fileID: -2837080447172163765, guid: ebb3d78afb23fa94d9c6919ba8f66f24, type: 3}
+  weight: 0.2
+  basePrice: 10
+  isStackable: 1
+  maxStackAmount: 99
+  dropPrefab: {fileID: 286542594194360813, guid: a9bbdc7c230f4a44387b29d34567d365, type: 3}
+  sellPrice: 30

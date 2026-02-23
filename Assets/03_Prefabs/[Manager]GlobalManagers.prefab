@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 3539451241155705468}
   - component: {fileID: 572374818377129698}
   - component: {fileID: 2347887029095275869}
+  - component: {fileID: 8251919005499558918}
   m_Layer: 0
   m_Name: '[Manager]GlobalManagers'
   m_TagString: Untagged
@@ -227,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8abfccb95147c44b2a1a311e25f8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTime: 0
 --- !u!114 &8942570312190243682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,8 +241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88e955f80c86e64ca917775d3c33614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSaveSlot: 1
   playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   savedData:
+    metadata:
+      saveTime: 
+      inGameTime: 0
+      playTime: 0
     currentHp: 0
     currentStamina: 0
     exploreMaxUnlockedLevel: 0
@@ -286,6 +293,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d419759f42617be4aa931bd23fdf9bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8251919005499558918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5046600995907738205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513eb9080ed74914f9a824e186ccac3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7880109148753386290

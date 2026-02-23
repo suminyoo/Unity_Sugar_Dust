@@ -88,6 +88,19 @@ public class SceneController : MonoBehaviour
         if (useFade) InputControlManager.Instance.LockInput();
         if (useFade) yield return FadeUIManager.Instance.FadeOut();
 
+        // ================= 데이터 저장 =======================
+        // 현재 씬의 ISaveable 인터페이스를 가진 컴포넌트를 찾아서 저장
+        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+
+        foreach (var saveable in saveables)
+        {
+            saveable.SaveData();
+        }
+
+        Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
+        // ===================================================
+
+
         //  나갈때: 기존 실내 언로드
         if (isExiting)
         {

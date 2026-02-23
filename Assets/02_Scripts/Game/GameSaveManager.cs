@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 
 public interface ISaveable
 {
@@ -9,6 +12,9 @@ public interface ISaveable
 public class GameSaveManager : MonoBehaviour
 {
     public static GameSaveManager Instance;
+
+    public int currentSaveSlot = 1;
+
     public PlayerData playerData;
     private int selectedExploreLevel;
 
@@ -20,19 +26,23 @@ public class GameSaveManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            InitData();
         }
         else
         {
             Destroy(gameObject);
         }
     }
+    private void Update()
+    {
+        if (savedData != null && savedData.metadata != null)
+        {
+            savedData.metadata.playTime += Time.deltaTime;
+        }
+    }
 
     public void InitData()
     {
-        // 게임 시작시 초기화 (테스트용)
-        // 타이틀 에서 새 게임 때 호출하거나 파일 로드 시 덮어씌움
-        // TODO: 로드 로직
+        // 게임 시작시 초기화
         if (playerData != null)
         {
             savedData.InitNewGame(
@@ -44,10 +54,58 @@ public class GameSaveManager : MonoBehaviour
         }
     }
 
-    // 씬 넘어가기 전에 플레이어의 상태를 매니저에 기록
-    // 업데이트 될때 부를지는 고민
+    #region 게임 데이터 슬롯에 저장
 
-    #region [씬 세이브 로드]
+    public void SaveGameAtDiary()
+    {
+        savedData.metadata.saveTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm");
+        savedData.metadata.inGameTime = GameManager.Instance.currentTime;
+
+        // 현재 플레이 중인 슬롯의 폴더 경로 설정 (Saves/Slot1 등)
+        string directoryPath = Path.Combine(Application.persistentDataPath, $"Saves/Slot{currentSaveSlot}");
+
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        // 밀어내기 로직 실행 (10개
+        ManageRollingSaves(directoryPath, 10);
+
+        // 새 파일 이름 생성
+        string fileName = $"Save_{System.DateTime.Now.ToString("yyyyMMdd_HHmmss")}.json";
+        string filePath = Path.Combine(directoryPath, fileName);
+
+        // 데이터를 JSON으로
+        string json = JsonUtility.ToJson(savedData, true);
+        File.WriteAllText(filePath, json);
+
+        Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료! 경로: {filePath}");
+    }
+
+    private void ManageRollingSaves(string directoryPath, int maxFiles)
+    {
+        DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
+        FileInfo[] files = dirInfo.GetFiles("*.json");
+
+        // 파일이 10개 이상
+        if (files.Length >= maxFiles)
+        {
+            var sortedFiles = files.OrderBy(f => f.CreationTime).ToList();
+
+            // 초과된 만큼 삭제
+            int deleteCount = files.Length - maxFiles + 1;
+            for (int i = 0; i < deleteCount; i++)
+            {
+                sortedFiles[i].Delete();
+                Debug.Log($"[GameManager] 밀어내기: 오래된 세이브 파일 삭제됨 -> {sortedFiles[i].Name}");
+            }
+        }
+    }
+
+    #endregion
+
+    // 씬 넘어가기 전에 플레이어의 상태를 매니저에 기록
 
     #region 자산 데이터 세이브로드
 
@@ -89,20 +147,35 @@ public class GameSaveManager : MonoBehaviour
 
     public void SavePlayerInventory(IReadOnlyList<InventorySlot> slots)
     {
-        // 아이템 슬롯 리스트 저장
         savedData.inventorySlots.Clear();
         foreach (var slot in slots)
         {
-            // 빈 슬롯이든 아이템이든 그대로 상태 복사
-            savedData.inventorySlots.Add(new InventorySlot(slot.ItemData, slot.Amount));
+            // 빈 슬롯이면 아이디를 비워둠
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID; 
+            savedData.inventorySlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
-        Debug.Log("GameManager: 플레이어 인벤토리 저장 완료");
-
     }
-    
+
     public (int size, List<InventorySlot> slots) LoadPlayerInventory()
     {
-        return (savedData.inventorySizeLevel, savedData.inventorySlots);
+        List<InventorySlot> loadedSlots = new List<InventorySlot>();
+
+        foreach (var savedSlot in savedData.inventorySlots)
+        {
+            if (string.IsNullOrEmpty(savedSlot.itemID))
+            {
+                // 빈 슬롯 복원
+                loadedSlots.Add(new InventorySlot());
+            }
+            else
+            {
+                // ItemManager에게 저장된 ID로 SO 요청
+                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                loadedSlots.Add(new InventorySlot(item, savedSlot.amount));
+            }
+        }
+
+        return (savedData.inventorySizeLevel, loadedSlots);
     }
     #endregion
 
@@ -114,25 +187,38 @@ public class GameSaveManager : MonoBehaviour
         savedData.displayStandSlots.Clear();
         foreach (var slot in slots)
         {
-            savedData.displayStandSlots.Add(new InventorySlot(slot.ItemData, slot.Amount));
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID;
+            savedData.displayStandSlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
 
         // 가격 리스트 저장
         savedData.displayStandPrices.Clear();
         if (prices != null)
         {
-            foreach (var price in prices)
-            {
-                savedData.displayStandPrices.Add(price);
-            }
+            savedData.displayStandPrices.AddRange(prices);
         }
 
-        Debug.Log("GameManager: 진열대 (아이템 + 가격) 저장 완료");
+        Debug.Log("GameManager: 진열대 (아이템 ID + 가격) 저장 완료");
     }
-    
+
     public (int size, List<InventorySlot> slots, List<int> prices) LoadDisplayStand()
     {
-        return (savedData.displayStandSizeLevel, savedData.displayStandSlots, savedData.displayStandPrices);
+        List<InventorySlot> loadedSlots = new List<InventorySlot>();
+
+        // 저장된 ID를 읽어서 다시 원본 ItemData로 복구
+        foreach (var savedSlot in savedData.displayStandSlots)
+        {
+            if (string.IsNullOrEmpty(savedSlot.itemID))
+            {
+                loadedSlots.Add(new InventorySlot()); // 빈 슬롯
+            }
+            else
+            {
+                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                loadedSlots.Add(new InventorySlot(item, savedSlot.amount)); // 복구된 슬롯
+            }
+        }
+        return (savedData.displayStandSizeLevel, loadedSlots, savedData.displayStandPrices);
     }
 
     #endregion
@@ -207,5 +293,4 @@ public class GameSaveManager : MonoBehaviour
 
     #endregion
 
-    #endregion
 }

@@ -29,6 +29,15 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     public float jumpCost = 20f;
     private float lastStaminaUseTime;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.OnSleep += FullRecovery; 
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnSleep -= FullRecovery;
+    }
+
     private void Awake()
     {
         if (playerData != null)
@@ -135,6 +144,18 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
         Debug.Log($"플레이어 부활 완료 HP: {currentHp}");
     }
+
+    public void FullRecovery()
+    {
+        if (IsDead) return;
+
+        currentHp = maxHp;
+        currentStamina = maxStamina;
+
+        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+    }
+
     public bool UseStamina(float amount)
     {
         if (currentStamina >= amount)

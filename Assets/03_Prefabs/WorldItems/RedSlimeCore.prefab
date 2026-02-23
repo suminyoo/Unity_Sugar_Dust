@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 1370326943602200054}
   - component: {fileID: 8777049057655477074}
   - component: {fileID: 5262440620842022135}
+  - component: {fileID: 418728564536667579}
   m_Layer: 0
   m_Name: Crystal_5
   m_TagString: Untagged
@@ -289,7 +290,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b6dabd13f698c5443ba9b05468ac77b0, type: 2}
+  - {fileID: 2100000, guid: 27f0868467e5a0147ae44ef81327b9ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -311,3 +312,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &418728564536667579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9203591251599900296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b058d286f6e629c4580b9d8a02f976ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myColor: {r: 0.8962264, g: 0.51998043, b: 0.51998043, a: 1}

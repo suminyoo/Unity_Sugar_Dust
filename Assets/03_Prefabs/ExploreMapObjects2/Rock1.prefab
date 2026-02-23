@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5847834920187981568}
   - component: {fileID: 833064898316908765}
   - component: {fileID: 1709760318884946411}
+  - component: {fileID: 3545494526867275285}
   m_Layer: 8
   m_Name: EA_Clif_01e_LOD0
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 271125ab66405cc4aa34d7f55afd0b46, type: 2}
+  - {fileID: 2100000, guid: 27f0868467e5a0147ae44ef81327b9ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3545494526867275285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2606359464304657492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b058d286f6e629c4580b9d8a02f976ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myColor: {r: 0.29411766, g: 0.34901962, b: 0, a: 1}
 --- !u!1 &4446988479934824784
 GameObject:
   m_ObjectHideFlags: 0

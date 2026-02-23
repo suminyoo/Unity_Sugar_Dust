@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9c4651282b54eee4fa464384c8904f53, type: 3}
       propertyPath: m_Name
-      value: Curtain 2
+      value: Curtain 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,9 +59,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c4651282b54eee4fa464384c8904f53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2348637934014160167}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c4651282b54eee4fa464384c8904f53, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2733445484632362329}
   m_SourcePrefab: {fileID: 100100000, guid: 9c4651282b54eee4fa464384c8904f53, type: 3}
 --- !u!1 &7685760375499567024 stripped
 GameObject:
@@ -89,16 +86,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2698164, y: 1.5149957, z: 0.07951355}
   m_Center: {x: 0, y: 0.75749785, z: 0}
---- !u!114 &2733445484632362329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7685760375499567024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

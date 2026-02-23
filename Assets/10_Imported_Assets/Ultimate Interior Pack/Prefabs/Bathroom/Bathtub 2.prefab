@@ -50,15 +50,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 28718a3af2c5c7944b32fe6eb2b414ee, type: 3}
       propertyPath: m_Name
-      value: Bathtub
+      value: Bathtub 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 28718a3af2c5c7944b32fe6eb2b414ee, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1689622101589487649}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 28718a3af2c5c7944b32fe6eb2b414ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7934718106788928457}
@@ -68,19 +65,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 28718a3af2c5c7944b32fe6eb2b414ee, type: 3}
   m_PrefabInstance: {fileID: 4281507227224691148}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1689622101589487649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4011460363315047581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!64 &7934718106788928457
 MeshCollider:
   m_ObjectHideFlags: 0

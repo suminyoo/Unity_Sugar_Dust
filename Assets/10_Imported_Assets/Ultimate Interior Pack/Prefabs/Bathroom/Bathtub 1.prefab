@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
       propertyPath: m_Name
-      value: Bathtub
+      value: Bathtub 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -75,12 +75,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6818105497797937765}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4086643939529260156}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -7122961827471240887}
   m_SourcePrefab: {fileID: 100100000, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
 --- !u!1 &8682880920725971999 stripped
 GameObject:
@@ -109,31 +103,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2911835818554400071, guid: 5a932daa6bad97e408b3c273ca14c16b, type: 3}
---- !u!114 &4086643939529260156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8682880920725971999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d99999487eb4ef780bccce267108ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotatables:
-  - key: '-'
-    value: {fileID: 0}
---- !u!114 &-7122961827471240887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8682880920725971999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

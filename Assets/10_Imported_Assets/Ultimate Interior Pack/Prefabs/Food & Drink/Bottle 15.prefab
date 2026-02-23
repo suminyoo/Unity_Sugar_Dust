@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe4a9fff76741854e9cfd5788a96fd48, type: 3}
       propertyPath: m_Name
-      value: Bottle 5 1
+      value: Bottle 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,9 +59,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe4a9fff76741854e9cfd5788a96fd48, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7718015993983802053}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe4a9fff76741854e9cfd5788a96fd48, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1212096804658599644}
   m_SourcePrefab: {fileID: 100100000, guid: fe4a9fff76741854e9cfd5788a96fd48, type: 3}
 --- !u!1 &852386588316060032 stripped
 GameObject:
@@ -90,16 +87,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5539357819512116934, guid: fe4a9fff76741854e9cfd5788a96fd48, type: 3}
---- !u!114 &1212096804658599644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 852386588316060032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

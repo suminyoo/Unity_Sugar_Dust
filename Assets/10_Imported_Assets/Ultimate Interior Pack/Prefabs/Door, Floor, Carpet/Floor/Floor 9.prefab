@@ -50,15 +50,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 08b053255b6d2e5458197da85c0a358c, type: 3}
       propertyPath: m_Name
-      value: Floor
+      value: Floor 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 08b053255b6d2e5458197da85c0a358c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1964237258944244615}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 08b053255b6d2e5458197da85c0a358c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3142495015698388027}
@@ -68,19 +65,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 08b053255b6d2e5458197da85c0a358c, type: 3}
   m_PrefabInstance: {fileID: 2779776405768520175}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1964237258944244615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049735434240621758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!65 &3142495015698388027
 BoxCollider:
   m_ObjectHideFlags: 0

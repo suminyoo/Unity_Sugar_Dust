@@ -74,15 +74,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2235812341103477661}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3819576371248661999}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7923430036062023360}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -5719412204415599739}
   m_SourcePrefab: {fileID: 100100000, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
 --- !u!1 &7467325893926728372 stripped
@@ -90,50 +81,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d64bac106bbb9074bbe458dc9f52d30d, type: 3}
   m_PrefabInstance: {fileID: 7737233120932990949}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2235812341103477661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7467325893926728372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
---- !u!114 &3819576371248661999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7467325893926728372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a517f24b83171644bd15ecebd0038ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startAngle: -8.86
-  endAngle: 8.86
-  rotationAxis: 0
-  rotation: 0.5
---- !u!114 &7923430036062023360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7467325893926728372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d99999487eb4ef780bccce267108ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotatables:
-  - key: '-'
-    value: {fileID: 3819576371248661999}
 --- !u!64 &-5719412204415599739
 MeshCollider:
   m_ObjectHideFlags: 0

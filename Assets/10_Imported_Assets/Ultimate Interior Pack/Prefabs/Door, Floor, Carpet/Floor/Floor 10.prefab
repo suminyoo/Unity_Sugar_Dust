@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 916d353c4b050e54ea13b386be6319b8, type: 3}
       propertyPath: m_Name
-      value: Floor 1
+      value: Floor 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,9 +59,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 916d353c4b050e54ea13b386be6319b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1870321677563274425}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 916d353c4b050e54ea13b386be6319b8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -541668277662840601}
   m_SourcePrefab: {fileID: 100100000, guid: 916d353c4b050e54ea13b386be6319b8, type: 3}
 --- !u!1 &2088896348955292200 stripped
 GameObject:
@@ -89,16 +86,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.9872637, y: 0.00999999, z: 5.071344}
   m_Center: {x: 0, y: 0.004999995, z: 0}
---- !u!114 &-541668277662840601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2088896348955292200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 69ff43b0962d2e84f9290aae08cae4e6, type: 3}
       propertyPath: m_Name
-      value: Rectangular Prism
+      value: Name Display Screen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,9 +59,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 69ff43b0962d2e84f9290aae08cae4e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1572495569102024121}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 69ff43b0962d2e84f9290aae08cae4e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6889834586020981829}
   m_SourcePrefab: {fileID: 100100000, guid: 69ff43b0962d2e84f9290aae08cae4e6, type: 3}
 --- !u!1 &3381915399350897084 stripped
 GameObject:
@@ -89,16 +86,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6309223, y: 0.058994737, z: 0.095662594}
   m_Center: {x: 0, y: 0.029497368, z: 0}
---- !u!114 &6889834586020981829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3381915399350897084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

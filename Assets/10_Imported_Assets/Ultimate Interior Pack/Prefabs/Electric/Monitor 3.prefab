@@ -74,9 +74,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 17ac7b4e285d3054c99c51dfb7fcbd41, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1453562867645288287}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 17ac7b4e285d3054c99c51dfb7fcbd41, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -1772700426544404344}
   m_SourcePrefab: {fileID: 100100000, guid: 17ac7b4e285d3054c99c51dfb7fcbd41, type: 3}
 --- !u!1 &3228248075558188247 stripped
@@ -84,19 +81,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 17ac7b4e285d3054c99c51dfb7fcbd41, type: 3}
   m_PrefabInstance: {fileID: 2309329924222536070}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-1453562867645288287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3228248075558188247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!64 &-1772700426544404344
 MeshCollider:
   m_ObjectHideFlags: 0

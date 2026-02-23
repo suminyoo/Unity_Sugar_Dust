@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ec871a1fa482a794fb4ef125149436b7, type: 3}
       propertyPath: m_Name
-      value: Desk 1
+      value: Desk 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,9 +59,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ec871a1fa482a794fb4ef125149436b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3950188985703549162}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ec871a1fa482a794fb4ef125149436b7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7854154607376021799}
   m_SourcePrefab: {fileID: 100100000, guid: ec871a1fa482a794fb4ef125149436b7, type: 3}
 --- !u!1 &4887396739370605277 stripped
 GameObject:
@@ -89,16 +86,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.86243534, y: 0.9159334, z: 0.5893049}
   m_Center: {x: 0, y: 0.4579667, z: -0.012495518}
---- !u!114 &7854154607376021799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4887396739370605277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1

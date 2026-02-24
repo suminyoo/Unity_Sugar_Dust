@@ -5,6 +5,7 @@ using TMPro;
 public class SaveSlotUI : MonoBehaviour
 {
     public TextMeshProUGUI saveTimeText;
+    public TextMeshProUGUI inGameDayText;
     public TextMeshProUGUI inGameTimeText;
     public TextMeshProUGUI playTimeText;
     public GameObject emptySlotText;
@@ -17,11 +18,14 @@ public class SaveSlotUI : MonoBehaviour
             // 데이터가 없으면 빈 슬롯 처리
             emptySlotText.SetActive(true);
             saveTimeText.gameObject.SetActive(false);
+            inGameDayText.gameObject.SetActive(false);
             inGameTimeText.gameObject.SetActive(false);
             playTimeText.gameObject.SetActive(false);
         }
         else
         {
+            inGameDayText.text = $"{data.inGameDay}일차 - ";
+
             string timeText = "";
             switch (data.inGameTime)
             {
@@ -34,6 +38,7 @@ public class SaveSlotUI : MonoBehaviour
             // 데이터가 있으면 텍스트 업데이트
             emptySlotText.SetActive(false);
             saveTimeText.gameObject.SetActive(true);
+            inGameDayText.gameObject.SetActive(true);
             inGameTimeText.gameObject.SetActive(true);
             playTimeText.gameObject.SetActive(true);
 

@@ -15,26 +15,22 @@ public class PlayerData : ScriptableObject
     public float tooHeavySpeed = 1f;
 
     [Header("Stats")]
-    public float maxHp = 100f;
-    public float maxStamina = 50f;
+    public float[] hpLevels = { 100f, 120f, 150f, 200f };
+    public float[] staminaLevels = { 50f, 80f, 100f, 120f };
 
     [Header("Storages")]
-    public int[] inventorySizes = { 4, 6, 8, 10, 12 };
-    public int[] displayStandSizes = { 2, 3, 4, 6, 8 };
+    public int[] inventorySizes = { 6, 8, 10, 12 };
+    public int[] displayStandSizes = { 3, 5, 7, 9 };
 
-    public int GetInventorySize(int level)
-    {
-        // 범위 벗어나면 마지막 사이즈로
-        if (level >= inventorySizes.Length) return inventorySizes[inventorySizes.Length - 1];
-        if (level < 0) return inventorySizes[0];
-        return inventorySizes[level];
-    }
+    public float GetMaxHpValue(int level) => GetValueSafe(hpLevels, level);
+    public float GetMaxStaminaValue(int level) => GetValueSafe(staminaLevels, level);
+    public int GetInventorySize(int level) => (int)GetValueSafe(inventorySizes, level);
+    public int GetDisplayStandSize(int level) => (int)GetValueSafe(displayStandSizes, level);
 
-    public int GetDisplayStandSize(int level)
+    private float GetValueSafe(System.Array array, int level)
     {
-        // 범위 벗어나면 마지막 사이즈로
-        if (level >= displayStandSizes.Length) return displayStandSizes[displayStandSizes.Length - 1];
-        if (level < 0) return displayStandSizes[0];
-        return displayStandSizes[level];
+        if (array == null || array.Length == 0) return 0;
+        int index = Mathf.Clamp(level, 0, array.Length - 1);
+        return (float)System.Convert.ToDouble(array.GetValue(index));
     }
 }

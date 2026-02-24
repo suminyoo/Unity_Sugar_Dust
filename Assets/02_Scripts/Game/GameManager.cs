@@ -3,15 +3,17 @@ using System;
 
 public enum GAME_TIME
 {
-    Morning,    // ¾ÆÄ§
-    Day,        // ³·
-    Evening,    // Àú³á
-    Night       // ¹ã
+    Morning,
+    Day,
+    Evening,
+    Night
 }
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveable
 {
     public static event Action<GAME_TIME> OnTimeChanged;
     public static GameManager Instance;
+
+    public int currentDay = 1;
     public GAME_TIME currentTime = GAME_TIME.Morning;
 
     public event Action OnSleep;
@@ -20,6 +22,16 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+    private void Start()
+    {
+        if (GameSaveManager.Instance != null)
+        {
+            var data = GameSaveManager.Instance.LoadGameState();
+            currentDay = data.day;
+            currentTime = data.time;
+            OnTimeChanged?.Invoke(currentTime);
+        }
     }
 
     // ÀÓ½Ã µð¹ö±ë¿ë (½Ã°£ Á¶ÀÛ)
@@ -40,13 +52,20 @@ public class GameManager : MonoBehaviour
 
     public bool TrySleep()
     {
-        if (currentTime != GAME_TIME.Night)
-        {
-            return false;
-        }
-
+        if (currentTime != GAME_TIME.Night) return false;
+        
+        currentDay++;
         ChangeTime(GAME_TIME.Morning);
         OnSleep?.Invoke();
         return true;
     }
+
+    public void SaveData()
+    {
+        if (GameSaveManager.Instance != null)
+        {
+            GameSaveManager.Instance.SaveGameState(currentDay, currentTime);
+        }
+    }
+
 }

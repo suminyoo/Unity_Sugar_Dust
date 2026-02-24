@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-
 public interface ISaveable
 {
     void SaveData();// 각 클래스가 자기 데이터를 GameManager에 어떻게 저장할지 스스로 정의
@@ -15,7 +14,7 @@ public class GameSaveManager : MonoBehaviour
 
     public int currentSaveSlot = 1;
 
-    public PlayerData playerData;
+    public PlayerData defaultPlayerData;
     private int selectedExploreLevel;
 
     // 씬이 넘어가도 살아있는 데이터 보관함
@@ -23,14 +22,8 @@ public class GameSaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
     private void Update()
     {
@@ -43,15 +36,7 @@ public class GameSaveManager : MonoBehaviour
     public void InitData()
     {
         // 게임 시작시 초기화
-        if (playerData != null)
-        {
-            savedData.InitNewGame(
-                playerData.maxHp,
-                playerData.maxStamina,
-                0, //인벤 사이즈 레벨
-                0  // 진열대 사이즈 레벨
-            );
-        }
+        savedData.InitNewGame(defaultPlayerData);
     }
 
     #region 게임 데이터 슬롯에 저장
@@ -59,7 +44,6 @@ public class GameSaveManager : MonoBehaviour
     public void SaveGameAtDiary()
     {
         savedData.metadata.saveTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm");
-        savedData.metadata.inGameTime = GameManager.Instance.currentTime;
 
         // 현재 플레이 중인 슬롯의 폴더 경로 설정 (Saves/Slot1 등)
         string directoryPath = Path.Combine(Application.persistentDataPath, $"Saves/Slot{currentSaveSlot}");
@@ -107,6 +91,23 @@ public class GameSaveManager : MonoBehaviour
 
     // 씬 넘어가기 전에 플레이어의 상태를 매니저에 기록
 
+
+    #region 게임 데이터 세이브로드
+    public void SaveGameState(int day, GAME_TIME time)
+    {
+        savedData.currentDay = day;
+        savedData.currentTime = time;
+
+        savedData.metadata.inGameDay = day;
+        savedData.metadata.inGameTime = time;
+    }
+    public (int day, GAME_TIME time) LoadGameState()
+    {
+        return (savedData.currentDay, savedData.currentTime);
+    }
+
+    #endregion
+
     #region 자산 데이터 세이브로드
 
     public void SavePlayerAssets(int money, HashSet<string> keyItems)
@@ -128,17 +129,19 @@ public class GameSaveManager : MonoBehaviour
 
     #region 플레이어 상태 데이터 세이브로드
 
-    public void SavePlayerCondition(float hp, float stamina)
+    public void SavePlayerCondition(float hp, float stamina, int hpLevel, int staLevel)
     {
         savedData.currentHp = hp;
         savedData.currentStamina = stamina;
+        savedData.hpLevel = hpLevel;
+        savedData.staminaLevel = staLevel;
 
         Debug.Log("GameManager: 플레이어 컨디션 저장 완료");
     }
-    
-    public (float hp, float stamina) LoadPlayerCondition()
+
+    public (float hp, float stamina, int hpLevel, int staminaLevel) LoadPlayerCondition()
     {
-        return (savedData.currentHp, savedData.currentStamina);
+        return (savedData.currentHp, savedData.currentStamina, savedData.hpLevel, savedData.staminaLevel);
     }
 
     #endregion

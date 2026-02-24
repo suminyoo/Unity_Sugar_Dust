@@ -14,12 +14,15 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     public PlayerInventory inventory;
     public PlayerData playerData;
 
+    private int hpLevel;
+    private int staminaLevel;
     private float maxHp;
     private float maxStamina;
 
     public float currentHp { get; private set; }
     public float currentStamina { get; private set; }
-
+    public float MaxHp => maxHp;
+    public float MaxStamina => maxStamina;
     public bool IsDead => currentHp <= 0;
 
     [Header("Settings")]
@@ -28,6 +31,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     public float runCostPerSec = 10f;
     public float jumpCost = 20f;
     private float lastStaminaUseTime;
+
 
     private void OnEnable()
     {
@@ -44,36 +48,45 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         {
             // 데이터 로드 전 잠깐이라도 풀피로 설정해둠
             // 이렇게 해야 IsDead가 false가 되어 PlayerController가 Start에서 죽는 처리를 안함
-            currentHp = playerData.maxHp;
-            currentStamina = playerData.maxStamina;
+            currentHp = playerData.GetMaxHpValue(0);
+            currentStamina = playerData.GetMaxStaminaValue(0);
         }
     }
 
     void Start()
     {
         inventory = GetComponent<PlayerInventory>();
-
-
         LoadStatusFromManager();
         
     }
 
-    void LoadStatusFromManager()
+    public void LoadStatusFromManager()
     {
         var data = GameSaveManager.Instance.LoadPlayerCondition();
 
         // 저장된 데이터 불러오기
-        currentHp = data.hp;
-        currentStamina = data.stamina;
+        this.hpLevel = data.hpLevel;
+        this.staminaLevel = data.staminaLevel;
 
-        this.maxHp = playerData.maxHp;
-        this.maxStamina = playerData.maxStamina;
+        RefreshMaxStats();
+
+        this.currentHp = data.hp;
+        this.currentStamina = data.stamina;
 
         OnHpChanged?.Invoke(currentHp, maxHp);
         OnStaminaChanged?.Invoke(maxStamina, maxStamina); // 꽉 채워서 (버그방지)
 
 
         Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
+    }
+
+    public void RefreshMaxStats()
+    {
+        if (playerData != null)
+        {
+            maxHp = playerData.GetMaxHpValue(hpLevel);
+            maxStamina = playerData.GetMaxStaminaValue(staminaLevel);
+        }
     }
 
     void Update()
@@ -178,12 +191,15 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
     public void SaveData()
     {
-        if (GameSaveManager.Instance != null && inventory != null)
+        if (GameSaveManager.Instance != null)
         {
+            // 저장할 때 현재 '수치'와 '단계'를 모두 넘겨줌
             GameSaveManager.Instance.SavePlayerCondition(
-               currentHp,
-               currentStamina
-           );
+                currentHp,
+                currentStamina,
+                hpLevel,
+                staminaLevel
+            );
         }
     }
 }

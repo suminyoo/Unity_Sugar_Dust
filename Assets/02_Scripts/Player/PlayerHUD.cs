@@ -41,8 +41,8 @@ public class PlayerHUD : MonoBehaviour
             playerCondition.OnStaminaChanged += UpdateStaminaUI;
 
             // 구독 직후 UI 수동 초기화
-            UpdateHpUI(playerCondition.currentHp, playerCondition.playerData.maxHp);
-            UpdateStaminaUI(playerCondition.currentStamina, playerCondition.playerData.maxStamina);
+            UpdateHpUI(playerCondition.currentHp, playerCondition.MaxHp);
+            UpdateStaminaUI(playerCondition.currentStamina, playerCondition.MaxStamina);
         }
 
         PlayerAssetsManager.Instance.OnMoneyChanged += UpdateMoneyUI;

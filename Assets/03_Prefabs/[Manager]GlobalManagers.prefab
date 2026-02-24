@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8abfccb95147c44b2a1a311e25f8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDay: 1
   currentTime: 0
 --- !u!114 &8942570312190243682
 MonoBehaviour:
@@ -242,20 +243,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSaveSlot: 1
-  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
+  defaultPlayerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   savedData:
     metadata:
       saveTime: 
-      inGameTime: 0
       playTime: 0
+      inGameDay: 0
+      inGameTime: 0
+    currentDay: 1
+    currentTime: 0
+    hpLevel: 0
+    staminaLevel: 0
+    inventorySizeLevel: 0
+    displayStandSizeLevel: 0
     currentHp: 0
     currentStamina: 0
     exploreMaxUnlockedLevel: 0
     money: 0
     ownedKeyItems: []
-    inventorySizeLevel: 0
     inventorySlots: []
-    displayStandSizeLevel: 0
     displayStandSlots: []
     displayStandPrices: 
 --- !u!114 &3539451241155705468

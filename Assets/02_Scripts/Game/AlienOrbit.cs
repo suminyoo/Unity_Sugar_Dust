@@ -1,11 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AlienOrbit : MonoBehaviour
 {
-    public float minOrbitSpeed = 10f;
-    public float maxOrbitSpeed = 40f;
+    public float minOrbitSpeed = 2f;
+    public float maxOrbitSpeed = 10f;
 
-    public string[] animationStateNames;
+    public float minSelfRotationSpeed = 10f;
+    public float maxSelfRotationSpeed = 40f;
+
+    public float minAnimSpeed = 0.8f;
+    public float maxAnimSpeed = 1.2f;
 
     private Vector3 centerPoint;
     private Vector3 orbitAxis;
@@ -18,23 +22,19 @@ public class AlienOrbit : MonoBehaviour
     {
         centerPoint = center;
     }
-
     void Start()
     {
         orbitAxis = Random.onUnitSphere;
         orbitSpeed = Random.Range(minOrbitSpeed, maxOrbitSpeed);
 
         selfRotationAxis = Random.onUnitSphere;
-        selfRotationSpeed = Random.Range(10f, 50f);
+        selfRotationSpeed = Random.Range(minSelfRotationSpeed, maxSelfRotationSpeed);
 
         Animator anim = GetComponent<Animator>();
-        if (anim != null && animationStateNames != null && animationStateNames.Length > 0)
+        if (anim != null)
         {
-            int randomIndex = Random.Range(0, animationStateNames.Length);
-            string selectedAnim = animationStateNames[randomIndex];
-
-            anim.Play(selectedAnim);
-            anim.speed = Random.Range(0.8f, 1.2f);
+            anim.speed = Random.Range(minAnimSpeed, maxAnimSpeed);
+            anim.Play(0, -1, Random.Range(0f, 1f));
         }
     }
 

@@ -496,13 +496,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minOrbitSpeed: 2
   maxOrbitSpeed: 10
-  animationStateNames:
-  - Float1
-  - Float2
-  - Float3
-  - Float4
-  - Float5
-  - Float6
+  minSelfRotationSpeed: 10
+  maxSelfRotationSpeed: 50
+  minAnimSpeed: 0.8
+  maxAnimSpeed: 1.2
 --- !u!1 &3299673053334731285
 GameObject:
   m_ObjectHideFlags: 0

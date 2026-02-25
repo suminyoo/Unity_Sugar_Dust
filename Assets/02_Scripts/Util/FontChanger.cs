@@ -39,7 +39,6 @@ public class FontChanger : EditorWindow
 
     private void ChangeAllFonts()
     {
-        // 씬에 있는 숨겨진 오브젝트까지 포함하여 모든 TMP_Text를 찾습니다.
         TMP_Text[] allTexts = Resources.FindObjectsOfTypeAll<TMP_Text>();
         int count = 0;
 

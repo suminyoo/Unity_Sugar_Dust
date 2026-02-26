@@ -136,7 +136,7 @@ public class TitleManager : MonoBehaviour
         GameSaveManager.Instance.InitData();
         GameSaveManager.Instance.currentSaveSlot = slotNum;
         GameSaveManager.Instance.SetTimerActive(true);
-        SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.PLAYER_HOME, SPAWN_ID.PLAYERHOME_BED);
+        SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.PLAYER_HOME, SPAWN_ID.PLAYERHOME_BED, true);
     }
 
     public void LoadSaveFile(string fullPath, int slotNum)
@@ -148,9 +148,15 @@ public class TitleManager : MonoBehaviour
         GameSaveManager.Instance.currentSaveSlot = slotNum;
         GameSaveManager.Instance.SetTimerActive(true);
 
-        SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.PLAYER_HOME, SPAWN_ID.PLAYERHOME_BED);
-
         Debug.Log($"파일 로드 완료: {fullPath}");
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ApplyLoadedData();
+        }
+
+        SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.PLAYER_HOME, SPAWN_ID.PLAYERHOME_BED, true);
+
     }
 
     public void DeleteSlot(int arrayIndex)

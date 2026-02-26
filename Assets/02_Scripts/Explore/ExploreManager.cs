@@ -54,6 +54,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private float currentSuccessProb;
     private bool isRetrying = false;
 
+
     private void OnEnable()
     {
         ExploreEvents.OnMonsterDefeated += AddExplorationProgress;
@@ -106,6 +107,10 @@ public class ExploreManager : MonoBehaviour, ISaveable
         //시간 초과 체크
         if (currentTime <= 0)
         {
+            if (GameManager.Instance.currentTime == GAME_TIME.Day)
+            {
+                GameManager.Instance.ChangeTime(GAME_TIME.Evening, false);
+            }
             //TODO: 얼어붙는 이펙트 활성화 
             //TODO: 시간 초과시 플레이어에게 지속적인 피해 주기
         }
@@ -371,21 +376,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public void ReturnToTown()
     {
         InputControlManager.Instance.UnlockInput();
-
-        if (isExploreSuccess)
-        {
-            // 성공: 마을 센터로 일반 이동
-            SceneController.Instance.ChangeScene(SCENE_NAME.TOWN, SPAWN_ID.TOWN_CENTER);
-        }
-        else
-        {
-            // 실패(플레이어죽음): 마을 로드 후 Additive 씬을 로드하고 플레이어 이동
-            SceneController.Instance.ChangeSceneAndAddScene(
-                SCENE_NAME.TOWN,
-                SCENE_NAME.HOSPITAL_ROOM,
-                SPAWN_ID.HOSPITAL_BED
-            );
-        }
+        GameManager.Instance.EndExploration(isExploreSuccess);
+        
     }
 
     #endregion

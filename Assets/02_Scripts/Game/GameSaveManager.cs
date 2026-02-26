@@ -48,8 +48,14 @@ public class GameSaveManager : MonoBehaviour
 
     #region 게임 데이터 슬롯에 저장
 
-    public void SaveGameAtDiary()
+    public void SaveCurrentGame()
     {
+        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+        foreach (var saveable in saveables)
+        {
+            saveable.SaveData();
+        }
+
         savedData.metadata.saveTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm");
 
         // 현재 플레이 중인 슬롯의 폴더 경로 설정 (Saves/Slot1 등)

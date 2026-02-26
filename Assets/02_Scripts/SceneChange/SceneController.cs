@@ -24,14 +24,14 @@ public class SceneController : MonoBehaviour
 
     #region Change Scene
 
-    public void ChangeScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID)
+    public void ChangeScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isLoadGame = false)
     {
         if (isChangingScene) return;
 
-        StartCoroutine(SceneTransitionCor(sceneName, spawnPointID, true));
+        StartCoroutine(SceneTransitionCor(sceneName, spawnPointID, isLoadGame));
     }
 
-    private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool useFade = true)
+    private IEnumerator SceneTransitionCor(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isLoadGame, bool useFade = true)
     {
         isChangingScene = true;
 
@@ -43,14 +43,17 @@ public class SceneController : MonoBehaviour
 
         // ================= 데이터 저장 =======================
         // 현재 씬의 ISaveable 인터페이스를 가진 컴포넌트를 찾아서 저장
-        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
-
-        foreach (var saveable in saveables)
+        if (!isLoadGame)
         {
-            saveable.SaveData();
+            var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+            foreach (var saveable in saveables)
+            {
+                saveable.SaveData();
+            }
+            Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
+
         }
 
-        Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
         // ===================================================
 
         // 씬 로드
@@ -74,14 +77,14 @@ public class SceneController : MonoBehaviour
 
     #region Additive Load Scene
 
-    public void AddSceneAndMoveTo(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isExiting)
+    public void AddSceneAndMoveTo(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isExiting, bool isLoadGame = false)
     {
         if (isChangingScene) return;
 
-        StartCoroutine(AdditiveLoadCor(sceneName.ToString(), spawnPointID, isExiting, true));
+        StartCoroutine(AdditiveLoadCor(sceneName.ToString(), spawnPointID, isExiting, isLoadGame));
     }
 
-    private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting, bool useFade = true)
+    private IEnumerator AdditiveLoadCor(string sceneName, SPAWN_ID spawnPointID, bool isExiting, bool isLoadGame, bool useFade = true)
     {
         isChangingScene = true;
 
@@ -90,14 +93,15 @@ public class SceneController : MonoBehaviour
 
         // ================= 데이터 저장 =======================
         // 현재 씬의 ISaveable 인터페이스를 가진 컴포넌트를 찾아서 저장
-        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
-
-        foreach (var saveable in saveables)
+        if (!isLoadGame)
         {
-            saveable.SaveData();
+            var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+            foreach (var saveable in saveables)
+            {
+                saveable.SaveData();
+            }
+            Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
         }
-
-        Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
         // ===================================================
 
 
@@ -151,18 +155,18 @@ public class SceneController : MonoBehaviour
 
     #endregion
 
-    public void ChangeSceneAndAddScene(SCENE_NAME changeSceneName, SCENE_NAME addSceneName, SPAWN_ID spawnPos)
+    public void ChangeSceneAndAddScene(SCENE_NAME changeSceneName, SCENE_NAME addSceneName, SPAWN_ID spawnPos, bool isLoadGame = false)
     {
-        StartCoroutine(ChangeAndAddCor(changeSceneName, addSceneName, spawnPos));
+        StartCoroutine(ChangeAndAddCor(changeSceneName, addSceneName, spawnPos, isLoadGame));
     }
 
-    private IEnumerator ChangeAndAddCor(SCENE_NAME baseScene, SCENE_NAME additiveScene, SPAWN_ID targetID)
+    private IEnumerator ChangeAndAddCor(SCENE_NAME baseScene, SCENE_NAME additiveScene, SPAWN_ID targetID, bool isLoadGame)
     {
         InputControlManager.Instance.LockInput();
         yield return FadeUIManager.Instance.FadeOut();
 
-        yield return StartCoroutine(SceneTransitionCor(baseScene, SPAWN_ID.NONE, false));
-        yield return StartCoroutine(AdditiveLoadCor(additiveScene.ToString(), targetID, false, false));
+        yield return StartCoroutine(SceneTransitionCor(baseScene, SPAWN_ID.NONE, isLoadGame, false));
+        yield return StartCoroutine(AdditiveLoadCor(additiveScene.ToString(), targetID, false, true, false));
 
         yield return FadeUIManager.Instance.FadeIn();
         InputControlManager.Instance.UnlockInput();

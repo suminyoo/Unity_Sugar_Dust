@@ -28,12 +28,14 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
 
         if (currentState == MyShopState.TOWN_MODE)
         {
+            if (!GameManager.Instance.CanShop()) return;
+
             popupMsg = "영업을 시작하겠습니까?";
 
             popupMsg = "영업을 시작하겠습니까?";
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
-                () => { StartBusiness(); } // ★ 깔끔해진 호출
+                () => { StartBusiness(); }
             );
             return;
         }
@@ -58,12 +60,13 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
 
     public void StartBusiness()
     {
-        MyShopManager.IsShopMode = true;
-        SceneController.Instance.ChangeScene(SCENE_NAME.MY_SHOP, SPAWN_ID.MYSHOP_OPEN);
+        GameManager.Instance.StartShop();
     }
 
     public void FinishBusiness()
     {
+        GameManager.Instance.EndShop();
+
         if (currentState == MyShopState.SHOP_OPEN)
         {
             MyShopManager.Instance.ForceEarlyClose();

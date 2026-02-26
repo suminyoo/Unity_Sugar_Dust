@@ -29,7 +29,15 @@ public class SkyDomeController : MonoBehaviour
         GameManager.OnTimeChanged -= HandleTimeChange;
     }
 
-    private void HandleTimeChange(GAME_TIME timeState)
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+        {
+            HandleTimeChange(GameManager.Instance.currentTime, true);
+        }
+    }
+
+    private void HandleTimeChange(GAME_TIME timeState, bool isInstant)
     {
         float targetOffset = 0f;
         float targetSunAlpha = 0f;
@@ -62,7 +70,26 @@ public class SkyDomeController : MonoBehaviour
 
         // 코루틴
         if (currentTransition != null) StopCoroutine(currentTransition);
-        currentTransition = StartCoroutine(SmoothChangeSky(targetOffset, targetSunAlpha, targetMoonAlpha));
+
+        if (isInstant)
+        {
+            ChangeSkyInstantly(targetOffset, targetSunAlpha, targetMoonAlpha);
+        }
+        else
+        {
+            currentTransition = StartCoroutine(SmoothChangeSky(targetOffset, targetSunAlpha, targetMoonAlpha));
+        }
+    }
+
+    // 즉시 적용
+    private void ChangeSkyInstantly(float targetSkyX, float targetSunAlpha, float targetMoonAlpha)
+    {
+        if (skyRenderer != null)
+            skyRenderer.material.mainTextureOffset = new Vector2(targetSkyX % 1.0f, 0);
+
+        if (sunRenderer != null) SetAlpha(sunRenderer, targetSunAlpha);
+        if (moonRenderer != null) SetAlpha(moonRenderer, targetMoonAlpha);
+        if (starRenderer != null) SetAlpha(starRenderer, targetMoonAlpha);
     }
 
     // 부드럽게 변함

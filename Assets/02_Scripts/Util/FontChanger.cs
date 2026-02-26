@@ -4,9 +4,8 @@ using TMPro;
 
 public class FontChanger : EditorWindow
 {
-    public TMP_FontAsset newFont; // 새로 적용할 폰트
+    public TMP_FontAsset newFont;
 
-    // 유니티 상단 메뉴에 [Tools -> 폰트 일괄 변경] 메뉴를 만듭니다.
     [MenuItem("Tools/폰트 일괄 변경")]
     public static void ShowWindow()
     {
@@ -18,12 +17,10 @@ public class FontChanger : EditorWindow
         GUILayout.Label("현재 씬의 모든 TextMeshPro 폰트를 변경합니다.", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        // 폰트를 넣을 수 있는 칸 생성
         newFont = (TMP_FontAsset)EditorGUILayout.ObjectField("새 폰트 에셋", newFont, typeof(TMP_FontAsset), false);
 
         GUILayout.Space(10);
 
-        // 버튼 생성
         if (GUILayout.Button("현재 씬 전체 폰트 바꾸기!"))
         {
             if (newFont != null)
@@ -44,11 +41,10 @@ public class FontChanger : EditorWindow
 
         foreach (TMP_Text txt in allTexts)
         {
-            // 프로젝트 폴더 내의 프리팹 원본이 아닌, 현재 씬에 존재하는 오브젝트만 변경
             if (txt.gameObject.scene.name != null)
             {
                 txt.font = newFont;
-                EditorUtility.SetDirty(txt); // 변경 사항을 유니티에 알림(저장 가능하게)
+                EditorUtility.SetDirty(txt);
                 count++;
             }
         }

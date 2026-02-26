@@ -12,10 +12,12 @@ public class GameSaveManager : MonoBehaviour
 {
     public static GameSaveManager Instance;
 
-    public int currentSaveSlot = 1;
-
     public PlayerData defaultPlayerData;
+
+    public int currentSaveSlot = 1;
     private int selectedExploreLevel;
+
+    public bool isTimerActive = false;
 
     // 씬이 넘어가도 살아있는 데이터 보관함
     public GameData savedData = new GameData();
@@ -27,10 +29,15 @@ public class GameSaveManager : MonoBehaviour
     }
     private void Update()
     {
-        if (savedData != null && savedData.metadata != null)
+        if (isTimerActive && savedData != null && savedData.metadata != null)
         {
             savedData.metadata.playTime += Time.deltaTime;
         }
+    }
+
+    public void SetTimerActive(bool active)
+    {
+        isTimerActive = active;
     }
 
     public void InitData()
@@ -53,8 +60,8 @@ public class GameSaveManager : MonoBehaviour
             Directory.CreateDirectory(directoryPath);
         }
 
-        // 밀어내기 로직 실행 (10개
-        ManageRollingSaves(directoryPath, 10);
+        // 밀어내기 로직 실행 (5개
+        ManageRollingSaves(directoryPath, 5);
 
         // 새 파일 이름 생성
         string fileName = $"Save_{System.DateTime.Now.ToString("yyyyMMdd_HHmmss")}.json";

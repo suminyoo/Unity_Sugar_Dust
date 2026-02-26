@@ -39,7 +39,6 @@ public class GridMapSpawner : MonoBehaviour
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
     private bool[,] gridMap;
 
-
     public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int levelsPerStageData, int levelsPerEnvironment)
     {
         this.currentMapObjects = stageData.mapObjects;
@@ -136,8 +135,9 @@ public class GridMapSpawner : MonoBehaviour
     // 착륙장 배치
     private void SpawnExitObject(int level)
     {
-        //TODO: 착륙장 배치 로직 수정
-        GameObject prefabToSpawn = (level == 1 || level % 5 == 0) ? landingSpotPrefab : defaultLandingSpotPrefab;
+        bool isStation = (level % 5 == 1) && (level % 15 != 0);
+        GameObject prefabToSpawn = isStation ? landingSpotPrefab : defaultLandingSpotPrefab;
+
         if (prefabToSpawn == null) return;
 
         GameObject instance = Instantiate(prefabToSpawn, landingSpotSpawnPoint.position, prefabToSpawn.transform.rotation);
@@ -182,7 +182,6 @@ public class GridMapSpawner : MonoBehaviour
 
     void GenerateWorld(int currentLevel, int environmentInterval)
     {
-        
         if (preLoadedMapEnvironments == null || preLoadedMapEnvironments.Count == 0) return;
         
         int worldIndex = (currentLevel - 1) / environmentInterval;

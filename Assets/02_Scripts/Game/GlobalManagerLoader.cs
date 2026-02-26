@@ -8,7 +8,7 @@ public class GlobalManagerLoader : MonoBehaviour
 
     [Header("Boot Settings")]
     public bool isBootScene = false;
-    private string nextSceneName = "Town";
+    private string nextSceneName = "TITLE";
 
     private void Awake()
     {

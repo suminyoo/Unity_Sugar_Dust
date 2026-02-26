@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState currentState = PlayerState.Idle;
 
     private Vector3 moveInput;
-    private bool isInteracting;
+    //private bool isInteracting;
     private bool isRunning;
     private bool isGrounded;
 
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         currentState = PlayerState.Idle;
         isGrounded = true;
-        isInteracting = false;
+        //isInteracting = false;
         isRunning = false;
 
         rb.velocity = Vector3.zero;

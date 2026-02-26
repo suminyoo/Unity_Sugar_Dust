@@ -12,7 +12,7 @@ public static class ExploreEvents
 public class ExploreManager : MonoBehaviour, ISaveable
 {
     [Header("Exploration Data")]
-    public List<ExploreStageData> stageProfiles; // 레벨별 스테이지 데이터 리스트
+    public List<ExploreStageData> stageProfiles;
     public int currentExplorationLevel;
 
 
@@ -116,9 +116,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
         // 로딩 중에는 시간 멈춤
         isExploreStarted = false;
         InputControlManager.Instance.LockInput();
-
-        //exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
-
         ExploreStageData selectedData = GetStageDataForLevel(level);
 
         if (!isRetry) currentProgressCount = 0;
@@ -173,7 +170,10 @@ public class ExploreManager : MonoBehaviour, ISaveable
     void OnMapReady()
     {
         Debug.Log("맵 준비 완료 신호 수신");
-        exploreLevelText.text = $"탐사 구역 {currentExplorationLevel:00}";
+        int localLevel = (currentExplorationLevel - 1) % levelsPerStageData + 1;
+        string stageName = GetStageDataForLevel(currentExplorationLevel).stageName;
+        exploreLevelText.text = $"{stageName} {localLevel:00}";
+
         UpdateExploreProgressUI();
         if (player != null)
         {

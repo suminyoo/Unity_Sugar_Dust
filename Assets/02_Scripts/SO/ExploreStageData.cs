@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewStageData", menuName = "Explore/Explore Stage Data")]
 
 [Serializable]
 public class SpawnInfo
@@ -16,14 +15,15 @@ public struct DynamicSpawnInfo
 {
     public ExploreObjectData objectData;
 
-    [Tooltip("X축: 레벨(1~15), Y축: 생성 개수")]
+    [Tooltip("X축: 레벨, Y축: 생성 개수")]
     public AnimationCurve spawnRateCurve;
 }
 
+[CreateAssetMenu(fileName = "NewStageData", menuName = "Explore/Explore Stage Data")]
 public class ExploreStageData : ScriptableObject
 {
     [Header("Stage Settings")]
-    public string stageName = "초원 지대";
+    public string stageName;
 
     [Header("Spawn Objects")]
     //public GameObject groundObject;

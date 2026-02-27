@@ -35,11 +35,13 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
     private void OnEnable()
     {
-        GameManager.Instance.OnSleep += FullRecovery; 
+        if(GameManager.Instance != null)
+            GameManager.Instance.OnSleep += FullRecovery; 
     }
     private void OnDisable()
     {
-        GameManager.Instance.OnSleep -= FullRecovery;
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnSleep -= FullRecovery;
     }
 
     private void Awake()

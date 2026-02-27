@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
-
 
 // 두 인벤토리 간의 아이템 이동 및 UI 관리를 담당하는 매니저 클래스   
 public class StorageUIManager : MonoBehaviour
@@ -19,12 +17,12 @@ public class StorageUIManager : MonoBehaviour
 
     public GameObject myShopPanel;
     public GameObject npcShopPanel;
-    public GameObject commonStoragePanel;
+    public GameObject containerPanel;
 
     [Header("Target UIs ")] //상대스토리지가 사용할 ui들
     public InventoryUI myShopUI;
     public InventoryUI npcShopUI;
-    public InventoryUI commonStorageUI; // 일반 상자용 UI
+    public InventoryUI containerUI; // 일반 상자용 UI
 
     // UI 전체를 감싸는 부모 오브젝트 (배경 등)
 
@@ -51,7 +49,7 @@ public class StorageUIManager : MonoBehaviour
         // 시작할 때 모든 상대방 UI 비활성화
         if (myShopUI) myShopUI.gameObject.SetActive(false);
         if (npcShopUI) npcShopUI.gameObject.SetActive(false);
-        if (commonStorageUI) commonStorageUI.gameObject.SetActive(false);
+        if (containerUI) containerUI.gameObject.SetActive(false);
 
     }
 
@@ -80,7 +78,7 @@ public class StorageUIManager : MonoBehaviour
 
     // 외부(Storage)에서 호출해서 UI 열기
     // TODO: uiType -  Enum을 써서 상자별 다른 ui를 열도록 확장 가능
-    public void OpenStorage(InventoryHolder other,  string shopType = "Common", Action onClosed = null)
+    public void OpenStorage(InventoryHolder other, InventoryContext shopType, Action onClosed = null)
     {
         _currentOtherHolder = other;
 
@@ -104,25 +102,25 @@ public class StorageUIManager : MonoBehaviour
         // 타입에 따라 UI 패널 선택
         switch (shopType)
         {
-            case "MyShop":
+            case InventoryContext.MyShop:
                 _currentOtherUI = myShopUI;
                 _currentOtherPanel = myShopPanel;
                 if (other is IShopSource source)
                     _currentOtherUI.InitShopMode(source, InventoryContext.MyShop);
                 break;
                 
-            case "Weapon":
+            case InventoryContext.NPCShop:
                 _currentOtherUI = npcShopUI;
                 _currentOtherPanel = npcShopPanel;
                 if (other is IShopSource npcSource)
                     _currentOtherUI.InitShopMode(npcSource, InventoryContext.NPCShop);
                 break;
 
-            case "Common":
-                _currentOtherUI = commonStorageUI;
-                _currentOtherPanel = commonStoragePanel;
+            case InventoryContext.Container:
+                _currentOtherUI = containerUI;
+                _currentOtherPanel = containerPanel;
                 if (_currentOtherUI != null)
-                    _currentOtherUI.contextType = InventoryContext.Chest;
+                    _currentOtherUI.contextType = InventoryContext.Container;
                 break;
 
         }
@@ -143,7 +141,7 @@ public class StorageUIManager : MonoBehaviour
     {
         if (myShopPanel) myShopPanel.SetActive(false);
         if (npcShopPanel) npcShopPanel.SetActive(false);
-        if (commonStoragePanel) commonStoragePanel.SetActive(false);
+        if (containerPanel) containerPanel.SetActive(false);
     }
 
     public void CloseStorage()

@@ -6,8 +6,6 @@ using UnityEngine;
 public class PlayerInventory : InventoryHolder, ISaveable
 {
     #region Variables
-
-    public PlayerData playerData; // SO 연결 필요
     public MouseItemData mouseItemData;
     public InventoryUI inventoryUI;
 
@@ -61,9 +59,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         var data = GameSaveManager.Instance.LoadPlayerInventory();
 
-        // 새로 만들기
-        int size = playerData.GetInventorySize(data.size);
-        inventorySystem = new InventorySystem(size);
+        inventorySystem = new InventorySystem(data.size);
 
         // 데이터 채우기
         var savedSlots = data.slots;

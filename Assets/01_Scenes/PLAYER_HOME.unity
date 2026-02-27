@@ -4884,6 +4884,7 @@ GameObject:
   - component: {fileID: 5211389526414946798}
   - component: {fileID: 3625937995011193184}
   - component: {fileID: 7950426738744296646}
+  - component: {fileID: 8232547030601181072}
   m_Layer: 0
   m_Name: Wardrobe 2
   m_TagString: Untagged
@@ -4891,6 +4892,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8232547030601181072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232547030601181071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75123698728445045a8320b0b56ebd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPosition: {fileID: 0}
+  inventorySystem:
+    slots: []
+    maxSlots: 0
+  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
+  inventoryUI: {fileID: 0}
+  playerInventory: {fileID: 0}
 --- !u!65 &8454334345026892201
 BoxCollider:
   m_ObjectHideFlags: 0

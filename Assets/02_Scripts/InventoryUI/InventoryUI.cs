@@ -11,7 +11,7 @@ public interface IShopSource
 public enum InventoryContext
 {
     Player,     // 플레이어 가방 (사용/장착)
-    Chest,      // 보관함 (이동)
+    Container,      // 보관함 (이동)
     MyShop,     // 내 진열대 (가격 설정, 판매 취소)
     NPCShop     // 남의 상점 (구매)
 }
@@ -202,7 +202,7 @@ public class InventoryUI : MonoBehaviour
         switch (contextType)
         {
             case InventoryContext.Player:
-            case InventoryContext.Chest:
+            case InventoryContext.Container:
                 // 플레이어나 상자: 정보창
                 ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData);
                 break;

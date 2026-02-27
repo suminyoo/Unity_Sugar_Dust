@@ -5,8 +5,6 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 {
     #region Variables & Data
 
-    public PlayerData playerData; // SO 
-
     private List<Transform> displayPoints = new List<Transform>();
     private List<GameObject> spawnedVisualItems = new List<GameObject>();
     private List<GameObject> spawnedStandObjects = new List<GameObject>();
@@ -27,7 +25,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     public void OnInteract()
     {
-        StorageUIManager.Instance.OpenStorage(this, "MyShop");
+        StorageUIManager.Instance.OpenStorage(this, InventoryContext.MyShop);
     }
     #endregion
 
@@ -328,8 +326,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         var data = GameSaveManager.Instance.LoadDisplayStand();
 
         // 새로 만들기
-        int size = playerData.GetDisplayStandSize(data.size);
-        inventorySystem = new InventorySystem(size);
+        inventorySystem = new InventorySystem(data.size);
 
         // 시스템이 바뀌었으니, 이벤트도 새 시스템에 재연결
         // 기존 연결 해제 후 다시 연결

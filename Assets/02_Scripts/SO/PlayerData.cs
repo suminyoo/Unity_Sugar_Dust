@@ -21,11 +21,13 @@ public class PlayerData : ScriptableObject
     [Header("Storages")]
     public int[] inventorySizes = { 6, 8, 10, 12 };
     public int[] displayStandSizes = { 3, 5, 7, 9 };
+    public int[] containerBoxSizes = { 30, 50, 70, 90 };
 
     public float GetMaxHpValue(int level) => GetValueSafe(hpLevels, level);
     public float GetMaxStaminaValue(int level) => GetValueSafe(staminaLevels, level);
     public int GetInventorySize(int level) => (int)GetValueSafe(inventorySizes, level);
     public int GetDisplayStandSize(int level) => (int)GetValueSafe(displayStandSizes, level);
+    public int GetContainerBoxSize(int level) => (int)GetValueSafe(containerBoxSizes, level);
 
     private float GetValueSafe(System.Array array, int level)
     {

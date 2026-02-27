@@ -30,6 +30,7 @@ public class GameData
     public int staminaLevel = 0;
     public int inventorySizeLevel = 0;
     public int displayStandSizeLevel = 0;
+    public int containerSizeLevel = 0;
 
     // 플레이어 
     public float currentHp;
@@ -49,10 +50,8 @@ public class GameData
     public List<ItemSaveData> displayStandSlots = new List<ItemSaveData>();
     public List<int> displayStandPrices = new List<int>(); //진열대 별 가격
 
-    // 씬 내 스토리지(진열대나 상자 등 여러개가 존재하는 스토리지) 데이터 저장소
-    // 키는 스트링으로 고유 아이디 값은 itemslotlist
-    public Dictionary<string, List<InventorySlot>> worldStorageData = new Dictionary<string, List<InventorySlot>>();
-
+    // 컨테이너 박스
+    public List<ItemSaveData> containerSlots = new List<ItemSaveData>();
 
     public void InitNewGame(PlayerData blueprint)
     {
@@ -66,6 +65,7 @@ public class GameData
         staminaLevel = 0;
         inventorySizeLevel = 0;
         displayStandSizeLevel = 0;
+        containerSizeLevel = 0;
 
         currentHp = blueprint.GetMaxHpValue(0);
         currentStamina = blueprint.GetMaxStaminaValue(0);
@@ -82,7 +82,9 @@ public class GameData
         displayStandSlots = new List<ItemSaveData>();
         for (int i = 0; i < dsSize; i++) displayStandSlots.Add(new ItemSaveData());
 
-        //if (worldStorageData != null) worldStorageData.Clear();
-        //else worldStorageData = new Dictionary<string, List<InventorySlot>>();
+        int cbSize = blueprint.GetContainerBoxSize(this.containerSizeLevel);
+        containerSlots = new List<ItemSaveData>();
+        for (int i = 0; i < cbSize; i++) containerSlots.Add(new ItemSaveData());
+
     }
 }

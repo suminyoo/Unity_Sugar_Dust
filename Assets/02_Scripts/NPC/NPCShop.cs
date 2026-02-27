@@ -6,7 +6,7 @@ public class NPCShop : InventoryHolder, IShopSource
     public ShopData shopData; // 사용할 상점 데이터
 
     [Header("Settings")]
-    private string uiShopType = "Weapon";
+    private InventoryContext uiShopType = InventoryContext.NPCShop;
 
     protected override void Awake()
     {
@@ -117,5 +117,5 @@ public class NPCShop : InventoryHolder, IShopSource
         return i >= 0 && i < shopData.itemsForSale.Count;
     }
 
-    public string GetShopType() => uiShopType;
+    public InventoryContext GetShopType() => uiShopType;
 }

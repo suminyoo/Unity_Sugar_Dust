@@ -191,7 +191,8 @@ public class GameSaveManager : MonoBehaviour
             }
         }
 
-        return (savedData.inventorySizeLevel, loadedSlots);
+        int inventorySize = defaultPlayerData.GetInventorySize(savedData.inventorySizeLevel);
+        return (inventorySize, loadedSlots);
     }
     #endregion
 
@@ -234,49 +235,45 @@ public class GameSaveManager : MonoBehaviour
                 loadedSlots.Add(new InventorySlot(item, savedSlot.amount)); // 복구된 슬롯
             }
         }
-        return (savedData.displayStandSizeLevel, loadedSlots, savedData.displayStandPrices);
+        int displayStandSize = defaultPlayerData.GetDisplayStandSize(savedData.displayStandSizeLevel);
+        return (displayStandSize, loadedSlots, savedData.displayStandPrices);
     }
 
     #endregion
 
     #region 상자 데이터 세이브로드
 
-    // 세이브
-    public void SaveWorldStorage(string objectID, IReadOnlyList<InventorySlot> slots)
+    public void SaveContainerBox(IReadOnlyList<InventorySlot> slots)
     {
-        if (string.IsNullOrEmpty(objectID)) return;
-
-        // 딕셔너리에 들어갈 새로운 리스트 생성 (깊은 복사)
-        List<InventorySlot> slotsToSave = new List<InventorySlot>();
+        savedData.containerSlots.Clear();
         foreach (var slot in slots)
         {
-            slotsToSave.Add(new InventorySlot(slot.ItemData, slot.Amount));
+            // 빈 슬롯이면 아이디를 비워둠
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID;
+            savedData.containerSlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
-
-        // 딕셔너리에 저장 (이미 있으면 덮어쓰기)
-        if (savedData.worldStorageData.ContainsKey(objectID))
-        {
-            savedData.worldStorageData[objectID] = slotsToSave;
-        }
-        else
-        {
-            savedData.worldStorageData.Add(objectID, slotsToSave);
-        }
-
-        Debug.Log($"오브젝트 저장 완료: {objectID}");
     }
 
-    // 로드 (아이디에 해당하는 데이터로드
-    public List<InventorySlot> LoadWorldStorage(string objectID)
+    public (int size, List<InventorySlot> slots) LoadContainerBox()
     {
-        if (string.IsNullOrEmpty(objectID)) return null;
+        List<InventorySlot> loadedSlots = new List<InventorySlot>();
 
-        if (savedData.worldStorageData.ContainsKey(objectID))
+        foreach (var savedSlot in savedData.containerSlots)
         {
-            return savedData.worldStorageData[objectID];
+            if (string.IsNullOrEmpty(savedSlot.itemID))
+            {
+                // 빈 슬롯 복원
+                loadedSlots.Add(new InventorySlot());
+            }
+            else
+            {
+                // ItemManager에게 저장된 ID로 SO 요청
+                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                loadedSlots.Add(new InventorySlot(item, savedSlot.amount));
+            }
         }
-
-        return null; // 데이터 없음
+        int containerSize = defaultPlayerData.GetContainerBoxSize(savedData.containerSizeLevel);
+        return (containerSize, loadedSlots);
     }
 
     #endregion

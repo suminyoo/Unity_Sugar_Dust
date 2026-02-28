@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : MonoBehaviour
+public class SaveLoadUIManager : MonoBehaviour
 {
     public SaveSlotUI[] saveSlots;
 
@@ -147,6 +147,8 @@ public class TitleManager : MonoBehaviour
 
         GameSaveManager.Instance.currentSaveSlot = slotNum;
         GameSaveManager.Instance.SetTimerActive(true);
+
+        GameManager.Instance.ResumeGameTime();
 
         Debug.Log($"파일 로드 완료: {fullPath}");
 

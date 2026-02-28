@@ -13,10 +13,10 @@ public class SaveSlotUI : MonoBehaviour
     public int slotNumber;
     public bool isSubSlot = false;
     private string fullFilePath;
-    private TitleManager titleManager;
+    private SaveLoadUIManager titleManager;
     private Button myButton;
 
-    public void UpdateSlotUI(SaveMetadata data, string path = "", TitleManager manager = null, bool isSub = false)
+    public void UpdateSlotUI(SaveMetadata data, string path = "", SaveLoadUIManager manager = null, bool isSub = false)
     {
         fullFilePath = path;
         titleManager = manager;

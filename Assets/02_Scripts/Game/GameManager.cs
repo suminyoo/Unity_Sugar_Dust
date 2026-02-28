@@ -29,6 +29,18 @@ public class GameManager : MonoBehaviour, ISaveable
         ApplyLoadedData();
     }
 
+    public void PauseGameTime()
+    {
+        Time.timeScale = 0f;
+        // 멈출때 음악이 작아진다던지
+
+    }
+
+    public void ResumeGameTime()
+    {
+        Time.timeScale = 1f;
+    }
+
     public void ApplyLoadedData()
     {
         if (GameSaveManager.Instance != null)

@@ -43,15 +43,6 @@ public class GameManager : MonoBehaviour, ISaveable
         }
     }
 
-    // 임시 디버깅용 (시간 조작)
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeTime(GAME_TIME.Morning);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeTime(GAME_TIME.Day);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeTime(GAME_TIME.Evening);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeTime(GAME_TIME.Night);
-    }
-
     public void ChangeTime(GAME_TIME newTime, bool isInstant = true)
     {
         currentTime = newTime;

@@ -24,6 +24,7 @@ public class ExploreStageData : ScriptableObject
 {
     [Header("Stage Settings")]
     public string stageName;
+    public int timeLimit;
 
     [Header("Spawn Objects")]
     //public GameObject groundObject;

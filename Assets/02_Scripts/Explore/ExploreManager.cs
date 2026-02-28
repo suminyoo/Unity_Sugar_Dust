@@ -11,25 +11,22 @@ public static class ExploreEvents
 
 public class ExploreManager : MonoBehaviour, ISaveable
 {
-    [Header("Exploration Data")]
-    public List<ExploreStageData> stageProfiles;
-    public int currentExplorationLevel;
-
+    [Header("References")]
+    private PlayerController player;
+    public GridMapSpawner mapSpawner;
+    private SPAWN_ID playerSpawnPointID = SPAWN_ID.EXPLORE_START;
+    public ExploreConfigData exploreConfig;
 
     [Header("Exploration Settings")]
-    public float timeLimit = 300f;
-    public int levelsPerStageData = 15;    // 스테이지 데이터 변경 주기
-    public int levelsPerEnvironment = 30;  // 월드 배경 변경 주기
+
+    private int currentExplorationLevel;
+    private float maxTimeLimit;
 
     private float currentTime;
     private bool isExplorationEnded = false;
     private bool isExploreStarted = false;
     private bool isExploreSuccess = false;
 
-    [Header("References")]
-    private PlayerController player;
-    public GridMapSpawner mapSpawner;
-    private SPAWN_ID playerSpawnPointID = SPAWN_ID.EXPLORE_START;
 
     [Header("UI")]
     public TextMeshProUGUI timerText;
@@ -53,7 +50,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private int currentProgressCount;
     private float currentSuccessProb;
     private bool isRetrying = false;
-
 
     private void OnEnable()
     {
@@ -84,14 +80,14 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (resultUIPanel != null) resultUIPanel.SetActive(false);
 
-        currentTime = timeLimit;
-
         // 저장된 레벨 불러오기
         if (GameSaveManager.Instance != null)
             currentExplorationLevel = GameSaveManager.Instance.LoadSelectedExploreLevel();
         else
-            currentExplorationLevel = 1; 
-        
+            currentExplorationLevel = 0;
+
+        maxTimeLimit = exploreConfig.GetStageData(currentExplorationLevel).timeLimit;
+        currentTime = maxTimeLimit;
 
         LoadStage(currentExplorationLevel);
     }
@@ -121,22 +117,20 @@ public class ExploreManager : MonoBehaviour, ISaveable
         // 로딩 중에는 시간 멈춤
         isExploreStarted = false;
         InputControlManager.Instance.LockInput();
-        ExploreStageData selectedData = GetStageDataForLevel(level);
+        ExploreStageData selectedData = exploreConfig.GetStageData(level);
 
         if (!isRetry) currentProgressCount = 0;
 
         CalculateProgressTargetCount(selectedData);
 
-        mapSpawner.InitAndGenerateMap(selectedData, level, player, levelsPerStageData, levelsPerEnvironment);
-
+        mapSpawner.InitAndGenerateMap(selectedData, level, player, exploreConfig.levelsPerStageData, exploreConfig.levelsPerEnvironment);
         //UpdateExploreStateUI();
     }
 
     void CalculateProgressTargetCount(ExploreStageData data)
     {
         targetProgressCount = 0;
-        int localLevelIndex = (currentExplorationLevel - 1) % levelsPerStageData + 1;
-
+        int localLevelIndex = exploreConfig.GetLocalLevel(currentExplorationLevel);
         // 진척도를 위한 광물 개수
         foreach (var info in data.mineralObjects)
             targetProgressCount += Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
@@ -157,26 +151,12 @@ public class ExploreManager : MonoBehaviour, ISaveable
         UpdateExploreProgressUI();
     }
 
-    ExploreStageData GetStageDataForLevel(int level)
-    {
-        int index = (level - 1) / levelsPerStageData;
-
-        if (stageProfiles != null && index < stageProfiles.Count)
-        {
-            return stageProfiles[index];
-        }
-
-        // 데이터가 모자라면 마지막 데이터 사용
-        if (stageProfiles.Count > 0) return stageProfiles[stageProfiles.Count - 1];
-
-        return null;
-    }
-
     void OnMapReady()
     {
         Debug.Log("맵 준비 완료 신호 수신");
-        int localLevel = (currentExplorationLevel - 1) % levelsPerStageData + 1;
-        string stageName = GetStageDataForLevel(currentExplorationLevel).stageName;
+
+        int localLevel = exploreConfig.GetLocalLevel(currentExplorationLevel);
+        string stageName = exploreConfig.GetStageData(currentExplorationLevel).stageName;
         exploreLevelText.text = $"{stageName} {localLevel:00}";
 
         UpdateExploreProgressUI();
@@ -393,7 +373,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     }
 
     public float GetCurrentTime() => currentTime;
-    public float GetTimeLimit() => timeLimit;
+    public float GetTimeLimit() => maxTimeLimit;
 
     #endregion 
 

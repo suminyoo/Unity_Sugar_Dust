@@ -1313,19 +1313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fdd0b7fead467b4989cf5a15ad524d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageProfiles:
-  - {fileID: 11400000, guid: 7715580e8302355449955a4df312c7d1, type: 2}
-  - {fileID: 11400000, guid: cd76482babbee534ab90db99c071cfc8, type: 2}
-  - {fileID: 11400000, guid: cfcc753ec399bfa4898d732244621b69, type: 2}
-  - {fileID: 11400000, guid: 35c2e4e20ed4f374bac3cbc32de2886f, type: 2}
-  - {fileID: 11400000, guid: 63f9bc0461fe7084e89dc51555852fac, type: 2}
-  - {fileID: 11400000, guid: 25e28042f5ba3344dbe93be717a3d639, type: 2}
-  - {fileID: 11400000, guid: 5d2633788c6de314d9011ea0d8112d44, type: 2}
-  currentExplorationLevel: 0
-  timeLimit: 300
-  levelsPerStageData: 15
-  levelsPerEnvironment: 30
   mapSpawner: {fileID: 1661169971}
+  exploreConfig: {fileID: 11400000, guid: 199d1f944b0b896479c7e1d82c3ddb5c, type: 2}
   timerText: {fileID: 631926681}
   exploreLevelText: {fileID: 90551440}
   explorePathText: {fileID: 1476694574}

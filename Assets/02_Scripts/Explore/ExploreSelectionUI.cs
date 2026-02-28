@@ -1,15 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
+using System;
 
 public class ExploreSelectionUI : MonoBehaviour
 {
-    public List<ExploreStageData> stageProfiles;
-    public int levelsPerStageData = 15;
-    public int levelsPerEnvironment = 30;
-    public float defaultTimeLimit = 300f;
+    public event Action<int> OnLevelSelectedEvent;
 
+    public ExploreConfigData exploreConfig;
 
     [Header("Environment Selection")]
     [SerializeField] private Button[] environmentButtons;
@@ -22,17 +20,36 @@ public class ExploreSelectionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeLimitText;
     [SerializeField] private Button startExplorationButton;
 
-    private int selectedLevelNumber = -1;
+    public int selectedLevelNumber = -1;
+
+    private void Update()
+    {
+        if (exploreLevelSelectPanel != null && exploreLevelSelectPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ClosePanel();
+            }
+        }
+    }
 
     public void OpenPanel()
     {
         exploreLevelSelectPanel.SetActive(true);
         RefreshEnvironmentButtons();
 
-        foreach (var map in mapImages) map.SetActive(false);
-        infoPanel.SetActive(false);
-        startExplorationButton.interactable = false;
-        selectedLevelNumber = -1;
+        int maxUnlocked = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+        if (maxUnlocked < 1) maxUnlocked = 1;
+
+        int mapIndex = (maxUnlocked - 1) / exploreConfig.levelsPerEnvironment;
+
+        if (mapImages.Length > 0)
+        {
+            mapIndex = Mathf.Clamp(mapIndex, 0, mapImages.Length - 1);
+            OnClickEnvironment(mapIndex);
+        }
+
+        OnSelectLevel(maxUnlocked);
     }
 
     private void RefreshEnvironmentButtons()
@@ -41,7 +58,7 @@ public class ExploreSelectionUI : MonoBehaviour
 
         for (int i = 0; i < environmentButtons.Length; i++)
         {
-            int envStartLevel = (i * levelsPerEnvironment) + 1;
+            int envStartLevel = (i * exploreConfig.levelsPerEnvironment);
             environmentButtons[i].interactable = maxUnlocked >= envStartLevel;
         }
     }
@@ -56,51 +73,42 @@ public class ExploreSelectionUI : MonoBehaviour
 
         infoPanel.SetActive(false);
         startExplorationButton.interactable = false;
+
+        int firstLevelOfEnv = (index * exploreConfig.levelsPerEnvironment);
+        OnSelectLevel(firstLevelOfEnv);
     }
 
     public void OnSelectLevel(int levelNum)
     {
-        int maxUnlocked = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
-
-        if (levelNum > maxUnlocked)
-        {
-            NotificationUIManager.Instance.ShowNotification("아직 갈 수 없는 구역입니다.");
-            return;
-        }
-
-        selectedLevelNumber = levelNum;
-        ExploreStageData data = GetStageDataForLevel(levelNum);
+        ExploreStageData data = exploreConfig.GetStageData(levelNum);
 
         if (data != null)
         {
             infoPanel.SetActive(true);
-            int localLevel = (levelNum - 1) % levelsPerStageData + 1;
+            int localLevel = exploreConfig.GetLocalLevel(levelNum);
+            int minutes = (int)data.timeLimit / 60;
+            int seconds = (int)data.timeLimit % 60;
 
-            levelNameText.text = $"{data.stageName} {localLevel:00}";
-            timeLimitText.text = $"제한 시간: {defaultTimeLimit}초";
+            levelNameText.text = $"{data.stageName} {localLevel:00} 구역";
+            timeLimitText.text = $"일몰까지 예상시간 {minutes:D2}:{seconds:D2}";
+
+            selectedLevelNumber = levelNum;
 
             startExplorationButton.interactable = true;
+
+            OnLevelSelectedEvent?.Invoke(levelNum);
         }
-    }
-    private ExploreStageData GetStageDataForLevel(int level)
-    {
-        int index = (level - 1) / levelsPerStageData;
-
-        if (stageProfiles != null && index < stageProfiles.Count)
-            return stageProfiles[index];
-
-        if (stageProfiles.Count > 0)
-            return stageProfiles[stageProfiles.Count - 1];
-
-        return null;
     }
 
     public void OnExploreStart()
     {
-        if (selectedLevelNumber > 0)
+        if (selectedLevelNumber >= 0)
         {
+            ExploreStageData data = exploreConfig.GetStageData(selectedLevelNumber);
+            int localLevel = exploreConfig.GetLocalLevel(selectedLevelNumber);
+
             CommonConfirmPopup.Instance.OpenPopup(
-                $"{selectedLevelNumber:00} 구역 탐사를 시작하시겠습니까?",
+                $"{data.stageName} {localLevel:00} 구역 탐사를 시작하시겠습니까?",
                 () => {
                     GameSaveManager.Instance.SaveSelectedExploreLevel(selectedLevelNumber);
                     GameManager.Instance.StartExploration(selectedLevelNumber);

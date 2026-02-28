@@ -16,9 +16,10 @@ public class MyShopManager : MonoBehaviour
     public OpenCloseMyShop openCloseInteraction;
     public ClosingReceiptUI closingReceiptUI;
 
-    public TextMeshProUGUI timerText;
-
     public static bool IsShopMode = false; // 씬 체인지로 영업모드로 바뀔때
+
+    public float GetCurrentTime() => currentTime;
+    public float GetTimeLimit() => businessDuration;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class MyShopManager : MonoBehaviour
     {
         if (IsShopOpen)
         {
-            UpdateTimeUI();
+            currentTime -= Time.deltaTime;
 
             if (currentTime <= 0)
             {
@@ -52,23 +53,10 @@ public class MyShopManager : MonoBehaviour
             }
         }
     }
-    public void UpdateTimeUI()
-    {
-        currentTime -= Time.deltaTime;
 
-        if (timerText != null)
-        {
-            float displayTime = Mathf.Max(currentTime, 0);
-            int minutes = Mathf.FloorToInt(displayTime / 60F);
-            int seconds = Mathf.FloorToInt(displayTime % 60F);
-            timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
-        }
-    }
     private void TempShopMode()
     {
         IsShopOpen = false;
-        if (timerText != null) timerText.text = "";
-
     }
 
     public void RealShopMode()
@@ -89,8 +77,6 @@ public class MyShopManager : MonoBehaviour
     {
         if (!IsShopOpen) return;
         IsShopOpen = false;
-
-        if (timerText != null) timerText.text = "CLOSED";
 
         NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
 

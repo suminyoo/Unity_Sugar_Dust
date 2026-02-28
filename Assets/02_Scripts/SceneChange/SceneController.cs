@@ -2,10 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
+using System;
 
 
 public class SceneController : MonoBehaviour
 {
+    public static event Action OnScreenFadedOut;
+
     public static SceneController Instance;
 
     private bool isChangingScene = false;
@@ -37,6 +40,8 @@ public class SceneController : MonoBehaviour
 
         if (useFade) InputControlManager.Instance.LockInput();
         if (useFade) yield return FadeUIManager.Instance.FadeOut();
+
+        OnScreenFadedOut?.Invoke();
 
         // 이동할 목적지 ID
         targetSpawnPointID = spawnPointID;

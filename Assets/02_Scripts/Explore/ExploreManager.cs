@@ -29,7 +29,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
 
     [Header("UI")]
-    public TextMeshProUGUI timerText;
     public TextMeshProUGUI exploreLevelText;
     public TextMeshProUGUI explorePathText;
 
@@ -74,7 +73,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
         ExploreEndSpot.OnPlayerReturnToTown += ExploreSuccess; //동적으로 생성되는 오브젝트
         ExploreToTownPoint.OnPlayerReturnToTown += ExploreSuccess;
         mapSpawner.OnMapGenerationComplete += OnMapReady;
-        if(timerText == null) timerText = GameObject.FindGameObjectWithTag("ClockText").GetComponent<TextMeshProUGUI>();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -97,8 +95,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         if (isExplorationEnded) return;
         if (!isExploreStarted) return;
 
-        UpdateTimeUI();
-
+        currentTime -= Time.deltaTime;
 
         //시간 초과 체크
         if (currentTime <= 0)
@@ -123,7 +120,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         CalculateProgressTargetCount(selectedData);
 
-        mapSpawner.InitAndGenerateMap(selectedData, level, player, exploreConfig.levelsPerStageData, exploreConfig.levelsPerEnvironment);
+        mapSpawner.InitAndGenerateMap(selectedData, level, player);
         //UpdateExploreStateUI();
     }
 
@@ -207,20 +204,6 @@ public class ExploreManager : MonoBehaviour, ISaveable
     }
 
     #region UI
-
-    public void UpdateTimeUI()
-    {
-        //시간 감소
-        currentTime -= Time.deltaTime;
-
-        if (timerText != null)
-        {
-            float displayTime = Mathf.Max(currentTime, 0);
-            int minutes = Mathf.FloorToInt(displayTime / 60F);
-            int seconds = Mathf.FloorToInt(displayTime % 60F);
-            timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
-        }
-    }
 
     public void UpdateExploreProgressUI()
     {

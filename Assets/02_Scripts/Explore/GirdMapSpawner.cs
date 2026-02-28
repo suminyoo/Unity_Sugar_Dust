@@ -29,6 +29,7 @@ public class GridMapSpawner : MonoBehaviour
     public GameObject defaultLandingSpotPrefab;
 
     private PlayerController playerRef;
+    public ExploreConfigData exploreConfig;
 
     [Header("UI")]
     //public GameObject loadingPanel;
@@ -39,19 +40,18 @@ public class GridMapSpawner : MonoBehaviour
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
     private bool[,] gridMap;
 
-    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player, int levelsPerStageData, int levelsPerEnvironment)
+    public void InitAndGenerateMap(ExploreStageData stageData, int currentLevel, PlayerController player)
     {
         this.currentMapObjects = stageData.mapObjects;
         this.currentMineralObjects = stageData.mineralObjects;
         this.currentEnemyObjects = stageData.enemyObjects;
-
         this.playerRef = player;
 
         StopAllCoroutines();
-        StartCoroutine(GenerateMapRoutine(currentLevel, levelsPerStageData, levelsPerEnvironment));
+        StartCoroutine(GenerateMapRoutine(currentLevel));
     }
 
-    private IEnumerator GenerateMapRoutine(int currentLevel, int levelsPerStageData, int levelsPerEnvironment)
+    private IEnumerator GenerateMapRoutine(int currentLevel)
     {
         yield return null;
         yield return FadeUIManager.Instance.FadeOut();
@@ -69,7 +69,7 @@ public class GridMapSpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);  //연출용 지연
 
         // ---맵 생성---
-        GenerateWorld(currentLevel, levelsPerEnvironment);
+        GenerateWorld(currentLevel); 
         yield return null;
 
         // --- 착륙장 배치 ---
@@ -86,7 +86,7 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
-        int localLevelIndex = (currentLevel - 1) % levelsPerStageData + 1;
+        int localLevelIndex = exploreConfig.GetLocalLevel(currentLevel);
 
         // --- 광물 배치 ---
         if (currentMineralObjects != null)
@@ -135,7 +135,7 @@ public class GridMapSpawner : MonoBehaviour
     // 착륙장 배치
     private void SpawnExitObject(int level)
     {
-        bool isStation = (level % 5 == 1) && (level % 15 != 0);
+        bool isStation = (level % 5 == 0);
         GameObject prefabToSpawn = isStation ? landingSpotPrefab : defaultLandingSpotPrefab;
 
         if (prefabToSpawn == null) return;
@@ -180,13 +180,12 @@ public class GridMapSpawner : MonoBehaviour
         }
     }
 
-    void GenerateWorld(int currentLevel, int environmentInterval)
+    void GenerateWorld(int currentLevel)
     {
         if (preLoadedMapEnvironments == null || preLoadedMapEnvironments.Count == 0) return;
-        
-        int worldIndex = (currentLevel - 1) / environmentInterval;
-        worldIndex = Mathf.Clamp(worldIndex, 0, preLoadedMapEnvironments.Count - 1);
 
+        int worldIndex = currentLevel / exploreConfig.levelsPerEnvironment;
+        worldIndex = Mathf.Clamp(worldIndex, 0, preLoadedMapEnvironments.Count - 1);
 
         // 미리 로드된 환경(배경/오브젝트) 켜기/끄기
         for (int i = 0; i < preLoadedMapEnvironments.Count; i++)

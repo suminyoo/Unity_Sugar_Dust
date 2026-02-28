@@ -39,17 +39,17 @@ public class ExploreSelectionUI : MonoBehaviour
         RefreshEnvironmentButtons();
 
         int maxUnlocked = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
-        if (maxUnlocked < 1) maxUnlocked = 1;
 
-        int mapIndex = (maxUnlocked - 1) / exploreConfig.levelsPerEnvironment;
+        if (maxUnlocked < 0) maxUnlocked = 0;
+
+        int mapIndex = maxUnlocked / exploreConfig.levelsPerEnvironment;
 
         if (mapImages.Length > 0)
         {
             mapIndex = Mathf.Clamp(mapIndex, 0, mapImages.Length - 1);
+
             OnClickEnvironment(mapIndex);
         }
-
-        OnSelectLevel(maxUnlocked);
     }
 
     private void RefreshEnvironmentButtons()

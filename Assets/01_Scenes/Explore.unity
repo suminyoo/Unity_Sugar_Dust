@@ -1315,7 +1315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSpawner: {fileID: 1661169971}
   exploreConfig: {fileID: 11400000, guid: 199d1f944b0b896479c7e1d82c3ddb5c, type: 2}
-  timerText: {fileID: 631926681}
   exploreLevelText: {fileID: 90551440}
   explorePathText: {fileID: 1476694574}
   resultUIPanel: {fileID: 5710049418305912608}
@@ -2227,6 +2226,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5082899230964164142, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: exploreManager
+      value: 
+      objectReference: {fileID: 275351537}
     - target: {fileID: 6094085051925216577, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2284,17 +2287,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
---- !u!114 &631926681 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4616127581974052157, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
-  m_PrefabInstance: {fileID: 631926680}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &651649139 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6610152016162390053, guid: 01e1d40494441d747abbc522eb370325, type: 3}
@@ -5514,6 +5506,7 @@ MonoBehaviour:
   landingSpotSpawnPoint: {fileID: 706654756}
   landingSpotPrefab: {fileID: 1216586451355079381, guid: 980fef01b8d3cbc478a5992627cdaa90, type: 3}
   defaultLandingSpotPrefab: {fileID: 8511608250816219995, guid: 28c5ff168518a0545abe2937752f4e8a, type: 3}
+  exploreConfig: {fileID: 11400000, guid: 199d1f944b0b896479c7e1d82c3ddb5c, type: 2}
 --- !u!4 &1661169972
 Transform:
   m_ObjectHideFlags: 0

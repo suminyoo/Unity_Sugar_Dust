@@ -2480,6 +2480,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5082899230964164142, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: shopManager
+      value: 
+      objectReference: {fileID: 1943669312}
     - target: {fileID: 5090841326757345348, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 1.5
@@ -3541,7 +3545,6 @@ MonoBehaviour:
   inventorySystem:
     slots: []
     maxSlots: 0
-  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
   displayStandPrefab: {fileID: 1195814639507633061, guid: 494590301b0f8ae4f925baf068b0f26e, type: 3}
   gridOrigin: {fileID: 562749875}
   columns: 3

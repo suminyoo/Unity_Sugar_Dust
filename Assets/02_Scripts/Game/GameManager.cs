@@ -19,6 +19,19 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public event Action OnSleep;
 
+    private GAME_TIME pendingTime;
+    private bool hasPendingTimeChange = false;
+
+    private void OnEnable()
+    {
+        SceneController.OnScreenFadedOut += ExecutePendingTimeChange;
+    }
+
+    private void OnDisable()
+    {
+        SceneController.OnScreenFadedOut -= ExecutePendingTimeChange;
+    }
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -49,7 +62,7 @@ public class GameManager : MonoBehaviour, ISaveable
             currentDay = data.day;
             currentTime = data.time;
 
-            ChangeTime(currentTime, true);
+            ChangeTime(currentTime);
 
             Debug.Log($"[GameManager] 세이브 데이터 적용 완료! 현재 시간: {currentTime}");
         }
@@ -62,12 +75,28 @@ public class GameManager : MonoBehaviour, ISaveable
         OnTimeChanged?.Invoke(newTime, isInstant);
     }
 
+    public void ChangeTimeAfterFadeOut(GAME_TIME newTime)
+    {
+        pendingTime = newTime;
+        hasPendingTimeChange = true;
+    }
+    // 씬 컨트롤러가 페이드 아웃 직후에 날리는 이벤트를 받아서 실행
+    private void ExecutePendingTimeChange()
+    {
+        if (hasPendingTimeChange)
+        {
+            ChangeTime(pendingTime, true);
+            hasPendingTimeChange = false;
+        }
+    }
+
     #region 탐사 씬 플로우
 
     // 탐사 시작
     public void StartExploration(int exploreLevel)
     {
-        ChangeTime(GAME_TIME.Day);
+        ChangeTimeAfterFadeOut(GAME_TIME.Day);
+
         GameSaveManager.Instance.SaveSelectedExploreLevel(exploreLevel);
         SceneController.Instance.ChangeScene(SCENE_NAME.EXPLORE, SPAWN_ID.EXPLORE_START);
     }
@@ -75,7 +104,7 @@ public class GameManager : MonoBehaviour, ISaveable
     // 탐사 종료
     public void EndExploration(bool isSuccess)
     {
-        ChangeTime(GAME_TIME.Evening);
+        ChangeTimeAfterFadeOut(GAME_TIME.Evening);
 
         if (isSuccess)
         {
@@ -83,11 +112,7 @@ public class GameManager : MonoBehaviour, ISaveable
         }
         else
         {
-            SceneController.Instance.ChangeSceneAndAddScene(
-                SCENE_NAME.TOWN,
-                SCENE_NAME.HOSPITAL_ROOM,
-                SPAWN_ID.HOSPITAL_BED
-            );
+            SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.HOSPITAL_ROOM, SPAWN_ID.HOSPITAL_BED);
         }
     }
 
@@ -102,7 +127,7 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public void EndShop()
     {
-        ChangeTime(GAME_TIME.Night);
+        ChangeTimeAfterFadeOut(GAME_TIME.Night);
     }
     #endregion
 
@@ -145,9 +170,11 @@ public class GameManager : MonoBehaviour, ISaveable
         InputControlManager.Instance.LockInput();
         yield return FadeUIManager.Instance.FadeOut();
 
-        currentDay++;
         ChangeTime(GAME_TIME.Morning);
+        currentDay++;
         OnSleep?.Invoke();
+
+        //TODO: 저장? 아침이 밝아올 때(페이드 인 직후) UI에 N일차 아침 등등 UI추가?
 
         yield return new WaitForSeconds(1.0f);
 

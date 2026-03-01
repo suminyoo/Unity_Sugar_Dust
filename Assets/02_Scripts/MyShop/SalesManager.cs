@@ -27,7 +27,7 @@ public struct SettlementData
 public class SalesManager : MonoBehaviour
 {
     public static SalesManager Instance;
-
+    
     [Header("Settings")]
     [Range(0f, 0.5f)] public float baseRentRate = 0.10f;   // 기본 10%
     [Range(0f, 0.5f)] public float ratePerRefusal = 0.03f; // 거절

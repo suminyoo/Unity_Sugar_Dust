@@ -3,6 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public struct DigitController
+{
+    public TextMeshProUGUI digitText; // 해당 자리의 숫자 텍스트
+    public Button upButton;           // 위 버튼 (+1)
+    public Button downButton;         // 아래 버튼 (-1)
+}
+
 public class ItemPriceInfoUI : MonoBehaviour
 {
     #region Variables & References
@@ -14,7 +22,6 @@ public class ItemPriceInfoUI : MonoBehaviour
     [Header("Item Info")]
     public Image icon;
     public TextMeshProUGUI nameText;
-    public TextMeshProUGUI sellingPriceText;
 
     [Header("Activation")]
     public Button activateButton;       // 활성화 비활성화 토글 버튼
@@ -24,14 +31,16 @@ public class ItemPriceInfoUI : MonoBehaviour
     public Color activePriceColor = new Color(0, 0.6f, 0, 0.8f);
     public Color inactivePriceColor = new Color(0, 0, 0, 0.5f);
 
-    // 내부 상태 변수
-    private int currentSellingPrice;
-    private bool isCurrentActive;
-
     // 콜백 
     private Action<int> onPriceChanged;
-    private Action<bool> onActiveChanged; 
+    private Action<bool> onActiveChanged;
 
+    [Header("Price")]
+    public DigitController[] digitControllers = new DigitController[3];
+    private int currentSellingPrice;
+    private int[] currentDigits = new int[3];
+    private bool isCurrentActive;
+    public TextMeshProUGUI currencyText;
     #endregion
 
 
@@ -43,7 +52,22 @@ public class ItemPriceInfoUI : MonoBehaviour
         // 기존 연결 삭제
         activateButton.onClick.RemoveAllListeners();
         activateButton.onClick.AddListener(OnActivateButtonClicked);
-        
+
+        if (currencyText != null)
+        {
+            currencyText.text = CustomerPaymentSystem.CURRENCY_SYMBOL;
+        }
+
+        for (int i = 0; i < digitControllers.Length; i++)
+        {
+            int index = i;
+
+            if (digitControllers[i].upButton != null)
+                digitControllers[i].upButton.onClick.AddListener(() => ChangeDigit(index, 1));
+
+            if (digitControllers[i].downButton != null)
+                digitControllers[i].downButton.onClick.AddListener(() => ChangeDigit(index, -1));
+        }
     }
 
     public void OpenPanel(ItemData data, int currentPrice, bool isActive,
@@ -60,8 +84,11 @@ public class ItemPriceInfoUI : MonoBehaviour
         icon.sprite = data.icon;
         nameText.text = data.itemName;
 
-        currentSellingPrice = currentPrice;
+        currentSellingPrice = Mathf.Clamp(currentPrice, 0, 9999);
+        currentSellingPrice = (currentSellingPrice / 10) * 10;
+
         isCurrentActive = isActive;
+        ExtractDigits(currentSellingPrice);
 
         // UI 갱신
         UpdateUI();
@@ -74,46 +101,64 @@ public class ItemPriceInfoUI : MonoBehaviour
     }
 
 
-    // 판매 가격 변경 (+10, -10)
-    public void ChangeSellingPrice(int amount)
+    private void ChangeDigit(int index, int amount)
     {
-        currentSellingPrice += amount;
-        if (currentSellingPrice < 0) currentSellingPrice = 0;
+        if (isCurrentActive) return;
+
+        currentDigits[index] += amount;
+
+        // 0~9 순환
+        if (currentDigits[index] > 9) currentDigits[index] = 0;
+        else if (currentDigits[index] < 0) currentDigits[index] = 9;
+
+        // 최종 가격
+        currentSellingPrice = (currentDigits[0] * 100 + currentDigits[1] * 10 + currentDigits[2]) * 10;
 
         UpdateUI();
-
-        // 실시간 가격 반영
-        onPriceChanged?.Invoke(currentSellingPrice);
     }
 
-    // 판매 시작/중지 버튼 클릭
     private void OnActivateButtonClicked()
     {
         isCurrentActive = !isCurrentActive;
 
         UpdateUI();
 
-        // 실시간 상태 반영
+        // 판매를 시작할 때 설정된 최종 금액
+        if (isCurrentActive)
+        {
+            onPriceChanged?.Invoke(currentSellingPrice);
+        }
+
         onActiveChanged?.Invoke(isCurrentActive);
+    }
+
+    private void ExtractDigits(int price)
+    {
+        currentDigits[0] = (price / 1000) % 10;
+        currentDigits[1] = (price / 100) % 10;
+        currentDigits[2] = (price / 10) % 10;
     }
 
     private void UpdateUI()
     {
-        // 가격 표시
-        sellingPriceText.text = $"{currentSellingPrice:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
+        for (int i = 0; i < digitControllers.Length; i++)
+        {
+            digitControllers[i].digitText.text = currentDigits[i].ToString();
 
-        // 활성화 버튼 상태 표시
+            digitControllers[i].upButton.interactable = !isCurrentActive;
+            digitControllers[i].downButton.interactable = !isCurrentActive;
+        }
+
+        // 활성화 버튼
         if (isCurrentActive)
         {
             buttonText.text = "판매 중지";
-            buttonImage.color = activePriceColor; // 활성화
+            buttonImage.color = activePriceColor;
         }
         else
         {
             buttonText.text = "판매 시작";
-            buttonImage.color = inactivePriceColor;  // 비활성화
+            buttonImage.color = inactivePriceColor;
         }
     }
-
-
 }

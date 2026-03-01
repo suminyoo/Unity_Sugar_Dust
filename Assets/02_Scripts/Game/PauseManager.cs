@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    public static int openPopupCount = 0;
+
     [Header("UI Panels")]
     public GameObject pausePanel;
     public GameObject saveLoadPanel;
@@ -23,6 +25,7 @@ public class PauseManager : MonoBehaviour
         {
             if (!isPaused)
             {
+                if (openPopupCount > 0) return;
                 PauseGame();
             }
             else

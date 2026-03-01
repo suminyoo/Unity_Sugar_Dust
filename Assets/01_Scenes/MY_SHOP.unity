@@ -2605,17 +2605,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6094085051925216577, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
   m_PrefabInstance: {fileID: 370146247}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &370146249 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4616127581974052157, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
-  m_PrefabInstance: {fileID: 370146247}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &415799121
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,6 +6060,7 @@ GameObject:
   - component: {fileID: 1099982927}
   - component: {fileID: 1099982926}
   - component: {fileID: 1099982928}
+  - component: {fileID: 1099982929}
   m_Layer: 5
   m_Name: CounterRootPanel
   m_TagString: Untagged
@@ -6139,6 +6129,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1099982929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099982924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670d1fdeacebd6e4987a602c4bbfbad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1119368881
 GameObject:
   m_ObjectHideFlags: 0
@@ -10142,7 +10144,6 @@ MonoBehaviour:
   counter: {fileID: 7358804626782508867}
   openCloseInteraction: {fileID: 786729237}
   closingReceiptUI: {fileID: 508789806}
-  timerText: {fileID: 370146249}
 --- !u!4 &1943669313
 Transform:
   m_ObjectHideFlags: 0

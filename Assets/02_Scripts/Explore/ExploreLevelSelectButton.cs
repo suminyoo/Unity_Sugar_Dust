@@ -1,46 +1,47 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class ExploreLevelSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ExploreLevelSelectButton : MonoBehaviour
 {
     public int levelNumber;
     [SerializeField] private Button button;
     [SerializeField] private ExploreSelectionUI selectionUI;
-    [SerializeField] private Image childIconImage;
 
-    private Color originalColor;
-    private Color disabledColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-    private Color highlightColor = Color.white;
-
-    private bool isUnlocked = false;
-    private bool isSelected = false;
+    private ColorBlock originalColors;
 
     private void Awake()
     {
-        if (childIconImage != null)
+        if (button != null)
         {
-            originalColor = childIconImage.color;
+            originalColors = button.colors;
         }
     }
 
     private void OnEnable()
     {
-        if (selectionUI != null && selectionUI.exploreConfig != null)
+        if (selectionUI != null)
         {
             selectionUI.OnLevelSelectedEvent -= OnLevelSelected;
             selectionUI.OnLevelSelectedEvent += OnLevelSelected;
+        }
 
-            if (button != null && GameSaveManager.Instance != null)
+        if (button != null)
+        {
+            // 잠금 해제 체크
+            bool isUnlocked = false;
+            if (GameSaveManager.Instance != null)
             {
                 int maxUnlocked = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
-
-                isUnlocked = levelNumber <= maxUnlocked;
-                button.interactable = isUnlocked;
+                isUnlocked = (levelNumber <= maxUnlocked);
             }
-            isSelected = (selectionUI.selectedLevelNumber == this.levelNumber);
+            button.interactable = isUnlocked;
 
-            UpdateColor();
+            // 처음 켜질 때, 현재 선택된 레벨표시
+            if (selectionUI != null)
+            {
+                bool isCurrentlySelected = (selectionUI.selectedLevelNumber == this.levelNumber);
+                UpdateSelectedVisuals(isCurrentlySelected);
+            }
         }
     }
 
@@ -63,41 +64,29 @@ public class ExploreLevelSelectButton : MonoBehaviour, IPointerEnterHandler, IPo
 
     private void OnLevelSelected(int selectedLevel)
     {
-        isSelected = (this.levelNumber == selectedLevel);
-        UpdateColor();
+        bool isCurrentlySelected = (this.levelNumber == selectedLevel);
+        UpdateSelectedVisuals(isCurrentlySelected);
     }
 
-    private void UpdateColor()
+    private void UpdateSelectedVisuals(bool isSelected)
     {
-        if (childIconImage == null) return;
+        if (button == null) return;
 
-        if (!isUnlocked)
+        ColorBlock cb = originalColors;
+
+        if (isSelected)
         {
-            childIconImage.color = disabledColor;
-        }
-        else if (isSelected)
-        {
-            childIconImage.color = highlightColor;
+            // 선택된 상태
+            cb.normalColor = originalColors.selectedColor;
+            cb.highlightedColor = originalColors.selectedColor;
         }
         else
         {
-            childIconImage.color = originalColor;
+            // 선택되지 않은 상태
+            cb.normalColor = originalColors.normalColor;
+            cb.highlightedColor = originalColors.highlightedColor;
         }
-    }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (isUnlocked && !isSelected && childIconImage != null)
-        {
-            childIconImage.color = highlightColor;
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (isUnlocked && !isSelected && childIconImage != null)
-        {
-            childIconImage.color = originalColor;
-        }
+        button.colors = cb;
     }
 }

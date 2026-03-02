@@ -1603,6 +1603,7 @@ GameObject:
   - component: {fileID: 227669448}
   - component: {fileID: 227669447}
   - component: {fileID: 227669446}
+  - component: {fileID: 227669449}
   m_Layer: 5
   m_Name: RejectButton
   m_TagString: Untagged
@@ -1652,8 +1653,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.627451, g: 0.6666667, b: 0.8627451, a: 1}
+    m_PressedColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1712,6 +1713,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227669444}
   m_CullTransparentMesh: 1
+--- !u!114 &227669449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227669444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &246862420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2714,6 +2730,7 @@ GameObject:
   - component: {fileID: 448002909}
   - component: {fileID: 448002908}
   - component: {fileID: 448002907}
+  - component: {fileID: 448002910}
   m_Layer: 5
   m_Name: ConfirmButton
   m_TagString: Untagged
@@ -2763,8 +2780,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.627451, g: 0.6666667, b: 0.8627451, a: 1}
+    m_PressedColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2823,6 +2840,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448002905}
   m_CullTransparentMesh: 1
+--- !u!114 &448002910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448002905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &463049740
 GameObject:
   m_ObjectHideFlags: 0
@@ -5357,6 +5389,7 @@ GameObject:
   - component: {fileID: 845051077}
   - component: {fileID: 845051076}
   - component: {fileID: 845051075}
+  - component: {fileID: 845051078}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -5406,8 +5439,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.627451, g: 0.6666667, b: 0.8627451, a: 1}
+    m_PressedColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -5466,6 +5499,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845051073}
   m_CullTransparentMesh: 1
+--- !u!114 &845051078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845051073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &955418782
 GameObject:
   m_ObjectHideFlags: 0
@@ -5653,6 +5701,7 @@ GameObject:
   - component: {fileID: 1004360524}
   - component: {fileID: 1004360523}
   - component: {fileID: 1004360522}
+  - component: {fileID: 1004360525}
   m_Layer: 5
   m_Name: MoneyPaper 50
   m_TagString: Untagged
@@ -5773,6 +5822,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004360520}
   m_CullTransparentMesh: 1
+--- !u!114 &1004360525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004360520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &1004853656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6880,7 +6944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1294524289
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10758,6 +10822,7 @@ GameObject:
   - component: {fileID: 2085944513}
   - component: {fileID: 2085944512}
   - component: {fileID: 2085944511}
+  - component: {fileID: 2085944514}
   m_Layer: 5
   m_Name: ConfirmButton
   m_TagString: Untagged
@@ -10807,8 +10872,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.627451, g: 0.6666667, b: 0.8627451, a: 1}
+    m_PressedColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -10867,6 +10932,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085944509}
   m_CullTransparentMesh: 1
+--- !u!114 &2085944514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085944509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &2138515675
 GameObject:
   m_ObjectHideFlags: 0
@@ -14380,6 +14460,7 @@ GameObject:
   - component: {fileID: 3114654650334475436}
   - component: {fileID: 5354073905160845660}
   - component: {fileID: 639055387}
+  - component: {fileID: 7692561288551500028}
   m_Layer: 5
   m_Name: MoneyPaper 100
   m_TagString: Untagged
@@ -14387,6 +14468,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561288551500028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561288551500027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289066464218
 GameObject:
   m_ObjectHideFlags: 0
@@ -14399,6 +14495,7 @@ GameObject:
   - component: {fileID: 3114654648494374797}
   - component: {fileID: 5354073906950845053}
   - component: {fileID: 1811626621}
+  - component: {fileID: 7692561289066464219}
   m_Layer: 5
   m_Name: MoneyPaper 5000
   m_TagString: Untagged
@@ -14406,6 +14503,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289066464219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289066464218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289304267777
 GameObject:
   m_ObjectHideFlags: 0
@@ -14418,6 +14530,7 @@ GameObject:
   - component: {fileID: 3114654648264958038}
   - component: {fileID: 5354073907246837158}
   - component: {fileID: 1936538458}
+  - component: {fileID: 7692561289304267778}
   m_Layer: 5
   m_Name: MoneyPaper 10
   m_TagString: Untagged
@@ -14425,6 +14538,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289304267778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289304267777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289318867983
 GameObject:
   m_ObjectHideFlags: 0
@@ -14437,6 +14565,7 @@ GameObject:
   - component: {fileID: 3114654648216672344}
   - component: {fileID: 5354073907227907496}
   - component: {fileID: 1909852322}
+  - component: {fileID: 7692561289318867984}
   m_Layer: 5
   m_Name: MoneyPaper 1000
   m_TagString: Untagged
@@ -14444,6 +14573,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289318867984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289318867983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289348021086
 GameObject:
   m_ObjectHideFlags: 0
@@ -14456,6 +14600,7 @@ GameObject:
   - component: {fileID: 3114654648447698697}
   - component: {fileID: 5354073907064605433}
   - component: {fileID: 1469957560}
+  - component: {fileID: 7692561289348021087}
   m_Layer: 5
   m_Name: MoneyPaper 10000
   m_TagString: Untagged
@@ -14463,6 +14608,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289348021087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289348021086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289517633043
 GameObject:
   m_ObjectHideFlags: 0
@@ -14475,6 +14635,7 @@ GameObject:
   - component: {fileID: 3114654649083392580}
   - component: {fileID: 5354073906361335732}
   - component: {fileID: 1837183235}
+  - component: {fileID: 7692561289517633044}
   m_Layer: 5
   m_Name: MoneyPaper 50000
   m_TagString: Untagged
@@ -14482,6 +14643,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289517633044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289517633043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &7692561289988988682
 GameObject:
   m_ObjectHideFlags: 0
@@ -14494,6 +14670,7 @@ GameObject:
   - component: {fileID: 3114654648880472925}
   - component: {fileID: 5354073906564214445}
   - component: {fileID: 1906926060}
+  - component: {fileID: 7692561289988988683}
   m_Layer: 5
   m_Name: MoneyPaper 500
   m_TagString: Untagged
@@ -14501,6 +14678,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7692561289988988683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692561289988988682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1001 &8056398691746206454
 PrefabInstance:
   m_ObjectHideFlags: 0

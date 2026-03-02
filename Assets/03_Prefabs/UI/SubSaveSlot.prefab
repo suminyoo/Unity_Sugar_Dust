@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 5580405720827666665}
   - component: {fileID: 8451624452484577008}
   - component: {fileID: 5125907211971314691}
+  - component: {fileID: 228343249969210240}
   m_Layer: 5
   m_Name: SubSaveSlot
   m_TagString: Untagged
@@ -279,6 +280,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &228343249969210240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603035774035064068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &5015940555952557253
 GameObject:
   m_ObjectHideFlags: 0

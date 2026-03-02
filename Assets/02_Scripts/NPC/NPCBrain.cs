@@ -201,19 +201,19 @@ public class NPCBrain : MonoBehaviour
 
 
 //NPCAnimation 사용 예시
-//// 1. 대화할 때 랜덤 제스처
+//// 대화할 때 랜덤 제스처
 //controller.Animation.PlayTalkRandom();
 
-//// 2. 특정 대화 제스처 (설명하는 손짓)
+//// 특정 대화 제스처 (설명하는 손짓)
 //controller.Animation.PlayTalk(NPCAnimation.TalkState.Explain);
 
-//// 3. 깜짝 놀라기
+//// 깜짝 놀라기
 //controller.Animation.PlayEmotion(NPCAnimation.Emotion.Surprised);
 
-//// 4. 의자에 앉히기
+//// 의자에 앉기
 //controller.Movement.Stop(); // 일단 멈추고
 //controller.Animation.SetSit(true, NPCAnimation.SitState.Chair);
 
-//// 5. 다시 일으키기
+//// 다시 일으키기
 //controller.Animation.SetSit(false);
 //controller.Movement.Resume();

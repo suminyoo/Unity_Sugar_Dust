@@ -14,7 +14,7 @@ public class DialogueClickUI : MonoBehaviour, IPointerClickHandler
     {
         if (manager != null && manager.isDialogueActive)
         {
-            manager.DisplayNextSentence();
+            manager.OnDialoguePanelClicked();
         }
     }
 }

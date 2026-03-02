@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.EventSystems;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    public AlienVoicePlayer alienVoice;
 
     [Header("UI Components")]
     public GameObject dialogueRootPanel;
@@ -21,6 +23,11 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogueActive = false;
     private bool shouldAutoClose = true;
 
+    [Header("Typing Effects")]
+    private bool isTyping = false;
+    private string currentSentence = "";
+    public float typeSpeed = 0.08f;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -28,15 +35,6 @@ public class DialogueManager : MonoBehaviour
 
         dialogueRootPanel.SetActive(false); 
     }
-
-    //private void Update()
-    //{
-    //    // 대화 중일 때 마우스 클릭하면 다음 대사
-    //    if (isDialogueActive && Input.GetMouseButtonDown(0))
-    //    {
-    //        DisplayNextSentence();
-    //    }
-    //}
 
     // NPCBrain에서 이 함수를 호출해서 대화시작
     public void StartDialogue(DialogueData data, string speakerName, Action callback, bool autoClose = true)
@@ -61,6 +59,23 @@ public class DialogueManager : MonoBehaviour
 
         DisplayNextSentence();
     }
+    public void OnDialoguePanelClicked()
+    {
+        if (!isDialogueActive) return;
+
+        if (isTyping)
+        {
+            // 타이핑 중일 때 누르면 스킵
+            StopAllCoroutines();
+            dialogueText.text = currentSentence;
+            isTyping = false;
+        }
+        else
+        {
+            // 타이핑이 이미 다 끝났을 때 누르면 다음 문wkd
+            DisplayNextSentence();
+        }
+    }
 
     public void DisplayNextSentence()
     {
@@ -73,14 +88,38 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
+        currentSentence = sentences.Dequeue();
 
-        // [TODO: 타이핑 효과나 선택지 로직
-        // StopAllCoroutines();
-        // StartCoroutine(TypeSentence(sentence));
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(currentSentence));
     }
+    private IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text = "";
+        isTyping = true;
 
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+
+            // 띄어쓰기가 아닐 때만 소리 재생
+            if (letter != ' ' && alienVoice != null)
+            {
+                alienVoice.PlayRandomSyllable();
+            }
+
+            if (letter == '.' || letter == ',' || letter == '?' || letter == '!')
+            {
+                yield return new WaitForSeconds(typeSpeed * 4f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(typeSpeed);
+            }
+        }
+
+        isTyping = false; 
+    }
     public void EndDialogue()
     {
         if (!isDialogueActive) return;

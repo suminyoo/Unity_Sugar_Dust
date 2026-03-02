@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 2628334704113490054}
   - component: {fileID: 2499173348451981514}
   - component: {fileID: 2557280982127028025}
+  - component: {fileID: 7401244941768184310}
   m_Layer: 5
   m_Name: InventorySlotUI
   m_TagString: Untagged
@@ -461,6 +462,21 @@ MonoBehaviour:
   inactivePriceColor: {r: 0, g: 0, b: 0, a: 0.50980395}
   priceTagGroup: {fileID: 3330559031746233569}
   priceText: {fileID: 12746227146932957}
+--- !u!114 &7401244941768184310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7153219060786524397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customHoverSound: {fileID: 0}
+  customClickSound: {fileID: 0}
+  volume: 1
 --- !u!1 &8310459937734990558
 GameObject:
   m_ObjectHideFlags: 0

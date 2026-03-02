@@ -10,6 +10,8 @@ public class TimeBGM
     public AudioClip[] bgmClips;
 }
 
+/// SoundManager.Instance.PlaySFX(sound, transform.position);
+
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
@@ -49,6 +51,21 @@ public class SoundManager : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnTimeChanged -= OnTimeChangedHandler;
+    }
+    private void Start()
+    {
+        InitVolumeSettings();
+    }
+
+    private void InitVolumeSettings()
+    {
+        float master = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
+        float bgm = PlayerPrefs.GetFloat("BGMVolume", 1.0f);
+        float sfx = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+
+        SetMasterVolume(master);
+        SetBGMVolume(bgm);
+        SetSFXVolume(sfx);
     }
 
     #region SFX
@@ -161,14 +178,22 @@ public class SoundManager : MonoBehaviour
 
     #region 설정창 볼륨 조절
 
+    public void SetMasterVolume(float volume)
+    {
+        float safeVolume = Mathf.Clamp(volume, 0.0001f, 1f);
+        mainMixer.SetFloat("Master_Volume", Mathf.Log10(safeVolume) * 20);
+    }
+
     public void SetBGMVolume(float volume)
     {
-        mainMixer.SetFloat("BGM_Volume", Mathf.Log10(volume) * 20);
+        float safeVolume = Mathf.Clamp(volume, 0.0001f, 1f);
+        mainMixer.SetFloat("BGM_Volume", Mathf.Log10(safeVolume) * 20);
     }
 
     public void SetSFXVolume(float volume)
     {
-        mainMixer.SetFloat("SFX_Volume", Mathf.Log10(volume) * 20);
+        float safeVolume = Mathf.Clamp(volume, 0.0001f, 1f);
+        mainMixer.SetFloat("SFX_Volume", Mathf.Log10(safeVolume) * 20);
     }
 
     #endregion

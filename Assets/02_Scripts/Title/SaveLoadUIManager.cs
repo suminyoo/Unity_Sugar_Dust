@@ -136,6 +136,12 @@ public class SaveLoadUIManager : MonoBehaviour
         GameSaveManager.Instance.InitData();
         GameSaveManager.Instance.currentSaveSlot = slotNum;
         GameSaveManager.Instance.SetTimerActive(true);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ApplyLoadedData();
+        }
+
         SceneController.Instance.ChangeSceneAndAddScene(SCENE_NAME.TOWN, SCENE_NAME.PLAYER_HOME, SPAWN_ID.PLAYERHOME_BED, true);
     }
 

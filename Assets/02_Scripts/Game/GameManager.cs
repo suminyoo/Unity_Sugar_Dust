@@ -7,15 +7,16 @@ public enum GAME_TIME
     Morning,
     Day,
     Evening,
-    Night
+    Night,
+    None
 }
 public class GameManager : MonoBehaviour, ISaveable
 {
     public static event Action<GAME_TIME, bool> OnTimeChanged;
     public static GameManager Instance;
 
-    public int currentDay = 1;
-    public GAME_TIME currentTime = GAME_TIME.Morning;
+    public int currentDay = 0;
+    public GAME_TIME currentTime = GAME_TIME.None;
 
     public event Action OnSleep;
 

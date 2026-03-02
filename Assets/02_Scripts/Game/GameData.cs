@@ -22,8 +22,8 @@ public class GameData
 {
     //게임 데이터
     public SaveMetadata metadata = new SaveMetadata();
-    public int currentDay = 1;
-    public GAME_TIME currentTime = GAME_TIME.Morning;
+    public int currentDay = 0;
+    public GAME_TIME currentTime = GAME_TIME.None;
 
     // 레벨 데이터
     public int hpLevel = 0;

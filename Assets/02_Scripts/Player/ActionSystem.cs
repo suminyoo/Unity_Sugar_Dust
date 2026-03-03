@@ -90,7 +90,7 @@ public class ActionSystem : MonoBehaviour
         // 积己
         if (activeToolData != null && activeToolData.toolPrefab != null && handHolder != null)
         {
-            if(activeToolData.equipSound != null) SoundManager.Instance.PlaySFX(activeToolData.equipSound, transform.position);
+            if(activeToolData.equipSound.clip != null) SoundManager.Instance.PlaySFX(activeToolData.equipSound, transform.position);
 
             instantiatedWeaponModel = Instantiate(activeToolData.toolPrefab, handHolder);
         }
@@ -166,7 +166,7 @@ public class ActionSystem : MonoBehaviour
 
         playerController.HandleWield(actionType); // 局聪皋捞记 犁积
 
-        if (activeToolData != null && activeToolData.actionSound != null)
+        if (activeToolData != null && activeToolData.actionSound.clip != null)
         {
             SoundManager.Instance.PlaySFX(activeToolData.actionSound, transform.position);
         }

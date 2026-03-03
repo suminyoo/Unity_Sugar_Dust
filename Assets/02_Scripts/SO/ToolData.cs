@@ -17,7 +17,7 @@ public class ToolData : ScriptableObject
     public float criticalMultiplier;
 
     [Header("Sounds")]
-    public AudioClip equipSound;
-    public AudioClip actionSound;
+    public SoundData equipSound;
+    public SoundData actionSound;
 
 }

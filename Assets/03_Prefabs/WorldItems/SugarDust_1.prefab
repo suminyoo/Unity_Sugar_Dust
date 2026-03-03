@@ -184,7 +184,9 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 7dc4961e7f839ae45b5d86b1e90102c4, type: 2}
   amount: 1
   visualChild: {fileID: 0}
-  pickupSound: {fileID: 8300000, guid: d4b4564ad8ca7254c9d41efb905858eb, type: 3}
+  pickupSound:
+    clip: {fileID: 8300000, guid: 1340ba1fa579f674ab71453241682a8a, type: 3}
+    volume: 0.5
 --- !u!135 &6451891379039213191
 SphereCollider:
   m_ObjectHideFlags: 0

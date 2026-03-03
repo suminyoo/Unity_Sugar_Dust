@@ -1,6 +1,4 @@
 using UnityEngine;
-using TMPro;
-using Unity.VisualScripting;
 
 public class MyShopManager : MonoBehaviour
 {
@@ -21,9 +19,9 @@ public class MyShopManager : MonoBehaviour
 
 
     [Header("Sound")]
-    public AudioClip openShopSound;
-    public AudioClip closeShopSound;
-    public AudioClip receiptSound;
+    public SoundData openShopSound;
+    public SoundData closeShopSound;
+    public SoundData receiptSound;
 
 
     public float GetCurrentTime() => currentTime;
@@ -71,7 +69,7 @@ public class MyShopManager : MonoBehaviour
     {
         IsShopOpen = true;
 
-        if(openShopSound != null) SoundManager.Instance.PlaySFX(openShopSound, transform.position);
+        if(openShopSound.clip != null) SoundManager.Instance.PlaySFX(openShopSound, transform.position);
 
         NotificationUIManager.Instance.ShowNotification("영업이 시작되었습니다");
 
@@ -88,7 +86,7 @@ public class MyShopManager : MonoBehaviour
         if (!IsShopOpen) return;
         IsShopOpen = false;
 
-        if(closeShopSound != null) SoundManager.Instance.PlaySFX(closeShopSound, transform.position);
+        if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX(closeShopSound, transform.position);
 
         NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
 
@@ -107,7 +105,7 @@ public class MyShopManager : MonoBehaviour
     public void OpenSettlementUI()
     {
         
-        if (receiptSound != null) SoundManager.Instance.PlaySFX2D(receiptSound);
+        if (receiptSound.clip != null) SoundManager.Instance.PlaySFX2D(receiptSound);
 
         closingReceiptUI.ShowReceipt();
         

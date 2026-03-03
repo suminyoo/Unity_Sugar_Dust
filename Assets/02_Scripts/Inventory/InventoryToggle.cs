@@ -6,8 +6,7 @@ public class InventoryToggle : MonoBehaviour
     public GameObject playerBagPanel;
     public KeyCode toggleKey = KeyCode.Tab;
 
-    [Header("Sound")]
-    public AudioClip inventoryOpenSound;
+    public SoundData inventoryOpenSound;
 
     void Start()
     {
@@ -20,7 +19,7 @@ public class InventoryToggle : MonoBehaviour
         {
             if (playerBagPanel != null)
             {
-                if(inventoryOpenSound != null) SoundManager.Instance.PlaySFX2D(inventoryOpenSound);
+                if(inventoryOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(inventoryOpenSound);
 
                 bool isActive = !playerBagPanel.activeSelf;
                 playerBagPanel.SetActive(isActive);

@@ -387,8 +387,12 @@ MonoBehaviour:
   targetSceneName: 0
   targetSpawnId: 0
   isExiting: 0
-  doorOpenSound: {fileID: 8300000, guid: c7d79950547809f42983c235f1c6715a, type: 3}
-  doorLockedSound: {fileID: 8300000, guid: f80843d46b6467546a4d007cd972045f, type: 3}
+  doorOpenSound:
+    clip: {fileID: 8300000, guid: 8f233e5473a4e004d93df44bda67efef, type: 3}
+    volume: 0.3
+  doorLockedSound:
+    clip: {fileID: 8300000, guid: c7d79950547809f42983c235f1c6715a, type: 3}
+    volume: 0.3
 --- !u!1 &5501774256795670696
 GameObject:
   m_ObjectHideFlags: 0

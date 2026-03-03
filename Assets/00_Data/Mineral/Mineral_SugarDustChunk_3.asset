@@ -15,5 +15,10 @@ MonoBehaviour:
   mineralName: "\uCD08\uB85D \uC288\uAC00\uB354\uC2A4\uD2B8 \uB369\uC5B4\uB9AC"
   maxHealth: 200
   hitEffectPrefab: {fileID: 5209545850516574945, guid: d04aee12d888b9540b22b825ae49f6cf, type: 3}
-  mineSound: {fileID: 0}
+  mineSound:
+    clip: {fileID: 8300000, guid: f0454497b4fde48449183655b7b17314, type: 3}
+    volume: 0.5
+  destroySound:
+    clip: {fileID: 8300000, guid: df320cedca86c134dae0dfbc2a1d7ddf, type: 3}
+    volume: 0.5
   lootTable: {fileID: 11400000, guid: c7593c27a5851c942ae3f0541d6777cb, type: 2}

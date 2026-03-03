@@ -32,10 +32,10 @@ public class EnemyData : ScriptableObject
     public GameObject dieEffect;
 
     [Header("SFX")]
-    public AudioClip hitSound;
-    public AudioClip attackSound;
-    public AudioClip detectSound;
-    public AudioClip dieSound;
+    public SoundData hitSound;
+    public SoundData attackSound;
+    public SoundData detectSound;
+    public SoundData dieSound;
 
 
 }

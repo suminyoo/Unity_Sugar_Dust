@@ -3335,8 +3335,12 @@ MonoBehaviour:
   dragLayer: {fileID: 642273997}
   stackStartPos: {x: -240, y: 80}
   stackOffset: {x: 20, y: -20}
-  paperMoneySound: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
-  coinMoneySound: {fileID: 8300000, guid: 33b856df142ac424c8fc9fa6446a4a23, type: 3}
+  paperMoneySound:
+    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+    volume: 0.5
+  coinMoneySound:
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.5
 --- !u!114 &508789806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8044,7 +8048,9 @@ MonoBehaviour:
   minGenerosity: 0.8
   maxGenerosity: 1.2
   maxCustomers: 5
-  customerEnterSound: {fileID: 8300000, guid: 6cb82585cd84cf44c945676bf256d6b6, type: 3}
+  customerEnterSound:
+    clip: {fileID: 8300000, guid: 33b6de1069360714e80342b0107456b6, type: 3}
+    volume: 0.5
 --- !u!114 &1464588344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10211,9 +10217,15 @@ MonoBehaviour:
   counter: {fileID: 7358804626782508867}
   openCloseInteraction: {fileID: 786729237}
   closingReceiptUI: {fileID: 508789806}
-  openShopSound: {fileID: 8300000, guid: 5f782f38eea679143afa6a943bccd323, type: 3}
-  closeShopSound: {fileID: 8300000, guid: 849846c1d2caf2646baf4e9a44932dbb, type: 3}
-  receiptSound: {fileID: 8300000, guid: a70f4e4e209224b179568f3592318309, type: 3}
+  openShopSound:
+    clip: {fileID: 8300000, guid: 5f782f38eea679143afa6a943bccd323, type: 3}
+    volume: 0.5
+  closeShopSound:
+    clip: {fileID: 8300000, guid: 849846c1d2caf2646baf4e9a44932dbb, type: 3}
+    volume: 0.5
+  receiptSound:
+    clip: {fileID: 8300000, guid: a70f4e4e209224b179568f3592318309, type: 3}
+    volume: 1
 --- !u!4 &1943669313
 Transform:
   m_ObjectHideFlags: 0

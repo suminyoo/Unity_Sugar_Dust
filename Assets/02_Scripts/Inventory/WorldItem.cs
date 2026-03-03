@@ -24,7 +24,7 @@ public class WorldItem : MonoBehaviour
     private Vector3 startPos;
     private Rigidbody rb;
 
-    public AudioClip pickupSound;
+    public SoundData pickupSound;
 
     #endregion
 
@@ -115,7 +115,7 @@ public class WorldItem : MonoBehaviour
 
                 if (remaining != -1)
                 {
-                    if (pickupSound != null) SoundManager.Instance.PlaySFX(pickupSound, transform.position);
+                    if (pickupSound.clip != null) SoundManager.Instance.PlaySFX(pickupSound, transform.position);
 
                     if (remaining == 0)
                     {

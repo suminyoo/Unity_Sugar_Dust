@@ -9,7 +9,12 @@ public class TimeBGM
     public GAME_TIME time;
     public AudioClip[] bgmClips;
 }
-
+[System.Serializable]
+public struct SoundData
+{
+    public AudioClip clip;
+    [Range(0f, 1f)] public float volume;
+}
 /// SoundManager.Instance.PlaySFX(sound, transform.position);
 
 public class SoundManager : MonoBehaviour
@@ -88,13 +93,7 @@ public class SoundManager : MonoBehaviour
             sfxPool.Enqueue(source);
         }
     }
-
-    public void PlaySFX2D(AudioClip clip, float volume = 1.0f, float pitchVariation = 0.1f)
-    {
-        PlaySFX(clip, Camera.main.transform.position, volume, pitchVariation, true);
-    }
-
-    public void PlaySFX(AudioClip clip, Vector3 position, float volume = 1.0f, float pitchVariation = 0.1f, bool is2D = false)
+    private void PlayCore(AudioClip clip, Vector3 position, float volume, float pitchVariation, bool is2D)
     {
         if (clip == null) return;
 
@@ -108,9 +107,25 @@ public class SoundManager : MonoBehaviour
 
         source.Play();
 
+        // 소리 길이만큼 기다렸다가 반납
+        StartCoroutine(ReturnToPoolAfterPlay(source, clip.length));
+    }
+
+    private IEnumerator ReturnToPoolAfterPlay(AudioSource source, float delay)
+    {
+        yield return new WaitForSeconds(delay);
         sfxPool.Enqueue(source);
     }
 
+    public void PlaySFX(SoundData data, Vector3 position, float pitchVariation = 0.1f)
+    {
+        if (data.clip != null) PlayCore(data.clip, position, data.volume, pitchVariation, false);
+    }
+
+    public void PlaySFX2D(SoundData data, float pitchVariation = 0.1f)
+    {
+        if (data.clip != null) PlayCore(data.clip, Camera.main.transform.position, data.volume, pitchVariation, true);
+    }
     #endregion
 
     #region BGM

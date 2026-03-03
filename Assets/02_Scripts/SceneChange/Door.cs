@@ -7,8 +7,8 @@ public class Door : MonoBehaviour, IInteractable
     public SPAWN_ID targetSpawnId;
     public bool isExiting = false;
 
-    public AudioClip doorOpenSound;
-    public AudioClip doorLockedSound;
+    public SoundData doorOpenSound;
+    public SoundData doorLockedSound;
 
 
     public string GetInteractPrompt() => $"[E] {placeName} {(isExiting ? "나가기" : "들어가기")}";
@@ -17,7 +17,7 @@ public class Door : MonoBehaviour, IInteractable
     {
         if(targetSceneName == SCENE_NAME.NONE || targetSpawnId == SPAWN_ID.NONE)
         {
-            if(doorLockedSound != null) SoundManager.Instance.PlaySFX(doorLockedSound, transform.position); 
+            if(doorLockedSound.clip != null) SoundManager.Instance.PlaySFX(doorLockedSound, transform.position); 
             return;
         }
 
@@ -27,7 +27,7 @@ public class Door : MonoBehaviour, IInteractable
             return;
         }
 
-        if(doorOpenSound != null) SoundManager.Instance.PlaySFX(doorOpenSound, transform.position);
+        if(doorOpenSound.clip != null) SoundManager.Instance.PlaySFX(doorOpenSound, transform.position);
         SceneController.Instance.AddSceneAndMoveTo(targetSceneName, targetSpawnId, isExiting);
     }
 }

@@ -5357,7 +5357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01d72c4eebc42f42abdce77e06d1981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diaryOpenSound: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+  diaryOpenSound:
+    clip: {fileID: 8300000, guid: f8a1fed476a5d20478f7ab1a5d53a0ed, type: 3}
+    volume: 0.5
 --- !u!65 &9060683458460049684
 BoxCollider:
   m_ObjectHideFlags: 0

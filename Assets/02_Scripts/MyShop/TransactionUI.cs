@@ -49,8 +49,8 @@ public class TransactionUI : MonoBehaviour
     public Vector2 stackOffset = new Vector2(10, -10);
 
     [Header("Sound")]
-    public AudioClip paperMoneySound;
-    public AudioClip coinMoneySound;
+    public SoundData paperMoneySound;
+    public SoundData coinMoneySound;
 
 
     private void Awake()
@@ -128,11 +128,11 @@ public class TransactionUI : MonoBehaviour
     public void OnClickGiveChange(int amount)
     {
         if (amount <= 500) {
-            if(coinMoneySound != null) SoundManager.Instance.PlaySFX2D(coinMoneySound);
+            if(coinMoneySound.clip != null) SoundManager.Instance.PlaySFX2D(coinMoneySound);
         }
         else
         {
-           if (paperMoneySound != null) SoundManager.Instance.PlaySFX2D(paperMoneySound);
+           if (paperMoneySound.clip != null) SoundManager.Instance.PlaySFX2D(paperMoneySound);
         }   
 
         int index = playerMonies.Count;

@@ -22,8 +22,7 @@ public class GameSaveManager : MonoBehaviour
     // 씬이 넘어가도 살아있는 데이터 보관함
     public GameData savedData = new GameData();
 
-    [Header("Sound")]
-    public AudioClip writingSound;
+    public SoundData writingSound;
 
     private void Awake()
     {
@@ -53,7 +52,7 @@ public class GameSaveManager : MonoBehaviour
 
     public void SaveCurrentGame()
     {
-        if (savedData == null) SoundManager.Instance.PlaySFX2D(writingSound);
+        if (writingSound.clip == null) SoundManager.Instance.PlaySFX2D(writingSound);
 
         var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
         foreach (var saveable in saveables)

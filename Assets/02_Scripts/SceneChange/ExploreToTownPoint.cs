@@ -4,7 +4,7 @@ using UnityEngine;
 public class ExploreToTownPoint : MonoBehaviour, IInteractable
 {
     public static event Action<bool> OnPlayerReturnToTown;
-    public AudioClip walkSound;
+    public SoundData walkSound;
 
     public string GetInteractPrompt() => "[E] 마을로 돌아가기";
 
@@ -14,7 +14,8 @@ public class ExploreToTownPoint : MonoBehaviour, IInteractable
             "정말로 걸어서 마을로 돌아가시겠습니까?",
             () => {
                 Debug.Log("마을로 이동 중...");
-                if (walkSound != null) SoundManager.Instance.PlaySFX2D(walkSound);
+                if (walkSound.clip != null) 
+                    SoundManager.Instance.PlaySFX2D(walkSound);
 
                 OnPlayerReturnToTown?.Invoke(false);
             }

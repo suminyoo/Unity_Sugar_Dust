@@ -136,7 +136,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (IsDead) return;
 
-        if (playerData.hitSound != null) SoundManager.Instance.PlaySFX(playerData.hitSound, transform.position);
+        if (playerData.hitSound.clip != null) SoundManager.Instance.PlaySFX(playerData.hitSound, transform.position);
 
         currentHp -= amount;
 
@@ -145,7 +145,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
         if (currentHp <= 0)
         {
-            if(playerData.deathSound != null) SoundManager.Instance.PlaySFX(playerData.deathSound, transform.position);    
+            if(playerData.deathSound.clip != null) SoundManager.Instance.PlaySFX(playerData.deathSound, transform.position);    
             currentHp = 0;
             OnDie?.Invoke();
         }
@@ -202,7 +202,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     }
     private void PlayExhaustedSound()
     {
-        if (playerData.exhaustedSound != null && SoundManager.Instance != null)
+        if (playerData.exhaustedSound.clip != null && SoundManager.Instance != null)
         {
             isExhausted = true;
             SoundManager.Instance.PlaySFX(playerData.exhaustedSound, transform.position);

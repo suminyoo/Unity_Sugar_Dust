@@ -36,11 +36,10 @@ public class StorageUIManager : MonoBehaviour
     public float closeDistance = 3.0f;
     public bool IsAnyStorageUIOpen => playerBagPanel.activeSelf || (_currentOtherPanel != null && _currentOtherPanel.activeSelf);
 
-    [Header("Sound")]
-    public AudioClip myShopOpenSound;
-    public AudioClip npcShopOpenSound;
-    public AudioClip containerOpenSound;
-    public AudioClip DefaultCloseSound;
+    [Header("Sounds")]
+    public SoundData containerOpenSound;
+    public SoundData defaultOpenSound;
+    public SoundData defaultCloseSound;
 
 
     private void Awake()
@@ -109,7 +108,7 @@ public class StorageUIManager : MonoBehaviour
         switch (shopType)
         {
             case InventoryContext.MyShop:
-                if (myShopOpenSound != null) SoundManager.Instance.PlaySFX2D(myShopOpenSound);
+                if (defaultOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(defaultOpenSound);
 
                 _currentOtherUI = myShopUI;
                 _currentOtherPanel = myShopPanel;
@@ -118,7 +117,7 @@ public class StorageUIManager : MonoBehaviour
                 break;
                 
             case InventoryContext.NPCShop:
-                if (npcShopOpenSound != null) SoundManager.Instance.PlaySFX2D(npcShopOpenSound);
+                if (defaultOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(defaultOpenSound);
 
                 _currentOtherUI = npcShopUI;
                 _currentOtherPanel = npcShopPanel;
@@ -127,7 +126,7 @@ public class StorageUIManager : MonoBehaviour
                 break;
 
             case InventoryContext.Container:
-                if (containerOpenSound != null) SoundManager.Instance.PlaySFX2D(containerOpenSound);
+                if (containerOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(containerOpenSound);
 
                 _currentOtherUI = containerUI;
                 _currentOtherPanel = containerPanel;
@@ -158,7 +157,7 @@ public class StorageUIManager : MonoBehaviour
 
     public void CloseStorage()
     {
-        if (DefaultCloseSound != null) SoundManager.Instance.PlaySFX2D(DefaultCloseSound);
+        if (defaultCloseSound.clip != null) SoundManager.Instance.PlaySFX2D(defaultCloseSound);
 
         // 루트배경
         rootCanvas.SetActive(false);

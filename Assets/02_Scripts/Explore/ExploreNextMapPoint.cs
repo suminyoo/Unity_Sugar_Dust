@@ -3,14 +3,14 @@ using UnityEngine;
 public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 {
     public ExploreManager exploreManager;
-    public AudioClip walkSound;
+    public SoundData walkSound;
 
     public string GetInteractPrompt() => "[E] ´õ ±íÀº °÷ Å½»çÇÏ±â";
 
 
     void Start()
     {
-        exploreManager = Object.FindAnyObjectByType<ExploreManager>();
+        exploreManager = FindAnyObjectByType<ExploreManager>();
     }
 
     public void OnInteract()
@@ -21,7 +21,8 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
             {
                 if (exploreManager != null)
                 {
-                    if (walkSound != null) SoundManager.Instance.PlaySFX2D(walkSound);
+                    if (walkSound.clip != null) SoundManager.Instance.PlaySFX2D(walkSound);
+
                     exploreManager.AttemptMoveToNextStage();
                 }
                 else

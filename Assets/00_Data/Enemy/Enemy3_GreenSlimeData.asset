@@ -28,8 +28,15 @@ MonoBehaviour:
   detectEffect: {fileID: 0}
   patrolEffect: {fileID: 0}
   dieEffect: {fileID: 0}
-  hitSound: {fileID: 0}
-  attackSound: {fileID: 0}
-  detectSound: {fileID: 0}
-  patrolSound: {fileID: 0}
-  dieSound: {fileID: 0}
+  hitSound:
+    clip: {fileID: 8300000, guid: 3fe5f8e32268fab4389beba438bf7a87, type: 3}
+    volume: 0.5
+  attackSound:
+    clip: {fileID: 8300000, guid: 67d7abaecf4f71445ab64bad98f2c307, type: 3}
+    volume: 0.5
+  detectSound:
+    clip: {fileID: 0}
+    volume: 0.5
+  dieSound:
+    clip: {fileID: 8300000, guid: 4266c90db61deb9499dc359c78b64023, type: 3}
+    volume: 0.5

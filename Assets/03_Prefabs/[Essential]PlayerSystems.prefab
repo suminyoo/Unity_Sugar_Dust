@@ -781,9 +781,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &304089392424972070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,9 +1118,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &326559910657613800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,9 +1346,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &388624079167239799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,9 +1592,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &465301554083878165
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,9 +3064,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &952863405554017209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3823,9 +3843,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &1121710501463339658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,9 +4032,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &1201010690016391206
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,9 +4903,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &1373334997967469534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5024,9 +5056,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &1430664990057652785
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,7 +5245,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 838794424459342869}
-  - {fileID: 213458928245902318}
   - {fileID: 3005155421933746466}
   - {fileID: 3466065013929244015}
   - {fileID: 4380311945190391979}
@@ -6786,9 +6821,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &1845052972111843912
 GameObject:
   m_ObjectHideFlags: 0
@@ -8151,9 +8190,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &2398094463356241353
 GameObject:
   m_ObjectHideFlags: 0
@@ -8706,9 +8749,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &2550629637258141547
 GameObject:
   m_ObjectHideFlags: 0
@@ -9157,53 +9204,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &2648734335048124353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 213458928245902318}
-  - component: {fileID: 4326290985015828468}
-  m_Layer: 0
-  m_Name: '[Manager]UIManager'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &213458928245902318
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648734335048124353}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6094085051925216577}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4326290985015828468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648734335048124353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeec79158d24fdc459a901e38f280aa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  notificationPanel: {fileID: 8354082147738456087}
-  notificationText: {fileID: 5531764884239625315}
-  defaultDisplayTime: 2
 --- !u!1 &2676430176173207156
 GameObject:
   m_ObjectHideFlags: 0
@@ -9338,9 +9338,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &2700471349950755894
 GameObject:
   m_ObjectHideFlags: 0
@@ -9980,9 +9984,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &2837345590362797768
 GameObject:
   m_ObjectHideFlags: 0
@@ -11490,9 +11498,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3257488563433158772
 GameObject:
   m_ObjectHideFlags: 0
@@ -11639,9 +11651,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3268222615742989640
 GameObject:
   m_ObjectHideFlags: 0
@@ -13369,9 +13385,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3711315662647780299
 GameObject:
   m_ObjectHideFlags: 0
@@ -13770,10 +13790,15 @@ MonoBehaviour:
   npcShopUI: {fileID: 7049407710714896981}
   containerUI: {fileID: 1134432428702434637}
   closeDistance: 10
-  myShopOpenSound: {fileID: 8300000, guid: 5e7bc695c1adcf0489162823f2f1c7a9, type: 3}
-  npcShopOpenSound: {fileID: 8300000, guid: a634ee6fcac89124f92b1910dacfb922, type: 3}
-  containerOpenSound: {fileID: 8300000, guid: a662aafbcfaef4b6da8f965d1dfab2c5, type: 3}
-  DefaultCloseSound: {fileID: 8300000, guid: b7afd3b0c8d8534429420e8332461374, type: 3}
+  containerOpenSound:
+    clip: {fileID: 8300000, guid: a634ee6fcac89124f92b1910dacfb922, type: 3}
+    volume: 0.4
+  defaultOpenSound:
+    clip: {fileID: 8300000, guid: 4e7ce19b0c9dda1458946554f940d3b8, type: 3}
+    volume: 0.5
+  defaultCloseSound:
+    clip: {fileID: 8300000, guid: 7abccce1359ba0d4a8421bcc212783c5, type: 3}
+    volume: 0.5
 --- !u!114 &1585865001654277057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13788,7 +13813,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBagPanel: {fileID: 7644848444117479039}
   toggleKey: 9
-  inventoryOpenSound: {fileID: 8300000, guid: 2f3c3a852c32900429a59e5fbf742673, type: 3}
+  inventoryOpenSound:
+    clip: {fileID: 8300000, guid: 5e7bc695c1adcf0489162823f2f1c7a9, type: 3}
+    volume: 0.2
 --- !u!114 &3474830422778414060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14066,9 +14093,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3798731523413151096
 GameObject:
   m_ObjectHideFlags: 0
@@ -14228,9 +14259,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3825353236662007410
 GameObject:
   m_ObjectHideFlags: 0
@@ -14515,9 +14550,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &3979879279003113211
 GameObject:
   m_ObjectHideFlags: 0
@@ -16541,9 +16580,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &4705652120801328855
 GameObject:
   m_ObjectHideFlags: 0
@@ -16690,9 +16733,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &4713312055762163906
 GameObject:
   m_ObjectHideFlags: 0
@@ -20462,6 +20509,7 @@ MonoBehaviour:
   recoveryDelay: 1
   runCostPerSec: 10
   jumpCost: 20
+  staminaRecoveryThreshold: 0.2
 --- !u!114 &1261486451488569049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20475,8 +20523,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoney: 0
-  moneySpendSound: {fileID: 8300000, guid: 44ec0024decd141b8b8de268b2689761, type: 3}
-  moneyEarnSound: {fileID: 8300000, guid: 44ec0024decd141b8b8de268b2689761, type: 3}
+  moneySpendSound:
+    clip: {fileID: 8300000, guid: 33b856df142ac424c8fc9fa6446a4a23, type: 3}
+    volume: 0.5
+  moneyEarnSound:
+    clip: {fileID: 8300000, guid: 19a5b18b079f844bba783a9ec5f32efa, type: 3}
+    volume: 0.5
 --- !u!1 &5872971085322681958
 GameObject:
   m_ObjectHideFlags: 0
@@ -21498,9 +21550,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &6195855028212455051
 GameObject:
   m_ObjectHideFlags: 0
@@ -21647,9 +21703,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &6217866100985460958
 GameObject:
   m_ObjectHideFlags: 0
@@ -22216,9 +22276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &6297248981449492925
 GameObject:
   m_ObjectHideFlags: 0
@@ -22766,9 +22830,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &6612276351314361592
 GameObject:
   m_ObjectHideFlags: 0
@@ -23052,9 +23120,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &6642414298280445024
 GameObject:
   m_ObjectHideFlags: 0
@@ -24423,9 +24495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7000899552854750431
 GameObject:
   m_ObjectHideFlags: 0
@@ -24524,6 +24600,7 @@ GameObject:
   - component: {fileID: 2063635426126745756}
   - component: {fileID: 6338990322232295317}
   - component: {fileID: 6318738816791292319}
+  - component: {fileID: 1922746540106532958}
   m_Layer: 5
   m_Name: '[Canvas]PopupWindowLayer'
   m_TagString: Untagged
@@ -24675,10 +24752,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6573d33d1bbb78841b034b61f130b031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceClips:
-  - {fileID: 8300000, guid: 09f8dc09efedc414784e7ba556669245, type: 3}
+  voiceSound:
+    clip: {fileID: 0}
+    volume: 0
   pitchVariation: 0.5
-  volume: 1
+--- !u!114 &1922746540106532958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7073409763647116997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeec79158d24fdc459a901e38f280aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationPanel: {fileID: 8354082147738456087}
+  notificationText: {fileID: 5531764884239625315}
+  defaultDisplayTime: 2
+  notifySound:
+    clip: {fileID: 8300000, guid: f553e885457ddc4419dc926604474f07, type: 3}
+    volume: 0.5
 --- !u!1 &7075781201702757895
 GameObject:
   m_ObjectHideFlags: 0
@@ -24961,9 +25056,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7150446593367202888
 GameObject:
   m_ObjectHideFlags: 0
@@ -25127,9 +25226,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7178290934356327027
 GameObject:
   m_ObjectHideFlags: 0
@@ -25568,9 +25671,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7410315968993960338
 GameObject:
   m_ObjectHideFlags: 0
@@ -25743,9 +25850,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7434733609305799986
 GameObject:
   m_ObjectHideFlags: 0
@@ -27120,9 +27231,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &7923964995587927847
 GameObject:
   m_ObjectHideFlags: 0
@@ -29868,9 +29983,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &8891246223907564620
 GameObject:
   m_ObjectHideFlags: 0
@@ -30246,9 +30365,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &8977593767516994329
 GameObject:
   m_ObjectHideFlags: 0
@@ -30419,9 +30542,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1 &9083635292899492620
 GameObject:
   m_ObjectHideFlags: 0
@@ -31182,9 +31309,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &1200887745699515082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31395,9 +31526,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &1788275681648104980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31608,9 +31743,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &2400240833406213478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31821,9 +31960,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &2530085489524600909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32034,9 +32177,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &2656296751700987242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32263,9 +32410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &2737551315556783861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32476,9 +32627,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &3565877950353425690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32665,9 +32820,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &4111929439534622751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32894,9 +33053,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &4148737232058353521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33123,9 +33286,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &4517323975395144606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33336,9 +33503,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!1001 &5108288993701779338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33560,9 +33731,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &9003482199746080105 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -33773,9 +33948,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &8532465818808484777 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -33986,9 +34165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &8555541440954408969 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -34199,9 +34382,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &7816742797666636347 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -34412,9 +34599,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &6534603959460773067 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -34641,9 +34832,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &6540996578308379825 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}
@@ -34870,9 +35065,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
+  defaultVolume: 0.5
 --- !u!224 &5671996896838141895 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4185676518515227363, guid: 19ff95cb5a340dc4fa986b2d1561b13b, type: 3}

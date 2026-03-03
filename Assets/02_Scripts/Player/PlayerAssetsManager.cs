@@ -21,8 +21,8 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
     public event Action<int> OnMoneyChanged;
 
     [Header("Sounds")]
-    public AudioClip moneySpendSound;
-    public AudioClip moneyEarnSound;
+    public SoundData moneySpendSound;
+    public SoundData moneyEarnSound;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
 
     public void AddMoney(int amount)
     {
-        if(moneyEarnSound != null) SoundManager.Instance.PlaySFX2D(moneyEarnSound);
+        if(moneyEarnSound.clip != null) SoundManager.Instance.PlaySFX2D(moneyEarnSound);
         currentMoney += amount;
         OnMoneyChanged?.Invoke(currentMoney);
         Debug.Log($"[Money] {amount}¿ø È¹µæ (ÇöÀç: {currentMoney})");
@@ -61,7 +61,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
     {
         if (CheckMoney(amount))
         {
-            if(moneySpendSound != null) SoundManager.Instance.PlaySFX2D(moneySpendSound);
+            if(moneySpendSound.clip != null) SoundManager.Instance.PlaySFX2D(moneySpendSound);
             currentMoney -= amount;
             OnMoneyChanged?.Invoke(currentMoney);
             return true;

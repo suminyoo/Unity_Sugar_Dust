@@ -24,9 +24,9 @@ public class PlayerData : ScriptableObject
     public int[] containerBoxSizes = { 30, 50, 70, 90 };
 
     [Header("Sounds")]
-    public AudioClip hitSound;
-    public AudioClip deathSound;
-    public AudioClip exhaustedSound;
+    public SoundData hitSound;
+    public SoundData deathSound;
+    public SoundData exhaustedSound;
 
     public float GetMaxHpValue(int level) => GetValueSafe(hpLevels, level);
     public float GetMaxStaminaValue(int level) => GetValueSafe(staminaLevels, level);

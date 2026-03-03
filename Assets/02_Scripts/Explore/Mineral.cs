@@ -31,7 +31,7 @@ public class Mineral : MonoBehaviour, IMineable
         Vector3 spawnPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
         if (data.hitEffectPrefab != null) Instantiate(data.hitEffectPrefab, spawnPos, Quaternion.identity);
         
-        if(data.mineSound != null) SoundManager.Instance.PlaySFX(data.mineSound, transform.position);
+        if(data.mineSound.clip != null) SoundManager.Instance.PlaySFX(data.mineSound, transform.position);
         
 
         GetComponent<HitEffect>()?.PlayHitFlash();
@@ -44,7 +44,7 @@ public class Mineral : MonoBehaviour, IMineable
 
     void DestoryMineral()
     {
-        if (data.destroySound != null) SoundManager.Instance.PlaySFX(data.destroySound, transform.position);
+        if (data.destroySound.clip != null) SoundManager.Instance.PlaySFX(data.destroySound, transform.position);
 
         if (data.lootTable != null) data.lootTable.SpawnItem(transform.position);
         ExploreEvents.OnMineralDestroyed?.Invoke();

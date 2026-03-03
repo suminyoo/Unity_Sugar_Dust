@@ -32,6 +32,12 @@ MonoBehaviour:
   inventorySizes: 06000000080000000a0000000c000000
   displayStandSizes: 03000000040000000600000008000000
   containerBoxSizes: 1e00000032000000460000005a000000
-  hitSound: {fileID: 8300000, guid: 04d0d39650eb8ed4eb47c28a627d9b89, type: 3}
-  deathSound: {fileID: 8300000, guid: 214e65a3d9373f8419eb6abac15537c7, type: 3}
-  exhaustedSound: {fileID: 8300000, guid: 94045d70661f57345ab47fe4ff55fad4, type: 3}
+  hitSound:
+    clip: {fileID: 8300000, guid: 589fa81cf6810134da7e303807778cf7, type: 3}
+    volume: 0.5
+  deathSound:
+    clip: {fileID: 8300000, guid: 3737db2ca1dc1e246b97c52e9e22db82, type: 3}
+    volume: 0.5
+  exhaustedSound:
+    clip: {fileID: 8300000, guid: 48565e68898b29949920aa605c1dbf2b, type: 3}
+    volume: 0.5

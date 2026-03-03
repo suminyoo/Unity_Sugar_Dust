@@ -12,6 +12,8 @@ public class NotificationUIManager : MonoBehaviour
     [SerializeField] private float defaultDisplayTime = 2.0f; // 기본 알림 표시 시간
     private Coroutine hideCoroutine;
 
+    public SoundData notifySound;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,7 +35,7 @@ public class NotificationUIManager : MonoBehaviour
             {
                 StopCoroutine(hideCoroutine);
             }
-
+            if (notifySound.clip != null) SoundManager.Instance.PlaySFX2D(notifySound);
             notificationText.text = message;
             notificationPanel.SetActive(true);
 

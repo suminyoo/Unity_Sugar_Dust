@@ -4,24 +4,22 @@ using UnityEngine.UI;
 
 public class UISoundFeedback : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
 {
-    public AudioClip customHoverSound;
-    public AudioClip customClickSound;
+    public SoundData customHoverSound;
+    public SoundData customClickSound;
 
-    [Range(0f, 1f)] public float volume = 1.0f;
-
+    private float defaultVolume = 0.2f;
     private AudioClip defaultHoverSound;
     private AudioClip defaultClickSound;
-
     private Selectable selectable;
 
     private void Start()
     {
         selectable = GetComponent<Selectable>();
 
-        if (customHoverSound == null)
+        if (customHoverSound.clip == null)
             defaultHoverSound = Resources.Load<AudioClip>("Sounds/DefaultHover");
 
-        if (customClickSound == null)
+        if (customClickSound.clip == null)
             defaultClickSound = Resources.Load<AudioClip>("Sounds/DefaultClick");
     }
 
@@ -29,27 +27,45 @@ public class UISoundFeedback : MonoBehaviour, IPointerEnterHandler, IPointerDown
     {
         if (selectable != null && !selectable.interactable) return;
 
-        AudioClip clipToPlay = customHoverSound != null ? customHoverSound : defaultHoverSound;
-        PlaySound(clipToPlay);
+        SoundData dataToPlay;
+
+        if (customHoverSound.clip != null)
+        {
+            dataToPlay = customHoverSound;
+        }
+        else if (defaultHoverSound != null)
+        {
+            dataToPlay = new SoundData { clip = defaultHoverSound, volume = defaultVolume };
+        }
+        else return;
+
+        PlaySound(dataToPlay);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (selectable != null && !selectable.interactable)
-        {
-            return;
-        }
+        if (selectable != null && !selectable.interactable) return;
+        
+        SoundData dataToPlay;
 
-        AudioClip clipToPlay = customClickSound != null ? customClickSound : defaultClickSound;
-        PlaySound(clipToPlay);
+        if (customClickSound.clip != null)
+        {
+            dataToPlay = customClickSound;
+        }
+        else if (defaultClickSound != null)
+        {
+            dataToPlay = new SoundData { clip = defaultClickSound, volume = defaultVolume };
+        }
+        else return;
+        PlaySound(dataToPlay);
     }
 
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(SoundData data)
     {
-        if (clip != null && SoundManager.Instance != null)
+        if (data.clip != null && SoundManager.Instance != null)
         {
             Vector3 playPos = Camera.main != null ? Camera.main.transform.position : transform.position;
-            SoundManager.Instance.PlaySFX(clip, playPos, volume);
+            SoundManager.Instance.PlaySFX2D(data);
         }
     }
 }

@@ -21,9 +21,9 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private Vector3 startPosition;
     private bool isReturning = false;
 
-    [Header("Sound Clips")]
-    public AudioClip paperSound;
-    public AudioClip coinSound;
+    [Header("Sounds")]
+    public SoundData paperSound;
+    public SoundData coinSound;
 
     private void Awake()
     {
@@ -148,10 +148,10 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     private void PlayInteractionSound()
     {
-        AudioClip clip = isCoin ? coinSound : paperSound;
-        if (clip != null && SoundManager.Instance != null)
+        SoundData soundData = isCoin ? coinSound : paperSound;
+        if (soundData.clip != null && SoundManager.Instance != null)
         {
-            SoundManager.Instance.PlaySFX2D(clip);
+            SoundManager.Instance.PlaySFX2D(soundData);
         }
     }
 }

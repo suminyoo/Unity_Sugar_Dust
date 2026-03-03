@@ -102,7 +102,7 @@ public class NPCShop : InventoryHolder, IShopSource
                 // 한정 수량일 때만 상점에서 제거
                 inventorySystem.RemoveItemAtIndex(slotIndex, 1);
             }
-            NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}을(를) 구매했습니다.");
+            //NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}을(를) 구매했습니다.");
             return true;
         }
         else

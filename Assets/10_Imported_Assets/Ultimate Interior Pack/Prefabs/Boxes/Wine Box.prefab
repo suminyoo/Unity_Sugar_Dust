@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 6736082390788135792}
   - component: {fileID: 1823532658528676101}
   - component: {fileID: 2083433699885769823}
-  - component: {fileID: 3497720624398341557}
-  - component: {fileID: 2222198046048726208}
   - component: {fileID: 6755053104016805}
   m_Layer: 0
   m_Name: Node 1
@@ -88,35 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3497720624398341557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3183676831343193921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
---- !u!114 &2222198046048726208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3183676831343193921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a517f24b83171644bd15ecebd0038ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startAngle: 0
-  endAngle: 199.1
-  rotationAxis: 0
-  rotation: 0
 --- !u!64 &6755053104016805
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -150,9 +119,7 @@ GameObject:
   - component: {fileID: 892736288109703182}
   - component: {fileID: 3058329955934625825}
   - component: {fileID: 3751167135824803181}
-  - component: {fileID: 1103971289640864682}
   - component: {fileID: 3719776353928124513}
-  - component: {fileID: 2613580102031579448}
   m_Layer: 0
   m_Name: Wine Box
   m_TagString: Untagged
@@ -228,19 +195,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1103971289640864682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7389215541755647541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!64 &3719776353928124513
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -263,18 +217,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5539357819512116934, guid: fd033a7cb7e6ad24aac5005bf023f028, type: 3}
---- !u!114 &2613580102031579448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7389215541755647541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d99999487eb4ef780bccce267108ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotatables:
-  - key: '-'
-    value: {fileID: 2222198046048726208}

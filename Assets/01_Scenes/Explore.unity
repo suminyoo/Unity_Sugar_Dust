@@ -3885,7 +3885,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 315600423212314532, guid: 01e1d40494441d747abbc522eb370325, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 545664103335084239, guid: 01e1d40494441d747abbc522eb370325, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3945,7 +3945,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 5547485993616417883, guid: 01e1d40494441d747abbc522eb370325, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6306,7 +6306,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 4764373610448452738, guid: aea6b4144a90b5047b3949a4f3fd1bac, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5727393080329970023, guid: aea6b4144a90b5047b3949a4f3fd1bac, type: 3}
       propertyPath: walkSound
@@ -6318,7 +6318,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 5727393080329970023, guid: aea6b4144a90b5047b3949a4f3fd1bac, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7575,7 +7575,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 6449321098016732931, guid: 636cc2525527e5c4ab527f8730386431, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7684451927841199054, guid: 636cc2525527e5c4ab527f8730386431, type: 3}
       propertyPath: walkSound
@@ -7587,7 +7587,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 2f7de75df688a0848a013a840a731dac, type: 3}
     - target: {fileID: 7684451927841199054, guid: 636cc2525527e5c4ab527f8730386431, type: 3}
       propertyPath: walkSound.volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 9205956795661922219, guid: 636cc2525527e5c4ab527f8730386431, type: 3}
       propertyPath: m_Name
@@ -9019,9 +9019,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
 --- !u!114 &9143021065514895400
 MonoBehaviour:
   m_ObjectHideFlags: 0

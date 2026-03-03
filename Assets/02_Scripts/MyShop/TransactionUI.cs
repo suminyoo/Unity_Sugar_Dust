@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,11 +46,6 @@ public class TransactionUI : MonoBehaviour
     [Header("Stacking Settings")]
     public Vector2 stackStartPos = new Vector2(-150, 100);
     public Vector2 stackOffset = new Vector2(10, -10);
-
-    [Header("Sound")]
-    public SoundData paperMoneySound;
-    public SoundData coinMoneySound;
-
 
     private void Awake()
     {
@@ -127,14 +121,6 @@ public class TransactionUI : MonoBehaviour
 
     public void OnClickGiveChange(int amount)
     {
-        if (amount <= 500) {
-            if(coinMoneySound.clip != null) SoundManager.Instance.PlaySFX2D(coinMoneySound);
-        }
-        else
-        {
-           if (paperMoneySound.clip != null) SoundManager.Instance.PlaySFX2D(paperMoneySound);
-        }   
-
         int index = playerMonies.Count;
         SpawnMoneyInternal(amount, playerMoneyZone, playerMonies, 0f, true, false, index);
         UpdatePlayerTotalText();

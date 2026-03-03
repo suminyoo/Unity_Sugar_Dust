@@ -58,16 +58,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4076807051104353946}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7983398887164711033}
     - targetCorrespondingSourceObject: {fileID: -3559909895095799887, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7771835036474260734}
-    - targetCorrespondingSourceObject: {fileID: -3559909895095799887, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1276001073888091795}
   m_SourcePrefab: {fileID: 100100000, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
 --- !u!1 &3115122067744319612 stripped
 GameObject:
@@ -96,37 +90,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7173674413208997415, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
---- !u!114 &1276001073888091795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115122067744319612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!1 &7593880523895143068 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 783aacbef6039d046b6e9f01317c89a6, type: 3}
   m_PrefabInstance: {fileID: 7323851126544779213}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4076807051104353946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7593880523895143068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
 --- !u!64 &7983398887164711033
 MeshCollider:
   m_ObjectHideFlags: 0

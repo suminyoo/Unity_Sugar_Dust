@@ -90,7 +90,7 @@ public class ActionSystem : MonoBehaviour
         // »ý¼º
         if (activeToolData != null && activeToolData.toolPrefab != null && handHolder != null)
         {
-            if(activeToolData.equipSound.clip != null) SoundManager.Instance.PlaySFX(activeToolData.equipSound, transform.position);
+            //if(activeToolData.equipSound.clip != null) SoundManager.Instance.PlaySFX(activeToolData.equipSound, transform.position);
 
             instantiatedWeaponModel = Instantiate(activeToolData.toolPrefab, handHolder);
         }

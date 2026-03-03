@@ -261,10 +261,10 @@ public class InventoryUI : MonoBehaviour
                             // 구매 시도
                             bool success = shop.TryPurchaseItem(slotIndex, playerInv);
 
-                            if (success)
-                            {
-                                NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}를 구매했습니다.");
-                            }
+                            //if (success)
+                            //{
+                            //    NotificationUIManager.Instance.ShowNotification($"{slot.ItemData.itemName}를 구매했습니다.");
+                            //}
                         }
                     );
                 }

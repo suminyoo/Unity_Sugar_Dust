@@ -156,38 +156,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
       insertIndex: -1
       addedObject: {fileID: 535469722106872664}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5970253186879663337}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2007129332250498972}
-    - targetCorrespondingSourceObject: {fileID: -3559909895095799887, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5776563274884421824}
   m_SourcePrefab: {fileID: 100100000, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
---- !u!1 &2638932441495840630 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3559909895095799887, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
-  m_PrefabInstance: {fileID: 7640347822221920455}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5776563274884421824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2638932441495840630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7811b77c5eea46338780e837a3dc5aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightSources:
-  - {fileID: 7896257062395607326}
-  activeLightSourceSurfaceColor: {r: 1, g: 0.91386294, b: 0.5251572, a: 1}
-  inactiveLightSourceSurfaceColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
-  lightEmissionColor: {r: 4, g: 3.2593873, b: 0.95359063, a: 0}
 --- !u!4 &5782268615464561913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4195465301901452350, guid: 0664cfa411e26364689224f5b67e3123, type: 3}
@@ -219,38 +188,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.17311232, y: 1.3799974, z: 0.17724428}
   m_Center: {x: 0, y: 0.6899987, z: 0}
---- !u!114 &5970253186879663337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405780415056360854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfcb675901bc6468cd417ef699d90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hided: 1
---- !u!114 &2007129332250498972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405780415056360854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6586ae77d582401e87d393effa4e0955, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOn: 0
-  lights:
-  - key: '-'
-    value: {fileID: 5776563274884421824}
-  onTurnOn:
-    m_PersistentCalls:
-      m_Calls: []
-  onTurnOff:
-    m_PersistentCalls:
-      m_Calls: []

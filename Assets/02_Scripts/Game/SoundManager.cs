@@ -84,11 +84,14 @@ public class SoundManager : MonoBehaviour
 
             AudioSource source = go.AddComponent<AudioSource>();
             source.outputAudioMixerGroup = sfxMixerGroup;
-            source.spatialBlend = 1.0f;
-            source.minDistance = 1f;
-            source.maxDistance = 20f;
-            source.rolloffMode = AudioRolloffMode.Logarithmic;
             source.playOnAwake = false;
+
+            source.spatialBlend = 0.8f;        
+            source.rolloffMode = AudioRolloffMode.Linear;
+            source.minDistance = 5f;           
+            source.maxDistance = 30f;  
+            source.dopplerLevel = 0f;
+            // ---------------------------------------------------
 
             sfxPool.Enqueue(source);
         }

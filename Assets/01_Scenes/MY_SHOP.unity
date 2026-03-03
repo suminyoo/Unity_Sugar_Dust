@@ -1725,9 +1725,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 8300000, guid: 792a6e132d38a4f70bbae7f091a6cab3, type: 3}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
 --- !u!1 &246862420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,9 +2855,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
 --- !u!1 &463049740
 GameObject:
   m_ObjectHideFlags: 0
@@ -3295,8 +3301,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1924462784}
   - {fileID: 1099982927}
+  - {fileID: 1924462784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3335,12 +3341,6 @@ MonoBehaviour:
   dragLayer: {fileID: 642273997}
   stackStartPos: {x: -240, y: 80}
   stackOffset: {x: 20, y: -20}
-  paperMoneySound:
-    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
-    volume: 0.5
-  coinMoneySound:
-    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
-    volume: 0.5
 --- !u!114 &508789806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5517,9 +5517,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
 --- !u!1 &955418782
 GameObject:
   m_ObjectHideFlags: 0
@@ -5840,9 +5843,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.2
 --- !u!1 &1004853656
 GameObject:
   m_ObjectHideFlags: 0
@@ -9982,8 +9988,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 448002906}
   - {fileID: 1452834443}
+  - {fileID: 448002906}
   m_Father: {fileID: 508789804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10222,10 +10228,10 @@ MonoBehaviour:
     volume: 0.5
   closeShopSound:
     clip: {fileID: 8300000, guid: 849846c1d2caf2646baf4e9a44932dbb, type: 3}
-    volume: 0.5
+    volume: 0.3
   receiptSound:
     clip: {fileID: 8300000, guid: a70f4e4e209224b179568f3592318309, type: 3}
-    volume: 1
+    volume: 0.3
 --- !u!4 &1943669313
 Transform:
   m_ObjectHideFlags: 0
@@ -10962,9 +10968,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: 19a5b18b079f844bba783a9ec5f32efa, type: 3}
+    volume: 0.5
 --- !u!1 &2138515675
 GameObject:
   m_ObjectHideFlags: 0
@@ -14490,9 +14499,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.2
 --- !u!1 &7692561289066464218
 GameObject:
   m_ObjectHideFlags: 0
@@ -14525,9 +14537,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+    volume: 0.1
 --- !u!1 &7692561289304267777
 GameObject:
   m_ObjectHideFlags: 0
@@ -14560,9 +14575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.2
 --- !u!1 &7692561289318867983
 GameObject:
   m_ObjectHideFlags: 0
@@ -14595,9 +14613,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+    volume: 0.1
 --- !u!1 &7692561289348021086
 GameObject:
   m_ObjectHideFlags: 0
@@ -14630,9 +14651,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+    volume: 0.1
 --- !u!1 &7692561289517633043
 GameObject:
   m_ObjectHideFlags: 0
@@ -14665,9 +14689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+    volume: 0.1
 --- !u!1 &7692561289988988682
 GameObject:
   m_ObjectHideFlags: 0
@@ -14700,9 +14727,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.2
 --- !u!1001 &8056398691746206454
 PrefabInstance:
   m_ObjectHideFlags: 0

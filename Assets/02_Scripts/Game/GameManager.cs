@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour, ISaveable
     private bool hasPendingTimeChange = false;
 
     [Header("Sound")]
-    public SoundData bedSound;
     public SoundData sleepSound;
     public SoundData morningSound;
 
@@ -175,7 +174,6 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         InputControlManager.Instance.LockInput();
         yield return FadeUIManager.Instance.FadeOut();
-        if(bedSound.clip != null) SoundManager.Instance.PlaySFX2D(bedSound);
 
         ChangeTime(GAME_TIME.Morning);
         currentDay++;

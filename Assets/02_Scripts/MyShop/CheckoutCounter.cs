@@ -21,6 +21,13 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         if (isCounterMode) return;
+
+        if (waitingQueue.Count == 0)
+        {
+            NotificationUIManager.Instance.ShowNotification("대기 중인 손님이 없습니다.");
+            return;
+        }
+
         StartCounterMode();
     }
 

@@ -69,7 +69,7 @@ public class MyShopManager : MonoBehaviour
     {
         IsShopOpen = true;
 
-        if(openShopSound.clip != null) SoundManager.Instance.PlaySFX(openShopSound, transform.position);
+        if(openShopSound.clip != null) SoundManager.Instance.PlaySFX2D(openShopSound);
 
         NotificationUIManager.Instance.ShowNotification("영업이 시작되었습니다");
 
@@ -86,7 +86,7 @@ public class MyShopManager : MonoBehaviour
         if (!IsShopOpen) return;
         IsShopOpen = false;
 
-        if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX(closeShopSound, transform.position);
+        if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX2D(closeShopSound);
 
         NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
 

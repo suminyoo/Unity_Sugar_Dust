@@ -18,6 +18,8 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     private int staminaLevel;
     private float maxHp;
     private float maxStamina;
+    private bool isExhausted = false;
+   
 
     public float currentHp { get; private set; }
     public float currentStamina { get; private set; }
@@ -31,6 +33,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     public float runCostPerSec = 10f;
     public float jumpCost = 20f;
     private float lastStaminaUseTime;
+    public float staminaRecoveryThreshold = 0.2f;
 
 
     private void OnEnable()
@@ -104,6 +107,10 @@ public class PlayerCondition : MonoBehaviour, ISaveable
                 currentStamina = Mathf.Min(currentStamina, maxStamina);
                 OnStaminaChanged?.Invoke(currentStamina, maxStamina);
             }
+            if (isExhausted && currentStamina > (maxStamina * staminaRecoveryThreshold))
+            {
+                isExhausted = false;
+            }
         }
     }
     public float GetCurrentWeightRatio()
@@ -129,6 +136,8 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (IsDead) return;
 
+        if (playerData.hitSound != null) SoundManager.Instance.PlaySFX(playerData.hitSound, transform.position);
+
         currentHp -= amount;
 
         // UI 갱신
@@ -136,6 +145,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
         if (currentHp <= 0)
         {
+            if(playerData.deathSound != null) SoundManager.Instance.PlaySFX(playerData.deathSound, transform.position);    
             currentHp = 0;
             OnDie?.Invoke();
         }
@@ -178,10 +188,29 @@ public class PlayerCondition : MonoBehaviour, ISaveable
             currentStamina -= amount;
             lastStaminaUseTime = Time.time;
             OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+
             return true;
         }
-        return false;
+        else
+        {
+            if (!isExhausted && currentStamina <= 0)
+            {
+                PlayExhaustedSound();
+            }
+            return false;
+        }
     }
+    private void PlayExhaustedSound()
+    {
+        if (playerData.exhaustedSound != null && SoundManager.Instance != null)
+        {
+            isExhausted = true;
+            SoundManager.Instance.PlaySFX(playerData.exhaustedSound, transform.position);
+
+            // 일정 시간 후 또는 스테미나가 일정량 회복된 후 다시 재생 가능하도록
+        }
+    }
+
     public float GetWalkSpeed(PlayerData data)
     {
         float ratio = GetCurrentWeightRatio();
@@ -195,7 +224,6 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (GameSaveManager.Instance != null)
         {
-            // 저장할 때 현재 '수치'와 '단계'를 모두 넘겨줌
             GameSaveManager.Instance.SavePlayerCondition(
                 currentHp,
                 currentStamina,

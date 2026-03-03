@@ -44,6 +44,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     private List<InventorySlot> lostItemsList;
 
+    public AudioClip exploreSuccessSound;   
+
     [Header("Exploration Logic")]
     private int targetProgressCount;
     private int currentProgressCount;
@@ -305,6 +307,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (isSafeReturn)
         {
+            if (exploreSuccessSound != null) SoundManager.Instance.PlaySFX2D(exploreSuccessSound);
+
             resultTitleText.text = "탐사 성공";
             resultInfoText.text = "우주선을 타고 마을로 무사히 귀환합니다.";
         }

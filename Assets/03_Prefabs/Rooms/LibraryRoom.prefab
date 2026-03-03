@@ -19488,35 +19488,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: isExiting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: placeName
+      value: "\uB3C4\uC11C\uAD00"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSpawnId
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSceneName
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5980988092594422733}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195baf241c8d494685b25816651289f, type: 3}
---- !u!1 &740716605245528559 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-  m_PrefabInstance: {fileID: 4824256143418018701}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5980988092594422733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740716605245528559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeName: "\uB3C4\uC11C\uAD00"
-  targetSceneName: 2
-  targetSpawnId: 320
-  isExiting: 1
 --- !u!4 &3379815631105880221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788050934299212560, guid: 4195baf241c8d494685b25816651289f, type: 3}

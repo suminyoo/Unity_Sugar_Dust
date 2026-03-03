@@ -130,11 +130,10 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         int remaining = inventorySystem.AddItemToSlots(item, count);
 
-        // [핵심 로직]
         if (remaining == count)
         {
-            // 하나도 못 넣은 경우에만 알림
             NotificationUIManager.Instance.ShowNotification("인벤토리 공간이 부족합니다.");
+            return -1;
         }
 
         return remaining;

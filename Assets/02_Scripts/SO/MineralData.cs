@@ -10,6 +10,7 @@ public class MineralData : ScriptableObject
     [Header("Visual & Audio")]
     public GameObject hitEffectPrefab;
     public AudioClip mineSound;
+    public AudioClip destroySound;
 
     [Header("Loot")]
     public DropItemTable lootTable;

@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour, ISaveable
     private GAME_TIME pendingTime;
     private bool hasPendingTimeChange = false;
 
+    [Header("Sound")]
+    public AudioClip bedSound;
+    public AudioClip sleepSound;
+    public AudioClip morningSound;
+
     private void OnEnable()
     {
         SceneController.OnScreenFadedOut += ExecutePendingTimeChange;
@@ -170,17 +175,22 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         InputControlManager.Instance.LockInput();
         yield return FadeUIManager.Instance.FadeOut();
+        if(bedSound != null) SoundManager.Instance.PlaySFX2D(bedSound);
 
         ChangeTime(GAME_TIME.Morning);
         currentDay++;
         OnSleep?.Invoke();
 
-        //TODO: 저장? 아침이 밝아올 때(페이드 인 직후) UI에 N일차 아침 등등 UI추가?
-
         yield return new WaitForSeconds(1.0f);
+        if (sleepSound != null) SoundManager.Instance.PlaySFX2D(sleepSound);
+
+        //TODO: 저장? 아침이 밝아올 때(페이드 인 직후) UI에 N일차 아침 등등 UI추가
 
         yield return FadeUIManager.Instance.FadeIn();
         InputControlManager.Instance.UnlockInput();
+
+        if (morningSound != null) SoundManager.Instance.PlaySFX2D(morningSound);
+
     }
 
     public void SaveData()

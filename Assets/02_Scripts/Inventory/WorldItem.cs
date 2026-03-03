@@ -24,6 +24,8 @@ public class WorldItem : MonoBehaviour
     private Vector3 startPos;
     private Rigidbody rb;
 
+    public AudioClip pickupSound;
+
     #endregion
 
     #region Initialization
@@ -111,13 +113,18 @@ public class WorldItem : MonoBehaviour
             {
                 int remaining = inventory.AddItem(itemData, amount);
 
-                if (remaining <= 0)  //다 들어감
+                if (remaining != -1)
                 {
-                    Destroy(gameObject);
-                }
-                else if (remaining < amount)  // 일부만 들어감
-                {
-                    amount = remaining; 
+                    if (pickupSound != null) SoundManager.Instance.PlaySFX(pickupSound, transform.position);
+
+                    if (remaining == 0)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else if (0 < remaining)
+                    {
+                        amount = remaining;
+                    }
                 }
             }
         }

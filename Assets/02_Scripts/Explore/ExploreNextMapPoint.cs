@@ -3,6 +3,7 @@ using UnityEngine;
 public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 {
     public ExploreManager exploreManager;
+    public AudioClip walkSound;
 
     public string GetInteractPrompt() => "[E] ´õ ±íÀº °÷ Å½»çÇÏ±â";
 
@@ -20,6 +21,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
             {
                 if (exploreManager != null)
                 {
+                    if (walkSound != null) SoundManager.Instance.PlaySFX2D(walkSound);
                     exploreManager.AttemptMoveToNextStage();
                 }
                 else

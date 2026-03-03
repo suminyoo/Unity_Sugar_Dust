@@ -1485,35 +1485,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: isExiting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: placeName
+      value: "\uBCD1\uC6D0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSpawnId
+      value: 311
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSceneName
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3946228687820324079}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195baf241c8d494685b25816651289f, type: 3}
---- !u!1 &5166419473997195285 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-  m_PrefabInstance: {fileID: 1082677655784569463}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3946228687820324079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5166419473997195285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeName: "\uBCD1\uC6D0"
-  targetSceneName: 2
-  targetSpawnId: 311
-  isExiting: 1
 --- !u!4 &7138986718170382695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788050934299212560, guid: 4195baf241c8d494685b25816651289f, type: 3}

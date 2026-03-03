@@ -231,6 +231,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDay: 0
   currentTime: 4
+  bedSound: {fileID: 8300000, guid: e9976a08d53182d448ac7ceae282abfa, type: 3}
+  sleepSound: {fileID: 8300000, guid: b1ca1129b4d38cb4aa0881d9906ee10d, type: 3}
+  morningSound: {fileID: 0}
 --- !u!114 &8942570312190243682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +271,7 @@ MonoBehaviour:
     displayStandSlots: []
     displayStandPrices: 
     containerSlots: []
+  writingSound: {fileID: 8300000, guid: fc34819363247774683b9a9cffcd0009, type: 3}
 --- !u!114 &3539451241155705468
 MonoBehaviour:
   m_ObjectHideFlags: 0

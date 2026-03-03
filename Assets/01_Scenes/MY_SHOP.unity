@@ -1726,7 +1726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
+  customClickSound: {fileID: 8300000, guid: 792a6e132d38a4f70bbae7f091a6cab3, type: 3}
   volume: 1
 --- !u!1 &246862420
 GameObject:
@@ -3335,6 +3335,8 @@ MonoBehaviour:
   dragLayer: {fileID: 642273997}
   stackStartPos: {x: -240, y: 80}
   stackOffset: {x: 20, y: -20}
+  paperMoneySound: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
+  coinMoneySound: {fileID: 8300000, guid: 33b856df142ac424c8fc9fa6446a4a23, type: 3}
 --- !u!114 &508789806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4203,7 +4205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -5703,7 +5705,7 @@ GameObject:
   - component: {fileID: 1004360522}
   - component: {fileID: 1004360525}
   m_Layer: 5
-  m_Name: MoneyPaper 50
+  m_Name: MoneyCoin 50
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5773,7 +5775,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -8042,6 +8044,7 @@ MonoBehaviour:
   minGenerosity: 0.8
   maxGenerosity: 1.2
   maxCustomers: 5
+  customerEnterSound: {fileID: 8300000, guid: 6cb82585cd84cf44c945676bf256d6b6, type: 3}
 --- !u!114 &1464588344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8121,7 +8124,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -9589,7 +9592,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -9645,7 +9648,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -9876,7 +9879,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -9932,7 +9935,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -10065,7 +10068,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 508789805}
-        m_TargetAssemblyTypeName: CounterUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: TransactionUI, Assembly-CSharp
         m_MethodName: OnClickGiveChange
         m_Mode: 3
         m_Arguments:
@@ -10208,6 +10211,9 @@ MonoBehaviour:
   counter: {fileID: 7358804626782508867}
   openCloseInteraction: {fileID: 786729237}
   closingReceiptUI: {fileID: 508789806}
+  openShopSound: {fileID: 8300000, guid: 5f782f38eea679143afa6a943bccd323, type: 3}
+  closeShopSound: {fileID: 8300000, guid: 849846c1d2caf2646baf4e9a44932dbb, type: 3}
+  receiptSound: {fileID: 8300000, guid: a70f4e4e209224b179568f3592318309, type: 3}
 --- !u!4 &1943669313
 Transform:
   m_ObjectHideFlags: 0
@@ -10945,7 +10951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
+  customClickSound: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
   volume: 1
 --- !u!1 &2138515675
 GameObject:
@@ -11931,22 +11937,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8473066756549609436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2034830713096733615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3631073589156426391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeName: "\uB0B4 \uC0C1\uC810"
-  targetSceneName: 2
-  targetSpawnId: 350
-  isExiting: 1
 --- !u!1001 &2115256125629560452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12544,22 +12534,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: isExiting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: placeName
+      value: "\uB0B4 \uC0C1\uC810"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSpawnId
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSceneName
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2034830713096733615}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195baf241c8d494685b25816651289f, type: 3}
 --- !u!4 &3631073589156426390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788050934299212560, guid: 4195baf241c8d494685b25816651289f, type: 3}
-  m_PrefabInstance: {fileID: 3631073589156426389}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3631073589156426391 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
   m_PrefabInstance: {fileID: 3631073589156426389}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3809848747068451995
@@ -14462,7 +14460,7 @@ GameObject:
   - component: {fileID: 639055387}
   - component: {fileID: 7692561288551500028}
   m_Layer: 5
-  m_Name: MoneyPaper 100
+  m_Name: MoneyCoin 100
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14532,7 +14530,7 @@ GameObject:
   - component: {fileID: 1936538458}
   - component: {fileID: 7692561289304267778}
   m_Layer: 5
-  m_Name: MoneyPaper 10
+  m_Name: MoneyCoin 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14672,7 +14670,7 @@ GameObject:
   - component: {fileID: 1906926060}
   - component: {fileID: 7692561289988988683}
   m_Layer: 5
-  m_Name: MoneyPaper 500
+  m_Name: MoneyCoin 500
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

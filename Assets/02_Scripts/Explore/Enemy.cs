@@ -95,6 +95,11 @@ public class Enemy : MonoBehaviour, IDamageable
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance <= data.detectRange)
             {
+                if (currentState != EnemyState.Chase && data.detectSound != null)
+                {
+                    if(data.detectSound != null) SoundManager.Instance.PlaySFX(data.detectSound, transform.position);
+                }
+
                 currentState = EnemyState.Chase;
                 agent.speed = data.runSpeed;
                 wanderTimer = 0f;
@@ -173,6 +178,8 @@ public class Enemy : MonoBehaviour, IDamageable
             animator.SetTrigger("Attack1");
         }
 
+        if (data.attackSound != null) SoundManager.Instance.PlaySFX(data.attackSound, transform.position);
+
         float distToPlayer = Vector3.Distance(transform.position, target.position);
         if (distToPlayer > data.attackRange)
         {
@@ -186,6 +193,8 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return;
 
         currentHp -= damage;
+
+        if (data.hitSound != null) SoundManager.Instance.PlaySFX(data.hitSound, transform.position);
 
         GetComponent<HitEffect>()?.PlayHitFlash();
         EffectManager.Instance.PlayEffect(data.hitEffect, transform.position, 1f);
@@ -220,6 +229,8 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) return;
         isDead = true;
         currentState = EnemyState.Die;
+
+        if (data.dieSound != null) SoundManager.Instance.PlaySFX(data.dieSound, transform.position);
 
         agent.isStopped = true;
         agent.enabled = false;

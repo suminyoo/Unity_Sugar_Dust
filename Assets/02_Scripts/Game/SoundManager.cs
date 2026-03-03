@@ -89,12 +89,18 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip clip, Vector3 position, float volume = 1.0f, float pitchVariation = 0.1f)
+    public void PlaySFX2D(AudioClip clip, float volume = 1.0f, float pitchVariation = 0.1f)
+    {
+        PlaySFX(clip, Camera.main.transform.position, volume, pitchVariation, true);
+    }
+
+    public void PlaySFX(AudioClip clip, Vector3 position, float volume = 1.0f, float pitchVariation = 0.1f, bool is2D = false)
     {
         if (clip == null) return;
 
         AudioSource source = sfxPool.Dequeue();
 
+        source.spatialBlend = is2D ? 0f : 1.0f;
         source.transform.position = position;
         source.clip = clip;
         source.volume = volume;

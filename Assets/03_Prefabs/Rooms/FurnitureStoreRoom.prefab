@@ -3254,40 +3254,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: isExiting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: placeName
+      value: "\uAC00\uAD6C \uC0C1\uC810"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSpawnId
+      value: 340
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSceneName
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8106931972761740999}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195baf241c8d494685b25816651289f, type: 3}
 --- !u!4 &81496488746318632 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788050934299212560, guid: 4195baf241c8d494685b25816651289f, type: 3}
   m_PrefabInstance: {fileID: 7869265812574945336}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2702583246418219610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-  m_PrefabInstance: {fileID: 7869265812574945336}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8106931972761740999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702583246418219610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeName: "\uAC00\uAD6C\uC0C1\uC810"
-  targetSceneName: 2
-  targetSpawnId: 340
-  isExiting: 1
 --- !u!1001 &7893292289580497724
 PrefabInstance:
   m_ObjectHideFlags: 0

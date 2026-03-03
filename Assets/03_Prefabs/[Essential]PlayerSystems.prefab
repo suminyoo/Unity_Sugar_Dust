@@ -13770,6 +13770,10 @@ MonoBehaviour:
   npcShopUI: {fileID: 7049407710714896981}
   containerUI: {fileID: 1134432428702434637}
   closeDistance: 10
+  myShopOpenSound: {fileID: 8300000, guid: 5e7bc695c1adcf0489162823f2f1c7a9, type: 3}
+  npcShopOpenSound: {fileID: 8300000, guid: a634ee6fcac89124f92b1910dacfb922, type: 3}
+  containerOpenSound: {fileID: 8300000, guid: a662aafbcfaef4b6da8f965d1dfab2c5, type: 3}
+  DefaultCloseSound: {fileID: 8300000, guid: b7afd3b0c8d8534429420e8332461374, type: 3}
 --- !u!114 &1585865001654277057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13784,6 +13788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBagPanel: {fileID: 7644848444117479039}
   toggleKey: 9
+  inventoryOpenSound: {fileID: 8300000, guid: 2f3c3a852c32900429a59e5fbf742673, type: 3}
 --- !u!114 &3474830422778414060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20470,6 +20475,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoney: 0
+  moneySpendSound: {fileID: 8300000, guid: 44ec0024decd141b8b8de268b2689761, type: 3}
+  moneyEarnSound: {fileID: 8300000, guid: 44ec0024decd141b8b8de268b2689761, type: 3}
 --- !u!1 &5872971085322681958
 GameObject:
   m_ObjectHideFlags: 0

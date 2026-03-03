@@ -33,6 +33,10 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] float maxGenerosity = 1.2f;
     [SerializeField] int maxCustomers = 10;
 
+    [Header("Sound")]
+    public AudioClip customerEnterSound;
+    
+
     private List<CustomerBrain> currentCustomers = new List<CustomerBrain>();
     private Coroutine spawnCoroutine;
 
@@ -106,6 +110,8 @@ public class CustomerSpawner : MonoBehaviour
                 }
             );
         }
+
+        if (customerEnterSound != null) SoundManager.Instance.PlaySFX(customerEnterSound, transform.position);
     }
 
     private CustomerType GetWeightedRandomType()

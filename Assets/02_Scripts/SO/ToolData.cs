@@ -15,4 +15,9 @@ public class ToolData : ScriptableObject
     [Header("Critical")]
     [Range(0f, 1f)] public float criticalChance;
     public float criticalMultiplier;
+
+    [Header("Sounds")]
+    public AudioClip equipSound;
+    public AudioClip actionSound;
+
 }

@@ -35,7 +35,6 @@ public class EnemyData : ScriptableObject
     public AudioClip hitSound;
     public AudioClip attackSound;
     public AudioClip detectSound;
-    public AudioClip patrolSound;
     public AudioClip dieSound;
 
 

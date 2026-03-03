@@ -94,11 +94,12 @@ public class InventoryHolder : MonoBehaviour
         {
             inventorySystem.RemoveItemAtIndex(fromIndex, amountToSend);
         }
-        else if (remaining < amountToSend) // 일부만 성공
+        else if (0 < remaining)
         {
             int actualSent = amountToSend - remaining;
             inventorySystem.RemoveItemAtIndex(fromIndex, actualSent);
         }
+
     }
     
     #endregion

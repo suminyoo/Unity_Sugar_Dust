@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class MyShopManager : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public class MyShopManager : MonoBehaviour
     public ClosingReceiptUI closingReceiptUI;
 
     public static bool IsShopMode = false; // 씬 체인지로 영업모드로 바뀔때
+
+
+    [Header("Sound")]
+    public AudioClip openShopSound;
+    public AudioClip closeShopSound;
+    public AudioClip receiptSound;
+
 
     public float GetCurrentTime() => currentTime;
     public float GetTimeLimit() => businessDuration;
@@ -63,6 +71,8 @@ public class MyShopManager : MonoBehaviour
     {
         IsShopOpen = true;
 
+        if(openShopSound != null) SoundManager.Instance.PlaySFX(openShopSound, transform.position);
+
         NotificationUIManager.Instance.ShowNotification("영업이 시작되었습니다");
 
         currentTime = businessDuration;
@@ -77,6 +87,8 @@ public class MyShopManager : MonoBehaviour
     {
         if (!IsShopOpen) return;
         IsShopOpen = false;
+
+        if(closeShopSound != null) SoundManager.Instance.PlaySFX(closeShopSound, transform.position);
 
         NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
 
@@ -95,6 +107,8 @@ public class MyShopManager : MonoBehaviour
     public void OpenSettlementUI()
     {
         
+        if (receiptSound != null) SoundManager.Instance.PlaySFX2D(receiptSound);
+
         closingReceiptUI.ShowReceipt();
         
     }

@@ -79,7 +79,6 @@ public class ActionSystem : MonoBehaviour
     // 상점에서 업그레이드 하거나, 공격/채광 모드 전환 시 호출
     public void EquipTool(ActionType actionType)
     {
-
         if (instantiatedWeaponModel != null) Destroy(instantiatedWeaponModel);
 
         if (actionType == ActionType.Attack)
@@ -91,6 +90,8 @@ public class ActionSystem : MonoBehaviour
         // 생성
         if (activeToolData != null && activeToolData.toolPrefab != null && handHolder != null)
         {
+            if(activeToolData.equipSound != null) SoundManager.Instance.PlaySFX(activeToolData.equipSound, transform.position);
+
             instantiatedWeaponModel = Instantiate(activeToolData.toolPrefab, handHolder);
         }
 
@@ -164,6 +165,11 @@ public class ActionSystem : MonoBehaviour
         currentCooldownTimer = activeToolData != null ? activeToolData.cooldown : 1f;
 
         playerController.HandleWield(actionType); // 애니메이션 재생
+
+        if (activeToolData != null && activeToolData.actionSound != null)
+        {
+            SoundManager.Instance.PlaySFX(activeToolData.actionSound, transform.position);
+        }
     }
 
     // 상점에서 무기 업그레이드 시 호출용

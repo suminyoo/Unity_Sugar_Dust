@@ -962,6 +962,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6a0a62736d66bd341bd71cfc6dd906f0, type: 2}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: isExiting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: placeName
+      value: "\uC9D1"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSpawnId
+      value: 301
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: targetSceneName
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9097087294359387728, guid: 4195baf241c8d494685b25816651289f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -969,19 +985,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9033732325965607592}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4195baf241c8d494685b25816651289f, type: 3}
 --- !u!4 &1102500521480093312 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788050934299212560, guid: 4195baf241c8d494685b25816651289f, type: 3}
-  m_PrefabInstance: {fileID: 1102500521480093311}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1102500521480093313 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5239021950919627362, guid: 4195baf241c8d494685b25816651289f, type: 3}
   m_PrefabInstance: {fileID: 1102500521480093311}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1314530876048836546
@@ -4908,9 +4916,6 @@ MonoBehaviour:
   inventorySystem:
     slots: []
     maxSlots: 0
-  playerData: {fileID: 11400000, guid: 8a0277b4408581043b8b1bd1692a7d4e, type: 2}
-  inventoryUI: {fileID: 0}
-  playerInventory: {fileID: 0}
 --- !u!65 &8454334345026892201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5352,22 +5357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01d72c4eebc42f42abdce77e06d1981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9033732325965607592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102500521480093313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1cded353b16bc4f8628087211c9fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeName: "\uC9D1"
-  targetSceneName: 2
-  targetSpawnId: 301
-  isExiting: 1
+  diaryOpenSound: {fileID: 8300000, guid: fd564784c4ec5694b9f30c175f135bb7, type: 3}
 --- !u!65 &9060683458460049684
 BoxCollider:
   m_ObjectHideFlags: 0

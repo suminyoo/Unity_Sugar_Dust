@@ -13,6 +13,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private RectTransform myLimitZone;
 
     public int amount;
+    public bool isCoin;
     public bool isFake;
     public bool isPlayerMoney;
     public Action<DraggableMoney> OnMoneyDestroyed;
@@ -20,6 +21,9 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private Vector3 startPosition;
     private bool isReturning = false;
 
+    [Header("Sound Clips")]
+    public AudioClip paperSound;
+    public AudioClip coinSound;
 
     private void Awake()
     {
@@ -54,6 +58,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         if (isReturning) return;
         if (transform.parent == dragLayerParent) return;
 
+        PlayInteractionSound();
         startPosition = transform.position;
 
         // 드래그 레이어로 부모 변경하여 최상단 노출
@@ -72,6 +77,7 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         if (isReturning) return;
 
+        PlayInteractionSound();
         canvasGroup.blocksRaycasts = true;
 
         // 마우스 아래에 있는 오브젝트 확인
@@ -137,6 +143,15 @@ public class DraggableMoney : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
                 OnMoneyDestroyed?.Invoke(this);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void PlayInteractionSound()
+    {
+        AudioClip clip = isCoin ? coinSound : paperSound;
+        if (clip != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySFX2D(clip);
         }
     }
 }

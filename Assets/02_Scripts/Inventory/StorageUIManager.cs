@@ -36,6 +36,12 @@ public class StorageUIManager : MonoBehaviour
     public float closeDistance = 3.0f;
     public bool IsAnyStorageUIOpen => playerBagPanel.activeSelf || (_currentOtherPanel != null && _currentOtherPanel.activeSelf);
 
+    [Header("Sound")]
+    public AudioClip myShopOpenSound;
+    public AudioClip npcShopOpenSound;
+    public AudioClip containerOpenSound;
+    public AudioClip DefaultCloseSound;
+
 
     private void Awake()
     {
@@ -103,6 +109,8 @@ public class StorageUIManager : MonoBehaviour
         switch (shopType)
         {
             case InventoryContext.MyShop:
+                if (myShopOpenSound != null) SoundManager.Instance.PlaySFX2D(myShopOpenSound);
+
                 _currentOtherUI = myShopUI;
                 _currentOtherPanel = myShopPanel;
                 if (other is IShopSource source)
@@ -110,6 +118,8 @@ public class StorageUIManager : MonoBehaviour
                 break;
                 
             case InventoryContext.NPCShop:
+                if (npcShopOpenSound != null) SoundManager.Instance.PlaySFX2D(npcShopOpenSound);
+
                 _currentOtherUI = npcShopUI;
                 _currentOtherPanel = npcShopPanel;
                 if (other is IShopSource npcSource)
@@ -117,6 +127,8 @@ public class StorageUIManager : MonoBehaviour
                 break;
 
             case InventoryContext.Container:
+                if (containerOpenSound != null) SoundManager.Instance.PlaySFX2D(containerOpenSound);
+
                 _currentOtherUI = containerUI;
                 _currentOtherPanel = containerPanel;
                 if (_currentOtherUI != null)
@@ -146,6 +158,8 @@ public class StorageUIManager : MonoBehaviour
 
     public void CloseStorage()
     {
+        if (DefaultCloseSound != null) SoundManager.Instance.PlaySFX2D(DefaultCloseSound);
+
         // 루트배경
         rootCanvas.SetActive(false);
 

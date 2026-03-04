@@ -14,6 +14,7 @@ public interface IQuestInteractable
     string GetQuestPrompt();
     bool HasAvailableQuest();
 }
+
 public class InteractionSystem : MonoBehaviour
 {
     public TextMeshProUGUI interactionText;

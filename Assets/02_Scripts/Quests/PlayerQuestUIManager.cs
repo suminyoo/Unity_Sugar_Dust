@@ -16,27 +16,31 @@ public class PlayerQuestUIManager : MonoBehaviour
 
     private void Update()
     {
-        // 팝업이 켜져있거나 npc 상호작용중에는 Q 안되게
         if (InputControlManager.Instance != null && InputControlManager.Instance.IsInputLocked) return;
-        
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            bool isActive = !playerQuestPanel.activeSelf;
-            playerQuestPanel.SetActive(isActive);
+            ToggleQuestPanel();
+        }
 
-            if (isActive)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (playerQuestPanel.activeSelf)
             {
-                UpdateQuestUI();
-                InputControlManager.Instance.LockInput();
-                Cursor.visible = true;
-            }
-            else
-            {
-                InputControlManager.Instance.UnlockInput();
+                playerQuestPanel.SetActive(false);
             }
         }
     }
+    private void ToggleQuestPanel()
+    {
+        bool isActive = !playerQuestPanel.activeSelf;
+        playerQuestPanel.SetActive(isActive);
 
+        if (isActive)
+        {
+            UpdateQuestUI();
+        }
+    }
     public void UpdateQuestUI()
     {
         foreach (Transform child in contentParent) Destroy(child.gameObject);
@@ -48,11 +52,11 @@ public class PlayerQuestUIManager : MonoBehaviour
 
             if (quest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(quest.data, quest, "보상 받기", true, () => ClaimReward(quest));
+                slotUI.SetupSlot(quest.data, quest, "보상받기", true, () => ClaimReward(quest));
             }
             else
             {
-                slotUI.SetupSlot(quest.data, quest, "진행 중", false, null);
+                slotUI.SetupSlot(quest.data, quest, "진행중", false, null);
             }
         }
     }

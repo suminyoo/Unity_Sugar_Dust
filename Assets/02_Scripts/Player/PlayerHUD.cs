@@ -63,7 +63,7 @@ public class PlayerHUD : MonoBehaviour
     #region HP & Stamina 
     private void UpdateHpUI(float curHp, float maxHp)
     {
-        Debug.Log($"[PlayerHUD] HP UI 업데이트: {curHp} / {maxHp}");
+        //Debug.Log($"[PlayerHUD] HP UI 업데이트: {curHp} / {maxHp}");
         hpSlider.value = curHp / maxHp;
         hpText.text = $"{(int)curHp} / {(int)maxHp}";
     }

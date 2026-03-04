@@ -6,7 +6,7 @@ public class NPCQuestUIManager : MonoBehaviour
 {
     public static NPCQuestUIManager Instance;
 
-    public GameObject uiPanel;
+    public GameObject npcQuestPanel;
     public Transform contentParent;
     public GameObject questSlotPrefab;
 
@@ -17,19 +17,25 @@ public class NPCQuestUIManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        uiPanel.SetActive(false);
+        npcQuestPanel.SetActive(false);
+    }
+    private void Update()
+    {
+        if (npcQuestPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseUI();
+        }
     }
 
-    // 인자가 NPCBrain 하나로 줄었습니다.
+
     public void OpenInteractionUI(List<QuestData> quests, Action onClose)
     {
-        InputControlManager.Instance.LockInput();
         currentQuestsToOffer = quests;
         onPanelClosed = onClose;
 
-        RefreshUI(); // 화면 그리기
+        RefreshUI();
 
-        uiPanel.SetActive(true);
+        npcQuestPanel.SetActive(true);
     }
 
     public void RefreshUI()
@@ -62,7 +68,7 @@ public class NPCQuestUIManager : MonoBehaviour
             }
             else
             {
-                slotUI.SetupSlot(questData, activeQuest, "진행 중", false, null);
+                slotUI.SetupSlot(questData, activeQuest, "진행중", false, null);
             }
         }
     }
@@ -81,8 +87,7 @@ public class NPCQuestUIManager : MonoBehaviour
 
     public void CloseUI()
     {
-        uiPanel.SetActive(false);
-        InputControlManager.Instance.UnlockInput();
+        npcQuestPanel.SetActive(false);
         onPanelClosed?.Invoke();
     }
 }

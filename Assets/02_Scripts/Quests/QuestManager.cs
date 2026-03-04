@@ -89,7 +89,7 @@ public class QuestManager : MonoBehaviour
             Debug.Log($"{quest.data.rewardGold} °ñµå º¸»ó È¹µæ");
 
             if (PlayerQuestUIManager.Instance != null) PlayerQuestUIManager.Instance.UpdateQuestUI();
-            if (NPCQuestUIManager.Instance != null && NPCQuestUIManager.Instance.uiPanel.activeSelf)
+            if (NPCQuestUIManager.Instance != null && NPCQuestUIManager.Instance.npcQuestPanel.activeSelf)
                 NPCQuestUIManager.Instance.RefreshUI();
         }
     }

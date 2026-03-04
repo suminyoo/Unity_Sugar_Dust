@@ -25,13 +25,13 @@ public class QuestSlotUI : MonoBehaviour
     {
         titleText.text = questData.questName;
         descriptionText.text = questData.description;
-        rewardText.text = $"보상: {questData.rewardGold} G";
+        rewardText.text = $"보상: {questData.rewardGold} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
 
         if (activeQuest == null)
         {
-            // 아직 미수락 상태
+            // 미수락 상태
             int max = questData.objectives.Count > 0 ? questData.objectives[0].requiredAmount : 0;
-            progressText.text = $"목표 수량: {max}";
+            progressText.text = $"목표: {max}";
         }
         else
         {
@@ -40,7 +40,7 @@ public class QuestSlotUI : MonoBehaviour
             {
                 int current = activeQuest.currentAmounts[0];
                 int max = activeQuest.data.objectives[0].requiredAmount;
-                progressText.text = $"진행도: {current} / {max}";
+                progressText.text = $"목표: {current} / {max}";
             }
         }
 

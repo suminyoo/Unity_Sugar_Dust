@@ -19,16 +19,37 @@ public class InventoryToggle : MonoBehaviour
         {
             if (playerBagPanel != null)
             {
-                if(inventoryOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(inventoryOpenSound);
+                bool nextState = !playerBagPanel.activeSelf;
 
-                bool isActive = !playerBagPanel.activeSelf;
-                playerBagPanel.SetActive(isActive);
-
-                if (!isActive)
-                {
-                    StorageUIManager.Instance.TryClearMouseItem();
-                }
+                if (nextState) OpenInventory();
+                else CloseInventory();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (playerBagPanel != null && playerBagPanel.activeSelf)
+            {
+                CloseInventory();
+            }
+        }
+    }
+
+    private void OpenInventory()
+    {
+        if (inventoryOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(inventoryOpenSound);
+        playerBagPanel.SetActive(true);
+    }
+
+    private void CloseInventory()
+    {
+        if (inventoryOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(inventoryOpenSound);
+
+        playerBagPanel.SetActive(false);
+
+        if (StorageUIManager.Instance != null)
+        {
+            StorageUIManager.Instance.TryClearMouseItem();
         }
     }
 }

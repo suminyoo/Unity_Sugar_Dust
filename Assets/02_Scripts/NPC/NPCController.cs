@@ -35,4 +35,8 @@ public class NPCController : MonoBehaviour
     {
         Brain.HandleInteraction();
     }
+    public void OnQuestInteract()
+    {
+        Brain.HandleQuestInteraction();
+    }
 }

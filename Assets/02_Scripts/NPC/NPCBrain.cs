@@ -31,6 +31,8 @@ public class NPCBrain : MonoBehaviour
         if (isInteracting) return;
 
         DetectPlayer();
+
+
     }
     private void DetectPlayer()
     {
@@ -57,6 +59,8 @@ public class NPCBrain : MonoBehaviour
             isPlayerInRange = false; 
         }
     }
+
+    #region Interaction
     public virtual void HandleInteraction()
     {
         // 이미 대화 중이면 중복 실행 방지
@@ -77,7 +81,6 @@ public class NPCBrain : MonoBehaviour
 
         FinishInteraction();
     }
-
     protected void PrepareInteraction()
     {
         isInteracting = true;
@@ -108,8 +111,47 @@ public class NPCBrain : MonoBehaviour
         {
             ShowGoodbyeMessage();
         }
-
     }
+
+    //상호작용 종료
+    protected void FinishInteraction()
+    {
+        controller.Movement.Resume();
+        isInteracting = false;
+    }
+
+
+    #endregion
+
+    #region Quest Interaction
+    public bool HasAvailableQuest()
+    {
+        if (controller.npcData.questsToGive == null || controller.npcData.questsToGive.Count == 0)
+            return false;
+
+        foreach (var questData in controller.npcData.questsToGive)
+        {
+            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void HandleQuestInteraction()
+    {
+        if (isInteracting) return;
+        PrepareInteraction();
+
+        NPCQuestUIManager.Instance.OpenInteractionUI(controller.npcData.questsToGive, OnQuestUIClosed);
+    }
+
+    private void OnQuestUIClosed()
+    {
+        FinishInteraction();
+    }
+    #endregion
 
     // 굿바이 인사
     protected void ShowGoodbyeMessage()
@@ -123,13 +165,6 @@ public class NPCBrain : MonoBehaviour
         }
     }
 
-    //상호작용 종료
-    protected void FinishInteraction()
-    {
-        controller.Movement.Resume();
-        isInteracting = false;
-    }
- 
     // 혼잣말 함수
     public void SayToSelf(string text)
     {
@@ -204,7 +239,7 @@ public class NPCBrain : MonoBehaviour
 //// 대화할 때 랜덤 제스처
 //controller.Animation.PlayTalkRandom();
 
-//// 특정 대화 제스처 (설명하는 손짓)
+//// 특정 대화 제스처 (설명하는 손짓
 //controller.Animation.PlayTalk(NPCAnimation.TalkState.Explain);
 
 //// 깜짝 놀라기

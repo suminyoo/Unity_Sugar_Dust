@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New NPC Data", menuName = "NPC/NPC Data")]
@@ -12,10 +13,13 @@ public class NPCData : ScriptableObject
 
     [Header("Interaction")]
     public string promptText = $"[E] 대화하기"; // 상호작용 텍스트
+    public string questPromptText = $"[R] 퀘스트 보기";
     public DialogueData defaultDialogue;
 
     public string defaultGreetingMessage;
     public string defaultGoodByeMessage;
     public float detectRange = 5.0f;
 
+    [Header("Quests")]
+    public List<QuestData> questsToGive;
 }

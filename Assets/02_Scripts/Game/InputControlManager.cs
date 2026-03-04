@@ -8,6 +8,7 @@ public class InputControlManager : MonoBehaviour
 
     // 입력 잠금 카운터 (여러 시스템이 동시에 잠금을 요청할 수 있으므로 bool 대신 int)
     private int inputLockCount = 0;
+    public bool IsInputLocked => inputLockCount > 0;
 
     // 상태가 변할 때 알리는 이벤트
     public event Action<bool> OnInputStateChanged; // true: 입력 가능, false: 입력 불가

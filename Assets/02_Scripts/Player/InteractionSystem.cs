@@ -7,6 +7,13 @@ public interface IInteractable
     void OnInteract();
     string GetInteractPrompt();
 }
+
+public interface IQuestInteractable
+{
+    void OnQuestInteract();
+    string GetQuestPrompt();
+    bool HasAvailableQuest();
+}
 public class InteractionSystem : MonoBehaviour
 {
     public TextMeshProUGUI interactionText;
@@ -75,16 +82,38 @@ public class InteractionSystem : MonoBehaviour
 
         currentInteractable = interactablesInRange[0];
 
-        
-        PromptUIManager.Instance.SetInteractionPrompt(currentInteractable.GetInteractPrompt());
-        
+        // 기본 E키 프롬프트
+        string finalPrompt = currentInteractable.GetInteractPrompt();
+
+        // 타겟이 퀘스트를 줄 수 있는 대상IQuestInteractable
+        if (currentInteractable is IQuestInteractable questTarget)
+        {
+            if (questTarget.HasAvailableQuest())
+            {
+                // R키 텍스트 추가
+                finalPrompt += $"\n{questTarget.GetQuestPrompt()}";
+            }
+        }
+
+        PromptUIManager.Instance.SetInteractionPrompt(finalPrompt);
     }
 
     void HandleInput()
     {
-        if (currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+        if (currentInteractable == null) return;
+
+        // E키: 기본
+        if (Input.GetKeyDown(KeyCode.E))
         {
             currentInteractable.OnInteract();
+        }
+        // R키: 퀘스트
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (currentInteractable is IQuestInteractable questTarget && questTarget.HasAvailableQuest())
+            {
+                questTarget.OnQuestInteract();
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 public class CollectObjectiveHandler : QuestObjectiveHandler
 {
+    // 부모 클래스 초기화를 위해 base 생성자 호출. 함수 : base 문법
     public CollectObjectiveHandler(Quest quest, int index) : base(quest, index) { }
 
     public override void EvaluateProgress()

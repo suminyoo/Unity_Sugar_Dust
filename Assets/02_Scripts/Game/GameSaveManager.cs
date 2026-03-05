@@ -310,4 +310,23 @@ public class GameSaveManager : MonoBehaviour
 
     #endregion
 
+    #region 퀘스트 데이터 세이브로드
+
+    public void SaveQuestData(List<string> completedIDs, List<QuestSaveData> activeQuestData)
+    {
+        // 완료목록
+        savedData.completedQuestIDs = new List<string>(completedIDs);
+
+        // 진행중 목록
+        savedData.activeQuests = new List<QuestSaveData>(activeQuestData);
+
+        Debug.Log("GameManager: 퀘스트 데이터 저장 완료");
+    }
+
+    public (List<string> completedIDs, List<QuestSaveData> activeQuestData) LoadQuestData()
+    {
+        return (savedData.completedQuestIDs, savedData.activeQuests);
+    }
+
+    #endregion
 }

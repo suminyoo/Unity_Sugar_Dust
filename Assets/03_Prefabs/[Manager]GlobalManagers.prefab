@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 2347887029095275869}
   - component: {fileID: 8251919005499558918}
   - component: {fileID: 496892743777320435}
+  - component: {fileID: 2422193467367281175}
   - component: {fileID: 868333599760186589}
   m_Layer: 0
   m_Name: '[Manager]GlobalManagers'
@@ -276,6 +277,8 @@ MonoBehaviour:
     displayStandSlots: []
     displayStandPrices: 
     containerSlots: []
+    completedQuestIDs: []
+    activeQuests: []
   writingSound:
     clip: {fileID: 8300000, guid: b9bbaf15f87d0d14599c9db8cf1b9385, type: 3}
     volume: 0.7
@@ -291,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2a75b1b1a4caa48b0568276a241c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.43137255, g: 0.43137255, b: 0.627451, a: 0}
+  backgroundColor: {r: 0.43137255, g: 0.43137255, b: 0.627451, a: 1}
 --- !u!114 &572374818377129698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +341,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea41189b335a9c641bd6f9c3d7f2ec1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2422193467367281175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5046600995907738205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 586958ea803ca1e4785d54fcc949c5dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &868333599760186589

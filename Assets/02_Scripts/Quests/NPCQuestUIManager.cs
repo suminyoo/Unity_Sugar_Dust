@@ -55,6 +55,14 @@ public class NPCQuestUIManager : MonoBehaviour
             // 완료 퀘스트는 안그림
             if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID)) continue;
 
+            if (!string.IsNullOrEmpty(questData.requiredQuestID))
+            {
+                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
+                {
+                    continue;
+                }
+            }
+
             GameObject slotObj = Instantiate(questSlotPrefab, contentParent);
             QuestSlotUI slotUI = slotObj.GetComponent<QuestSlotUI>();
 

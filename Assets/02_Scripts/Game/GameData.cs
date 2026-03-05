@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 
 [System.Serializable]
+public class QuestSaveData
+{
+    public string questID;
+    public int[] currentAmounts; // 각 목표별 현재 진행도
+    public bool isRewardClaimed; // 보상수령 여부
+}
+[System.Serializable]
 public class ItemSaveData
 {
     public string itemID;
@@ -52,6 +59,10 @@ public class GameData
 
     // 컨테이너 박스
     public List<ItemSaveData> containerSlots = new List<ItemSaveData>();
+
+    //퀘스트
+    public List<string> completedQuestIDs = new List<string>(); // 완료한 퀘스트id
+    public List<QuestSaveData> activeQuests = new List<QuestSaveData>(); // 진행중인 퀘스트 정보
 
     public void InitNewGame(PlayerData blueprint)
     {

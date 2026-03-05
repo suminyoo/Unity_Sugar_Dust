@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour, ISaveable
 
             Debug.Log($"[GameManager] 세이브 데이터 적용 완료! 현재 시간: {currentTime}");
         }
+
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.LoadSavedQuests();
+        }
     }
 
     public void ChangeTime(GAME_TIME newTime, bool isInstant = true)
@@ -196,6 +201,7 @@ public class GameManager : MonoBehaviour, ISaveable
         if (GameSaveManager.Instance != null)
         {
             GameSaveManager.Instance.SaveGameState(currentDay, currentTime);
+            QuestManager.Instance.SaveData();
         }
     }
 

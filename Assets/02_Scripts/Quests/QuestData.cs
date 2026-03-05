@@ -47,6 +47,6 @@ public class QuestData : ScriptableObject
     public int rewardGold;
     public List<QuestItemReward> rewardItems;
 
-    public QuestData nextQuest;
+    public string requiredQuestID;
 }
 

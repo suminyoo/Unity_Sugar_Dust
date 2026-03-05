@@ -8,19 +8,14 @@ public static class GameEvents
     // 아이템 제출 퀘스트 이벤트
     public static Func<string, int> RequestPlayerItemCount;
 
-
     // 몬스터처치 이벤트 (몬스터 ID)
     public static Action<string> OnMonsterKilled;
-
-    // 아이템획득 이벤트 (아이템 ID, 획득량)
-    public static Action<string, int> OnItemCollected;
 
     // 장사수익 이벤트
     public static Action<int> OnRevenueEarned;
 
     // 탐사 레벨 도달 이벤트
     public static Action<int> OnLevelReached;
-
 
 
 }

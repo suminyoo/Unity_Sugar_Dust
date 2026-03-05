@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+//인게임에서 사용할 퀘스트 진행상황 저장 클래스
 [System.Serializable]
 public class Quest
 {

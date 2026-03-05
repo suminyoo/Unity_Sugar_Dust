@@ -5,6 +5,8 @@ using UnityEngine;
 //플레이어 인벤토리, 인벤홀더 상속
 public class PlayerInventory : InventoryHolder, ISaveable
 {
+    public static PlayerInventory Instance;
+
     #region Variables
     public MouseItemData mouseItemData;
     public InventoryUI inventoryUI;
@@ -22,6 +24,11 @@ public class PlayerInventory : InventoryHolder, ISaveable
     #endregion
 
     #region Lifecycle & Initialization
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -46,6 +53,15 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
+    }
+    private void OnEnable()
+    {
+        GameEvents.RequestPlayerItemCount += GetItemCountByID;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.RequestPlayerItemCount -= GetItemCountByID;
     }
     private void OnDestroy()
     {
@@ -157,6 +173,31 @@ public class PlayerInventory : InventoryHolder, ISaveable
         {
             NotificationUIManager.Instance.ShowNotification($"{item.itemName}이(가) 부족합니다.");
         }
+    }
+    #endregion
+
+    #region Quest
+
+    private int GetItemCountByID(string targetID)
+    {
+        Debug.Log($"<color=magenta>[CCTV 4] 인벤토리 전화 받음! 퀘스트가 찾는 ID: '{targetID}'</color>");
+        if (string.IsNullOrEmpty(targetID)) return 0;
+
+        int totalCount = 0;
+        foreach (var slot in inventorySystem.Slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                // 글자 띄어쓰기 오타 잡기 위해 양옆에 따옴표 붙임
+                Debug.Log($"[CCTV 5] 가방 슬롯 검사 중... 들어있는 아이템: '{slot.ItemData.itemID}'");
+
+                if (slot.ItemData.itemID == targetID)
+                {
+                    totalCount += slot.Amount;
+                }
+            }
+        }
+        return totalCount;
     }
     #endregion
 

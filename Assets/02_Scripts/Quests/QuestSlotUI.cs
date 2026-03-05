@@ -27,20 +27,19 @@ public class QuestSlotUI : MonoBehaviour
         descriptionText.text = questData.description;
         rewardText.text = $"보상: {questData.rewardGold} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
 
-        if (activeQuest == null)
+
+        if (questData.objectives.Count > 0)
         {
-            // 미수락 상태
-            int max = questData.objectives.Count > 0 ? questData.objectives[0].requiredAmount : 0;
-            progressText.text = $"목표: {max}";
-        }
-        else
-        {
-            // 진행 중 상태
-            if (activeQuest.data.objectives.Count > 0)
+            QuestObjective firstObjective = questData.objectives[0];
+
+            if (activeQuest == null)
+            {
+                progressText.text = firstObjective.GetProgressText(0);
+            }
+            else
             {
                 int current = activeQuest.currentAmounts[0];
-                int max = activeQuest.data.objectives[0].requiredAmount;
-                progressText.text = $"목표: {current} / {max}";
+                progressText.text = firstObjective.GetProgressText(current);
             }
         }
 

@@ -38,6 +38,7 @@ public class PlayerQuestUIManager : MonoBehaviour
 
         if (isActive)
         {
+            QuestManager.Instance.RefreshAllQuestProgress();
             UpdateQuestUI();
         }
     }

@@ -3,6 +3,7 @@ using System;
 // 퀘스트용 static 클래스
 public static class GameEvents
 {
+
     // 몬스터처치 이벤트 (몬스터 ID)
     public static Action<string> OnMonsterKilled;
 
@@ -14,4 +15,9 @@ public static class GameEvents
 
     // 탐사 레벨 도달 이벤트
     public static Action<int> OnLevelReached;
+
+
+    public static Func<string, int> RequestPlayerItemCount;
+
+    public static Action OnQuestProgressUpdated;
 }

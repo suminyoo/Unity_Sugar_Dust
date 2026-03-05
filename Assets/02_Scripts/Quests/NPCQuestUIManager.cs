@@ -30,6 +30,8 @@ public class NPCQuestUIManager : MonoBehaviour
 
     public void OpenInteractionUI(List<QuestData> quests, Action onClose)
     {
+        QuestManager.Instance.RefreshAllQuestProgress();
+
         currentQuestsToOffer = quests;
         onPanelClosed = onClose;
 

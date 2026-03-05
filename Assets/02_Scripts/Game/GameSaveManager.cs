@@ -190,7 +190,7 @@ public class GameSaveManager : MonoBehaviour
             else
             {
                 // ItemManager에게 저장된 ID로 SO 요청
-                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                ItemData item = ItemDataManager.Instance.GetItemByID(savedSlot.itemID);
                 loadedSlots.Add(new InventorySlot(item, savedSlot.amount));
             }
         }
@@ -235,7 +235,7 @@ public class GameSaveManager : MonoBehaviour
             }
             else
             {
-                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                ItemData item = ItemDataManager.Instance.GetItemByID(savedSlot.itemID);
                 loadedSlots.Add(new InventorySlot(item, savedSlot.amount)); // 복구된 슬롯
             }
         }
@@ -272,7 +272,7 @@ public class GameSaveManager : MonoBehaviour
             else
             {
                 // ItemManager에게 저장된 ID로 SO 요청
-                ItemData item = ItemManager.Instance.GetItemByID(savedSlot.itemID);
+                ItemData item = ItemDataManager.Instance.GetItemByID(savedSlot.itemID);
                 loadedSlots.Add(new InventorySlot(item, savedSlot.amount));
             }
         }

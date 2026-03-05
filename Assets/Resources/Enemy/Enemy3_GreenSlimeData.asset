@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f636f58d8ca8f3419b7a5c98a5ce695, type: 3}
-  m_Name: Enemy6_PinkMonsterData
+  m_Name: Enemy3_GreenSlimeData
   m_EditorClassIdentifier: 
-  enemyName: "\uBD84\uD64D\uBAAC\uC2A4\uD130"
-  maxHp: 250
-  moveSpeed: 2.5
-  runSpeed: 5
-  attackDamage: 1
+  enemyID: Enemy3_GreenSlime
+  enemyName: "\uCD08\uB85D\uC2AC\uB77C\uC784"
+  maxHp: 150
+  moveSpeed: 2
+  runSpeed: 3.5
+  attackDamage: 25
   attackCooldown: 1
   attackRange: 2
-  detectRange: 14
-  patrolRadius: 14
+  detectRange: 10
+  patrolRadius: 10
   patrolWaitTime: 1
-  lootTable: {fileID: 11400000, guid: 6fa1147f735cf534cb6355b2501b624e, type: 2}
+  lootTable: {fileID: 11400000, guid: 81d1c3cb35a1c594db69adcfea8043a9, type: 2}
   hitEffect: {fileID: 3237748116200754267, guid: 3d490ce6e32f58746b4d6fb15aaa5919, type: 3}
   attackEffect: {fileID: 0}
   detectEffect: {fileID: 0}
   patrolEffect: {fileID: 0}
   dieEffect: {fileID: 0}
   hitSound:
-    clip: {fileID: 8300000, guid: 9e9019ae25314cd4b94d169b4df0450e, type: 3}
+    clip: {fileID: 8300000, guid: 3fe5f8e32268fab4389beba438bf7a87, type: 3}
     volume: 0.5
   attackSound:
-    clip: {fileID: 8300000, guid: 61837e962d195964380839a7d567bf00, type: 3}
+    clip: {fileID: 8300000, guid: 67d7abaecf4f71445ab64bad98f2c307, type: 3}
     volume: 0.5
   detectSound:
     clip: {fileID: 0}

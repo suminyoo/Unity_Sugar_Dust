@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2a936062e1f1a74dadd775958bb9239, type: 3}
-  m_Name: TQ_1
+  m_Name: TestQ_1
   m_EditorClassIdentifier: 
   questID: TQ_1
   questName: "\uC288\uAC00\uB354\uC2A4\uD2B8\uAC00 \uD544\uC694\uD574"
@@ -20,5 +20,6 @@ MonoBehaviour:
     targetID: SugarDust_Purple
     requiredAmount: 10
     currentAmount: 0
+    objectiveDescription: "\uBCF4\uB77C\uC288\uAC00\uB354\uC2A4\uD2B8 \uC81C\uCD9C"
   rewardGold: 1000
-  nextQuest: {fileID: 0}
+  nextQuest: {fileID: 11400000, guid: 80036aac9d11798429a6ed18863f9677, type: 2}

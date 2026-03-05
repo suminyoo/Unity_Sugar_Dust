@@ -20,9 +20,15 @@ public class Quest
         {
             var obj = data.objectives[i];
             if (obj.type == QuestType.Collect)
+            {
                 handlers.Add(new CollectObjectiveHandler(this, i));
+
+            }
             else if (obj.type == QuestType.Hunt)
+            {
                 handlers.Add(new HuntObjectiveHandler(this, i));
+
+            }
             // 새로운 퀘스트(장소도달?) 생기면 여기에 elseif로 늘려가기
         }
     }
@@ -53,8 +59,8 @@ public class Quest
         return true;
     }
 
-    public string GetObjectiveText(int index)
-    {
-        return handlers[index].GetProgressText();
-    }
+    //public string GetObjectiveText(int index)
+    //{
+    //    return handlers[index].GetProgressText();
+    //}
 }

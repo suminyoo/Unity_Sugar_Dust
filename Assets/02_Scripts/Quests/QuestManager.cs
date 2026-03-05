@@ -8,7 +8,6 @@ public class QuestManager : MonoBehaviour
     public List<Quest> activeQuests = new List<Quest>();
     public List<string> completedQuestIDs = new List<string>();
 
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -52,12 +51,11 @@ public class QuestManager : MonoBehaviour
             {
                 if (obj.type == QuestType.Collect)
                 {
-                    if (ItemManager.Instance != null && PlayerInventory.Instance != null)
+                    if (ItemDataManager.Instance != null && PlayerInventory.Instance != null)
                     {
-                        ItemData itemData = ItemManager.Instance.GetItemByID(obj.targetID);
+                        ItemData itemData = ItemDataManager.Instance.GetItemByID(obj.targetID);
                         if (itemData != null)
                         {
-                            // ≥ª ¿Œ∫•≈‰∏Æø°º≠ ø‰±∏ƒ°∏∏≈≠ æ∆¿Ã≈€ º“∏!
                             PlayerInventory.Instance.ConsumeItem(itemData, obj.requiredAmount);
                         }
                     }
@@ -75,7 +73,8 @@ public class QuestManager : MonoBehaviour
             if (quest.data.rewardGold > 0)
             {
                 PlayerAssetsManager.Instance.AddMoney(quest.data.rewardGold);
-                Debug.Log($"{quest.data.rewardGold} ∞ÒµÂ ∫∏ªÛ »πµÊ!");
+                NotificationUIManager.Instance.
+                    ShowNotification($"ƒ˘Ω∫∆Æ ∫∏ªÛ {quest.data.rewardGold}{CustomerPaymentSystem.CURRENCY_SYMBOL} »πµÊ");
             }
 
             // ∫∏ªÛ æ∆¿Ã≈€
@@ -83,20 +82,22 @@ public class QuestManager : MonoBehaviour
             {
                 foreach (var reward in quest.data.rewardItems)
                 {
-                    if (ItemManager.Instance != null && PlayerInventory.Instance != null)
+                    if (ItemDataManager.Instance != null && PlayerInventory.Instance != null)
                     {
-                        ItemData itemData = ItemManager.Instance.GetItemByID(reward.itemID);
+                        ItemData itemData = ItemDataManager.Instance.GetItemByID(reward.itemID);
                         if (itemData != null)
                         {
                             PlayerInventory.Instance.AddItem(itemData, reward.amount);
-                            Debug.Log($"∫∏ªÛ æ∆¿Ã≈€ »πµÊ: {itemData.itemName} {reward.amount}∞≥");
+                            NotificationUIManager.Instance.
+                                ShowNotification($"ƒ˘Ω∫∆Æ ∫∏ªÛ {itemData.itemName} {reward.amount}∞≥ »πµÊ ");
                         }
                     }
                 }
             }
 
             // UI ªı∑Œ∞Ìƒß
-            if (PlayerQuestUIManager.Instance != null) PlayerQuestUIManager.Instance.UpdateQuestUI();
+            if (PlayerQuestUIManager.Instance != null) 
+                PlayerQuestUIManager.Instance.UpdateQuestUI();
             if (NPCQuestUIManager.Instance != null && NPCQuestUIManager.Instance.npcQuestPanel.activeSelf)
                 NPCQuestUIManager.Instance.RefreshUI();
         }

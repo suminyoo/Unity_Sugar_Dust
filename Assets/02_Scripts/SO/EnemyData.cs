@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [Header("Basic Info")]
+    public string enemyID;
     public string enemyName;
     public float maxHp = 100f;
 

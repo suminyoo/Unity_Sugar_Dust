@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ItemManager : MonoBehaviour
+public class ItemDataManager : MonoBehaviour
 {
-    public static ItemManager Instance;
+    public static ItemDataManager Instance;
 
     // itemID: Key, ItemData: Value
     private Dictionary<string, ItemData> itemDatabase = new Dictionary<string, ItemData>();
@@ -24,7 +24,7 @@ public class ItemManager : MonoBehaviour
     private void LoadAllItems()
     {
         // Resources/Items 폴더 안에 있는 모든 ItemData
-        ItemData[] items = Resources.LoadAll<ItemData>("Items");
+        ItemData[] items = Resources.LoadAll<ItemData>("Item");
 
         foreach (var item in items)
         {

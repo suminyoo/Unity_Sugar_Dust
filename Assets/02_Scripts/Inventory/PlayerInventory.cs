@@ -180,7 +180,6 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
     private int GetItemCountByID(string targetID)
     {
-        Debug.Log($"<color=magenta>[CCTV 4] 인벤토리 전화 받음! 퀘스트가 찾는 ID: '{targetID}'</color>");
         if (string.IsNullOrEmpty(targetID)) return 0;
 
         int totalCount = 0;
@@ -188,9 +187,6 @@ public class PlayerInventory : InventoryHolder, ISaveable
         {
             if (!slot.IsEmpty)
             {
-                // 글자 띄어쓰기 오타 잡기 위해 양옆에 따옴표 붙임
-                Debug.Log($"[CCTV 5] 가방 슬롯 검사 중... 들어있는 아이템: '{slot.ItemData.itemID}'");
-
                 if (slot.ItemData.itemID == targetID)
                 {
                     totalCount += slot.Amount;

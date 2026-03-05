@@ -12,9 +12,9 @@ public class HuntObjectiveHandler : QuestObjectiveHandler
         GameEvents.OnMonsterKilled -= HandleMonsterKilled;
     }
 
-    private void HandleMonsterKilled(string monsterID)
+    private void HandleMonsterKilled(string enemyID)
     {
-        if (monsterID == objectiveData.targetID)
+        if (enemyID == objectiveData.targetID)
         {
             quest.currentAmounts[objectiveIndex]++;
 
@@ -26,8 +26,8 @@ public class HuntObjectiveHandler : QuestObjectiveHandler
     {
     }
 
-    public override string GetProgressText()
-    {
-        return $"{objectiveData.targetID} 처치하기: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
-    }
+    //public override string GetProgressText()
+    //{
+    //    return $"{objectiveData.targetID} 처치: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
+    //}
 }

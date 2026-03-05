@@ -13,8 +13,8 @@ public class CollectObjectiveHandler : QuestObjectiveHandler
         quest.currentAmounts[objectiveIndex] = count;
     }
 
-    public override string GetProgressText()
-    {
-        return $"{objectiveData.targetID} 제출: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
-    }
+    //public override string GetProgressText()
+    //{
+    //    return $"{objectiveData.targetID} 제출: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
+    //}
 }

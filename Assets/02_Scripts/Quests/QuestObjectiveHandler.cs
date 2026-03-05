@@ -20,8 +20,7 @@ public abstract class QuestObjectiveHandler
     // 상태 검사 (Q창이나 NPC퀘창 등 검사가 필요한 시점에서 호출)
     public abstract void EvaluateProgress();
 
-    // UI에 표시할 텍스트 (목표에 쓸 문장)
-    public abstract string GetProgressText();
+    //public abstract string GetProgressText();
 
     // 완료여부
     public bool IsComplete()

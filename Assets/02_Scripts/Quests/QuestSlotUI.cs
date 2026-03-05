@@ -15,6 +15,14 @@ public class QuestSlotUI : MonoBehaviour
 
     private Action onButtonClicked;
 
+    public Color objectiveTextOriginColor;
+    public Color objectiveCompletedColor;
+    public Color objectiveIncompleteColor;
+
+    public Color actionButtonOriginColor;
+    public Color actionButtonCompletedColor;
+    public Color actionButtonImcompletedColor;
+
     private void Awake()
     {
         actionButton.onClick.AddListener(() => onButtonClicked?.Invoke());
@@ -27,24 +35,36 @@ public class QuestSlotUI : MonoBehaviour
         descriptionText.text = questData.description;
         rewardText.text = $"보상: {questData.rewardGold} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
 
+        Color textColor;
+        Color buttonColor;
 
+        // 수락 여부에 따른 색상 결정
+        if (activeQuest == null)
+        {
+            textColor = objectiveTextOriginColor;
+            buttonColor = actionButtonOriginColor;
+        }
+        else
+        {
+            bool isComplete = activeQuest.IsAllObjectivesComplete();
+            textColor = isComplete ? objectiveCompletedColor : objectiveIncompleteColor;
+            buttonColor = isComplete ? actionButtonCompletedColor : actionButtonImcompletedColor;
+        }
+
+        // 목표 텍스트 및 진행도 설정
         if (questData.objectives.Count > 0)
         {
-            QuestObjective firstObjective = questData.objectives[0];
+            QuestObjective questobjective = questData.objectives[0];
+            int current = (activeQuest == null) ? 0 : activeQuest.currentAmounts[0];
 
-            if (activeQuest == null)
-            {
-                progressText.text = firstObjective.GetProgressText(0);
-            }
-            else
-            {
-                int current = activeQuest.currentAmounts[0];
-                progressText.text = firstObjective.GetProgressText(current);
-            }
+            progressText.text = questobjective.GetProgressText(current);
+            progressText.color = textColor;
         }
 
         actionButtonText.text = btnText;
         actionButton.interactable = isInteractable;
         onButtonClicked = onClickAction;
+
+        actionButton.GetComponent<Image>().color = buttonColor;
     }
 }

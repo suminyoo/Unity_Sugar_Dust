@@ -7,13 +7,13 @@ public class PlayerQuestUIManager : MonoBehaviour
     public GameObject playerQuestPanel;
     public Transform contentParent;
     public GameObject questSlotPrefab;
+    public GameObject defaultPanel;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         playerQuestPanel.SetActive(false);
     }
-
     private void Update()
     {
         if (InputControlManager.Instance != null && InputControlManager.Instance.IsInputLocked) return;
@@ -45,6 +45,19 @@ public class PlayerQuestUIManager : MonoBehaviour
     public void UpdateQuestUI()
     {
         foreach (Transform child in contentParent) Destroy(child.gameObject);
+
+        var activeQuests = QuestManager.Instance.activeQuests;
+
+        if (activeQuests == null || activeQuests.Count == 0)
+        {
+            defaultPanel.SetActive(true);
+            return;
+        }
+        else
+        {
+            defaultPanel.SetActive(false);
+        }
+
 
         foreach (Quest quest in QuestManager.Instance.activeQuests)
         {

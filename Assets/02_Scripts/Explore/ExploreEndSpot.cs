@@ -5,7 +5,7 @@ public class ExploreEndSpot : MonoBehaviour, IInteractable
 {
     public static event Action<bool> OnPlayerReturnToTown;   
 
-    public string GetInteractPrompt() => "[E] 快林急 何福扁";
+    public string GetInteractPrompt() => "快林急 何福扁";
 
     public void OnInteract()
     {

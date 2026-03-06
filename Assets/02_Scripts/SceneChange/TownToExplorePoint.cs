@@ -12,6 +12,6 @@ public class TownToExplorePoint : MonoBehaviour, IInteractable
         }
     }
 
-    public string GetInteractPrompt() => "[E] 우주선 타기";
+    public string GetInteractPrompt() => "우주선 타기";
 }
 

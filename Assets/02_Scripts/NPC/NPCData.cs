@@ -12,13 +12,14 @@ public class NPCData : ScriptableObject
     public float waitTimeAtPoint = 2.0f; // 패트롤 지점 대기 시간
 
     [Header("Interaction")]
-    public string promptText = $"[E] 대화하기"; // 상호작용 텍스트
-    public string questPromptText = $"[R] 퀘스트 보기";
     public DialogueData defaultDialogue;
-
     public string defaultGreetingMessage;
     public string defaultGoodByeMessage;
     public float detectRange = 5.0f;
+
+    [HideInInspector] public string promptText = $"대화하기"; // 상호작용 텍스트
+    [HideInInspector] public string questPromptText = $"퀘스트 보기"; //퀘스트 텍스트
+
 
     [Header("Quests")]
     public List<QuestData> questsToGive;

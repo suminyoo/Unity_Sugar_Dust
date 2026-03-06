@@ -3,7 +3,7 @@ using UnityEngine;
 public class DiaryInteraction : MonoBehaviour, IInteractable
 {
     public SoundData diaryOpenSound;
-    public string GetInteractPrompt() => "[E] 일기쓰기 (저장)";
+    public string GetInteractPrompt() => "일기쓰기 (저장)";
 
     public void OnInteract()
     {

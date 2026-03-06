@@ -24,6 +24,11 @@ public class InteractionSystem : MonoBehaviour
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
     private IInteractable currentInteractable;
 
+    public KeyCode interactionToggleKey = KeyCode.E;
+    public KeyCode questInteractionToggleKey = KeyCode.F;
+
+
+
     void Update()
     {
         //팝업창이 켜져 있다면 패널끔
@@ -83,16 +88,16 @@ public class InteractionSystem : MonoBehaviour
 
         currentInteractable = interactablesInRange[0];
 
-        // 기본 E키 프롬프트
-        string finalPrompt = currentInteractable.GetInteractPrompt();
+        // 기본 상호작용 프롬프트
+        string finalPrompt = $"[{interactionToggleKey.ToString()}] {currentInteractable.GetInteractPrompt()}";
 
         // 타겟이 퀘스트를 줄 수 있는 대상IQuestInteractable
         if (currentInteractable is IQuestInteractable questTarget)
         {
             if (questTarget.HasAvailableQuest())
             {
-                // R키 텍스트 추가
-                finalPrompt += $"\n{questTarget.GetQuestPrompt()}";
+                // 퀘스트 상호작용 프롬프트
+                finalPrompt += $"\n[{questInteractionToggleKey.ToString()}] {questTarget.GetQuestPrompt()}";
             }
         }
 
@@ -104,12 +109,12 @@ public class InteractionSystem : MonoBehaviour
         if (currentInteractable == null) return;
 
         // E키: 기본
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(interactionToggleKey))
         {
             currentInteractable.OnInteract();
         }
-        // R키: 퀘스트
-        else if (Input.GetKeyDown(KeyCode.R))
+        // F키: 퀘스트
+        else if (Input.GetKeyDown(questInteractionToggleKey))
         {
             if (currentInteractable is IQuestInteractable questTarget && questTarget.HasAvailableQuest())
             {

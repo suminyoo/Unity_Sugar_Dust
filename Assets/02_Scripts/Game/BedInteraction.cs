@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BedInteraction : MonoBehaviour, IInteractable
 {
-    public string GetInteractPrompt() => "[E] 잠자기";
+    public string GetInteractPrompt() => "잠자기";
 
     public void OnInteract()
     {

@@ -6,7 +6,7 @@ public class ExploreToTownPoint : MonoBehaviour, IInteractable
     public static event Action<bool> OnPlayerReturnToTown;
     public SoundData walkSound;
 
-    public string GetInteractPrompt() => "[E] 마을로 돌아가기";
+    public string GetInteractPrompt() => "마을로 돌아가기";
 
     public void OnInteract()
     {

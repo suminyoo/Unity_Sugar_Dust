@@ -2402,6 +2402,14 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5580210924908387712, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5580210924908387712, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5869345468020199328, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2457,6 +2465,30 @@ PrefabInstance:
     - target: {fileID: 6651134141921731838, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 139.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 79.545
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802465434007942185, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -38.754997
       objectReference: {fileID: 0}
     - target: {fileID: 7073409763647116997, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_IsActive
@@ -4798,6 +4830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   warningColor: '#cc5e69'
+  panelText: {fileID: 836954361}
 --- !u!65 &786729238
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -133,8 +133,6 @@ public class QuestManager : MonoBehaviour
         {
             foreach (var saveData in loadedData.activeQuestData)
             {
-                // [중요!] 인벤토리 로드할 때처럼, ID를 바탕으로 원본 ScriptableObject를 찾아옵니다.
-                // (주의: QuestDataManager는 ItemDataManager처럼 질문자님이 만드셔야 합니다!)
                 QuestData data = QuestDataManager.Instance.GetQuestByID(saveData.questID);
 
                 if (data != null)

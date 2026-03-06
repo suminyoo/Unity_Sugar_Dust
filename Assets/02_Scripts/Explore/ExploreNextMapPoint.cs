@@ -5,7 +5,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
     public ExploreManager exploreManager;
     public SoundData walkSound;
 
-    public string GetInteractPrompt() => "[E] 더 깊은 곳 탐사하기";
+    public string GetInteractPrompt() => "더 깊은 곳 탐사하기";
 
 
     void Start()

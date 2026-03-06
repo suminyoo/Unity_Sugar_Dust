@@ -15,7 +15,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     private bool isCounterMode = false; 
     private bool isTransactionActive = false; // 지금 계산 중인지
 
-    public string GetInteractPrompt() => "[E] 물건 결제해주기";
+    public string GetInteractPrompt() => "물건 결제해주기";
 
     // 상호작용
     public void OnInteract()

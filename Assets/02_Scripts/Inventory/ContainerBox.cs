@@ -5,7 +5,7 @@ public class ContainerBox : InventoryHolder, IInteractable, ISaveable
 {
     #region Interaction (IInteractable)
 
-    public string GetInteractPrompt() => "[E] 보관함 열기";
+    public string GetInteractPrompt() => "보관함 열기";
 
     public void OnInteract()
     {

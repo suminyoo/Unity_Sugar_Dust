@@ -45,5 +45,5 @@ public class UpgradeTester : MonoBehaviour, IInteractable
         NotificationUIManager.Instance.ShowNotification("모든 능력치가 강화되었습니다!");
     }
 
-    public string GetInteractPrompt() => "[E] 테스트: 전체 업그레이드 (100G)";
+    public string GetInteractPrompt() => "테스트: 전체 업그레이드 (100G)";
 }

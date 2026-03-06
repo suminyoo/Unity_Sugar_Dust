@@ -12,13 +12,15 @@ public static class ExploreEvents
 public class ExploreManager : MonoBehaviour, ISaveable
 {
     [Header("References")]
-    private PlayerController player;
+    private PlayerController playerController;
+    private PlayerCondition playerCondition;
+
     public GridMapSpawner mapSpawner;
-    private SPAWN_ID playerSpawnPointID = SPAWN_ID.EXPLORE_START;
     public ExploreConfigData exploreConfig;
 
-    [Header("Exploration Settings")]
+    private SPAWN_ID playerSpawnPointID = SPAWN_ID.EXPLORE_START;
 
+    [Header("Exploration Settings")]
     private int currentExplorationLevel;
     private float maxTimeLimit;
 
@@ -31,6 +33,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     [Header("UI")]
     public TextMeshProUGUI exploreLevelText;
     public TextMeshProUGUI explorePathText;
+    public GameObject frozenBG;
 
     [Header("Result")]
     public GameObject resultUIPanel;
@@ -51,6 +54,10 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private int currentProgressCount;
     private float currentSuccessProb;
     private bool isRetrying = false;
+    private bool isFrozenEnvironment = false;
+    private float frozenDamageInterval = 2f;
+    private float frozenDamageRate = 5f;
+    private float lastFrozenDamageTime;
 
     private void OnEnable()
     {
@@ -66,7 +73,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         ExploreEndSpot.OnPlayerReturnToTown -= ExploreSuccess;
         ExploreToTownPoint.OnPlayerReturnToTown -= ExploreSuccess;
 
-        player.OnPlayerDied -= OnPlayerDeath;
+        playerController.OnPlayerDied -= OnPlayerDeath;
         mapSpawner.OnMapGenerationComplete -= OnMapReady;
     }
 
@@ -76,9 +83,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
         ExploreToTownPoint.OnPlayerReturnToTown += ExploreSuccess;
         mapSpawner.OnMapGenerationComplete += OnMapReady;
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
+        playerCondition = player.GetComponent<PlayerCondition>();
 
         if (resultUIPanel != null) resultUIPanel.SetActive(false);
+        if (frozenBG != null) frozenBG.SetActive(false);
+        isFrozenEnvironment = false;
 
         // 저장된 레벨 불러오기
         if (GameSaveManager.Instance != null)
@@ -94,22 +105,49 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     void Update()
     {
-        if (isExplorationEnded) return;
-        if (!isExploreStarted) return;
+        if (isExplorationEnded || !isExploreStarted) return;
 
-        currentTime -= Time.deltaTime;
-
-        //시간 초과 체크
-        if (currentTime <= 0)
+        if (!isFrozenEnvironment)
         {
-            if (GameManager.Instance.currentTime == GAME_TIME.Day)
+            currentTime -= Time.deltaTime;
+
+            if (currentTime <= 0)
             {
-                GameManager.Instance.ChangeTime(GAME_TIME.Evening, false);
+                StartFrozenEnvironment();
             }
-            //TODO: 얼어붙는 이펙트 활성화 
-            //TODO: 시간 초과시 플레이어에게 지속적인 피해 주기
+        }
+        else
+        {
+            HandleFrozenDamage();
         }
     }
+
+    void StartFrozenEnvironment()
+    {
+        if (GameManager.Instance.currentTime == GAME_TIME.Day)
+        {
+            GameManager.Instance.ChangeTime(GAME_TIME.Evening, false);
+        }
+
+        isFrozenEnvironment = true;
+        frozenBG.SetActive(true);
+
+        NotificationUIManager.Instance.ShowNotification("저녁이 되어 기온이 급격히 떨어집니다.");
+    }
+    void HandleFrozenDamage()
+    {
+        lastFrozenDamageTime += Time.deltaTime;
+        if (lastFrozenDamageTime >= frozenDamageInterval)
+        {
+            if (playerCondition != null)
+            {
+                playerCondition.TakeDamage(frozenDamageRate);
+            }
+            lastFrozenDamageTime = 0f;
+        }
+
+    }
+
 
     void LoadStage(int level, bool isRetry = false)
     {
@@ -122,7 +160,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         CalculateProgressTargetCount(selectedData);
 
-        mapSpawner.InitAndGenerateMap(selectedData, level, player);
+        mapSpawner.InitAndGenerateMap(selectedData, level, playerController);
         //UpdateExploreStateUI();
     }
 
@@ -159,12 +197,12 @@ public class ExploreManager : MonoBehaviour, ISaveable
         exploreLevelText.text = $"{stageName} {localLevel:00}";
 
         UpdateExploreProgressUI();
-        if (player != null)
+        if (playerController != null)
         {
             PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
             //player.transform.position = playerSpawnPoint.transform.position;
-            player.gameObject.SetActive(true);
-            player.OnPlayerDied += OnPlayerDeath;
+            playerController.gameObject.SetActive(true);
+            playerController.OnPlayerDied += OnPlayerDeath;
         }
 
         if (isRetrying)
@@ -246,7 +284,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     void ShowResultItems()
     {
-        InventoryHolder holder = player.GetComponent<InventoryHolder>();
+        InventoryHolder holder = playerController.GetComponent<InventoryHolder>();
         if (holder == null) return;
 
         // 얻은 아이템 UI 생성
@@ -280,7 +318,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private void LoseItems(bool loseAll)
     {
         // GetComponent를 통해 PlayerInventory로 가져옵니다.
-        PlayerInventory playerInv = player.GetComponent<PlayerInventory>();
+        PlayerInventory playerInv = playerController.GetComponent<PlayerInventory>();
         if (playerInv == null) return;
 
         if (loseAll)

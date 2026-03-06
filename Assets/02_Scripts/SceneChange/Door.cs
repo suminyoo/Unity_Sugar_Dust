@@ -11,7 +11,7 @@ public class Door : MonoBehaviour, IInteractable
     public SoundData doorLockedSound;
 
 
-    public string GetInteractPrompt() => $"[E] {placeName} {(isExiting ? "나가기" : "들어가기")}";
+    public string GetInteractPrompt() => $"{placeName} {(isExiting ? "나가기" : "들어가기")}";
 
     public void OnInteract()
     {

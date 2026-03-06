@@ -21,7 +21,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     #region Interaction (IInteractable)
 
-    public string GetInteractPrompt() => "[E] 진열대 열기";
+    public string GetInteractPrompt() => "진열대 열기";
 
     public void OnInteract()
     {

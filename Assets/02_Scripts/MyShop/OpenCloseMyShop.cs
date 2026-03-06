@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class OpenCloseMyShop : MonoBehaviour, IInteractable
@@ -5,17 +6,32 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     public enum MyShopState { TOWN_MODE, SHOP_OPEN, SHOP_CLOSED }
     private MyShopState currentState = MyShopState.TOWN_MODE;
 
-    public void SetState(MyShopState state) => currentState = state;
-
     public string warningColor = "#cc5e69";
+    public TextMeshPro panelText;
+
+
+    public void SetState(MyShopState state)
+    {
+        currentState = state;
+
+        if (currentState == MyShopState.SHOP_OPEN)
+        {
+            panelText.text = "OPEN";
+        }
+        else
+        {
+            panelText.text = "CLOSED";
+        }
+
+    }
 
     public string GetInteractPrompt()
     {
         switch (currentState)
         {
-            case MyShopState.TOWN_MODE: return "[E] 상점 운영 시작하기";
-            case MyShopState.SHOP_OPEN: return "[E] 상점 일찍 마감하기";
-            case MyShopState.SHOP_CLOSED: return "[E] 상점 마감하기";
+            case MyShopState.TOWN_MODE: return "상점 운영 시작하기";
+            case MyShopState.SHOP_OPEN: return "상점 일찍 마감하기";
+            case MyShopState.SHOP_CLOSED: return "상점 마감하기";
             default: return "";
         }
     }
@@ -32,7 +48,6 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
 
             popupMsg = "영업을 시작하겠습니까?";
 
-            popupMsg = "영업을 시작하겠습니까?";
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
                 () => { StartBusiness(); }
@@ -61,6 +76,7 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     public void StartBusiness()
     {
         GameManager.Instance.StartShop();
+
     }
 
     public void FinishBusiness()

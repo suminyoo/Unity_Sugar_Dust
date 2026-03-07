@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Linq;
-using UnityEngine.SceneManagement;
+using UnityEngine.Localization.Settings;
 
 public class SaveLoadUIManager : MonoBehaviour
 {
@@ -13,6 +13,24 @@ public class SaveLoadUIManager : MonoBehaviour
     public GameObject emptyNoticeText;
     private int currentOpenListSlot = -1;
 
+    private void OnEnable()
+    {
+        RefreshSlots();
+        subSavePanel.SetActive(false);
+        if (emptyNoticeText != null) emptyNoticeText.SetActive(false);
+
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    private void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    private void OnLocaleChanged(UnityEngine.Localization.Locale newLocale)
+    {
+        RefreshSlots();
+    }
     private void Start()
     {
         RefreshSlots();
@@ -28,6 +46,7 @@ public class SaveLoadUIManager : MonoBehaviour
             saveSlots[i].UpdateSlotUI(latestData, "", this, false);
         }
     }
+
 
     // 특정 슬롯 번호의 가장 최신 세이브 정보
     private SaveMetadata GetLatestMetadata(int slotNumber)
@@ -156,7 +175,7 @@ public class SaveLoadUIManager : MonoBehaviour
 
         GameManager.Instance.ResumeGameTime();
 
-        Debug.Log($"파일 로드 완료: {fullPath}");
+        //Debug.Log($"파일 로드 완료: {fullPath}");
 
         if (GameManager.Instance != null)
         {
@@ -170,7 +189,7 @@ public class SaveLoadUIManager : MonoBehaviour
     public void DeleteSlot(int arrayIndex)
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            "정말로 이 세이브를 삭제하시겠습니까?",
+            LocalizationHelper.L("CONFIRM_DELETE_SAVE"),
             () => {
                 int slotNum = saveSlots[arrayIndex].slotNumber;
                 string directoryPath = Path.Combine(Application.persistentDataPath, $"Saves/Slot{slotNum}");

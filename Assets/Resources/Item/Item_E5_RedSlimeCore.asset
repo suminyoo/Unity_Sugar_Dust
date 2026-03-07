@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_E5_RedSlimeCore
   m_EditorClassIdentifier: 
   itemID: Red_Core
-  itemName: "\uBD89\uC740 \uC2AC\uB77C\uC784\uCF54\uC5B4"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895314
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uBD89\uC740 \uC2AC\uB77C\uC784\uC758 \uC0DD\uBA85\uB825\uC774 \uC751\uCD95\uB41C
-    \uAD6C\uCCB4\uC774\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895315
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 104308c99f415ed4db3bbd6b2192b8cf, type: 3}
   weight: 1.5
   basePrice: 1400
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 3247134415341774259, guid: 391d86bed7c17f5499319af50395e828, type: 3}
   sellPrice: 3500
+  references:
+    version: 2
+    RefIds: []

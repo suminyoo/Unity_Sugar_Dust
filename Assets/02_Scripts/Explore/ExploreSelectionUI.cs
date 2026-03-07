@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-
+using UnityEngine.Localization.Settings;
 public class ExploreSelectionUI : MonoBehaviour
 {
     public event Action<int> OnLevelSelectedEvent;
@@ -89,8 +89,8 @@ public class ExploreSelectionUI : MonoBehaviour
             int minutes = (int)data.timeLimit / 60;
             int seconds = (int)data.timeLimit % 60;
 
-            levelNameText.text = $"{data.stageName} {localLevel:00} 구역";
-            timeLimitText.text = $"일몰까지 예상시간 {minutes:D2}:{seconds:D2}";
+            levelNameText.text = LocalizationHelper.L("UI_STAGE_AREA_FORMAT", data.GetStageNameText(), localLevel);
+            timeLimitText.text = $"{LocalizationHelper.L("UI_TIME_UNTIL_SUNSET")} {minutes:D2}:{seconds:D2}";
 
             selectedLevelNumber = levelNum;
 
@@ -106,9 +106,10 @@ public class ExploreSelectionUI : MonoBehaviour
         {
             ExploreStageData data = exploreConfig.GetStageData(selectedLevelNumber);
             int localLevel = exploreConfig.GetLocalLevel(selectedLevelNumber);
+            string localizedMsg = LocalizationHelper.L("CONFIRM_START_EXPLORE", data.GetStageNameText(), localLevel);
 
             CommonConfirmPopup.Instance.OpenPopup(
-                $"{data.stageName} {localLevel:00} 구역 탐사를 시작하시겠습니까?",
+                localizedMsg,
                 () => {
                     GameSaveManager.Instance.SaveSelectedExploreLevel(selectedLevelNumber);
                     GameManager.Instance.StartExploration(selectedLevelNumber);

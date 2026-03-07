@@ -66,11 +66,11 @@ public class PlayerQuestUIManager : MonoBehaviour
 
             if (quest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(quest.data, quest, "보상받기", true, () => ClaimReward(quest));
+                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_BTN_CLAIM"), true, () => ClaimReward(quest));
             }
             else
             {
-                slotUI.SetupSlot(quest.data, quest, "진행중", false, null);
+                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_STATUS_PROGRESS"), false, null);
             }
         }
     }

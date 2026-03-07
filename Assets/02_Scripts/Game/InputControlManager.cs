@@ -27,7 +27,7 @@ public class InputControlManager : MonoBehaviour
         if (inputLockCount == 1) // 0에서 1이 될 때 잠금 신호 발송
         {
             OnInputStateChanged?.Invoke(false);
-            Debug.Log("Input Locked");
+            //Debug.Log("Input Locked");
         }
     }
 
@@ -40,7 +40,7 @@ public class InputControlManager : MonoBehaviour
             if (inputLockCount == 0) // 모든 잠금이 해제되었을 때만 해제 신호 발송
             {
                 OnInputStateChanged?.Invoke(true);
-                Debug.Log("Input Unlocked");
+                //Debug.Log("Input Unlocked");
             }
         }
     }

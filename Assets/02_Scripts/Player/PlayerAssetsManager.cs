@@ -54,7 +54,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         if(moneyEarnSound.clip != null) SoundManager.Instance.PlaySFX2D(moneyEarnSound);
         currentMoney += amount;
         OnMoneyChanged?.Invoke(currentMoney);
-        Debug.Log($"[Money] {amount}원 획득 (현재: {currentMoney})");
+        //Debug.Log($"[Money] {amount}원 획득 (현재: {currentMoney})");
     }
 
     public bool TrySpendMoney(int amount)
@@ -77,7 +77,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         }
         else
         {
-            NotificationUIManager.Instance.ShowNotification("돈이 부족합니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_NOT_ENOUGH_MONEY"));
             return false;
 
         }
@@ -91,7 +91,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         if (!ownedKeyItems.Contains(itemID))
         {
             ownedKeyItems.Add(itemID);
-            Debug.Log($"[Assets] 영구 아이템 획득: {itemID}");
+            //Debug.Log($"[Assets] 영구 아이템 획득: {itemID}");
             // 필요하다면 여기서 저장 시스템 호출
         }
     }

@@ -12,16 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36130124d0f542f4aa82a42a8e560876, type: 3}
   m_Name: Tool_PickaxeData_1
   m_EditorClassIdentifier: 
-  toolName: "\uAE30\uBCF8 \uACE1\uAD2D\uC774"
+  toolName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701068
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   toolPrefab: {fileID: 7583416358144379288, guid: 1dce341e1ec69b14fb7cf57651a9ef80, type: 3}
   power: 10
   range: 2.5
   cooldown: 1.2
   criticalChance: 0.2
   criticalMultiplier: 1.5
-  equipSound:
-    clip: {fileID: 8300000, guid: 627a0965b3932be489b1cba639940de7, type: 3}
-    volume: 1
   actionSound:
     clip: {fileID: 8300000, guid: 6b08e07b2853bb14c93a4c39250aa424, type: 3}
     volume: 0.1
+  references:
+    version: 2
+    RefIds: []

@@ -31,9 +31,13 @@ public class QuestSlotUI : MonoBehaviour
     // 슬롯 세팅
     public void SetupSlot(QuestData questData, Quest activeQuest, string btnText, bool isInteractable, Action onClickAction)
     {
-        titleText.text = questData.questName;
-        descriptionText.text = questData.description;
-        rewardText.text = $"보상: {questData.rewardGold} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
+        titleText.text = questData.GetQuestName();
+        descriptionText.text = questData.GetDescription();
+        rewardText.text = LocalizationHelper.L(
+            "UI_QUEST_REWARD_GOLD",
+            questData.rewardGold,
+            CustomerPaymentSystem.CURRENCY_SYMBOL
+        );
 
         Color textColor;
         Color buttonColor;

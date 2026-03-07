@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    public string placeName;
+    public LocalizedString placeName;
     public SCENE_NAME targetSceneName;
     public SPAWN_ID targetSpawnId;
     public bool isExiting = false;
@@ -10,8 +11,17 @@ public class Door : MonoBehaviour, IInteractable
     public SoundData doorOpenSound;
     public SoundData doorLockedSound;
 
+    public string GetPlaceName()
+    {
+        return placeName.GetLocalizedString();
+    }
 
-    public string GetInteractPrompt() => $"{placeName} {(isExiting ? "나가기" : "들어가기")}";
+
+    public string GetInteractPrompt()
+    {
+        string key = isExiting ? "PROMPT_DOOR_EXIT" : "PROMPT_DOOR_ENTER";
+        return LocalizationHelper.L(key, GetPlaceName());
+    }
 
     public void OnInteract()
     {
@@ -23,7 +33,7 @@ public class Door : MonoBehaviour, IInteractable
 
         if (isExiting && MyShopManager.Instance != null && MyShopManager.Instance.IsShopOpen)
         {
-            NotificationUIManager.Instance.ShowNotification("영업 중에는 나갈 수 없습니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_CANNOT_EXIT_SHOP"));
             return;
         }
 

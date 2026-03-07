@@ -39,9 +39,6 @@ public class ShopkeeperBrain : NPCBrain
 
         bool isShopping = true;
 
-        //상점 로직 
-        Debug.Log($" 상점 창 오픈");
-
         // 스토리지 매니저 호출
         StorageUIManager.Instance.OpenStorage(myShop, myShop.GetShopType(),
             () => { isShopping = false; } // 콜백(Action)

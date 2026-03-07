@@ -9,7 +9,7 @@ public class InventoryHolder : MonoBehaviour
 
     //구현하는 자식만 건들 수 있게
     [SerializeField] protected InventorySystem inventorySystem;
-    public InventorySystem InventorySystem => inventorySystem; //얘는 public
+    public InventorySystem InventorySystem => inventorySystem;
 
     #region Unity lifecycle
 

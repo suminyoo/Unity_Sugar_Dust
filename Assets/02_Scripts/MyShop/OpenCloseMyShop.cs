@@ -29,9 +29,12 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     {
         switch (currentState)
         {
-            case MyShopState.TOWN_MODE: return "상점 운영 시작하기";
-            case MyShopState.SHOP_OPEN: return "상점 일찍 마감하기";
-            case MyShopState.SHOP_CLOSED: return "상점 마감하기";
+            case MyShopState.TOWN_MODE:
+                return LocalizationHelper.L("PROMPT_START_SHOP_OPEN");
+            case MyShopState.SHOP_OPEN:
+                return LocalizationHelper.L("PROMPT_EARLY_CLOSE_SHOP");
+            case MyShopState.SHOP_CLOSED:
+                return LocalizationHelper.L("PROMPT_CLOSE_SHOP");
             default: return "";
         }
     }
@@ -40,13 +43,12 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     {
         // 영업 시작
         string popupMsg = "";
-        string itemNotify = $"<color={warningColor}>(바닥에 떨어진 아이템은 사라집니다)</color>";
-
+        string itemNotify = LocalizationHelper.L("UI_WARNING_DROPPED_ITEM", warningColor);
         if (currentState == MyShopState.TOWN_MODE)
         {
             if (!GameManager.Instance.CanShop()) return;
 
-            popupMsg = "영업을 시작하겠습니까?";
+            popupMsg = LocalizationHelper.L("CONFIRM_START_SHOP");
 
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
@@ -58,11 +60,11 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
         // 영업 마감
         if (currentState == MyShopState.SHOP_OPEN)
         {
-            popupMsg = $"아직 영업 중입니다.\n지금 마감하고 정산하겠습니까?\n{itemNotify}";
+            popupMsg = LocalizationHelper.L("CONFIRM_EARLY_CLOSE", itemNotify);
         }
         else if (currentState == MyShopState.SHOP_CLOSED)
         {
-            popupMsg = $"영업이 종료되었습니다.\n오늘의 정산 내역을 확인하겠습니까?\n{itemNotify}";
+            popupMsg = LocalizationHelper.L("CONFIRM_SHOP_SETTLEMENT", itemNotify);
         }
         if (!string.IsNullOrEmpty(popupMsg))
         {

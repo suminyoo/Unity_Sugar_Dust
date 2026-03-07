@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class SaveSlotUI : MonoBehaviour
 {
     public TextMeshProUGUI saveTimeText;
-    public TextMeshProUGUI inGameDayText;
-    public TextMeshProUGUI inGameTimeText;
+    public TextMeshProUGUI inGameDayTimeText;
     public TextMeshProUGUI playTimeText;
     public GameObject emptySlotText;
 
@@ -16,8 +15,16 @@ public class SaveSlotUI : MonoBehaviour
     private SaveLoadUIManager titleManager;
     private Button myButton;
 
+    public TextMeshProUGUI slotNameText;
+
     public void UpdateSlotUI(SaveMetadata data, string path = "", SaveLoadUIManager manager = null, bool isSub = false)
     {
+    
+        if (slotNameText != null && !isSub)
+        {
+            slotNameText.text = LocalizationHelper.L("UI_MENU_SAVE", slotNumber + 1);
+        }
+    
         fullFilePath = path;
         titleManager = manager;
         isSubSlot = isSub;
@@ -35,21 +42,15 @@ public class SaveSlotUI : MonoBehaviour
             SetTextActive(false);
             return;
         }
-        string timeText = "";
-        switch (data.inGameTime)
-        {
-            case GAME_TIME.Morning: timeText = "¾ÆÄ§"; break;
-            case GAME_TIME.Day: timeText = "³·"; break;
-            case GAME_TIME.Evening: timeText = "Àú³á"; break;
-            case GAME_TIME.Night: timeText = "¹ã"; break;
-        }
+        string timeText = LocalizationHelper.GetGameTimeText(data.inGameTime);
 
+        string timeName = LocalizationHelper.GetGameTimeText(data.inGameTime);
         emptySlotText.SetActive(false);
         SetTextActive(true);
 
         saveTimeText.text = data.saveTime;
-        inGameDayText.text = $"{data.inGameDay}ÀÏÂ÷";
-        inGameTimeText.text = timeText;
+
+        inGameDayTimeText.text = LocalizationHelper.L("UI_DAY_AND_TIME", data.inGameDay, timeName);
 
         int hours = Mathf.FloorToInt(data.playTime / 3600);
         int minutes = Mathf.FloorToInt((data.playTime % 3600) / 60);
@@ -75,8 +76,7 @@ public class SaveSlotUI : MonoBehaviour
     private void SetTextActive(bool active)
     {
         saveTimeText.gameObject.SetActive(active);
-        inGameDayText.gameObject.SetActive(active);
-        inGameTimeText.gameObject.SetActive(active);
+        inGameDayTimeText.gameObject.SetActive(active);
         playTimeText.gameObject.SetActive(active);
     }
 }

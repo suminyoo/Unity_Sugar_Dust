@@ -13,13 +13,40 @@ MonoBehaviour:
   m_Name: TestQ_1
   m_EditorClassIdentifier: 
   questID: TQ_1
-  questName: "\uC288\uAC00\uB354\uC2A4\uD2B8\uAC00 \uD544\uC694\uD574"
-  description: "\uC288\uAC00\uB354\uC2A4\uD2B8 \uBA87\uAC1C\uB9CC \uC880 \uAC16\uB2E4\uC918"
+  questName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895339
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895340
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   objectives:
   - type: 1
     targetID: SugarDust_Purple
     requiredAmount: 10
     currentAmount: 0
-    objectiveDescription: "\uBCF4\uB77C\uC288\uAC00\uB354\uC2A4\uD2B8 \uC81C\uCD9C"
+    objectiveDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+      m_TableEntryReference:
+        m_KeyId: 98536087072768
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
   rewardGold: 1000
   requiredQuestID: 
+  references:
+    version: 2
+    RefIds: []

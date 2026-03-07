@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6c88bcb063b8544a8570ac40ca06b2, type: 3}
   m_Name: ES_ExploreStage_3
   m_EditorClassIdentifier: 
-  stageName: "\uC0B0\uC131\uB2AA \uC678\uACFD"
+  stageName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 100177683132420
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   timeLimit: 270
   mapObjects:
   - objectData: {fileID: 11400000, guid: 08acd708bc8d6e443bfce500302f52c4, type: 2}
@@ -95,3 +103,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  references:
+    version: 2
+    RefIds: []

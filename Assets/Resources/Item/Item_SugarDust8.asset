@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_SugarDust8
   m_EditorClassIdentifier: 
   itemID: SugarDust_Rainbow
-  itemName: "\uBB34\uC9C0\uAC1C \uC288\uAC00\uB354\uC2A4\uD2B8"
-  description: "\uBB34\uC9C0\uAC1C\uBE5B \uC288\uAC00\uB354\uC2A4\uD2B8. \uBAA8\uB4E0
-    \uBBF8\uAC01\uC744 \uB9C8\uBE44\uC2DC\uD0AC \uB9CC\uD07C \uC555\uB3C4\uC801\uC774\uACE0
-    \uC644\uBCBD\uD55C \uB9DB\uC744 \uC790\uB791\uD55C\uB2E4."
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895336
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  itemType: 0
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895337
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: -2837080447172163765, guid: ebb3d78afb23fa94d9c6919ba8f66f24, type: 3}
   weight: 2.5
   basePrice: 2000
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 6598014453381679472, guid: 4cf15a66534f0eb4e81d33219988c179, type: 3}
   sellPrice: 5000
+  references:
+    version: 2
+    RefIds: []

@@ -12,6 +12,6 @@ public class TownToExplorePoint : MonoBehaviour, IInteractable
         }
     }
 
-    public string GetInteractPrompt() => "우주선 타기";
+    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_SPACESHIP_RIDE");
 }
 

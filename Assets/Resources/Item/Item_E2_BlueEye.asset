@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_E2_BlueEye
   m_EditorClassIdentifier: 
   itemID: Blue_Eye
-  itemName: "\uD0F1\uD0F1 \uB208\uC54C"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701084
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uD0F1\uD0F1\uD568\uC774 \uB290\uAEF4\uC9C0\uB294 \uB208\uC54C. \uC790\uAFB8
-    \uAD74\uB7EC\uB2E4\uB2CC\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701085
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 4bd959ba1855dea43abbc5742286f28f, type: 3}
   weight: 0.4
   basePrice: 50
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 980471243876595472, guid: c5cae2902c46d294ca90b222edff6f5b, type: 3}
   sellPrice: 130
+  references:
+    version: 2
+    RefIds: []

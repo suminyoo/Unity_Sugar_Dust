@@ -16,24 +16,15 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    public void OnClickStart()
-    {
-        loadPanel.SetActive(true);
-    }
+    public void OnClickStart() => loadPanel.SetActive(true);
+    
+    public void OnClickOption() => optionsPanel.SetActive(true);
 
-    public void OnClickOption()
-    {
-        optionsPanel.SetActive(true);
-    }
+    public void OnClickExit() => Application.Quit();
 
     public void BackToTitle()
     {
         loadPanel.SetActive(false);
         optionsPanel.SetActive(false);
-    }
-
-    public void OnClickExit()
-    {
-        Application.Quit();
     }
 }

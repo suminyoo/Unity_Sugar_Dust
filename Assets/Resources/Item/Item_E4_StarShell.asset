@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_E4_StarShell
   m_EditorClassIdentifier: 
   itemID: Star_Shell
-  itemName: "\uBCC4 \uAECD\uB370\uAE30"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895306
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uC624\uB3CC\uB3C4\uB3CC\uD55C \uD45C\uBA74\uC774 \uB290\uAEF4\uC9C0\uB294
-    \uB178\uB780 \uAECD\uB370\uAE30\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895307
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 1becce083cf4fe149a67ab79e2c93ed3, type: 3}
   weight: 0.8
   basePrice: 200
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 2468506564219172127, guid: 4fe80a3593d63634fb6bdd1fc33cdac7, type: 3}
   sellPrice: 500
+  references:
+    version: 2
+    RefIds: []

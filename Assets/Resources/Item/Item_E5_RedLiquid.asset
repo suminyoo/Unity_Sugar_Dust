@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: Item_E5_RedLiquid
   m_EditorClassIdentifier: 
   itemID: Red_Liquid
-  itemName: "\uC6A9\uC554 \uC810\uC561"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895312
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uBD80\uAE00\uBD80\uAE00 \uB053\uACE0 \uC788\uB294 \uC810\uC561\uC774\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895313
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 64c4b06409cbc0a4787e77f9b0e3c036, type: 3}
   weight: 0.5
   basePrice: 700
@@ -23,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 6484329946252748197, guid: 07f88c7dd0ff8e74a9253a75595f641b, type: 3}
   sellPrice: 1750
+  references:
+    version: 2
+    RefIds: []

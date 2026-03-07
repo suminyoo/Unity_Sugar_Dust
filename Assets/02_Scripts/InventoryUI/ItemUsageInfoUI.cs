@@ -11,6 +11,7 @@ public class ItemUsageInfoUI : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI infoText;
+    public TextMeshProUGUI typeText;
     public TextMeshProUGUI weightText;
 
 
@@ -26,9 +27,10 @@ public class ItemUsageInfoUI : MonoBehaviour
         itemInfoPanel.SetActive(true);
 
         icon.sprite = data.icon;
-        nameText.text = data.itemName;
-        weightText.text = $"¹«°Ô: {data.weight:F1}kg";
-        infoText.text = data.description;
+        nameText.text = data.GetItemName();
+        typeText.text = LocalizationHelper.L("ITEM_INFO_TYPE", data.GetItemTypeName());
+        weightText.text = LocalizationHelper.L("ITEM_INFO_WEIGHT", data.weight);
+        infoText.text = data.GetDescription();
     }
 
 

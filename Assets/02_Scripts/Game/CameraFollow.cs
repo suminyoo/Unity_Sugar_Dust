@@ -105,7 +105,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 pivot = target.position + Vector3.up * 1.5f;
         transform.LookAt(pivot);
 
-        Debug.Log("카메라 위치 동기화 완료");
+        //Debug.Log("카메라 위치 동기화 완료");
     }
 
     public void HandleOverrideMovement()

@@ -6,14 +6,12 @@ public class ExploreToTownPoint : MonoBehaviour, IInteractable
     public static event Action<bool> OnPlayerReturnToTown;
     public SoundData walkSound;
 
-    public string GetInteractPrompt() => "마을로 돌아가기";
-
+    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_RETURN_TO_TOWN");
     public void OnInteract()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            "정말로 걸어서 마을로 돌아가시겠습니까?",
+            LocalizationHelper.L("CONFIRM_WALK_TO_TOWN"),
             () => {
-                Debug.Log("마을로 이동 중...");
                 if (walkSound.clip != null) 
                     SoundManager.Instance.PlaySFX2D(walkSound);
 

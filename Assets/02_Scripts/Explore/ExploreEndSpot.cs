@@ -1,19 +1,22 @@
 using UnityEngine;
 using System;
+using UnityEngine.Localization.Settings;
 
 public class ExploreEndSpot : MonoBehaviour, IInteractable
 {
-    public static event Action<bool> OnPlayerReturnToTown;   
+    public static event Action<bool> OnPlayerReturnToTown;
 
-    public string GetInteractPrompt() => "우주선 부르기";
+    public string GetInteractPrompt()
+    {
+        return LocalizationHelper.L("PROMPT_SPACESHIP_CALL");
+    }
 
     public void OnInteract()
     {
-        // 팝업을 열면서 메시지와 할 일(람다식) 전달
+        string localizedMsg = LocalizationHelper.L("CONFIRM_RETURN_TOWN");
         CommonConfirmPopup.Instance.OpenPopup(
-            "탐사를 마치고 마을로 돌아가시겠습니까?",
+            localizedMsg,
             () => {
-                Debug.Log("마을로 이동 중...");
                 OnPlayerReturnToTown?.Invoke(true);
             }
         );

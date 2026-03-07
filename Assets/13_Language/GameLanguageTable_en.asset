@@ -1,0 +1,967 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: GameLanguageTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 0fd956b387874be41a54348d63e43d2b, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 7199834298847330340
+  m_TableData:
+  - m_Id: 2337015312384
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337015312387
+    m_Localized: Finish exploration and return to town?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337015312388
+    m_Localized: Are you sure you want to walk back to town?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337015312389
+    m_Localized: Explore Deeper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337015312390
+    m_Localized: Move to the next area?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337015312391
+    m_Localized: Evening has fallen, and the temperature is dropping rapidly.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506688
+    m_Localized: It`s too cold and dangerous to go out right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506689
+    m_Localized: Turned back due to the complicated path...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506690
+    m_Localized: I think I know the way clearly now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506691
+    m_Localized: I`ve gotten somewhat used to the path.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506692
+    m_Localized: I`m still confused about the path...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506693
+    m_Localized: Exploration Successful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506694
+    m_Localized: Safely returning to town via spaceship.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506695
+    m_Localized: Exploration Complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506696
+    m_Localized: Returning to town on foot.\nLost some items on the way back.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506697
+    m_Localized: Exploration Failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506698
+    m_Localized: Rescued and transported to the hospital.\nLost all items.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506699
+    m_Localized: '{0} Area {1:00}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506700
+    m_Localized: Est. time until sunset {0:D2}:{1:D2}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506701
+    m_Localized: Start exploring {0} Area {1:00}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506702
+    m_Localized: Enter {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506703
+    m_Localized: Exit {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506704
+    m_Localized: '[LMB] Attack'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506705
+    m_Localized: '[RMB] Mine'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506706
+    m_Localized: Sleep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506707
+    m_Localized: Would you like to go to sleep?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506709
+    m_Localized: Open Display Stand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506710
+    m_Localized: Open Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506711
+    m_Localized: Would you like to open the shop?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506712
+    m_Localized: The shop is now open.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506713
+    m_Localized: Close Shop Early
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506714
+    m_Localized: Closing the shop early.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506715
+    m_Localized: Close Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506716
+    m_Localized: The shop is now closed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506717
+    m_Localized: The shop only opens in the evening.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506718
+    m_Localized: You cannot leave while the shop is open.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506719
+    m_Localized: Stop Selling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506720
+    m_Localized: Start Selling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506721
+    m_Localized: Checkout Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506722
+    m_Localized: No customers waiting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506723
+    m_Localized: 'Stock: Unlimited'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506724
+    m_Localized: Not enough money.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506725
+    m_Localized: <color={0}>(Items dropped on the floor will disappear)</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506726
+    m_Localized: The shop is still open.\nClose now and settle the accounts?\n{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506727
+    m_Localized: The shop is closed.\nWould you like to check today`s settlement?\n{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506728
+    m_Localized: 'Registered Price: {0:N0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506729
+    m_Localized: 'Amount Brought: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506730
+    m_Localized: Not enough {0}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506731
+    m_Localized: 'Price: {0:N0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337019506732
+    m_Localized: 'Weight: {0:F1}kg'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023700992
+    m_Localized: 'Stock: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023700993
+    m_Localized: ({0} times) - {1:F0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023700997
+    m_Localized: Talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023700998
+    m_Localized: Talk to {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023700999
+    m_Localized: Nothing worth buying here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701000
+    m_Localized: Huh? The item disappeared already.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701001
+    m_Localized: Wow, it`s free? Awesome!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701002
+    m_Localized: Hmm, good price. I`ll buy it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701003
+    m_Localized: Oh? Out of stock...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701004
+    m_Localized: The line is too long... I should just go.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701005
+    m_Localized: Checkout, please.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701006
+    m_Localized: I`ll come again next time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701007
+    m_Localized: Thank you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701008
+    m_Localized: Tsk, whatever.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701009
+    m_Localized: '{0} gold? What a rip-off!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701011
+    m_Localized: View Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701012
+    m_Localized: Accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701013
+    m_Localized: Claim Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701014
+    m_Localized: In Progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701015
+    m_Localized: 'Obtained Quest Reward: {0}{1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701016
+    m_Localized: 'Obtained Quest Reward: {0} x{1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701017
+    m_Localized: 'Reward: {0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701019
+    m_Localized: Return to the title screen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701020
+    m_Localized: Exit the game?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701021
+    m_Localized: Open Storage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701022
+    m_Localized: Not enough inventory space.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701023
+    m_Localized: Write in Diary (Save)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701024
+    m_Localized: Record your progress in the diary?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701025
+    m_Localized: Are you sure you want to delete this save?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701026
+    m_Localized: Morning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701027
+    m_Localized: Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701028
+    m_Localized: Evening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701029
+    m_Localized: Night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701042
+    m_Localized: Alien Customer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701044
+    m_Localized: What are you selling here?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701045
+    m_Localized: I`ll just look around.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701048
+    m_Localized: Purple Alien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701050
+    m_Localized: Hello.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701051
+    m_Localized: Goodbye.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701054
+    m_Localized: Alien Resident
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701056
+    m_Localized: Do you need something?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701057
+    m_Localized: I`m busy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701060
+    m_Localized: Weapon Merchant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701062
+    m_Localized: Selling weapons!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701063
+    m_Localized: Feel free to look around anytime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701067
+    m_Localized: Weapon Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701068
+    m_Localized: Basic Pickaxe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701069
+    m_Localized: Wooden Sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701071
+    m_Localized: Blue Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701072
+    m_Localized: Blue Monster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701073
+    m_Localized: Green Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701074
+    m_Localized: Star Monster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701075
+    m_Localized: Red Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701076
+    m_Localized: Pink Monster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701078
+    m_Localized: Blue Jelly Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701079
+    m_Localized: A refreshing blue jelly piece.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701080
+    m_Localized: Watery Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701081
+    m_Localized: Transparent, jiggly slime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701082
+    m_Localized: Blue Slime Core
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701083
+    m_Localized: A sphere condensed with the life force of a Blue Slime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701084
+    m_Localized: Bouncy Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701085
+    m_Localized: A bouncy eyeball. It keeps rolling around.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701086
+    m_Localized: Blue Heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337023701087
+    m_Localized: A warmly beating heart. An eyeball on it glares in all directions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895296
+    m_Localized: Sucker Tentacle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895297
+    m_Localized: A soft tentacle densely packed with highly adhesive suckers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895298
+    m_Localized: Green Jelly Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895299
+    m_Localized: A green jelly piece that stings to the touch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895300
+    m_Localized: Acid Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895301
+    m_Localized: Slime emitting a sour smell and smoke.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895302
+    m_Localized: Green Slime Core
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895303
+    m_Localized: A sphere condensed with the life force of a Green Slime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895304
+    m_Localized: Star Cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895305
+    m_Localized: Looks like a hard cap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895306
+    m_Localized: Star Shell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895307
+    m_Localized: A yellow shell with a bumpy surface.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895308
+    m_Localized: Star Fang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895309
+    m_Localized: A fang sharp enough to easily cut you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895310
+    m_Localized: Red Jelly Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895311
+    m_Localized: An incredibly hot jelly piece.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895312
+    m_Localized: Lava Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895313
+    m_Localized: Bubbling, boiling slime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895314
+    m_Localized: Red Slime Core
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895315
+    m_Localized: A sphere condensed with the life force of a Red Slime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895316
+    m_Localized: Eerie Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895317
+    m_Localized: It keeps staring at me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895318
+    m_Localized: Floating Pocket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895319
+    m_Localized: Filled with gas, it floats in the air.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895320
+    m_Localized: Tear Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895321
+    m_Localized: A tear crystallized like a brilliant gem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895322
+    m_Localized: Purple Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895323
+    m_Localized: Purple Sugar Dust. They say it`s dry but sweet as candy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895324
+    m_Localized: Blue Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895325
+    m_Localized: Blue Sugar Dust. Said to have a fantastic, overwhelmingly sweet
+      taste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895326
+    m_Localized: Green Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895327
+    m_Localized: Green Sugar Dust. Said to be sticky but have a sour kick.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895328
+    m_Localized: Sky Blue Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895329
+    m_Localized: Sky Blue Sugar Dust. Known for its electrifying, extremely sour
+      taste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895330
+    m_Localized: Pink Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895331
+    m_Localized: Pink Sugar Dust. A bit bitter, but with a spicy aftertaste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895332
+    m_Localized: Red Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895333
+    m_Localized: Red Sugar Dust. Its extreme spiciness is highly addictive.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895334
+    m_Localized: White Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895335
+    m_Localized: White Sugar Dust. Overwhelmingly soft, fluffy, and savory.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895336
+    m_Localized: Rainbow Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895337
+    m_Localized: Rainbow Sugar Dust. Boasts an overwhelming, perfect flavor that
+      paralyzes all taste buds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895339
+    m_Localized: I Need Sugar Dust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895340
+    m_Localized: Bring me a few Sugar Dusts, please.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895341
+    m_Localized: Defeat the Blue Slimes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2337027895342
+    m_Localized: The Blue Slimes have multiplied so much they`re at the town entrance.
+      Can you help me reduce their numbers?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98535923494912
+    m_Localized: Option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536028352512
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536036741120
+    m_Localized: Unsaved progress will be lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536087072768
+    m_Localized: Purple SugarDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267072
+    m_Localized: 'Drop
+
+      Item'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267073
+    m_Localized: "Right-click for \nItem Info"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267074
+    m_Localized: Set Price
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267075
+    m_Localized: "Right-click for \nShop Item Info"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267076
+    m_Localized: Display Stand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267077
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267078
+    m_Localized: Area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267079
+    m_Localized: Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267080
+    m_Localized: Start Exploration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267081
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267082
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267083
+    m_Localized: Exit to Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267084
+    m_Localized: Save {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267085
+    m_Localized: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267086
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267087
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267088
+    m_Localized: Select Save Slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267089
+    m_Localized: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267090
+    m_Localized: No save data found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267091
+    m_Localized: Play Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267092
+    m_Localized: Save Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267093
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267094
+    m_Localized: BGM Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98536091267095
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177603440640
+    m_Localized: Call Spaceship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177674743808
+    m_Localized: Ride Spaceship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132416
+    m_Localized: Day {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132417
+    m_Localized: Day {0} - {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132418
+    m_Localized: Outskirts of the Blue Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132419
+    m_Localized: Heart of the Blue Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132420
+    m_Localized: Outskirts of the Acid Swamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132421
+    m_Localized: Heart of the Acid Swamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132422
+    m_Localized: Outskirts of the Lava Field
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132423
+    m_Localized: Heart of the Lava Field
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132424
+    m_Localized: Contaminated Zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177683132425
+    m_Localized: Exploration Zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177687326720
+    m_Localized: Blue Slime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177687326721
+    m_Localized: 'Purchase
+
+      1 item'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100177687326722
+    m_Localized: There are no ongoing quests.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121894640005120
+    m_Localized: Exploration Area {0}
+    m_Metadata:
+      m_Items:
+      - rid: 7199834298847330340
+  - m_Id: 127327140294656
+    m_Localized: House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127403766034432
+    m_Localized: Hospital
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127405452144640
+    m_Localized: Library
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127406098067456
+    m_Localized: Furniture Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127406609772544
+    m_Localized: My Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 128705753493504
+    m_Localized: Customer Paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 128651630194688
+    m_Localized: Leave Counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 128593325174784
+    m_Localized: Total Purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 128728050413568
+    m_Localized: Change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 128745427415040
+    m_Localized: Total Sales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131628298383360
+    m_Localized: Closing Receipt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132252268212224
+    m_Localized: =======  Counterfeit Bills Found   =======
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132288410529792
+    m_Localized: Total Counterfeit Loss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132324997443584
+    m_Localized: Base Rent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132364042219520
+    m_Localized: 'Shop Reput.: Customer Refusal'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132365556363264
+    m_Localized: 'Shop Reput.: Pricing Mistake'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132460980973568
+    m_Localized: Total Rent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132461568176128
+    m_Localized: Net Profit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132937390993408
+    m_Localized: =======  Shop Rent  =======
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143661391654912
+    m_Localized: Earned Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143691406094336
+    m_Localized: Lost Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143774537199616
+    m_Localized: Return to Town
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159194040217600
+    m_Localized: Mineral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159197420826624
+    m_Localized: Monster Loot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159199299874816
+    m_Localized: Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159200658829312
+    m_Localized: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159606424186880
+    m_Localized: Use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 160537358348288
+    m_Localized: 'Type: {0}'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7199834298847330340
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 121894640005120

@@ -21,7 +21,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     #region Interaction (IInteractable)
 
-    public string GetInteractPrompt() => "진열대 열기";
+    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_OPEN_DISPLAY_STAND");
 
     public void OnInteract()
     {

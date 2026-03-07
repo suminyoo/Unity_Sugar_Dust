@@ -36,7 +36,7 @@ public class ExploreLevelSelectButton : MonoBehaviour
             }
             button.interactable = isUnlocked;
 
-            // 처음 켜질 때, 현재 선택된 레벨표시
+            // 처음 켜질 때 현재 선택된 레벨표시
             if (selectionUI != null)
             {
                 bool isCurrentlySelected = (selectionUI.selectedLevelNumber == this.levelNumber);

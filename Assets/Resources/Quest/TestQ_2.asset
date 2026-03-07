@@ -13,16 +13,40 @@ MonoBehaviour:
   m_Name: TestQ_2
   m_EditorClassIdentifier: 
   questID: TQ_2
-  questName: "\uD30C\uB780 \uC2AC\uB77C\uC784 \uCC98\uCE58"
-  description: "\uD30C\uB780\uC2AC\uB77C\uC784\uC774 \uB108\uBB34 \uB298\uC5B4\uC11C
-    \uC774\uC81C\uB294 \uB9C8\uC744 \uCD08\uC785\uBD80\uD130 \uBCF4\uC5EC. \uD30C\uB780
-    \uC2AC\uB77C\uC784 \uAC1C\uCCB4\uC218\uB97C \uC904\uC5EC\uC57C\uD558\uB294\uB370
-    \uB3C4\uC640\uC8FC\uACA0\uC5B4?"
+  questName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895341
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895342
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   objectives:
   - type: 0
     targetID: Enemy1_BlueSlime
     requiredAmount: 2
     currentAmount: 0
-    objectiveDescription: "\uD30C\uB780\uC2AC\uB77C\uC784 \uCC98\uCE58"
+    objectiveDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+      m_TableEntryReference:
+        m_KeyId: 100177687326720
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
   rewardGold: 500
   requiredQuestID: TQ_1
+  references:
+    version: 2
+    RefIds: []

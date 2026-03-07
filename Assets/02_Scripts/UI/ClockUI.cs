@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Localization.Settings;
 
 public class ClockUI : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class ClockUI : MonoBehaviour
     {
         GameManager.OnTimeChanged += HandleTimeChanged;
 
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+
         if (GameManager.Instance != null)
         {
             HandleTimeChanged(GameManager.Instance.currentTime, true);
@@ -30,22 +33,24 @@ public class ClockUI : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnTimeChanged -= HandleTimeChanged;
+
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
     }
 
+    private void OnLocaleChanged(UnityEngine.Localization.Locale newLocale)
+    {
+        if (GameManager.Instance != null)
+        {
+            HandleTimeChanged(GameManager.Instance.currentTime, true);
+        }
+    }
     private void HandleTimeChanged(GAME_TIME newTime, bool isInstant)
     {
-        string timeName = "";
-        switch (newTime)
-        {
-            case GAME_TIME.Morning: timeName = "¾ÆÄ§"; break;
-            case GAME_TIME.Day: timeName = "³·"; break;
-            case GAME_TIME.Evening: timeName = "Àú³á"; break;
-            case GAME_TIME.Night: timeName = "¹ã"; break;
-        }
+        string timeName = LocalizationHelper.GetGameTimeText(newTime);
 
         if (GameManager.Instance != null && dayTimeText != null)
         {
-            dayTimeText.text = $"{GameManager.Instance.currentDay}ÀÏÂ÷ {timeName}";
+            dayTimeText.text = LocalizationHelper.L("UI_DAY_AND_TIME", GameManager.Instance.currentDay, timeName);
         }
 
         morningImage.SetActive(false);

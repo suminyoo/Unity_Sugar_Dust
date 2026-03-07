@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, ISaveable
     public SoundData sleepSound;
     public SoundData morningSound;
 
+
     private void OnEnable()
     {
         SceneController.OnScreenFadedOut += ExecutePendingTimeChange;
@@ -51,7 +52,6 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         Time.timeScale = 0f;
         // 멈출때 음악이 작아진다던지
-
     }
 
     public void ResumeGameTime()
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour, ISaveable
 
             ChangeTime(currentTime);
 
-            Debug.Log($"[GameManager] 세이브 데이터 적용 완료! 현재 시간: {currentTime}");
+            //Debug.Log($"[GameManager] 세이브 데이터 적용 완료! 현재 시간: {currentTime}");
         }
 
         if (QuestManager.Instance != null)
@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour, ISaveable
     public void ChangeTime(GAME_TIME newTime, bool isInstant = true)
     {
         currentTime = newTime;
-        Debug.Log($"시간 변경 알림: {newTime}");
         OnTimeChanged?.Invoke(newTime, isInstant);
     }
 
@@ -147,7 +146,7 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (currentTime == GAME_TIME.Evening || currentTime == GAME_TIME.Night)
         {
-            NotificationUIManager.Instance.ShowNotification("지금 나가기에는 너무 춥고 위험합니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_TOO_COLD"));
             return false;
         }
         return true;
@@ -157,12 +156,12 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (currentTime == GAME_TIME.Morning || currentTime == GAME_TIME.Day)
         {
-            NotificationUIManager.Instance.ShowNotification("상점 영업은 저녁부터 가능합니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_EVENING_ONLY"));
             return false;
         }
         if (currentTime == GAME_TIME.Night)
         {
-            NotificationUIManager.Instance.ShowNotification("오늘은 이미 장사를 마감했습니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_CLOSED"));
             return false;
         }
         return true;

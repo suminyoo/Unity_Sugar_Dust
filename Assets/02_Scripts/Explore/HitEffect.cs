@@ -44,7 +44,6 @@ public class HitEffect : MonoBehaviour
             r.GetPropertyBlock(propBlock);
 
             propBlock.SetColor("_EmissionColor", color);
-            //propBlock.SetColor("_ColorTint1", color);
             propBlock.SetFloat("_EmissionPower", intensity);
 
             r.SetPropertyBlock(propBlock);

@@ -12,14 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0124e21744a6e54b88113c912be9dd4, type: 3}
   m_Name: NPC_Customer
   m_EditorClassIdentifier: 
-  npcName: "\uC678\uACC4\uC778 \uC190\uB2D8"
-  description: "\uC678\uACC4\uC778 \uC190\uB2D8"
+  npcName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701042
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   moveSpeed: 3.5
   waitTimeAtPoint: 2
-  promptText: "\uB300\uD654\uD558\uAE30"
-  questPromptText: "\uD018\uC2A4\uD2B8 \uBCF4\uAE30"
   defaultDialogue: {fileID: 0}
-  defaultGreetingMessage: "\uC5EC\uAE30 \uBB50 \uD314\uC544?"
-  defaultGoodByeMessage: "\uBB3C\uAC74 \uC880 \uBCFC\uAC8C"
+  defaultGreetingMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701044
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultGoodByeMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701045
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   detectRange: 3
   questsToGive: []
+  references:
+    version: 2
+    RefIds: []

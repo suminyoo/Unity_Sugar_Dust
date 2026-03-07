@@ -129,7 +129,7 @@ public class PlayerHUD : MonoBehaviour
     {
         if (moneyText != null)
         {
-            moneyText.text = $"{currentGold:N0} G";
+            moneyText.text = $"{currentGold:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         }
     }
 

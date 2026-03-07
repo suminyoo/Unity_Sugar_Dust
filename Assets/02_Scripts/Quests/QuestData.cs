@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Localization;
 public class QuestItemReward
 {
     public string itemID;
@@ -14,23 +15,38 @@ public class QuestObjective
     public string targetID; // 몬스터ID 아이템ID NPCID 등등등등
     public int requiredAmount;
     public int currentAmount;
-    public string objectiveDescription;
+    public LocalizedString objectiveDescription;
     public bool IsComplete => currentAmount >= requiredAmount;
     public string GetProgressText(int current)
     {
-        if (string.IsNullOrEmpty(objectiveDescription))
+        string descText = "";
+
+        if (objectiveDescription != null && !objectiveDescription.IsEmpty)
+        {
+            descText = objectiveDescription.GetLocalizedString();
+        }
+        else
         {
             if (type == QuestType.Collect)
             {
                 var item = ItemDataManager.Instance.GetItemByID(targetID);
-                objectiveDescription = item != null ? item.itemName : "아이템";
+                if (item != null)
+                {
+                    descText = item.GetItemName();
+                }
             }
             else if (type == QuestType.Hunt)
             {
-                objectiveDescription = targetID; 
+                var enemy = EnemyDataManager.Instance.GetEnemyByID(targetID);
+                descText = enemy.GetEnemyName();
+            }
+            else
+            {
+                descText = "알 수 없는 목표";
             }
         }
-        return $"{objectiveDescription} ({current}/{requiredAmount})";
+
+        return $"{descText} ({current}/{requiredAmount})";
     }
 }
 
@@ -39,8 +55,8 @@ public class QuestObjective
 public class QuestData : ScriptableObject
 {
     public string questID;
-    public string questName;
-    [TextArea] public string description;
+    [SerializeField] private LocalizedString questName;
+    [SerializeField] private LocalizedString description;
 
     public List<QuestObjective> objectives;
 
@@ -48,5 +64,15 @@ public class QuestData : ScriptableObject
     public List<QuestItemReward> rewardItems;
 
     public string requiredQuestID;
+
+    public string GetQuestName()
+    {
+        return questName.GetLocalizedString();
+    }
+
+    public string GetDescription()
+    {
+        return description.GetLocalizedString();
+    }
 }
 

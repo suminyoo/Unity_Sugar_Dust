@@ -81,7 +81,8 @@ public class GameSaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(savedData, true);
         File.WriteAllText(filePath, json);
 
-        Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료! 경로: {filePath}");
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SAVE_COMPLETE"));
+        //Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
     }
 
     private void ManageRollingSaves(string directoryPath, int maxFiles)
@@ -99,7 +100,7 @@ public class GameSaveManager : MonoBehaviour
             for (int i = 0; i < deleteCount; i++)
             {
                 sortedFiles[i].Delete();
-                Debug.Log($"[GameManager] 밀어내기: 오래된 세이브 파일 삭제됨 -> {sortedFiles[i].Name}");
+                //Debug.Log($"[GameManager] 밀어내기: 오래된 세이브 파일 삭제됨 {sortedFiles[i].Name}");
             }
         }
     }
@@ -134,7 +135,6 @@ public class GameSaveManager : MonoBehaviour
         // HashSet -> List 변환 저장
         savedData.ownedKeyItems = new List<string>(keyItems);
 
-        Debug.Log($"[GameManager] 자산 저장 완료: {money} Gold");
     }
 
     public (int money, List<string> keyItems) LoadPlayerAssets()
@@ -153,7 +153,6 @@ public class GameSaveManager : MonoBehaviour
         savedData.hpLevel = hpLevel;
         savedData.staminaLevel = staLevel;
 
-        Debug.Log("GameManager: 플레이어 컨디션 저장 완료");
     }
 
     public (float hp, float stamina, int hpLevel, int staminaLevel) LoadPlayerCondition()
@@ -218,8 +217,6 @@ public class GameSaveManager : MonoBehaviour
         {
             savedData.displayStandPrices.AddRange(prices);
         }
-
-        Debug.Log("GameManager: 진열대 (아이템 ID + 가격) 저장 완료");
     }
 
     public (int size, List<InventorySlot> slots, List<int> prices) LoadDisplayStand()
@@ -287,7 +284,6 @@ public class GameSaveManager : MonoBehaviour
     public void SaveSelectedExploreLevel(int level)
     {
         selectedExploreLevel = level;
-        Debug.Log($"[GameManager] 탐사 시도 레벨 설정: {level}");
     }
 
     public int LoadSelectedExploreLevel()
@@ -320,7 +316,6 @@ public class GameSaveManager : MonoBehaviour
         // 진행중 목록
         savedData.activeQuests = new List<QuestSaveData>(activeQuestData);
 
-        Debug.Log("GameManager: 퀘스트 데이터 저장 완료");
     }
 
     public (List<string> completedIDs, List<QuestSaveData> activeQuestData) LoadQuestData()

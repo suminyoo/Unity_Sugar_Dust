@@ -70,15 +70,15 @@ public class NPCQuestUIManager : MonoBehaviour
 
             if (activeQuest == null)
             {
-                slotUI.SetupSlot(questData, null, "수락하기", true, () => AcceptQuest(questData));
+                slotUI.SetupSlot(questData, null, LocalizationHelper.L("QUEST_BTN_ACCEPT"), true, () => AcceptQuest(questData));
             }
             else if (activeQuest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(questData, activeQuest, "보상받기", true, () => ClaimReward(activeQuest));
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_BTN_CLAIM"), true, () => ClaimReward(activeQuest));
             }
             else
             {
-                slotUI.SetupSlot(questData, activeQuest, "진행중", false, null);
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_STATUS_PROGRESS"), false, null);
             }
         }
     }

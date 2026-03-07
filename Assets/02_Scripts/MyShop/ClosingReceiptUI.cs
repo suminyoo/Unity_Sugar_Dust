@@ -63,10 +63,9 @@ public class ClosingReceiptUI : MonoBehaviour
         totalFakeLossText.text = $"- {data.totalFakeLoss:N0} {symbol}";
 
         // 손님 거절 페널티
-        refusalPenaltyText.text = $"({data.refusalCount}회) - {data.refusalRatePercent:F0}%";
-
+        refusalPenaltyText.text = LocalizationHelper.L("RECEIPT_PENALTY_FORMAT", data.refusalCount, data.refusalRatePercent);
         // 계산 실수 페널티
-        mistakePenaltyText.text = $"({data.mistakeCount}회) - {data.mistakeRatePercent:F0}%";
+        mistakePenaltyText.text = LocalizationHelper.L("RECEIPT_PENALTY_FORMAT", data.mistakeCount, data.mistakeRatePercent);
 
         // 총 임대료: 총 임대료 (기본+거절+실수 %) : -금액
         totalRentText.text = $"- {data.totalRentRatePercent:F0}% : - {data.totalRentCost:N0} {symbol}";

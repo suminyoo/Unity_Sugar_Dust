@@ -14,6 +14,22 @@ public class DamagePopup : MonoBehaviour
     {
         textMesh = GetComponentInChildren<TextMeshPro>();
     }
+    void Update()
+    {
+        transform.position += Vector3.up * moveYSpeed * Time.deltaTime;
+        disappearTimer -= Time.deltaTime;
+
+        if (disappearTimer < 0)
+        {
+            textColor.a -= fadeSpeed * Time.deltaTime;
+            textMesh.color = textColor;
+
+            if (textColor.a <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 
     public void Setup(float damageAmount, bool isCritical)
     {
@@ -32,22 +48,6 @@ public class DamagePopup : MonoBehaviour
 
         textColor = textMesh.color;
         disappearTimer = 0.5f;
-    }
-
-    void Update()
-    {
-        transform.position += Vector3.up * moveYSpeed * Time.deltaTime;
-        disappearTimer -= Time.deltaTime;
-        if (disappearTimer < 0)
-        {
-            textColor.a -= fadeSpeed * Time.deltaTime;
-            if (textMesh != null) textMesh.color = textColor;
-
-            if (textColor.a <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
     }
 
     void LateUpdate()

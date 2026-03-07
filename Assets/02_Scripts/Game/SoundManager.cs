@@ -15,7 +15,6 @@ public struct SoundData
     public AudioClip clip;
     [Range(0f, 1f)] public float volume;
 }
-/// SoundManager.Instance.PlaySFX(sound, transform.position);
 
 public class SoundManager : MonoBehaviour
 {
@@ -91,7 +90,6 @@ public class SoundManager : MonoBehaviour
             source.minDistance = 5f;           
             source.maxDistance = 30f;  
             source.dopplerLevel = 0f;
-            // ---------------------------------------------------
 
             sfxPool.Enqueue(source);
         }

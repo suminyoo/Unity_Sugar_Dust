@@ -16,8 +16,6 @@ public class ItemPurchaseInfoUI : MonoBehaviour
     public TextMeshProUGUI itemWeightText;
     public TextMeshProUGUI itemDescriptionText;
     public TextMeshProUGUI itemStockAmountText;
-
-
     private Action onPurchased;
 
 
@@ -35,14 +33,15 @@ public class ItemPurchaseInfoUI : MonoBehaviour
         itemInfoPanel.SetActive(true);
 
         itemIcon.sprite = data.icon;
-        itemNameText.text = data.itemName;
-        purchasePriceText.text = $"가격: {price:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
-        itemWeightText.text = $"무게: {data.weight:F1}kg";
-        itemDescriptionText.text = data.description;
-        if(stockAmount == -1)
-            itemStockAmountText.text = "재고: 무제한";
+        itemNameText.text = data.GetItemName();
+        purchasePriceText.text = LocalizationHelper.L("ITEM_INFO_PRICE", price, CustomerPaymentSystem.CURRENCY_SYMBOL);
+        itemWeightText.text = LocalizationHelper.L("ITEM_INFO_WEIGHT", data.weight);
+        itemDescriptionText.text = data.GetDescription();
+        
+        if (stockAmount == -1)
+            itemStockAmountText.text = LocalizationHelper.L("ITEM_STOCK_UNLIMITED");
         else
-            itemStockAmountText.text = $"재고: {stockAmount}개"; 
+            itemStockAmountText.text = LocalizationHelper.L("ITEM_INFO_STOCK", stockAmount);
     }
     public void Close()
     {
@@ -50,7 +49,6 @@ public class ItemPurchaseInfoUI : MonoBehaviour
         defaultPanel.SetActive(true);
     }
 
-    //구매 버튼 클릭
     public void OnPurchaseButtonClicked()
     {
         onPurchased?.Invoke();

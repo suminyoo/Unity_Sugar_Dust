@@ -16,12 +16,12 @@ public class DamageTextManager : MonoBehaviour
     {
         if (damagePopupPrefab == null) return;
 
-        // 텍스트 생성
         GameObject popup = Instantiate(damagePopupPrefab, position, Quaternion.identity);
 
         popup.transform.rotation = Camera.main.transform.rotation;
 
         DamagePopup popupScript = popup.GetComponent<DamagePopup>();
+
         if (popupScript != null)
         {
             popupScript.Setup(damageAmount, isCritical);

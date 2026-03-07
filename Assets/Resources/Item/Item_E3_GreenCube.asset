@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_E3_GreenCube
   m_EditorClassIdentifier: 
   itemID: Green_Cube
-  itemName: "\uCD08\uB85D \uC824\uB9AC \uC870\uAC01"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895298
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uB2FF\uB294 \uBD80\uC704\uAC00 \uB530\uB054\uAC70\uB9AC\uB294 \uCD08\uB85D
-    \uC824\uB9AC \uC870\uAC01\uC774\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895299
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 5adea3ead7d527a45aa751865db60954, type: 3}
   weight: 0.2
   basePrice: 80
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 3353461429377521025, guid: 7c44787bc61957f4ba40ee50101cab91, type: 3}
   sellPrice: 200
+  references:
+    version: 2
+    RefIds: []

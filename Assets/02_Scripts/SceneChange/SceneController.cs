@@ -55,7 +55,7 @@ public class SceneController : MonoBehaviour
             {
                 saveable.SaveData();
             }
-            Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
+            //Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
 
         }
 
@@ -105,7 +105,7 @@ public class SceneController : MonoBehaviour
             {
                 saveable.SaveData();
             }
-            Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
+            //Debug.Log($"[SceneController] 총 {saveables.Count()}개의 오브젝트 데이터 저장 완료");
         }
         // ===================================================
 
@@ -132,8 +132,6 @@ public class SceneController : MonoBehaviour
                 yield return SceneManager.UnloadSceneAsync(currentLoadedInterior);
             }
 
-
-            Debug.Log($"로드 시도 중인 씬 이름: {sceneName.ToString()}");
             yield return SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 
             currentLoadedInterior = sceneName;

@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Item_E3_GreenLiquid
   m_EditorClassIdentifier: 
   itemID: Green_Liquid
-  itemName: "\uC0B0\uC131 \uC810\uC561"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895300
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uC2DC\uD07C\uD55C \uB0C4\uC0C8\uC640 \uC5F0\uAE30\uAC00 \uB098\uB294
-    \uC810\uC561\uC774\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895301
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: c6b64d51884b6b043985e5f75d58cc6e, type: 3}
   weight: 0.5
   basePrice: 150
@@ -24,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 8766455416448945887, guid: 7f1450b5d3323df40acddec32a8c9d63, type: 3}
   sellPrice: 380
+  references:
+    version: 2
+    RefIds: []

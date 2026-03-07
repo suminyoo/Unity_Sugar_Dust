@@ -5,9 +5,7 @@ public class CloudRotator : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float speed = 50f;
     [SerializeField] private Vector3 direction = new Vector3(0, 0, 1);
-
     [SerializeField] private float disappearZ = 500f;
-
     [SerializeField] private float startZ = -500f;
 
     void Update()

@@ -1,0 +1,198 @@
+Key,Id,Korean(ko),English(en)
+TEST_KEY,9.75364E+11,테스트,Test
+EXPLORE,,EXPLORE,EXPLORE
+PROMPT_CALL_SPACESHIP,,우주선 부르기,Call Spaceship
+PROMPT_RIDE_SPACESHIP,,우주선 타기,Ride Spaceship
+CONFIRM_RETURN_TOWN,,탐사를 마치고 마을로 돌아가시겠습니까?,Finish exploration and return to town?
+CONFIRM_WALK_TO_TOWN,,정말로 걸어서 마을로 돌아가시겠습니까?,Are you sure you want to walk back to town?
+PROMPT_EXPLORE_DEEPER,,더 깊은 곳 탐사하기,Explore Deeper
+CONFIRM_MOVE_NEXT_AREA,,다음 구역으로 이동하시겠습니까?,Move to the next area?
+NOTI_TEMP_DROP,,저녁이 되어 기온이 급격히 떨어집니다.,"Evening has fallen, and the temperature is dropping rapidly."
+NOTI_TOO_COLD,,지금 나가기에는 너무 춥고 위험합니다.,It`s too cold and dangerous to go out right now.
+NOTI_EXPLORE_RETRY,,복잡한 길 때문에 되돌아왔다…,Turned back due to the complicated path...
+EXPLORE_PATH_CLEAR,,이제 길을 확실히 알 것 같다.,I think I know the way clearly now.
+EXPLORE_PATH_FAMILIAR,,어느 정도 길이 익숙해졌다.,I`ve gotten somewhat used to the path.
+EXPLORE_PATH_CONFUSED,,아직 길이 헷갈린다…,I`m still confused about the path...
+RESULT_EXPLORE_SUCCESS,,탐사 성공,Exploration Successful
+RESULT_DESC_SUCCESS_SAFE,,우주선을 타고 마을로 무사히 귀환합니다.,Safely returning to town via spaceship.
+RESULT_EXPLORE_COMPLETE,,탐사 완료,Exploration Complete
+RESULT_DESC_SUCCESS_WALK,,걸어서 마을로 귀환합니다.\n돌아가는 길에 몇몇 아이템을 잃어버렸습니다.,Returning to town on foot.\nLost some items on the way back.
+RESULT_EXPLORE_FAIL,,탐사 실패,Exploration Failed
+RESULT_DESC_FAIL,,구조대에 의해\n병원으로 이송됩니다.\n아이템을 모두 잃어버렸습니다.,Rescued and transported to the hospital.\nLost all items.
+UI_STAGE_AREA_FORMAT,,{0} {1:00} 구역,{0} Area {1:00}
+UI_TIME_UNTIL_SUNSET,,일몰까지 예상시간 {0:D2}:{1:D2},Est. time until sunset {0:D2}:{1:D2}
+CONFIRM_START_EXPLORE,,{0} {1:00} 구역 탐사를 시작하시겠습니까?,Start exploring {0} Area {1:00}?
+PROMPT_DOOR_ENTER,,{0} 들어가기,Enter {0}
+PROMPT_DOOR_EXIT,,{0} 나가기,Exit {0}
+PROMPT_ACTION_ATTACK,,[LMB] 공격,[LMB] Attack
+PROMPT_ACTION_MINE,,[RMB] 채광,[RMB] Mine
+PROMPT_SLEEP,,잠자기,Sleep
+CONFIRM_SLEEP,,잠자리에 드시겠습니까?,Would you like to go to sleep?
+MYSHOP,,MYSHOP,MYSHOP
+PROMPT_OPEN_DISPLAY_STAND,,진열대 열기,Open Display Stand
+PROMPT_START_SHOP_OP,,상점 운영 시작하기,Start Shop Operation
+CONFIRM_START_SHOP,,영업을 시작하겠습니까?,Would you like to open the shop?
+NOTI_SHOP_OPENED,,영업이 시작되었습니다,The shop is now open.
+PROMPT_EARLY_CLOSE_SHOP,,상점 일찍 마감하기,Close Shop Early
+NOTI_SHOP_EARLY_CLOSE,,영업을 조기 마감합니다.,Closing the shop early.
+PROMPT_CLOSE_SHOP,,상점 마감하기,Close Shop
+NOTI_SHOP_CLOSED,,영업이 종료되었습니다,The shop is now closed.
+NOTI_SHOP_EVENING_ONLY,,상점 영업은 저녁부터 가능합니다.,The shop only opens in the evening.
+NOTI_CANNOT_EXIT_SHOP,,영업 중에는 나갈 수 없습니다.,You cannot leave while the shop is open.
+BTN_STOP_SALE,,판매 중지,Stop Selling
+BTN_START_SALE,,판매 시작,Start Selling
+PROMPT_CHECKOUT,,물건 결제해주기,Checkout Items
+NOTI_NO_WAITING_CUSTOMER,,대기 중인 손님이 없습니다.,No customers waiting.
+ITEM_STOCK_UNLIMITED,,재고: 무제한,Stock: Unlimited
+NOTI_NOT_ENOUGH_MONEY,,돈이 부족합니다.,Not enough money.
+UI_WARNING_DROPPED_ITEM,,<color={0}>(바닥에 떨어진 아이템은 사라집니다)</color>,<color={0}>(Items dropped on the floor will disappear)</color>
+CONFIRM_EARLY_CLOSE,,아직 영업 중입니다.\n지금 마감하고 정산하겠습니까?\n{0},The shop is still open.\nClose now and settle the accounts?\n{0}
+CONFIRM_SHOP_SETTLEMENT,,영업이 종료되었습니다.\n오늘의 정산 내역을 확인하겠습니까?\n{0},The shop is closed.\nWould you like to check today`s settlement?\n{0}
+UI_REGISTERED_PRICE,,등록한 가격: {0:N0} {1},Registered Price: {0:N0} {1}
+UI_BROUGHT_AMOUNT,,가져온 개수: {0} 개,Amount Brought: {0}
+NOTI_NOT_ENOUGH_ITEM,,{0}이(가) 부족합니다.,Not enough {0}.
+ITEM_INFO_PRICE,,가격: {0:N0} {1},Price: {0:N0} {1}
+ITEM_INFO_WEIGHT,,무게: {0:F1}kg,Weight: {0:F1}kg
+ITEM_INFO_STOCK,,재고: {0}개,Stock: {0}
+RECEIPT_MISTAKE_PENALTY,,({0}회) - {1:F0}%,({0} times) - {1:F0}%
+RECEIPT_TOTAL_RENT_RATE,,- {0:F0}% : - {1:N0} {2},- {0:F0}% : - {1:N0} {2}
+RECEIPT_FAKE_BILL_COUNT,,{0:N0} x {1},{0:N0} x {1}
+NPC,,NPC,NPC
+PROMPT_TALK,,대화하기,Talk
+PROMPT_TALK_TO_NPC,,{0} 대화하기,Talk to {0}
+NPC_SAY_NOTHING_TO_BUY,,여긴 살만한게 없네,Nothing worth buying here.
+NPC_SAY_ITEM_DISAPPEARED,,어? 물건이 그새 없어졌네,Huh? The item disappeared already.
+NPC_SAY_FREE_ITEM,,와 공짜네? 아싸!,"Wow, it`s free? Awesome!"
+NPC_SAY_GOOD_PRICE,,"음, 가격 괜찮네. 사야지.","Hmm, good price. I`ll buy it."
+NPC_SAY_NO_STOCK,,어? 재고가 없네...,Oh? Out of stock...
+NPC_SAY_QUEUE_TOO_LONG,,줄 너무 긴데... 그냥 가야겠다,The line is too long... I should just go.
+NPC_SAY_CHECKOUT_PLEASE,,계산해주세요,"Checkout, please."
+NPC_SAY_COME_AGAIN,,다음에 또 올게요,I`ll come again next time.
+NPC_SAY_THANK_YOU,,감사합니다.,Thank you.
+NPC_SAY_DISAPPOINTED,,쳇 뭐야.,"Tsk, whatever."
+NPC_SAY_TOO_EXPENSIVE,,{0}골드? 완전 바가지잖아!,{0} gold? What a rip-off!
+QUEST,,QUEST,QUEST
+PROMPT_VIEW_QUEST,,퀘스트 보기,View Quest
+QUEST_BTN_ACCEPT,,수락하기,Accept
+QUEST_BTN_CLAIM,,보상받기,Claim Reward
+QUEST_STATUS_PROGRESS,,진행중,In Progress
+NOTI_QUEST_REWARD_GOLD,,퀘스트 보상 {0}{1} 획득,Obtained Quest Reward: {0}{1}
+NOTI_QUEST_REWARD_ITEM,,퀘스트 보상 {0} {1}개 획득,Obtained Quest Reward: {0} x{1}
+UI_QUEST_REWARD_GOLD,,보상: {0} {1},Reward: {0} {1}
+GAME,,GAME,GAME
+CONFIRM_GO_TITLE,,저장되지 않은 정보는 사라집니다.\n타이틀로 돌아가겠습니까?,Unsaved progress will be lost.\nReturn to the title screen?
+CONFIRM_EXIT_GAME,,저장되지 않은 정보는 사라집니다.\n게임을 종료하겠습니까?,Unsaved progress will be lost.\nExit the game?
+PROMPT_OPEN_STORAGE,,보관함 열기,Open Storage
+NOTI_INVENTORY_FULL,,인벤토리 공간이 부족합니다.,Not enough inventory space.
+PROMPT_WRITE_DIARY,,일기쓰기 (저장),Write in Diary (Save)
+CONFIRM_SAVE_GAME,,일기장에 현재까지의 진행 상황을 기록하시겠습니까?,Record your progress in the diary?
+CONFIRM_DELETE_SAVE,,정말로 이 세이브를 삭제하시겠습니까?,Are you sure you want to delete this save?
+TIME_MORNING,,아침,Morning
+TIME_DAY,,낮,Day
+TIME_EVENING,,저녁,Evening
+TIME_NIGHT,,밤,Night
+UI_SAVE_DAY_COUNT,,{0}일차,Day {0}
+UI_HUD_DAY_AND_TIME,,{0}일차 {1},Day {0} - {1}
+SO_EXPLORES_STAGE,,SO_EXPLORES_STAGE,SO_EXPLORES_STAGE
+STAGE_NAME_1,,푸른숲 외곽,Outskirts of the Blue Forest
+STAGE_NAME_2,,푸른숲 중심부,Heart of the Blue Forest
+STAGE_NAME_3,,산성늪 외곽,Outskirts of the Acid Swamp
+STAGE_NAME_4,,산성늪 중심부,Heart of the Acid Swamp
+STAGE_NAME_5,,용암지 외곽,Outskirts of the Lava Field
+STAGE_NAME_6,,용암지 중심부,Heart of the Lava Field
+STAGE_NAME_7,,오염지역,Contaminated Zone
+STAGE_NAME_TEST,,탐사지역,Exploration Zone
+SO_NPC,,SO_NPC,SO_NPC
+CUSTOMER_NAME,,외계인 손님,Alien Customer
+CUSTOMER_DESC,,외계인 손님,An alien customer.
+CUSTOMER_GREET,,여기 뭐 팔아?,What are you selling here?
+CUSTOMER_BYE,,물건 좀 볼게,I`ll just look around.
+PROMPT_CUSTOMER,,대화하기,Talk
+PROMPT_QUEST_CUSTOMER,,퀘스트 보기,View Quest
+DEFAULT_1_NAME,,보라외계인,Purple Alien
+DEFAULT_1_DESC,,마을 주민,Town Resident
+DEFAULT_1_GREET,,안녕,Hello.
+DEFAULT_1_BYE,,잘가,Goodbye.
+PROMPT_DEFAULT_1,,대화하기,Talk
+PROMPT_QUEST_DEFAULT_1,,퀘스트 보기,View Quest
+DEFAULT_2_NAME,,외계인 주민,Alien Resident
+DEFAULT_2_DESC,,마을 주민,Town Resident
+DEFAULT_2_GREET,,무슨 볼일이라도?,Do you need something?
+DEFAULT_2_BYE,,나 바빠,I`m busy.
+PROMPT_DEFAULT_2,,대화하기,Talk
+PROMPT_QUEST_DEFAULT_2,,퀘스트 보기,View Quest
+SHOPKEEPER_WEAPON_NAME,,무기상인,Weapon Merchant
+SHOPKEEPER_WEAPON_DESC,,무기를 파는 외계인,An alien who sells weapons.
+SHOPKEEPER_WEAPON_GREET,,무기 팔아요,Selling weapons!
+SHOPKEEPER_WEAPON_BYE,,언제든 구경해도 돼,Feel free to look around anytime.
+PROMPT_SHOPKEEPER_WEAPON,,대화하기,Talk
+PROMPT_QUEST_SHOPKEEPER_WEAPON,,퀘스트 보기,View Quest
+SO_TOOL,,SO_TOOL,SO_TOOL
+SHOP_WEAPONSHOP_NAME,,무기상점,Weapon Shop
+TOOL_PICKAXE_1_NAME,,기본 곡괭이,Basic Pickaxe
+TOOL_SWORD_1_NAME,,나무 검,Wooden Sword
+SO_ENEMY,,SO_ENEMY,SO_ENEMY
+ENEMY1_BLUESLIME_NAME,,파랑슬라임,Blue Slime
+ENEMY2_BLUEMONSTER_NAME,,파랑몬스터,Blue Monster
+ENEMY3_GREENSLIME_NAME,,초록슬라임,Green Slime
+ENEMY4_STARMONSTER_NAME,,별몬스터,Star Monster
+ENEMY5_REDSLIME_NAME,,붉은슬라임,Red Slime
+ENEMY6_PINKMONSTER_NAME,,분홍몬스터,Pink Monster
+SO_ITEM,,SO_ITEM,SO_ITEM
+E1_BLUECUBE_NAME,,푸른 젤리 조각,Blue Jelly Piece
+E1_BLUECUBE_DESC,,시원한 느낌의 파란 젤리 조각이다.,A refreshing blue jelly piece.
+E1_BLUELIQUID_NAME,,물빛 점액,Watery Slime
+E1_BLUELIQUID_DESC,,투명하고 흐물거리는 점액이다.,"Transparent, jiggly slime."
+E1_BLUESLIMECORE_NAME,,파란 슬라임코어,Blue Slime Core
+E1_BLUESLIMECORE_DESC,,파란 슬라임의 생명력이 응축된 구체이다.,A sphere condensed with the life force of a Blue Slime.
+E2_BLUEEYE_NAME,,탱탱 눈알,Bouncy Eye
+E2_BLUEEYE_DESC,,탱탱함이 느껴지는 눈알. 자꾸 굴러다닌다.,A bouncy eyeball. It keeps rolling around.
+E2_BLUEHEART_NAME,,푸른 심장,Blue Heart
+E2_BLUEHEART_DESC,,따듯하게 박동하고 있는 심장. 눈알이 사방을 노려본다.,A warmly beating heart. An eyeball on it glares in all directions.
+E2_BLUETENTACLES_NAME,,빨판 촉수,Sucker Tentacle
+E2_BLUETENTACLES_DESC,,점착력이 강한 빨판이 촘촘하게 박힌 부드러운 촉수다.,A soft tentacle densely packed with highly adhesive suckers.
+E3_GREENCUBE_NAME,,초록 젤리 조각,Green Jelly Piece
+E3_GREENCUBE_DESC,,닿는 부위가 따끔거리는 초록 젤리 조각이다.,A green jelly piece that stings to the touch.
+E3_GREENLIQUID_NAME,,산성 점액,Acid Slime
+E3_GREENLIQUID_DESC,,시큼한 냄새와 연기가 나는 점액이다.,Slime emitting a sour smell and smoke.
+E3_GREENSLIMECORE_NAME,,초록 슬라임코어,Green Slime Core
+E3_GREENSLIMECORE_DESC,,초록 슬라임의 생명력이 응축된 구체이다.,A sphere condensed with the life force of a Green Slime.
+E4_STARCAP_NAME,,별등 뚜껑,Star Cap
+E4_STARCAP_DESC,,딱딱한 뚜껑 같다.,Looks like a hard cap.
+E4_STARSHELL_NAME,,별 껍데기,Star Shell
+E4_STARSHELL_DESC,,오돌도돌한 표면이 느껴지는 노란 껍데기다.,A yellow shell with a bumpy surface.
+E4_STARTOOTH_NAME,,별 송곳니,Star Fang
+E4_STARTOOTH_DESC,,베일것 같이 날카로운 송곳니다.,A fang sharp enough to easily cut you.
+E5_REDCUBE_NAME,,붉은 젤리 조각,Red Jelly Piece
+E5_REDCUBE_DESC,,엄청 뜨거운 젤리 조각이다.,An incredibly hot jelly piece.
+E5_REDLIQUID_NAME,,용암 점액,Lava Slime
+E5_REDLIQUID_DESC,,부글부글 끓고 있는 점액이다.,"Bubbling, boiling slime."
+E5_REDSLIMECORE_NAME,,붉은 슬라임코어,Red Slime Core
+E5_REDSLIMECORE_DESC,,붉은 슬라임의 생명력이 응축된 구체이다.,A sphere condensed with the life force of a Red Slime.
+E6_PINKEYE_NAME,,섬뜩한 눈알,Eerie Eye
+E6_PINKEYE_DESC,,자꾸 나를 쳐다본다.,It keeps staring at me.
+E6_PINKFLOATPOCKET_NAME,,부유 주머니,Floating Pocket
+E6_PINKFLOATPOCKET_DESC,,가스가 가득 차있어 공중에 둥둥 뜬다.,"Filled with gas, it floats in the air."
+E6_PINKTEAR_NAME,,눈물 조각,Tear Piece
+E6_PINKTEAR_DESC,,영롱한 보석 같이 결정화 된 눈물이다.,A tear crystallized like a brilliant gem.
+SUGARDUST1_NAME,,보라 슈가더스트,Purple Sugar Dust
+SUGARDUST1_DESC,,보라빛의 슈가더스트. 텁텁하지만 사탕처럼 달콤하다고 한다.,Purple Sugar Dust. They say it`s dry but sweet as candy.
+SUGARDUST2_NAME,,푸른 슈가더스트,Blue Sugar Dust
+SUGARDUST2_DESC,,푸른빛의 슈가더스트. 극강의 달콤한 맛이 환상적이라고 한다.,"Blue Sugar Dust. Said to have a fantastic, overwhelmingly sweet taste."
+SUGARDUST3_NAME,,초록 슈가더스트,Green Sugar Dust
+SUGARDUST3_DESC,,녹빛의 슈가더스트. 끈적하지만 새콤한 맛이난다고 한다.,Green Sugar Dust. Said to be sticky but have a sour kick.
+SUGARDUST4_NAME,,하늘 슈가더스트,Sky Blue Sugar Dust
+SUGARDUST4_DESC,,하늘빛의 슈가더스트. 극강의 새콤한 맛이 짜릿하다고 한다.,"Sky Blue Sugar Dust. Known for its electrifying, extremely sour taste."
+SUGARDUST5_NAME,,분홍 슈가더스트,Pink Sugar Dust
+SUGARDUST5_DESC,,분홍빛의 슈가더스트. 조금 씁쓸하지만 매콤한 맛이 난다고 한다.,"Pink Sugar Dust. A bit bitter, but with a spicy aftertaste."
+SUGARDUST6_NAME,,붉은 슈가더스트,Red Sugar Dust
+SUGARDUST6_DESC,,붉은빛의 슈가더스트. 극강의 매운맛이 아주 중독적이라고 한다.,Red Sugar Dust. Its extreme spiciness is highly addictive.
+SUGARDUST7_NAME,,하얀 슈가더스트,White Sugar Dust
+SUGARDUST7_DESC,,하얀빛의 슈가더스트. 폭신하고 고소한 맛이 압도적으로 부드럽다.,"White Sugar Dust. Overwhelmingly soft, fluffy, and savory."
+SUGARDUST8_NAME,,무지개 슈가더스트,Rainbow Sugar Dust
+SUGARDUST8_DESC,,무지개빛 슈가더스트. 모든 미각을 마비시킬 만큼 압도적이고 완벽한 맛을 자랑한다.,"Rainbow Sugar Dust. Boasts an overwhelming, perfect flavor that paralyzes all taste buds."
+SO_QUEST,,SO_QUEST,SO_QUEST
+TESTQ_1_NAME,,슈가더스트가 필요해,I Need Sugar Dust
+TESTQ_1_DESC,,슈가더스트 몇개만 좀 갖다줘,"Bring me a few Sugar Dusts, please."
+TESTQ_2_NAME,,파란 슬라임 처치,Defeat the Blue Slimes
+TESTQ_2_DESC,,파란슬라임이 너무 늘어서 이제는 마을 초입부터 보여. 파란 슬라임 개체수를 줄여야하는데 도와주겠어?,The Blue Slimes have multiplied so much they`re at the town entrance. Can you help me reduce their numbers?

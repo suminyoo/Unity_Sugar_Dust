@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Enemy4_StarMonsterData
   m_EditorClassIdentifier: 
   enemyID: Enemy4_StarMonster
-  enemyName: "\uBCC4\uBAAC\uC2A4\uD130"
+  enemyName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701074
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxHp: 200
   moveSpeed: 2
   runSpeed: 5
@@ -41,3 +49,6 @@ MonoBehaviour:
   dieSound:
     clip: {fileID: 8300000, guid: 4266c90db61deb9499dc359c78b64023, type: 3}
     volume: 0.4
+  references:
+    version: 2
+    RefIds: []

@@ -73,8 +73,13 @@ public class QuestManager : MonoBehaviour
             if (quest.data.rewardGold > 0)
             {
                 PlayerAssetsManager.Instance.AddMoney(quest.data.rewardGold);
-                NotificationUIManager.Instance.
-                    ShowNotification($"Äù½ºÆ® º¸»ó {quest.data.rewardGold}{CustomerPaymentSystem.CURRENCY_SYMBOL} È¹µæ");
+                NotificationUIManager.Instance.ShowNotification(
+                    LocalizationHelper.L(
+                        "NOTI_QUEST_REWARD_GOLD",
+                        quest.data.rewardGold,
+                        CustomerPaymentSystem.CURRENCY_SYMBOL
+                    )
+                );
             }
 
             // º¸»ó ¾ÆÀÌÅÛ
@@ -88,8 +93,13 @@ public class QuestManager : MonoBehaviour
                         if (itemData != null)
                         {
                             PlayerInventory.Instance.AddItem(itemData, reward.amount);
-                            NotificationUIManager.Instance.
-                                ShowNotification($"Äù½ºÆ® º¸»ó {itemData.itemName} {reward.amount}°³ È¹µæ ");
+                            NotificationUIManager.Instance.ShowNotification(
+                                LocalizationHelper.L(
+                                    "NOTI_QUEST_REWARD_ITEM",
+                                    itemData.GetItemName(),
+                                    reward.amount
+                                )
+                            );
                         }
                     }
                 }

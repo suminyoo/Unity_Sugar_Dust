@@ -10,7 +10,6 @@ public class EffectManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // 이펙트 재생
     public void PlayEffect(GameObject prefab, Vector3 position, float duration = 2.0f)
     {
         if (prefab == null) return;

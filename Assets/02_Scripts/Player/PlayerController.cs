@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         animator.Rebind();
         animator.Update(0f);
 
-        Debug.Log("플레이어 초기화 완료");
+        //Debug.Log("플레이어 초기화 완료");
     }
 
     void OnDestroy()
@@ -290,8 +290,6 @@ public class PlayerController : MonoBehaviour
 
             animator.SetBool("IsDead", false);
             animator.Play("Idle");
-
-            Debug.Log("PlayerController: 부활 신호 수신 -> 상태 리셋됨");
         }
     }
 

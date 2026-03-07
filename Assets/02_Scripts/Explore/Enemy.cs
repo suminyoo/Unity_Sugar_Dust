@@ -14,21 +14,23 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public EnemyState currentState = EnemyState.Patrol;
 
-    private float currentHp;
 
     [Header("References")]
     public EnemyData data;
-    private PlayerController player;
     private Transform target;
     private NavMeshAgent agent;
     private Animator animator;
+    private PlayerController player;
+    public GameObject attackHitbox;
+
+    private float currentHp;
     private float lastAttackTime = 0f;
+    private float wanderTimer = 0f;
+
     private bool isDead = false;
 
     private Vector3 spawnPosition;
-    private float wanderTimer = 0f;
 
-    public GameObject attackHitbox;
 
     [Header("UI")]
     public HealthBar healthBar;
@@ -40,22 +42,20 @@ public class Enemy : MonoBehaviour, IDamageable
         animator = GetComponentInChildren<Animator>();
         if (attackHitbox != null) attackHitbox.SetActive(false);
     }
-
-    public void Setup(PlayerController playerRef)
-    {
-        this.player = playerRef;
-
-        if (this.player != null)
-        {
-            this.player.OnPlayerDied += ClearTarget;
-            Initialize();
-        }
-    }
-
     void OnDestroy()
     {
         if (player != null) player.OnPlayerDied -= ClearTarget;
+    }
 
+    public void Setup(PlayerController playerController)
+    {
+        player = playerController;
+
+        if (player != null)
+        {
+            player.OnPlayerDied += ClearTarget;
+            Initialize();
+        }
     }
 
     public void Initialize()
@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour, IDamageable
         currentState = EnemyState.Patrol;
         
         healthBar.UpdateHealth(currentHp, data.maxHp);
+
         MoveToRandomLocation();
     }
 

@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: Item_E6_PinkEye
   m_EditorClassIdentifier: 
   itemID: Pink_Eye
-  itemName: "\uC12C\uB729\uD55C \uB208\uC54C"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895316
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uC790\uAFB8 \uB098\uB97C \uCCD0\uB2E4\uBCF8\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895317
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: bfbc0e911589ecb47ad16edba8eb611f, type: 3}
   weight: 0.8
   basePrice: 2000
@@ -23,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 6970720589265345877, guid: 3956a4997ad46e044a13e3bdc4909128, type: 3}
   sellPrice: 5000
+  references:
+    version: 2
+    RefIds: []

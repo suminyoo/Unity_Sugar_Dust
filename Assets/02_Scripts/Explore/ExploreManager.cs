@@ -132,7 +132,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isFrozenEnvironment = true;
         frozenBG.SetActive(true);
 
-        NotificationUIManager.Instance.ShowNotification("저녁이 되어 기온이 급격히 떨어집니다.");
+        
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_TEMP_DROP"));
     }
     void HandleFrozenDamage()
     {
@@ -190,10 +191,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     void OnMapReady()
     {
-        Debug.Log("맵 준비 완료 신호 수신");
-
         int localLevel = exploreConfig.GetLocalLevel(currentExplorationLevel);
-        string stageName = exploreConfig.GetStageData(currentExplorationLevel).stageName;
+        string stageName = exploreConfig.GetStageData(currentExplorationLevel).GetStageNameText();
         exploreLevelText.text = $"{stageName} {localLevel:00}";
 
         UpdateExploreProgressUI();
@@ -207,7 +206,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (isRetrying)
         {
-            NotificationUIManager.Instance.ShowNotification("복잡한 길 때문에 되돌아왔다…");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_EXPLORE_RETRY"));
             isRetrying = false;
         }
 
@@ -259,17 +258,17 @@ public class ExploreManager : MonoBehaviour, ISaveable
         if (isCleared || ratio >= 0.7f)
         {
             currentSuccessProb = 100f;
-            explorePathText.text = "이제 길을 확실히 알 것 같다.";
+            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_CLEAR");
         }
         else if (ratio >= 0.4f)
         {
             currentSuccessProb = 50f;
-            explorePathText.text = "어느 정도 길이 익숙해졌다.";
+            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_FAMILIAR");
         }
         else
         {
             currentSuccessProb = 10f;
-            explorePathText.text = "아직 길이 헷갈린다…";
+            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_CONFUSED");
         }
     }
     #endregion
@@ -347,13 +346,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
         {
             if (exploreSuccessSFX.clip != null) SoundManager.Instance.PlaySFX2D(exploreSuccessSFX);
 
-            resultTitleText.text = "탐사 성공";
-            resultInfoText.text = "우주선을 타고 마을로 무사히 귀환합니다.";
+            resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_SUCCESS");
+            resultInfoText.text = LocalizationHelper.L("RESULT_DESC_SUCCESS_SAFE");
         }
         else
         {
-            resultTitleText.text = "탐사 완료";
-            resultInfoText.text = "걸어서 마을로 귀환합니다.\n돌아가는 길에 몇몇 아이템을 잃어버렸습니다."; 
+            resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_COMPLETE");
+            resultInfoText.text = LocalizationHelper.L("RESULT_DESC_SUCCESS_WALK");
             LoseItems(false);
         }
 
@@ -369,8 +368,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isExplorationEnded = true;
         isExploreSuccess = false;
 
-        resultTitleText.text = "탐사 실패";
-        resultInfoText.text = "구조대에 의해\n병원으로 이송됩니다.\n아이템을 모두 잃어버렸습니다.";
+        resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_FAIL");
+        resultInfoText.text = LocalizationHelper.L("RESULT_DESC_FAIL");
 
         LoseItems(true);
         ShowResultItems();

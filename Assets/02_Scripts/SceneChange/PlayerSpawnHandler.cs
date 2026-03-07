@@ -30,7 +30,7 @@ public class PlayerSpawnHandler : MonoBehaviour
 
         if (targetPoint == null)
         {
-            Debug.LogWarning($"{targetID} 스폰 포인트를 찾지 못했습니다");
+            //Debug.LogWarning($"{targetID} 스폰 포인트를 찾지 못했습니다");
             yield break;
         }
 
@@ -76,7 +76,7 @@ public class PlayerSpawnHandler : MonoBehaviour
             player.GetComponent<PlayerCondition>()?.Revive(10f);
         }
 
-        Debug.Log($"플레이어를 {targetID} 위치로 배치 완료");
+        //Debug.Log($"플레이어를 {targetID} 위치로 배치 완료");
 
     }
 }

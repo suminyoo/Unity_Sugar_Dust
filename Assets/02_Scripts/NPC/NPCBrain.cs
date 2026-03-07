@@ -47,7 +47,7 @@ public class NPCBrain : MonoBehaviour
             isPlayerInRange = true;
 
             // 인사
-            string msg = controller.npcData.defaultGreetingMessage;
+            string msg = controller.npcData.GetGreetingMessage();
             if (!string.IsNullOrEmpty(msg))
             {
                 controller.Bubble.ShowBubble(msg);
@@ -100,7 +100,7 @@ public class NPCBrain : MonoBehaviour
             // 매니저에게 대화프로세스 요청, 끝나면 dialogueFinished =true 
             DialogueManager.Instance.StartDialogue(
                 dialogueToPlay,
-                controller.npcData.npcName,
+                controller.npcData.GetNpcName(),
                 () => { dialogueFinished = true; }
             );
             //대화 끝날때까지 대기
@@ -158,7 +158,7 @@ public class NPCBrain : MonoBehaviour
     {
         if (controller.npcData == null) return;
 
-        string msg = controller.npcData.defaultGoodByeMessage;
+        string msg = controller.npcData.GetGoodByeMessage();
         if (!string.IsNullOrEmpty(msg))
         {
             controller.Bubble.ShowBubble(msg);

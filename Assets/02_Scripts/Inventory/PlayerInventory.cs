@@ -92,7 +92,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
         }
 
         UpdateWeightUI();
-        Debug.Log("인벤토리 로드 및 UI 재연결 완료");
+        //Debug.Log("인벤토리 로드 및 UI 재연결 완료");
     }
 
     #endregion
@@ -148,7 +148,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         if (remaining == count)
         {
-            NotificationUIManager.Instance.ShowNotification("인벤토리 공간이 부족합니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_INVENTORY_FULL"));
             return -1;
         }
 
@@ -171,7 +171,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         if (!success)
         {
-            NotificationUIManager.Instance.ShowNotification($"{item.itemName}이(가) 부족합니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_NOT_ENOUGH_ITEM", item.GetItemName()));
         }
     }
     #endregion

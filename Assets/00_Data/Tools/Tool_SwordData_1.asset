@@ -12,16 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36130124d0f542f4aa82a42a8e560876, type: 3}
   m_Name: Tool_SwordData_1
   m_EditorClassIdentifier: 
-  toolName: "\uB098\uBB34 \uAC80"
+  toolName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701069
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   toolPrefab: {fileID: 3257247843198288711, guid: ee726421993706d4599e8881bb44f263, type: 3}
   power: 10
   range: 2.5
   cooldown: 1.2
   criticalChance: 0.2
   criticalMultiplier: 1.2
-  equipSound:
-    clip: {fileID: 8300000, guid: 627a0965b3932be489b1cba639940de7, type: 3}
-    volume: 1
   actionSound:
     clip: {fileID: 8300000, guid: 6b08e07b2853bb14c93a4c39250aa424, type: 3}
     volume: 0.1
+  references:
+    version: 2
+    RefIds: []

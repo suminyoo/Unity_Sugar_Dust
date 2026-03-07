@@ -13,13 +13,11 @@ public class EnemyAttackHitBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerCondition targetCondition = other.GetComponent<PlayerCondition>();
+            PlayerCondition player = other.GetComponent<PlayerCondition>();
 
-            if (targetCondition != null && enemy != null)
+            if (player != null && enemy != null)
             {
-                targetCondition.TakeDamage(enemy.data.attackDamage);
-
-                Debug.Log($"Attack Target: {other.name}");
+                player.TakeDamage(enemy.data.attackDamage);
             }
         }
     }

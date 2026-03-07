@@ -31,10 +31,6 @@ public class GridMapSpawner : MonoBehaviour
     private PlayerController playerRef;
     public ExploreConfigData exploreConfig;
 
-    [Header("UI")]
-    //public GameObject loadingPanel;
-    //public TextMeshProUGUI statusText;  // 맵 생성 중 표시 텍스트
-
     private List<Vector2Int> allCoordinates;
 
     // 맵의 상태 저장하는 2차원 배열 (이미 오브젝트 배치되어있을경우 true)
@@ -55,20 +51,11 @@ public class GridMapSpawner : MonoBehaviour
     {
         yield return null;
         yield return FadeUIManager.Instance.FadeOut();
-        //FadeUIManager.Instance.SetLoadingIcon(true);
 
-        // 로딩 시작 
-        //statusText.text = "맵 로딩중...";
 
         CleanupMap();
-
-        //InputControlManager.Instance.LockInput();
-
         InitializeMap();
 
-        yield return new WaitForSeconds(0.5f);  //연출용 지연
-
-        // ---맵 생성---
         GenerateWorld(currentLevel); 
         yield return null;
 
@@ -106,7 +93,6 @@ public class GridMapSpawner : MonoBehaviour
 
             activeNavSurface.RemoveData();
             activeNavSurface.BuildNavMesh();
-            Debug.Log($"{activeNavSurface.gameObject.name}에서 내브매시 베이크 완료");
         }
         yield return null;
 
@@ -121,14 +107,13 @@ public class GridMapSpawner : MonoBehaviour
             }
         }
 
-        //if (statusText != null) statusText.text = "탐사 준비 완료!";
-        yield return new WaitForSeconds(1.0f); //로딩 완료 연출
+        // TODO: 로딩 완료 연출
+        yield return new WaitForSeconds(0.5f);
 
         // ---로딩 완료---
         OnMapGenerationComplete?.Invoke();
 
         FadeUIManager.Instance.FadeIn();
-        //InputControlManager.Instance.UnlockInput(); //매니저에서 하도록
 
     }
 
@@ -168,7 +153,7 @@ public class GridMapSpawner : MonoBehaviour
         }
     }
 
-    // FisherYates  리스트 랜덤섞기
+    // 리스트 랜덤섞기
     void MixCoordinates()
     {
         for (int i = 0; i < allCoordinates.Count; i++)
@@ -187,7 +172,7 @@ public class GridMapSpawner : MonoBehaviour
         int worldIndex = currentLevel / exploreConfig.levelsPerEnvironment;
         worldIndex = Mathf.Clamp(worldIndex, 0, preLoadedMapEnvironments.Count - 1);
 
-        // 미리 로드된 환경(배경/오브젝트) 켜기/끄기
+        // 미리 로드된 환경 켜기/끄기
         for (int i = 0; i < preLoadedMapEnvironments.Count; i++)
         {
             preLoadedMapEnvironments[i].SetActive(i == worldIndex);
@@ -236,7 +221,7 @@ public class GridMapSpawner : MonoBehaviour
         }
         if (spawnedCount < count)
         {
-            Debug.Log($"공간이 부족하여 {data.objectName} {count - spawnedCount}개를 배치하지 못했습니다.");
+            //Debug.Log($"공간이 부족하여 {data.name} {count - spawnedCount}개를 배치하지 못했습니다.");
         }
     
 
@@ -285,7 +270,7 @@ public class GridMapSpawner : MonoBehaviour
             // 생성
             GameObject go = Instantiate(data.prefab, finalPos, finalRot);
             go.transform.SetParent(this.transform);
-            go.name = $"{data.objectName}_[{x},{y}]";
+            go.name = $"{data.name}_[{x},{y}]";
 
             // 적이면 플레이어 정보 넘기면서 셋업
             Enemy enemyScript = go.GetComponent<Enemy>();

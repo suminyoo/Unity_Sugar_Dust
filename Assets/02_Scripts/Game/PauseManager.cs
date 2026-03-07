@@ -12,6 +12,8 @@ public class PauseManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    public SaveLoadUIManager saveLoadManager;
+
     private void Start()
     {
         CloseAllPanels();
@@ -63,6 +65,11 @@ public class PauseManager : MonoBehaviour
     {
         pausePanel.SetActive(false);
         saveLoadPanel.SetActive(true);
+
+        if (saveLoadManager != null)
+        {
+            saveLoadManager.RefreshSlots();
+        }
     }
 
     public void OpenOption()
@@ -80,7 +87,7 @@ public class PauseManager : MonoBehaviour
     public void GoToTitle()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            "저장되지 않은 정보는 사라집니다.\n타이틀로 돌아가겠습니까?",
+            $"{LocalizationHelper.L("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.L("CONFIRM_GO_TITLE")}",
             () => {
                 GameManager.Instance.ResumeGameTime();
 
@@ -94,7 +101,7 @@ public class PauseManager : MonoBehaviour
     public void ExitGame()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            "저장되지 않은 정보는 사라집니다.\n게임을 종료하겠습니까?",
+            $"{LocalizationHelper.L("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.L("CONFIRM_EXIT_GAME")}",
             () => {
                 Application.Quit();
             }

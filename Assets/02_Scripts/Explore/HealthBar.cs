@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [Header("UI Reference")]
     public Image healthFillImage;
     public GameObject uiCanvas; 
 

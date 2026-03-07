@@ -71,7 +71,7 @@ public class MyShopManager : MonoBehaviour
 
         if(openShopSound.clip != null) SoundManager.Instance.PlaySFX2D(openShopSound);
 
-        NotificationUIManager.Instance.ShowNotification("영업이 시작되었습니다");
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_OPENED"));
 
         currentTime = businessDuration;
 
@@ -88,7 +88,7 @@ public class MyShopManager : MonoBehaviour
 
         if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX2D(closeShopSound);
 
-        NotificationUIManager.Instance.ShowNotification("영업이 종료되었습니다");
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_CLOSED"));
 
         spawner.StopSpawning();
 
@@ -116,6 +116,6 @@ public class MyShopManager : MonoBehaviour
 
         EndShopMode();
 
-        NotificationUIManager.Instance.ShowNotification("영업을 조기 마감합니다.");
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_EARLY_CLOSE"));
     }
 }

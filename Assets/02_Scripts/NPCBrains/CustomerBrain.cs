@@ -107,7 +107,7 @@ public class CustomerBrain : NPCBrain
         }
         else
         {
-            SayToSelf("여긴 살만한게 없네");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_NOTHING_TO_BUY"));
             yield return new WaitForSeconds(2f);
             ExitPhase();
         }
@@ -170,7 +170,7 @@ public class CustomerBrain : NPCBrain
         var slot = targetShop.InventorySystem.Slots[targetItemSlotIndex];
         if (slot.IsEmpty || slot.ItemData == null)
         {
-            SayToSelf("어? 물건이 그새 없어졌네");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_ITEM_DISAPPEARED"));
             yield return new WaitForSeconds(1.0f);
             yield return StartCoroutine(WanderPhase());
             yield break;
@@ -191,7 +191,7 @@ public class CustomerBrain : NPCBrain
         // Case A: 너무 비쌈 (> 2배) -> 안 삼
         if (potentialPrice > 0 && currentRatio > finalMaxRatio)
         {
-            SayToSelf($"{potentialPrice}골드? 완전 바가지잖아!");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_TOO_EXPENSIVE", potentialPrice));
 
             // 재고를 건드리지 않고 바로 퇴장
             yield return new WaitForSeconds(1.5f);
@@ -219,13 +219,13 @@ public class CustomerBrain : NPCBrain
 
                 if (itemToBuyPrice == 0)
                 {
-                    SayToSelf("와 공짜네? 아싸!");
+                    SayToSelf(LocalizationHelper.L("NPC_SAY_FREE_ITEM"));
                     yield return new WaitForSeconds(1.5f);
                     ExitPhase();
                 }
                 else
                 {
-                    SayToSelf("음, 가격 괜찮네. 사야지.");
+                    SayToSelf(LocalizationHelper.L("NPC_SAY_GOOD_PRICE"));
 
                     PreparePayment();
 
@@ -236,7 +236,7 @@ public class CustomerBrain : NPCBrain
             }
             else
             {
-                SayToSelf("어? 재고가 없네...");
+                SayToSelf(LocalizationHelper.L("NPC_SAY_NO_STOCK"));
                 yield return new WaitForSeconds(1.0f);
                 ExitPhase();
             }
@@ -266,7 +266,7 @@ public class CustomerBrain : NPCBrain
 
         if (queueInfo == null)
         {
-            SayToSelf("줄 너무 긴데... 그냥 가야겠다");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_QUEUE_TOO_LONG"));
             DropItemOnFloor();
             yield return new WaitForSeconds(2.0f);
             ExitPhase();
@@ -307,7 +307,7 @@ public class CustomerBrain : NPCBrain
         if (isFrontOfQueue)
         {
             IsReadyForTransaction = true;
-            SayToSelf("계산해주세요");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_CHECKOUT_PLEASE"));
 
             OnArrivedAtCounter?.Invoke(this);
         }
@@ -342,7 +342,7 @@ public class CustomerBrain : NPCBrain
         isExiting = false; // 중복 실행 방지
 
         controller.Movement.Stop();
-        SayToSelf("다음에 또 올게요");
+        SayToSelf(LocalizationHelper.L("NPC_SAY_COME_AGAIN"));
 
         yield return new WaitForSeconds(1f);
 
@@ -380,11 +380,11 @@ public class CustomerBrain : NPCBrain
 
         if (selectedDialogue != null)
         {
-            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.npcData.npcName, null, false);
+            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.npcData.GetNpcName(), null, false);
         }
         else
         {
-            Debug.Log("대사가 없습니다");
+            Debug.LogWarning("대사가 없습니다");
         }
     }
 
@@ -394,11 +394,11 @@ public class CustomerBrain : NPCBrain
 
         if (isSuccess)
         {
-            SayToSelf("감사합니다.");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_THANK_YOU"));
         }
         else
         {
-            SayToSelf("쳇 뭐야.");
+            SayToSelf(LocalizationHelper.L("NPC_SAY_DISAPPOINTED"));
             DropItemOnFloor();
         }
         counter.LeaveQueue(this);

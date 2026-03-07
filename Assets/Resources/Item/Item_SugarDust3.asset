@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: Item_SugarDust3
   m_EditorClassIdentifier: 
   itemID: SugarDust_Green
-  itemName: "\uCD08\uB85D \uC288\uAC00\uB354\uC2A4\uD2B8"
-  description: "\uB179\uBE5B\uC758 \uC288\uAC00\uB354\uC2A4\uD2B8. \uB048\uC801\uD558\uC9C0\uB9CC
-    \uC0C8\uCF64\uD55C \uB9DB\uC774\uB09C\uB2E4\uACE0 \uD55C\uB2E4."
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895326
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  itemType: 0
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895327
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: b905fc7e44d248046b42bf37b32c0450, type: 3}
   weight: 1.4
   basePrice: 200
@@ -23,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 4261355973684887976, guid: ebaf7372a8c0ad746b4540883ef702bb, type: 3}
   sellPrice: 250
+  references:
+    version: 2
+    RefIds: []

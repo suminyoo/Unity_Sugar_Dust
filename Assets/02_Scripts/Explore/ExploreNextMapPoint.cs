@@ -5,8 +5,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
     public ExploreManager exploreManager;
     public SoundData walkSound;
 
-    public string GetInteractPrompt() => "더 깊은 곳 탐사하기";
-
+    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_EXPLORE_DEEPER");
 
     void Start()
     {
@@ -16,7 +15,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            "다음 구역으로 이동하시겠습니까?", 
+            LocalizationHelper.L("CONFIRM_MOVE_NEXT_AREA"), 
             () =>
             {
                 if (exploreManager != null)
@@ -25,12 +24,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
 
                     exploreManager.AttemptMoveToNextStage();
                 }
-                else
-                {
-                    Debug.LogError("ExploreManager를 찾을 수 없음");
-                }
             }
         );
-
     }
 }

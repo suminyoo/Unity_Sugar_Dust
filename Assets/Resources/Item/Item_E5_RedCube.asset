@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: Item_E5_RedCube
   m_EditorClassIdentifier: 
   itemID: Red_Cube
-  itemName: "\uBD89\uC740 \uC824\uB9AC \uC870\uAC01"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895310
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uC5C4\uCCAD \uB728\uAC70\uC6B4 \uC824\uB9AC \uC870\uAC01\uC774\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895311
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: ea704a9d636651745910ad76a19710e4, type: 3}
   weight: 0.2
   basePrice: 400
@@ -23,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 8874107760562521977, guid: dc90cb42ba780644087b6d87e5d8d992, type: 3}
   sellPrice: 1000
+  references:
+    version: 2
+    RefIds: []

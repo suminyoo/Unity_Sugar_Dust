@@ -82,7 +82,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         OnStaminaChanged?.Invoke(maxStamina, maxStamina); // 꽉 채워서 (버그방지)
 
 
-        Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
+        //Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
     }
 
     public void RefreshMaxStats()
@@ -167,7 +167,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         OnHpChanged?.Invoke(currentHp, maxHp);
         OnStaminaChanged?.Invoke(currentStamina, maxStamina);
 
-        Debug.Log($"플레이어 부활 완료 HP: {currentHp}");
+        //Debug.Log($"플레이어 부활 완료 HP: {currentHp}");
     }
 
     public void FullRecovery()

@@ -13,9 +13,25 @@ MonoBehaviour:
   m_Name: Item_E4_StarTooth
   m_EditorClassIdentifier: 
   itemID: Star_Tooth
-  itemName: "\uBCC4 \uC1A1\uACF3\uB2C8"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895308
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemType: 1
-  description: "\uBCA0\uC77C\uAC83 \uAC19\uC774 \uB0A0\uCE74\uB85C\uC6B4 \uC1A1\uACF3\uB2C8\uB2E4."
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337027895309
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 6889949e6669b5244b5f039808ec6ec2, type: 3}
   weight: 2
   basePrice: 850
@@ -23,3 +39,6 @@ MonoBehaviour:
   maxStackAmount: 99
   dropPrefab: {fileID: 2246379323491895893, guid: a849ae56c9548c649a8a58e3fb0d4414, type: 3}
   sellPrice: 2130
+  references:
+    version: 2
+    RefIds: []

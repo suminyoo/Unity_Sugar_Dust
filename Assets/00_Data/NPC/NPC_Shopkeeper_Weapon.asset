@@ -12,16 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0124e21744a6e54b88113c912be9dd4, type: 3}
   m_Name: NPC_Shopkeeper_Weapon
   m_EditorClassIdentifier: 
-  npcName: "\uBB34\uAE30\uC0C1\uC778"
-  description: "\uBB34\uAE30\uB97C \uD30C\uB294 \uC678\uACC4\uC778"
+  npcName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701060
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   moveSpeed: 3.5
   waitTimeAtPoint: 2
-  promptText: "\uB300\uD654\uD558\uAE30"
-  questPromptText: "\uD018\uC2A4\uD2B8 \uBCF4\uAE30"
   defaultDialogue: {fileID: 11400000, guid: 0f3351f22485bc841981bee77e68357f, type: 2}
-  defaultGreetingMessage: "\uBB34\uAE30 \uD314\uC544\uC694"
-  defaultGoodByeMessage: "\uC5B8\uC81C\uB4E0 \uAD6C\uACBD\uD574\uB3C4 \uB3FC"
+  defaultGreetingMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701062
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultGoodByeMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701063
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   detectRange: 5
   questsToGive:
   - {fileID: 11400000, guid: 32284c72ba995f843bed07d4da91ae3f, type: 2}
   - {fileID: 11400000, guid: 80036aac9d11798429a6ed18863f9677, type: 2}
+  references:
+    version: 2
+    RefIds: []

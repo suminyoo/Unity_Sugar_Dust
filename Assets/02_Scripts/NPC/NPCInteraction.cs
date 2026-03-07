@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class NPCInteraction : MonoBehaviour, IInteractable, IQuestInteractable
 {
@@ -9,35 +10,14 @@ public class NPCInteraction : MonoBehaviour, IInteractable, IQuestInteractable
         controller = GetComponent<NPCController>();
     }
 
-    // 기본 상호작용
-    public string GetInteractPrompt()
-    {
-        if (controller.npcData != null)
-            return $"{controller.npcData.npcName} 대화하기";
-        else
-            return controller.npcData.promptText;
-    }
+    public string GetInteractPrompt() => $"{LocalizationHelper.L("PROMPT_TALK_TO_NPC", controller.npcData.GetNpcName())}";
 
-    public void OnInteract()
-    {
-        controller.OnInteract();
-    }
+    public string GetQuestPrompt() => LocalizationHelper.L("PROMPT_VIEW_QUEST");
 
-    // 퀘스트 상호작용
-    public string GetQuestPrompt()
-    {
-        if (controller.npcData != null)
-            return controller.npcData.questPromptText;
-        return "퀘스트 보기";
-    }
+    public void OnInteract() => controller.OnInteract();
+    
+    public void OnQuestInteract() => controller.OnQuestInteract();
 
-    public void OnQuestInteract()
-    {
-        controller.OnQuestInteract();
-    }
-
-    public bool HasAvailableQuest()
-    {
-        return controller.Brain.HasAvailableQuest();
-    }
+    public bool HasAvailableQuest() => controller.Brain.HasAvailableQuest();
+    
 }

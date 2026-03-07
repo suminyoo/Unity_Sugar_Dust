@@ -75,9 +75,9 @@ public class TransactionUI : MonoBehaviour
         {
             itemIconImage.sprite = customer.ItemToBuy.icon;
             itemIconImage.gameObject.SetActive(true);
-            itemNameText.text = customer.ItemToBuy.itemName;
-            itempriceText.text = $"등록한 가격: {customer.ItemToBuyPrice:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
-            itemAmountText.text = $"가져온 개수: {customer.ItemToBuyAmount} 개";
+            itemNameText.text = customer.ItemToBuy.GetItemName();
+            itempriceText.text = LocalizationHelper.L("UI_REGISTERED_PRICE", customer.ItemToBuyPrice, CustomerPaymentSystem.CURRENCY_SYMBOL);
+            itemAmountText.text = LocalizationHelper.L("UI_BROUGHT_AMOUNT", customer.ItemToBuyAmount);
             itemTotalPriceText.text = $"{customer.ItemToBuyPrice * customer.ItemToBuyAmount:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         }
 
@@ -108,7 +108,7 @@ public class TransactionUI : MonoBehaviour
         {
             // 사기꾼: 20% ~ 80% 확률로 가짜돈
             currentFakeProbability = UnityEngine.Random.Range(0.2f, 0.8f);
-            Debug.Log($"[사기꾼] 가짜 돈 비율: {currentFakeProbability * 100:F0}%");
+            //Debug.Log($"[사기꾼] 가짜 돈 비율: {currentFakeProbability * 100:F0}%");
         }
 
         int index = 0;
@@ -183,7 +183,7 @@ public class TransactionUI : MonoBehaviour
         if (playerZoneTotalText == null) return;
 
         int total = CalculateTotal(playerMonies);
-        playerZoneTotalText.text = $"{total:N0}"; // "1,500" 처럼 쉼표 포맷
+        playerZoneTotalText.text = $"{total:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}"; // "1,500" 처럼 쉼표 포맷
     }
 
     // 스태킹 위치 계산

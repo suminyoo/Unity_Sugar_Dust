@@ -82,7 +82,7 @@ public class ItemPriceInfoUI : MonoBehaviour
 
         // 기본 정보 표시
         icon.sprite = data.icon;
-        nameText.text = data.itemName;
+        nameText.text = data.GetItemName();
 
         currentSellingPrice = Mathf.Clamp(currentPrice, 0, 9999);
         currentSellingPrice = (currentSellingPrice / 10) * 10;
@@ -152,12 +152,12 @@ public class ItemPriceInfoUI : MonoBehaviour
         // 활성화 버튼
         if (isCurrentActive)
         {
-            buttonText.text = "판매 중지";
+            buttonText.text = LocalizationHelper.L("BTN_STOP_SALE");
             buttonImage.color = activePriceColor;
         }
         else
         {
-            buttonText.text = "판매 시작";
+            buttonText.text = LocalizationHelper.L("BTN_START_SALE");
             buttonImage.color = inactivePriceColor;
         }
     }

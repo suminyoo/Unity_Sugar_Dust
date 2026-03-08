@@ -7,6 +7,8 @@ public class ItemUsageInfoUI : MonoBehaviour
     [Header("UI")]
     public GameObject itemInfoPanel;
     public GameObject defaultPanel;
+    public GameObject useButton;
+    private ItemData currentData;
 
     public Image icon;
     public TextMeshProUGUI nameText;
@@ -23,6 +25,8 @@ public class ItemUsageInfoUI : MonoBehaviour
 
     public void OpenPanel(ItemData data)
     {
+        currentData = data;
+
         defaultPanel.SetActive(false);
         itemInfoPanel.SetActive(true);
 
@@ -31,8 +35,19 @@ public class ItemUsageInfoUI : MonoBehaviour
         typeText.text = LocalizationHelper.L("ITEM_INFO_TYPE", data.GetItemTypeName());
         weightText.text = LocalizationHelper.L("ITEM_INFO_WEIGHT", data.weight);
         infoText.text = data.GetDescription();
-    }
 
+        if (useButton != null)
+        {
+            useButton.gameObject.SetActive(data is ConsumableItemData);
+        }
+    }
+    public void OnClickUseButton()
+    {
+        if (currentData != null && PlayerInventory.Instance != null)
+        {
+            PlayerInventory.Instance.UseItem(currentData);
+        }
+    }
 
     public void Close()
     {

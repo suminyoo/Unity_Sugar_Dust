@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f90f1ce2bed3a248a2bc9227a467e5c, type: 3}
+  m_Name: Item_StaminaRecover_3
+  m_EditorClassIdentifier: 
+  itemID: Stamina_Recover3
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 494536182181888
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  itemType: 3
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 496297726947328
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  icon: {fileID: 0}
+  weight: 1
+  basePrice: 75
+  isStackable: 1
+  maxStackAmount: 99
+  dropPrefab: {fileID: 4391744310478029787, guid: 8deb1797326ba034f8abc630c4599e55, type: 3}
+  sellPrice: 300
+  hpRecoveryAmount: 0
+  staminaRecoveryAmount: 150
+  references:
+    version: 2
+    RefIds: []

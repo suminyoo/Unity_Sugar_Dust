@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private bool isRunning;
     private bool isGrounded;
 
+    public KeyCode runKey = KeyCode.LeftShift;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -129,6 +131,8 @@ public class PlayerController : MonoBehaviour
         {
             moveInput = Vector3.zero; 
             isRunning = false;
+
+            playerCondition.isRunButtonHeld = false;
             return;
         }
 
@@ -143,8 +147,12 @@ public class PlayerController : MonoBehaviour
 
         moveInput = (camForward.normalized * v + camRight.normalized * h).normalized;
 
+        bool holdingShift = Input.GetKey(runKey);
+
+        playerCondition.isRunButtonHeld = holdingShift;
+
         // 달리기
-        isRunning = Input.GetKey(KeyCode.LeftShift) && moveInput != Vector3.zero;
+        isRunning = holdingShift && moveInput != Vector3.zero && playerCondition.CanRun();
 
         // 점프
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -223,10 +231,10 @@ public class PlayerController : MonoBehaviour
     {
         if (moveInput == Vector3.zero) return;
 
-        bool tryRun = Input.GetKey(KeyCode.LeftShift) && playerCondition.CanRun();
-
-        if (tryRun) HandleRun();
-        else HandleWalk();
+        if (isRunning)
+            HandleRun();
+        else
+            HandleWalk();
     }
 
     void HandleRun()
@@ -234,16 +242,10 @@ public class PlayerController : MonoBehaviour
         // 소모량
         float cost = playerCondition.runCostPerSec * Time.fixedDeltaTime;
 
-        if (playerCondition.UseStamina(cost))
-        {
-            isRunning = true;
-            float speed = playerData.runSpeed;
-            rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            HandleWalk();
-        }
+        playerCondition.UseStamina(cost);
+
+        float speed = playerData.runSpeed;
+        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
     }
 
     void HandleWalk()

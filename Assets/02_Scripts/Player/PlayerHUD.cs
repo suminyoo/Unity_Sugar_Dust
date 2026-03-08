@@ -17,8 +17,13 @@ public class PlayerHUD : MonoBehaviour
     [Header("Stemina")]
     public Slider staminaSlider;
     public float barAnimationDuration = 0.2f; // 스테미나 차기 전 딜레이시간
-    private Coroutine staminaCoroutine;
-    public float hideDelay = 0.5f;
+
+    public float staminaLerpSpeed = 15f;
+    public float potionLerpSpeed = 50f;
+    private float currentLerpSpeed;
+    private float targetStaminaRatio = 1f;
+
+    private float hideDelay = 1f;
     private Coroutine hideStaminaCoroutine;
 
     [Header("Money")]
@@ -30,6 +35,8 @@ public class PlayerHUD : MonoBehaviour
 
     void Start()
     {
+        currentLerpSpeed = staminaLerpSpeed;
+
         var playerObj = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObj != null)
@@ -71,7 +78,16 @@ public class PlayerHUD : MonoBehaviour
     private void UpdateStaminaUI(float curStem, float maxStem)
     {
         float ratio = curStem / maxStem;
-        // 100%면 숨김 
+
+        //물약회복
+        if (ratio - targetStaminaRatio > 0.05f)
+        {
+            currentLerpSpeed = potionLerpSpeed;
+        }
+
+        targetStaminaRatio = ratio;
+
+        // 100%면 숨김 대기 시작
         if (ratio >= 1f)
         {
             if (hideStaminaCoroutine == null)
@@ -79,7 +95,7 @@ public class PlayerHUD : MonoBehaviour
             return;
         }
 
-        // 값이 줄어들면 표기
+        // 값이 줄어들면 숨김 취소하고 즉시 표기
         if (hideStaminaCoroutine != null)
         {
             StopCoroutine(hideStaminaCoroutine);
@@ -87,11 +103,6 @@ public class PlayerHUD : MonoBehaviour
         }
 
         staminaSlider.gameObject.SetActive(true);
-
-        if (staminaCoroutine != null)
-            StopCoroutine(staminaCoroutine);
-
-        staminaCoroutine = StartCoroutine(UpdateBarSmoothly(staminaSlider, ratio));
     }
 
     private IEnumerator HideStaminaAfterDelay()
@@ -101,24 +112,17 @@ public class PlayerHUD : MonoBehaviour
         staminaSlider.gameObject.SetActive(false);
         hideStaminaCoroutine = null;
     }
-
-    private IEnumerator UpdateBarSmoothly(Slider slider , float targetNormalizedValue)
+    private void Update()
     {
-        float initialNormalizedValue = slider.value;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < barAnimationDuration)
+        if (staminaSlider.gameObject.activeSelf)
         {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / barAnimationDuration;
+            staminaSlider.value = Mathf.Lerp(staminaSlider.value, targetStaminaRatio, Time.deltaTime * currentLerpSpeed);
 
-            slider.value = Mathf.Lerp(initialNormalizedValue, targetNormalizedValue, t);
-
-            yield return null;
+            if (currentLerpSpeed == potionLerpSpeed && Mathf.Abs(staminaSlider.value - targetStaminaRatio) < 0.01f)
+            {
+                currentLerpSpeed = staminaLerpSpeed;
+            }
         }
-
-        // 끝난 후 최종 값으로 정확히 설정
-        slider.value = targetNormalizedValue;
     }
 
     #endregion

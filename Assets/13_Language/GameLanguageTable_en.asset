@@ -16,8 +16,7 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 0fd956b387874be41a54348d63e43d2b, type: 2}
   m_Metadata:
-    m_Items:
-    - rid: 7199834298847330340
+    m_Items: []
   m_TableData:
   - m_Id: 2337015312384
     m_Localized: Start
@@ -92,7 +91,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2337019506700
-    m_Localized: Est. time until sunset {0:D2}:{1:D2}
+    m_Localized: Est. time until sunset
     m_Metadata:
       m_Items: []
   - m_Id: 2337019506701
@@ -706,7 +705,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 98536091267078
-    m_Localized: Area
+    m_Localized: Exploration Area
     m_Metadata:
       m_Items: []
   - m_Id: 98536091267079
@@ -790,31 +789,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132417
-    m_Localized: Day {0} - {1}
+    m_Localized: Day {0} {1}
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132418
-    m_Localized: Outskirts of the Blue Forest
+    m_Localized: Blue Forest Outskirts
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132419
-    m_Localized: Heart of the Blue Forest
+    m_Localized: Deep Blue Forest
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132420
-    m_Localized: Outskirts of the Acid Swamp
+    m_Localized: Acid Swamp Outskirts
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132421
-    m_Localized: Heart of the Acid Swamp
+    m_Localized: Deep Acid Swamp
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132422
-    m_Localized: Outskirts of the Lava Field
+    m_Localized: Lava Field Outskirts
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132423
-    m_Localized: Heart of the Lava Field
+    m_Localized: Deep Lava Field
     m_Metadata:
       m_Items: []
   - m_Id: 100177683132424
@@ -839,11 +838,6 @@ MonoBehaviour:
     m_Localized: There are no ongoing quests.
     m_Metadata:
       m_Items: []
-  - m_Id: 121894640005120
-    m_Localized: Exploration Area {0}
-    m_Metadata:
-      m_Items:
-      - rid: 7199834298847330340
   - m_Id: 127327140294656
     m_Localized: House
     m_Metadata:
@@ -956,12 +950,34 @@ MonoBehaviour:
     m_Localized: 'Type: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 439388575608832
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 439390333022208
+    m_Localized: Borderless Window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 439391415152640
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 453750560370688
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 453916575117312
+    m_Localized: Display Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 454159014277120
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483706833186816
+    m_Localized: Potion
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds:
-    - rid: 7199834298847330340
-      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_Entries: 
-        m_SharedEntries:
-        - id: 121894640005120
+    RefIds: []

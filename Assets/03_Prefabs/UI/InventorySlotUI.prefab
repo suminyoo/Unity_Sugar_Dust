@@ -319,12 +319,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 15.2
   m_fontSizeBase: 18
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 18
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -474,9 +474,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086bdffff038d8e46bea763e01523e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customHoverSound: {fileID: 0}
-  customClickSound: {fileID: 0}
-  volume: 1
+  customHoverSound:
+    clip: {fileID: 0}
+    volume: 0
+  customClickSound:
+    clip: {fileID: 0}
+    volume: 0
 --- !u!1 &8310459937734990558
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,12 +647,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 28
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 28
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512

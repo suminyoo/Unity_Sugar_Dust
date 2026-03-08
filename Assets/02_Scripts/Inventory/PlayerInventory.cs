@@ -249,4 +249,26 @@ public class PlayerInventory : InventoryHolder, ISaveable
     }
 
     #endregion
+
+    public void UseItem(ItemData item)
+    {
+        if (item is ConsumableItemData consumable)
+        {
+            if (GetItemCountByID(item.itemID) > 0)
+            {
+                ConsumeItem(item, 1);
+
+                PlayerCondition condition = GetComponent<PlayerCondition>();
+                if (condition != null)
+                {
+                    if (consumable.hpRecoveryAmount > 0)
+                        condition.RecoverHp(consumable.hpRecoveryAmount);
+
+                    if (consumable.staminaRecoveryAmount > 0)
+                        condition.RecoverStamina(consumable.staminaRecoveryAmount);
+                }
+            }
+        }
+    }
+
 }

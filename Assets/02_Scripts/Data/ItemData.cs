@@ -5,10 +5,12 @@ public enum ItemType
 {
     [InspectorName("광물")] Mineral,
     [InspectorName("몬스터 부산물")] MonsterLoot,
-    [InspectorName("무기")] Weapon
+    [InspectorName("무기")] Weapon,
+    [InspectorName("물약")] Potion
+
 }
 
-[CreateAssetMenu(fileName = "New Item Data", menuName = "Game/Item Data")]
+[CreateAssetMenu(fileName = "New Item Data", menuName = "Game/Item Data/Default Item")]
 public class ItemData : ScriptableObject
 {
     [Header("Basic Info")]
@@ -37,7 +39,7 @@ public class ItemData : ScriptableObject
         return itemName.GetLocalizedString();
     }
 
-    public string GetDescription()
+    public virtual string GetDescription()
     {
         return description.GetLocalizedString();
     }
@@ -49,6 +51,7 @@ public class ItemData : ScriptableObject
             ItemType.Mineral => LocalizationHelper.L("ITEM_TYPE_MINERAL"),
             ItemType.MonsterLoot => LocalizationHelper.L("ITEM_TYPE_MONSTER_LOOT"),
             ItemType.Weapon => LocalizationHelper.L("ITEM_TYPE_WEAPON"),
+            ItemType.Potion => LocalizationHelper.L("ITEM_TYPE_POTION"),
             _ => LocalizationHelper.L("ITEM_TYPE_DEFAULT")
         };
     }

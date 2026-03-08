@@ -60,8 +60,12 @@ public class ExploreSelectionUI : MonoBehaviour
         {
             int envStartLevel = (i * exploreConfig.levelsPerEnvironment);
             environmentButtons[i].interactable = maxUnlocked >= envStartLevel;
+            TextMeshProUGUI buttonText = environmentButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            buttonText.text = $"{LocalizationHelper.L("NAME_EXPLORE_AREA")} {i + 1}";
         }
     }
+
+
 
     public void OnClickEnvironment(int index)
     {

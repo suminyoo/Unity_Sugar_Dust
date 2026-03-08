@@ -35,6 +35,10 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     private float lastStaminaUseTime;
     public float staminaRecoveryThreshold = 0.2f;
 
+    private float potionPauseDuration = 1f;
+    private float consumptionPauseTimer = 0f;
+    public bool isRunButtonHeld = false;
+
 
     private void OnEnable()
     {
@@ -97,9 +101,13 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     void Update()
     {
         if (IsDead) return;
+        if (consumptionPauseTimer > 0)
+        {
+            consumptionPauseTimer -= Time.deltaTime;
+        }
 
         // 스테미나 자연 회복
-        if (Time.time - lastStaminaUseTime > recoveryDelay)
+        if (!isRunButtonHeld && Time.time - lastStaminaUseTime > recoveryDelay)
         {
             if (currentStamina < maxStamina)
             {
@@ -107,7 +115,8 @@ public class PlayerCondition : MonoBehaviour, ISaveable
                 currentStamina = Mathf.Min(currentStamina, maxStamina);
                 OnStaminaChanged?.Invoke(currentStamina, maxStamina);
             }
-            if (isExhausted && currentStamina > (maxStamina * staminaRecoveryThreshold))
+
+            if (isExhausted && currentStamina > 0)
             {
                 isExhausted = false;
             }
@@ -154,6 +163,33 @@ public class PlayerCondition : MonoBehaviour, ISaveable
             OnTakeDamage?.Invoke();
         }
     }
+    public void RecoverHp(float amount)
+    {
+        if (IsDead) return;
+
+        currentHp += amount;
+        if (currentHp > maxHp) currentHp = maxHp;
+
+        OnHpChanged?.Invoke(currentHp, maxHp);
+    }
+
+    public void RecoverStamina(float amount)
+    {
+        if (IsDead) return;
+
+        currentStamina += amount;
+        if (currentStamina > maxStamina) currentStamina = maxStamina;
+
+        lastStaminaUseTime = Time.time;
+
+        if (currentStamina > 0)
+        {
+            isExhausted = false;
+        }
+        consumptionPauseTimer = potionPauseDuration;
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+    }
+
     public void Revive(float recoverAmount)
     {
         // 체력 회복
@@ -183,31 +219,31 @@ public class PlayerCondition : MonoBehaviour, ISaveable
 
     public bool UseStamina(float amount)
     {
+        if (consumptionPauseTimer > 0f)
+        {
+            lastStaminaUseTime = Time.time;
+            return true;
+        }
+
         if (currentStamina >= amount)
         {
             currentStamina -= amount;
             lastStaminaUseTime = Time.time;
             OnStaminaChanged?.Invoke(currentStamina, maxStamina);
 
+            if (currentStamina <= 0)
+            {
+                currentStamina = 0;
+                isExhausted = true;
+            }
+
             return true;
         }
         else
         {
-            if (!isExhausted && currentStamina <= 0)
-            {
-                PlayExhaustedSound();
-            }
-            return false;
-        }
-    }
-    private void PlayExhaustedSound()
-    {
-        if (playerData.exhaustedSound.clip != null && SoundManager.Instance != null)
-        {
+            currentStamina = 0;
             isExhausted = true;
-            SoundManager.Instance.PlaySFX(playerData.exhaustedSound, transform.position);
-
-            // 일정 시간 후 또는 스테미나가 일정량 회복된 후 다시 재생 가능하도록
+            return false;
         }
     }
 

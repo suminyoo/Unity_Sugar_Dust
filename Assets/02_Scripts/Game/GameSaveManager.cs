@@ -142,6 +142,8 @@ public class GameSaveManager : MonoBehaviour
         return (savedData.money, savedData.ownedKeyItems);
     }
 
+
+
     #endregion
 
     #region 플레이어 상태 데이터 세이브로드
@@ -170,7 +172,7 @@ public class GameSaveManager : MonoBehaviour
         foreach (var slot in slots)
         {
             // 빈 슬롯이면 아이디를 비워둠
-            string id = slot.IsEmpty ? "" : slot.ItemData.itemID; 
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID.ToString(); 
             savedData.inventorySlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
     }
@@ -207,7 +209,7 @@ public class GameSaveManager : MonoBehaviour
         savedData.displayStandSlots.Clear();
         foreach (var slot in slots)
         {
-            string id = slot.IsEmpty ? "" : slot.ItemData.itemID;
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID.ToString();
             savedData.displayStandSlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
 
@@ -250,7 +252,7 @@ public class GameSaveManager : MonoBehaviour
         foreach (var slot in slots)
         {
             // 빈 슬롯이면 아이디를 비워둠
-            string id = slot.IsEmpty ? "" : slot.ItemData.itemID;
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID.ToString();
             savedData.containerSlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
         }
     }

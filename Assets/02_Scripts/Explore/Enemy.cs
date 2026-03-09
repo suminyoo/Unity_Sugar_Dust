@@ -242,7 +242,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         if (data.lootTable != null) data.lootTable.SpawnItem(transform.position);
         ExploreEvents.OnMonsterDefeated?.Invoke();
-        GameEvents.OnMonsterKilled?.Invoke(data.enemyID);
+        GameEvents.OnMonsterKilled?.Invoke(data.enemyID.ToString());
         Destroy(gameObject, 2f);
     }
 

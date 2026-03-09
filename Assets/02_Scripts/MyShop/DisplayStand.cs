@@ -319,7 +319,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         }
     }
 
-    private void LoadDisplayStandFromManager()
+    public void LoadDisplayStandFromManager()
     {
         if (GameSaveManager.Instance == null) return;
 

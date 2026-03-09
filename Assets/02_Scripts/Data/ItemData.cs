@@ -14,7 +14,7 @@ public enum ItemType
 public class ItemData : ScriptableObject
 {
     [Header("Basic Info")]
-    public string itemID;
+    public ItemID itemID;
     [SerializeField] private LocalizedString itemName;
 
     public ItemType itemType;

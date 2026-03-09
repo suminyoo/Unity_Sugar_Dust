@@ -346,13 +346,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
         {
             if (exploreSuccessSFX.clip != null) SoundManager.Instance.PlaySFX2D(exploreSuccessSFX);
 
-            resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_SUCCESS");
-            resultInfoText.text = LocalizationHelper.L("RESULT_DESC_SUCCESS_SAFE");
+            resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_SUCCESS");
+            resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_SUCCESS_DESC");
         }
         else
         {
-            resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_COMPLETE");
-            resultInfoText.text = LocalizationHelper.L("RESULT_DESC_SUCCESS_WALK");
+            resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_COMPLETE");
+            resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_COMPLETE_DESC");
             LoseItems(false);
         }
 
@@ -368,8 +368,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isExplorationEnded = true;
         isExploreSuccess = false;
 
-        resultTitleText.text = LocalizationHelper.L("RESULT_EXPLORE_FAIL");
-        resultInfoText.text = LocalizationHelper.L("RESULT_DESC_FAIL");
+        resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_FAIL");
+        resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_FAIL_DESC");
 
         LoseItems(true);
         ShowResultItems();

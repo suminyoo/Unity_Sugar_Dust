@@ -89,7 +89,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         //Debug.Log($"상태 로드 완료: HP {currentHp}, Stamina {currentStamina}");
     }
 
-    public void RefreshMaxStats()
+    private void RefreshMaxStats()
     {
         if (playerData != null)
         {
@@ -214,6 +214,19 @@ public class PlayerCondition : MonoBehaviour, ISaveable
         currentStamina = maxStamina;
 
         OnHpChanged?.Invoke(currentHp, maxHp);
+        OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+    }
+
+    public void FullHealthRecovery()
+    {
+        if (IsDead) return;
+        currentHp = maxHp;
+        OnHpChanged?.Invoke(currentHp, maxHp);
+    }
+    public void FullStaminaRecovery()
+    {
+        if (IsDead) return;
+        currentStamina = maxStamina;
         OnStaminaChanged?.Invoke(currentStamina, maxStamina);
     }
 

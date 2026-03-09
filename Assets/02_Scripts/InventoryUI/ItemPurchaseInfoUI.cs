@@ -39,7 +39,7 @@ public class ItemPurchaseInfoUI : MonoBehaviour
         itemDescriptionText.text = data.GetDescription();
         
         if (stockAmount == -1)
-            itemStockAmountText.text = LocalizationHelper.L("ITEM_STOCK_UNLIMITED");
+            itemStockAmountText.text = LocalizationHelper.L("ITEM_INFO_ITEM_UNLIMITED");
         else
             itemStockAmountText.text = LocalizationHelper.L("ITEM_INFO_STOCK", stockAmount);
     }

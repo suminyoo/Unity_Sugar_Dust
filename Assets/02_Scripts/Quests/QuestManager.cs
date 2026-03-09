@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
@@ -16,7 +19,7 @@ public class QuestManager : MonoBehaviour
 
     public Quest GetActiveQuest(string questID)
     {
-        return activeQuests.Find(q => q.data.questID == questID);
+        return activeQuests.Find(q => q.data.questID.ToString() == questID);
     }
 
     // Äù½ºÆ® ¼ö¶ô
@@ -53,7 +56,7 @@ public class QuestManager : MonoBehaviour
                 {
                     if (ItemDataManager.Instance != null && PlayerInventory.Instance != null)
                     {
-                        ItemData itemData = ItemDataManager.Instance.GetItemByID(obj.targetID);
+                        ItemData itemData = ItemDataManager.Instance.GetItemByID(obj.targetID.itemID.ToString());
                         if (itemData != null)
                         {
                             PlayerInventory.Instance.ConsumeItem(itemData, obj.requiredAmount);
@@ -66,7 +69,7 @@ public class QuestManager : MonoBehaviour
             quest.isRewardClaimed = true;
             quest.StopQuest();
 
-            completedQuestIDs.Add(quest.data.questID);
+            completedQuestIDs.Add(quest.data.questID.ToString());
             activeQuests.Remove(quest);
 
             // º¸»ó °ñµå
@@ -121,7 +124,7 @@ public class QuestManager : MonoBehaviour
         {
             activeDataList.Add(new QuestSaveData
             {
-                questID = quest.data.questID,
+                questID = quest.data.questID.ToString(),
                 currentAmounts = (int[])quest.currentAmounts.Clone(),
                 isRewardClaimed = quest.isRewardClaimed
             });

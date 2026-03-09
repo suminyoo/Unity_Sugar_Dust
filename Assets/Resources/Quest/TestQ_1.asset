@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a936062e1f1a74dadd775958bb9239, type: 3}
   m_Name: TestQ_1
   m_EditorClassIdentifier: 
-  questID: TQ_1
+  questID: 1
   questName:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
@@ -33,7 +33,10 @@ MonoBehaviour:
     m_LocalVariables: []
   objectives:
   - type: 1
-    targetID: SugarDust_Purple
+    targetID:
+      itemID: 25
+      enemyID: 0
+      npcID: 0
     requiredAmount: 10
     currentAmount: 0
     objectiveDescription:

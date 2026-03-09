@@ -17,5 +17,7 @@ public static class GameEvents
     // 탐사 레벨 도달 이벤트
     public static Action<int> OnLevelReached;
 
+    public static Action<string> OnNPCTalked;
+
 
 }

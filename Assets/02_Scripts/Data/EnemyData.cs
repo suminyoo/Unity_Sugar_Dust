@@ -5,7 +5,7 @@ using UnityEngine.Localization;
 public class EnemyData : ScriptableObject
 {
     [Header("Basic Info")]
-    public string enemyID;
+    public EnemyID enemyID;
     [SerializeField] private LocalizedString enemyName;
     public float maxHp = 100f;
 

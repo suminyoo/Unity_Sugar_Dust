@@ -50,7 +50,7 @@ public class SaveSlotUI : MonoBehaviour
 
         saveTimeText.text = data.saveTime;
 
-        inGameDayTimeText.text = LocalizationHelper.L("UI_DAY_AND_TIME", data.inGameDay, timeName);
+        inGameDayTimeText.text = LocalizationHelper.L("DAY_AND_TIME", data.inGameDay, timeName);
 
         int hours = Mathf.FloorToInt(data.playTime / 3600);
         int minutes = Mathf.FloorToInt((data.playTime % 3600) / 60);

@@ -53,7 +53,7 @@ public class NPCQuestUIManager : MonoBehaviour
         foreach (var questData in currentQuestsToOffer) 
         {
             // 완료 퀘스트는 안그림
-            if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID)) continue;
+            if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID.ToString())) continue;
 
             if (!string.IsNullOrEmpty(questData.requiredQuestID))
             {
@@ -66,19 +66,19 @@ public class NPCQuestUIManager : MonoBehaviour
             GameObject slotObj = Instantiate(questSlotPrefab, contentParent);
             QuestSlotUI slotUI = slotObj.GetComponent<QuestSlotUI>();
 
-            Quest activeQuest = QuestManager.Instance.GetActiveQuest(questData.questID);
+            Quest activeQuest = QuestManager.Instance.GetActiveQuest(questData.questID.ToString());
 
             if (activeQuest == null)
             {
-                slotUI.SetupSlot(questData, null, LocalizationHelper.L("QUEST_BTN_ACCEPT"), true, () => AcceptQuest(questData));
+                slotUI.SetupSlot(questData, null, LocalizationHelper.L("QUEST_ACCEPT"), true, () => AcceptQuest(questData));
             }
             else if (activeQuest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_BTN_CLAIM"), true, () => ClaimReward(activeQuest));
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_CLAIM"), true, () => ClaimReward(activeQuest));
             }
             else
             {
-                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_STATUS_PROGRESS"), false, null);
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_IN_PROGRESS"), false, null);
             }
         }
     }

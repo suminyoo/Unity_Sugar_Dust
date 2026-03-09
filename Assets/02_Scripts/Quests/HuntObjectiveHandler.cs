@@ -14,7 +14,7 @@ public class HuntObjectiveHandler : QuestObjectiveHandler
 
     private void HandleMonsterKilled(string enemyID)
     {
-        if (enemyID == objectiveData.targetID)
+        if (enemyID == objectiveData.targetID.ToString())
         {
             quest.currentAmounts[objectiveIndex]++;
 

@@ -30,9 +30,9 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
         switch (currentState)
         {
             case MyShopState.TOWN_MODE:
-                return LocalizationHelper.L("PROMPT_START_SHOP_OPEN");
+                return LocalizationHelper.L("PROMPT_SHOP_OPEN");
             case MyShopState.SHOP_OPEN:
-                return LocalizationHelper.L("PROMPT_EARLY_CLOSE_SHOP");
+                return LocalizationHelper.L("PROMPT_SHOP_EARLY_CLOSE");
             case MyShopState.SHOP_CLOSED:
                 return LocalizationHelper.L("PROMPT_CLOSE_SHOP");
             default: return "";
@@ -43,12 +43,12 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     {
         // 영업 시작
         string popupMsg = "";
-        string itemNotify = LocalizationHelper.L("UI_WARNING_DROPPED_ITEM", warningColor);
+        string itemNotify = LocalizationHelper.L("MYSHOP_WARNING", warningColor);
         if (currentState == MyShopState.TOWN_MODE)
         {
             if (!GameManager.Instance.CanShop()) return;
 
-            popupMsg = LocalizationHelper.L("CONFIRM_START_SHOP");
+            popupMsg = LocalizationHelper.L("CONFIRM_SHOP_OPEN");
 
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,

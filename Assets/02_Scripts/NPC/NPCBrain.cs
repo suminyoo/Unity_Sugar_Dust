@@ -131,7 +131,7 @@ public class NPCBrain : MonoBehaviour
 
         foreach (var questData in controller.npcData.questsToGive)
         {
-            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
+            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID.ToString()))
             {
                 return true;
             }

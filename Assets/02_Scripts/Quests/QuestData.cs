@@ -6,13 +6,41 @@ public class QuestItemReward
     public string itemID;
     public int amount;
 }
-public enum QuestType { Hunt, Collect, EarnMoney, ReachLevel, TalkToNPC, ArriveAtPoint }
+
+public enum QuestType 
+{ 
+    Hunt, 
+    Collect,
+    TalkToNPC,
+    ArriveAtPoint,
+    EarnMoney, 
+    ReachLevel
+
+}
+
+[System.Serializable]
+public struct QuestTargetID
+{
+    public ItemID itemID;
+    public EnemyID enemyID;
+    public NPCID npcID;
+
+    public string GetID(QuestType type)
+    {
+        return type switch
+        {
+            QuestType.Collect => itemID.ToString(),
+            QuestType.Hunt => enemyID.ToString(),
+            _ => "None"
+        };
+    }
+}
 
 [System.Serializable]
 public class QuestObjective
 {
     public QuestType type;
-    public string targetID; // 몬스터ID 아이템ID NPCID 등등등등
+    public QuestTargetID targetID;
     public int requiredAmount;
     public int currentAmount;
     public LocalizedString objectiveDescription;
@@ -29,15 +57,13 @@ public class QuestObjective
         {
             if (type == QuestType.Collect)
             {
-                var item = ItemDataManager.Instance.GetItemByID(targetID);
-                if (item != null)
-                {
-                    descText = item.GetItemName();
-                }
+                var item = ItemDataManager.Instance.GetItemByID(targetID.itemID);
+                descText = item.GetItemName();
+                
             }
             else if (type == QuestType.Hunt)
             {
-                var enemy = EnemyDataManager.Instance.GetEnemyByID(targetID);
+                var enemy = EnemyDataManager.Instance.GetEnemyByID(targetID.enemyID);
                 descText = enemy.GetEnemyName();
             }
             else
@@ -54,7 +80,7 @@ public class QuestObjective
 
 public class QuestData : ScriptableObject
 {
-    public string questID;
+    public QuestID questID;
     [SerializeField] private LocalizedString questName;
     [SerializeField] private LocalizedString description;
 

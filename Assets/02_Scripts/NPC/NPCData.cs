@@ -6,6 +6,7 @@ using UnityEngine.Localization;
 public class NPCData : ScriptableObject
 {
     [Header("Settings")]
+    public NPCID npcID;
     [SerializeField] private LocalizedString npcName;
 
     public float moveSpeed = 3.5f;

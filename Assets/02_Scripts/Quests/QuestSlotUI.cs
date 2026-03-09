@@ -34,7 +34,7 @@ public class QuestSlotUI : MonoBehaviour
         titleText.text = questData.GetQuestName();
         descriptionText.text = questData.GetDescription();
         rewardText.text = LocalizationHelper.L(
-            "UI_QUEST_REWARD_GOLD",
+            "QUEST_REWARD",
             questData.rewardGold,
             CustomerPaymentSystem.CURRENCY_SYMBOL
         );

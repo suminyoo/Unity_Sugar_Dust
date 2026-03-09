@@ -25,7 +25,7 @@ public class ContainerBox : InventoryHolder, IInteractable, ISaveable
         LoadContainerBoxFromManager();
     }
 
-    private void LoadContainerBoxFromManager()
+    public void LoadContainerBoxFromManager()
     {
         if (GameSaveManager.Instance == null) return;
 
@@ -46,7 +46,6 @@ public class ContainerBox : InventoryHolder, IInteractable, ISaveable
     }
 
     #endregion
-
 
     public void SaveData()
     {

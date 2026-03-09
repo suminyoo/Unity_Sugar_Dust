@@ -14,12 +14,12 @@ public class ConsumableItemData : ItemData
 
         if (hpRecoveryAmount > 0)
         {
-            finalDesc += " " + LocalizationHelper.L("HEALTH_RECOVER_RATE", hpRecoveryAmount);
+            finalDesc += " " + LocalizationHelper.L("ITEM_HEALTH_RECOVER_RATE", hpRecoveryAmount);
         }
 
         if (staminaRecoveryAmount > 0)
         {
-            finalDesc += " " + LocalizationHelper.L("STAMINA_RECOVER_RATE", staminaRecoveryAmount);
+            finalDesc += " " + LocalizationHelper.L("ITEM_STAMINA_RECOVER_RATE", staminaRecoveryAmount);
         }
 
         return finalDesc;

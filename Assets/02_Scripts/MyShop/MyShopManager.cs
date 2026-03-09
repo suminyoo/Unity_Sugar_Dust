@@ -71,7 +71,7 @@ public class MyShopManager : MonoBehaviour
 
         if(openShopSound.clip != null) SoundManager.Instance.PlaySFX2D(openShopSound);
 
-        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_OPENED"));
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_OPEN"));
 
         currentTime = businessDuration;
 
@@ -88,7 +88,7 @@ public class MyShopManager : MonoBehaviour
 
         if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX2D(closeShopSound);
 
-        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_CLOSED"));
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_CLOSE"));
 
         spawner.StopSpawning();
 

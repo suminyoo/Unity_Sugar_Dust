@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a936062e1f1a74dadd775958bb9239, type: 3}
   m_Name: TestQ_2
   m_EditorClassIdentifier: 
-  questID: TQ_2
+  questID: 2
   questName:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
@@ -33,7 +33,10 @@ MonoBehaviour:
     m_LocalVariables: []
   objectives:
   - type: 0
-    targetID: Enemy1_BlueSlime
+    targetID:
+      itemID: 0
+      enemyID: 1
+      npcID: 0
     requiredAmount: 2
     currentAmount: 0
     objectiveDescription:

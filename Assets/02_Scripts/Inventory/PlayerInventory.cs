@@ -24,10 +24,11 @@ public class PlayerInventory : InventoryHolder, ISaveable
     #endregion
 
     #region Lifecycle & Initialization
-    private void Awake()
+    protected override void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        base.Awake();
     }
 
     private void Start()
@@ -69,7 +70,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
         mouseItemData.OnMouseItemChanged -= RefreshTotalWeight;
     }
 
-    private void LoadInventoryFromManager()
+    public void LoadInventoryFromManager()
     {
         if (GameSaveManager.Instance == null) return;
 
@@ -187,7 +188,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
         {
             if (!slot.IsEmpty)
             {
-                if (slot.ItemData.itemID == targetID)
+                if (slot.ItemData.itemID.ToString() == targetID)
                 {
                     totalCount += slot.Amount;
                 }
@@ -254,7 +255,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
     {
         if (item is ConsumableItemData consumable)
         {
-            if (GetItemCountByID(item.itemID) > 0)
+            if (GetItemCountByID(item.itemID.ToString()) > 0)
             {
                 ConsumeItem(item, 1);
 

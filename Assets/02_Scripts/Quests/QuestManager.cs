@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
@@ -56,7 +54,7 @@ public class QuestManager : MonoBehaviour
                 {
                     if (ItemDataManager.Instance != null && PlayerInventory.Instance != null)
                     {
-                        ItemData itemData = ItemDataManager.Instance.GetItemByID(obj.targetID.itemID.ToString());
+                        ItemData itemData = ItemDataManager.Instance.GetItemByID(obj.itemID.ToString());
                         if (itemData != null)
                         {
                             PlayerInventory.Instance.ConsumeItem(itemData, obj.requiredAmount);

@@ -55,9 +55,9 @@ public class NPCQuestUIManager : MonoBehaviour
             // 완료 퀘스트는 안그림
             if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID.ToString())) continue;
 
-            if (!string.IsNullOrEmpty(questData.requiredQuestID))
+            if (questData.requiredQuestID != QuestID.None)
             {
-                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
+                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID.ToString()))
                 {
                     continue;
                 }

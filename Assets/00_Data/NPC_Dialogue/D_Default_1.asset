@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2f6ee2d11bdf641b6b2474471c339e, type: 3}
   m_Name: D_Default_1
   m_EditorClassIdentifier: 
-  speakerName: "\uC678\uACC4\uC778 \uC8FC\uBBFC"
-  sentences:
-  - "\uC548\uB155\uD558\uC138\uC694 \uBC18\uAC00\uC6CC\uC694."
-  - "\uC624\uB298\uC740 \uC5B4\uB514\uB97C \uAC00\uC2DC\uB098\uC694?"
+  dialogueBlock:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 741071760171008
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

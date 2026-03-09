@@ -1,4 +1,3 @@
-using static UnityEditor.Progress;
 
 public class CollectObjectiveHandler : QuestObjectiveHandler
 {
@@ -10,9 +9,9 @@ public class CollectObjectiveHandler : QuestObjectiveHandler
         int count = 0;
         if (GameEvents.RequestPlayerItemCount != null)
         {
-            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.targetID.itemID.ToString());
+            // 바로 itemID.ToString() 사용
+            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID.ToString());
         }
-
         quest.currentAmounts[objectiveIndex] = count;
     }
 

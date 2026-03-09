@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Localization;
+using static UnityEditor.Progress;
 public class QuestItemReward
 {
-    public string itemID;
+    public ItemID itemID;
     public int amount;
 }
 
@@ -35,16 +36,21 @@ public struct QuestTargetID
         };
     }
 }
-
 [System.Serializable]
 public class QuestObjective
 {
     public QuestType type;
-    public QuestTargetID targetID;
+
+    public ItemID itemID;
+    public EnemyID enemyID;
+    public NPCID npcID;
+
     public int requiredAmount;
     public int currentAmount;
     public LocalizedString objectiveDescription;
+
     public bool IsComplete => currentAmount >= requiredAmount;
+
     public string GetProgressText(int current)
     {
         string descText = "";
@@ -57,14 +63,13 @@ public class QuestObjective
         {
             if (type == QuestType.Collect)
             {
-                var item = ItemDataManager.Instance.GetItemByID(targetID.itemID);
-                descText = item.GetItemName();
-                
+                var item = ItemDataManager.Instance.GetItemByID(itemID);
+                descText = item != null ? item.GetItemName() : "알 수 없는 아이템";
             }
             else if (type == QuestType.Hunt)
             {
-                var enemy = EnemyDataManager.Instance.GetEnemyByID(targetID.enemyID);
-                descText = enemy.GetEnemyName();
+                var enemy = EnemyDataManager.Instance.GetEnemyByID(enemyID);
+                descText = enemy != null ? enemy.GetEnemyName() + " 처치" : "알 수 없는 몬스터 처치";
             }
             else
             {
@@ -77,28 +82,18 @@ public class QuestObjective
 }
 
 [CreateAssetMenu(fileName = "New Quest", menuName = "Game/Quest Data")]
-
 public class QuestData : ScriptableObject
 {
     public QuestID questID;
     [SerializeField] private LocalizedString questName;
     [SerializeField] private LocalizedString description;
 
-    public List<QuestObjective> objectives;
+    public List<QuestObjective> objectives = new List<QuestObjective>();
 
     public int rewardGold;
     public List<QuestItemReward> rewardItems;
+    public QuestID requiredQuestID;
 
-    public string requiredQuestID;
-
-    public string GetQuestName()
-    {
-        return questName.GetLocalizedString();
-    }
-
-    public string GetDescription()
-    {
-        return description.GetLocalizedString();
-    }
+    public string GetQuestName() => questName.GetLocalizedString();
+    public string GetDescription() => description.GetLocalizedString();
 }
-

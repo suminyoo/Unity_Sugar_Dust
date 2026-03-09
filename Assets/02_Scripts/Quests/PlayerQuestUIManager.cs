@@ -70,7 +70,7 @@ public class PlayerQuestUIManager : MonoBehaviour
             }
             else
             {
-                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_STATUS_PROGRESS"), false, null);
+                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_IN_PROGRESS"), false, null);
             }
         }
     }

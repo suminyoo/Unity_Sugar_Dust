@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsUI : MonoBehaviour
+public class VolumeSettingsUI : MonoBehaviour
 {
     [Header("Volume")]
     public Slider masterSlider;

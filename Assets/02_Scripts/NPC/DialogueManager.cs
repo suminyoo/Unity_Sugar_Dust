@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         nameText.text = speakerName;
 
         sentences.Clear();
-        foreach (string sentence in data.sentences)
+        foreach (string sentence in data.GetSentences())
         {
             sentences.Enqueue(sentence);
         }

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VolumeSettingsUI : MonoBehaviour
+public class VolumeSettings : MonoBehaviour
 {
     [Header("Volume")]
     public Slider masterSlider;
@@ -14,11 +14,11 @@ public class VolumeSettingsUI : MonoBehaviour
 
     private void Start()
     {
+        SyncSliders();
+
         masterSlider.onValueChanged.AddListener(OnMasterSliderChanged);
         bgmSlider.onValueChanged.AddListener(OnBGMSliderChanged);
         sfxSlider.onValueChanged.AddListener(OnSFXSliderChanged);
-
-        SyncSliders();
     }
 
     private void OnMasterSliderChanged(float value)
@@ -27,7 +27,8 @@ public class VolumeSettingsUI : MonoBehaviour
             SoundManager.Instance.SetMasterVolume(value);
 
         UpdateVolumeText(masterText, value);
-        PlayerPrefs.SetFloat("MasterVolume", value);
+        PlayerPrefs.SetFloat(SettingsConstants.PREF_MASTER_VOL, value);
+        PlayerPrefs.Save();
     }
 
     private void OnBGMSliderChanged(float value)
@@ -36,7 +37,8 @@ public class VolumeSettingsUI : MonoBehaviour
             SoundManager.Instance.SetBGMVolume(value);
 
         UpdateVolumeText(bgmText, value);
-        PlayerPrefs.SetFloat("BGMVolume", value);
+        PlayerPrefs.SetFloat(SettingsConstants.PREF_BGM_VOL, value);
+        PlayerPrefs.Save();
     }
 
     private void OnSFXSliderChanged(float value)
@@ -45,8 +47,10 @@ public class VolumeSettingsUI : MonoBehaviour
             SoundManager.Instance.SetSFXVolume(value);
 
         UpdateVolumeText(sfxText, value);
-        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.SetFloat(SettingsConstants.PREF_SFX_VOL, value);
+        PlayerPrefs.Save();
     }
+
     private void UpdateVolumeText(TextMeshProUGUI textElement, float value)
     {
         if (textElement == null) return;
@@ -57,13 +61,14 @@ public class VolumeSettingsUI : MonoBehaviour
 
     private void SyncSliders()
     {
-        float masterVol = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
-        float bgmVol = PlayerPrefs.GetFloat("BGMVolume", 1.0f);
-        float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+        // 상수(SettingsConstants) 사용
+        float masterVol = PlayerPrefs.GetFloat(SettingsConstants.PREF_MASTER_VOL, 1.0f);
+        float bgmVol = PlayerPrefs.GetFloat(SettingsConstants.PREF_BGM_VOL, 1.0f);
+        float sfxVol = PlayerPrefs.GetFloat(SettingsConstants.PREF_SFX_VOL, 1.0f);
 
-        masterSlider.value = masterVol;
-        bgmSlider.value = bgmVol;
-        sfxSlider.value = sfxVol;
+        masterSlider.SetValueWithoutNotify(masterVol);
+        bgmSlider.SetValueWithoutNotify(bgmVol);
+        sfxSlider.SetValueWithoutNotify(sfxVol);
 
         UpdateVolumeText(masterText, masterVol);
         UpdateVolumeText(bgmText, bgmVol);

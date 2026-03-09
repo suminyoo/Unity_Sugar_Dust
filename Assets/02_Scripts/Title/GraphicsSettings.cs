@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.Localization.Settings;
 using System.Collections.Generic;
 
-public class GraphicsSettingsManager : MonoBehaviour
+public class GraphicsSettings : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_Dropdown displayModeDropdown;
@@ -14,12 +14,6 @@ public class GraphicsSettingsManager : MonoBehaviour
         "DISPLAY_MODE_FULLSCREEN",
         "DISPLAY_MODE_BORDERLESS",
         "DISPLAY_MODE_WINDOWED"
-    };
-
-    private readonly Vector2Int[] resolutions = {
-        new Vector2Int(1920, 1080), new Vector2Int(1600, 900),
-        new Vector2Int(1280, 720), new Vector2Int(1920, 1200),
-        new Vector2Int(1680, 1050)
     };
 
     void Start()
@@ -43,13 +37,14 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     private void UpdateLocalizedTexts()
     {
+        if (displayModeDropdown.options.Count < displayModeKeys.Length) return;
+
         for (int i = 0; i < displayModeKeys.Length; i++)
         {
             displayModeDropdown.options[i].text = LocalizationHelper.L(displayModeKeys[i]);
         }
         displayModeDropdown.RefreshShownValue();
     }
-
 
     private void InitDisplayModeDropdown()
     {
@@ -62,12 +57,8 @@ public class GraphicsSettingsManager : MonoBehaviour
         }
         displayModeDropdown.AddOptions(options);
 
-        switch (Screen.fullScreenMode)
-        {
-            case FullScreenMode.ExclusiveFullScreen: displayModeDropdown.value = 0; break;
-            case FullScreenMode.FullScreenWindow: displayModeDropdown.value = 1; break;
-            case FullScreenMode.Windowed: displayModeDropdown.value = 2; break;
-        }
+        int savedMode = PlayerPrefs.GetInt(SettingsConstants.PREF_DISPLAY_MODE, 0);
+        displayModeDropdown.SetValueWithoutNotify(savedMode);
         displayModeDropdown.RefreshShownValue();
     }
 
@@ -76,20 +67,16 @@ public class GraphicsSettingsManager : MonoBehaviour
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
-        int currentIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < SettingsConstants.Resolutions.Length; i++)
         {
-            options.Add($"{resolutions[i].x} x {resolutions[i].y}");
-
-            if (Screen.width == resolutions[i].x && Screen.height == resolutions[i].y)
-            {
-                currentIndex = i;
-            }
+            options.Add($"{SettingsConstants.Resolutions[i].x} x {SettingsConstants.Resolutions[i].y}");
         }
-
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentIndex;
+
+        int savedRes = PlayerPrefs.GetInt(SettingsConstants.PREF_RESOLUTION, 0);
+        if (savedRes < 0 || savedRes >= SettingsConstants.Resolutions.Length) savedRes = 0;
+
+        resolutionDropdown.SetValueWithoutNotify(savedRes);
         resolutionDropdown.RefreshShownValue();
     }
 
@@ -98,37 +85,40 @@ public class GraphicsSettingsManager : MonoBehaviour
         languageDropdown.ClearOptions();
 
         var options = new List<string>();
-        int selectedIndex = 0;
         var locales = LocalizationSettings.AvailableLocales.Locales;
 
         for (int i = 0; i < locales.Count; i++)
         {
             options.Add(locales[i].Identifier.CultureInfo != null ? locales[i].Identifier.CultureInfo.NativeName : locales[i].name);
-            if (LocalizationSettings.SelectedLocale == locales[i]) selectedIndex = i;
         }
-
         languageDropdown.AddOptions(options);
-        languageDropdown.value = selectedIndex;
+
+        int savedLang = PlayerPrefs.GetInt(SettingsConstants.PREF_LANGUAGE, 0);
+        if (savedLang < 0 || savedLang >= locales.Count) savedLang = 0;
+
+        languageDropdown.SetValueWithoutNotify(savedLang);
         languageDropdown.RefreshShownValue();
     }
 
     public void SetLanguage(int index)
     {
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
+        PlayerPrefs.SetInt(SettingsConstants.PREF_LANGUAGE, index);
+        PlayerPrefs.Save();
     }
 
     public void SetDisplayMode(int index)
     {
-        FullScreenMode mode = FullScreenMode.ExclusiveFullScreen;
-        if (index == 0) mode = FullScreenMode.ExclusiveFullScreen;
-        else if (index == 1) mode = FullScreenMode.FullScreenWindow;
-        else if (index == 2) mode = FullScreenMode.Windowed;
-
-        Screen.fullScreenMode = mode;
+        Screen.fullScreenMode = SettingsConstants.GetFullScreenMode(index);
+        PlayerPrefs.SetInt(SettingsConstants.PREF_DISPLAY_MODE, index);
+        PlayerPrefs.Save();
     }
 
     public void SetResolution(int index)
     {
-        Screen.SetResolution(resolutions[index].x, resolutions[index].y, Screen.fullScreenMode);
+        Vector2Int res = SettingsConstants.Resolutions[index];
+        Screen.SetResolution(res.x, res.y, Screen.fullScreenMode);
+        PlayerPrefs.SetInt(SettingsConstants.PREF_RESOLUTION, index);
+        PlayerPrefs.Save();
     }
 }

@@ -8,7 +8,7 @@ public class SkyDomeController : MonoBehaviour
     [SerializeField] private float transitionDuration = 3f;
 
     [Header("Offset Values")]
-    [SerializeField] private float morningOffset = 0.75f;
+    [SerializeField] private float morningOffset = 0.57f;
     [SerializeField] private float dayOffset = 0f;
     [SerializeField] private float eveningOffset = 0.25f;
     [SerializeField] private float nightOffset = 0.6f;

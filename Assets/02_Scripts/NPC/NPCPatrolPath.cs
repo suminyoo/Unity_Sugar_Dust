@@ -1,33 +1,45 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class PatrolPath : MonoBehaviour
+public class NPCPatrolPath : MonoBehaviour
 {
-    public List<Transform> waypoints;
+    [SerializeField] private List<PatrolPoint> waypoints = new List<PatrolPoint>();
 
-    // 에디터에서 경로를 눈으로 보기 위한 기즈모
-    private void OnDrawGizmos()
+    private void Awake()
     {
-        if (waypoints == null || waypoints.Count == 0) return;
+        UpdateWaypoints();
+    }
 
-        Gizmos.color = Color.yellow;
-        for (int i = 0; i < waypoints.Count; i++)
+    public void UpdateWaypoints()
+    {
+        waypoints.Clear();
+        foreach (Transform child in transform)
         {
-            if (waypoints[i] == null) continue;
-
-            // 점 찍기
-            Gizmos.DrawSphere(waypoints[i].position, 0.3f);
-
-            // 선 긋기 
-            int nextIndex = (i + 1) % waypoints.Count;
-            if (waypoints[nextIndex] != null)
-                Gizmos.DrawLine(waypoints[i].position, waypoints[nextIndex].position);
+            PatrolPoint p = child.GetComponent<PatrolPoint>();
+            if (p != null) waypoints.Add(p);
         }
     }
 
-    public Transform GetPoint(int index)
+    public PatrolPoint GetWaypoint(int index)
     {
-        if (waypoints == null || waypoints.Count == 0) return null;
+        if (waypoints.Count == 0) return null;
         return waypoints[index % waypoints.Count];
     }
+    private void OnDrawGizmos()
+    {
+        UpdateWaypoints();
+
+        if (waypoints.Count < 2) return;
+
+        Gizmos.color = Color.white;
+        for (int i = 0; i < waypoints.Count; i++)
+        {
+            int nextIndex = (i + 1) % waypoints.Count;
+            if (waypoints[i] != null && waypoints[nextIndex] != null)
+            {
+                Gizmos.DrawLine(waypoints[i].transform.position, waypoints[nextIndex].transform.position);
+            }
+        }
+    }
+
 }

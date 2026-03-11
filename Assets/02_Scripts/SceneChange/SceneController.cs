@@ -113,6 +113,8 @@ public class SceneController : MonoBehaviour
         //  나갈때: 기존 실내 언로드
         if (isExiting)
         {
+            FindObjectOfType<LightController>()?.SetIndoorMode(false);
+
             Camera.main.clearFlags = CameraClearFlags.Skybox;
 
             if (!string.IsNullOrEmpty(currentLoadedInterior))
@@ -121,9 +123,11 @@ public class SceneController : MonoBehaviour
                 currentLoadedInterior = null;
             }
         }
-        else
+        else // 들어갈떄: 새로운 실내 로드
+
         {
-            // 들어갈떄: 새로운 실내 로드
+            FindObjectOfType<LightController>()?.SetIndoorMode(true);
+
             Camera.main.backgroundColor = backgroundColor;
             Camera.main.clearFlags = CameraClearFlags.SolidColor;
 
@@ -160,6 +164,7 @@ public class SceneController : MonoBehaviour
 
     public void ChangeSceneAndAddScene(SCENE_NAME changeSceneName, SCENE_NAME addSceneName, SPAWN_ID spawnPos, bool isLoadGame = false)
     {
+
         StartCoroutine(ChangeAndAddCor(changeSceneName, addSceneName, spawnPos, isLoadGame));
     }
 

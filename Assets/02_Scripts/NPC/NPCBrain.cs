@@ -56,7 +56,7 @@ public class NPCBrain : MonoBehaviour
         // 범위 밖에 나감. 나가는 반경 1.2배
         else if (distance > detectionRange * 1.2f && isPlayerInRange)
         {
-            isPlayerInRange = false; 
+            isPlayerInRange = false;
         }
     }
 
@@ -175,58 +175,55 @@ public class NPCBrain : MonoBehaviour
 
     private IEnumerator PatrolRoutine()
     {
+        PatrolPoint currentPoint = null;
+
         while (true)
         {
-            // 시작부터 대화 중이면 대기
-            while (isInteracting) yield return null;
+            yield return null;
 
-            // 현재 목표 지점 가져오기
-            Transform targetPoint = null;
-            if (controller.assignedPath != null)
-                targetPoint = controller.assignedPath.GetPoint(currentPathIndex);
+            if (isInteracting || controller.assignedPath == null) continue;
 
-            // 이동 명령
-            if (targetPoint != null)
+            // 목표없으면 새로 가져오기
+            if (currentPoint == null)
             {
-                controller.Movement.MoveTo(targetPoint.position);
+                currentPoint = controller.assignedPath.GetWaypoint(currentPathIndex);
             }
 
-            // 도착할 때까지 대기
-            while (true)
+            if (currentPoint != null)
             {
-                // 대화 중이면 그냥 넘김
-                if (isInteracting)
+                // 이동
+                controller.Movement.MoveTo(currentPoint.transform.position);
+
+                while (!controller.Movement.HasArrived())
                 {
+                    if (isInteracting) { yield return null; continue; }
+                    yield return null; 
+                }
+
+                float rotTimer = 0f;
+                float rotDuration = 0.5f;
+                Quaternion startRot = transform.rotation;
+                while (rotTimer < rotDuration)
+                {
+                    if (!isInteracting)
+                    {
+                        rotTimer += Time.deltaTime;
+                        transform.rotation = Quaternion.Slerp(startRot, currentPoint.transform.rotation, rotTimer / rotDuration);
+                    }
                     yield return null;
-                    continue;
                 }
 
-                // 도착했으면
-                if (controller.Movement.HasArrived())
+                // 지점별 대기시간
+                float waitTimer = 0f;
+                while (waitTimer < currentPoint.waitTime)
                 {
-                    break; //루프나감
+                    if (!isInteracting) waitTimer += Time.deltaTime;
+                    yield return null;
                 }
-
-                // 아직 이동 중
-                yield return null;
             }
 
-            // 지점 도착 후 대기 
-            float waitTime = controller.npcData != null ? controller.npcData.waitTimeAtPoint : 2f;
-            float timer = 0;
-
-            // 대기 시간 동안에도 대화 상호작용 체크
-            while (timer < waitTime)
-            {
-                if (!isInteracting)
-                {
-                    timer += Time.deltaTime;
-                }
-                yield return null;
-            }
-
-            // 다음 인덱스
             currentPathIndex++;
+            currentPoint = null;
         }
     }
 }

@@ -5599,6 +5599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6094085051925216577}
   - component: {fileID: 3317875293771989421}
+  - component: {fileID: 8605734409731820694}
   m_Layer: 0
   m_Name: '[Essential]PlayerSystems'
   m_TagString: Essential
@@ -5639,6 +5640,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847e2d06b6ca5fe4eadccc881483ef60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8605734409731820694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483872049470624603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c3ea2ddb881924699c63cd06935d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionalLight: {fileID: 0}
+  morningIntensity: 0.8
+  dayIntensity: 0.9
+  eveningIntensity: 0.8
+  nightIntensity: 0.8
+  morningColor: {r: 0.7882353, g: 1, b: 0.9647059, a: 1}
+  dayColor: {r: 1, g: 1, b: 1, a: 1}
+  eveningColor: {r: 1, g: 0.6627451, b: 0.5254902, a: 1}
+  nightColor: {r: 0.2, g: 0.3, b: 0.6, a: 1}
 --- !u!1 &1510787654859742713
 GameObject:
   m_ObjectHideFlags: 0

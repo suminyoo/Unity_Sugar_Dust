@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     public NPCData npcData;
-    public PatrolPath assignedPath;
+    public NPCPatrolPath assignedPath;
 
 
     // ÂüÁ¶

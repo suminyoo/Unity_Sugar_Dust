@@ -47,7 +47,7 @@ public class NPCBrain : MonoBehaviour
             isPlayerInRange = true;
 
             // 인사
-            string msg = controller.npcData.GetGreetingMessage();
+            string msg = controller.GetGreetingMessage(); 
             if (!string.IsNullOrEmpty(msg))
             {
                 controller.Bubble.ShowBubble(msg);
@@ -66,7 +66,8 @@ public class NPCBrain : MonoBehaviour
         // 이미 대화 중이면 중복 실행 방지
         if (isInteracting) return;
 
-        // 대화 시작: 코루틴 대신 콜백 방식으로 변경 (더 깔끔함)
+        GameEvents.OnNPCTalked?.Invoke(controller.npcData.npcID);
+
         StartCoroutine(DefaultInteractionProcess());
     }
 
@@ -90,8 +91,7 @@ public class NPCBrain : MonoBehaviour
     }
     protected IEnumerator DialogueProcess(bool showAutoGoodbye = true)
     {
-        //대화 데이터 가져오기 (SO연결 필요)
-        DialogueData dialogueToPlay = controller.npcData.defaultDialogue;
+        DialogueData dialogueToPlay = controller.uniqueDialogue;
 
         if (dialogueToPlay != null)
         {
@@ -100,7 +100,7 @@ public class NPCBrain : MonoBehaviour
             // 매니저에게 대화프로세스 요청, 끝나면 dialogueFinished =true 
             DialogueManager.Instance.StartDialogue(
                 dialogueToPlay,
-                controller.npcData.GetNpcName(),
+                controller.GetNpcName(),
                 () => { dialogueFinished = true; }
             );
             //대화 끝날때까지 대기
@@ -158,7 +158,7 @@ public class NPCBrain : MonoBehaviour
     {
         if (controller.npcData == null) return;
 
-        string msg = controller.npcData.GetGoodByeMessage();
+        string msg = controller.GetGoodByeMessage();
         if (!string.IsNullOrEmpty(msg))
         {
             controller.Bubble.ShowBubble(msg);

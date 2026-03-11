@@ -3977,6 +3977,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: 14a94620823b2d94eadf6aa62b177203, type: 2}
   assignedPath: {fileID: 1781083649}
+  npcName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701060
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  uniqueDialogue: {fileID: 11400000, guid: 0f3351f22485bc841981bee77e68357f, type: 2}
+  greetingMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701062
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  goodByeMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701063
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &1786787868588293050
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7019,8 +7050,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e30e89ce6c39f4388fd5823258e638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: b1c31f0b45f2108419f1c86d9d1908fd, type: 2}
+  npcData: {fileID: 11400000, guid: 0cb13046d180bfe4b97ff976d6f9a05f, type: 2}
   assignedPath: {fileID: 118328719}
+  npcName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701048
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  uniqueDialogue: {fileID: 11400000, guid: 9336675794cccaa478dad2bbc6df536e, type: 2}
+  greetingMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701050
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  goodByeMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701051
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4944551089967911160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7033,8 +7095,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e30e89ce6c39f4388fd5823258e638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: b1c31f0b45f2108419f1c86d9d1908fd, type: 2}
+  npcData: {fileID: 11400000, guid: 0cb13046d180bfe4b97ff976d6f9a05f, type: 2}
   assignedPath: {fileID: 1907869880}
+  npcName:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701048
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  uniqueDialogue: {fileID: 11400000, guid: e448dd6488f968b4d9909ccf1827da32, type: 2}
+  greetingMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701050
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  goodByeMessage:
+    m_TableReference:
+      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+    m_TableEntryReference:
+      m_KeyId: 2337023701051
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4987731296173887355
 GameObject:
   m_ObjectHideFlags: 0

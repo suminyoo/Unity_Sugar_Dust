@@ -12,9 +12,9 @@ public class HuntObjectiveHandler : QuestObjectiveHandler
         GameEvents.OnMonsterKilled -= HandleMonsterKilled;
     }
 
-    private void HandleMonsterKilled(string enemyID)
+    private void HandleMonsterKilled(EnemyID enemyID)
     {
-        if (enemyID == objectiveData.enemyID.ToString())
+        if (enemyID == objectiveData.enemyID)
         {
             quest.currentAmounts[objectiveIndex]++;
             GameEvents.OnQuestProgressUpdated?.Invoke();

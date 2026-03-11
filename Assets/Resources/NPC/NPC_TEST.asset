@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0124e21744a6e54b88113c912be9dd4, type: 3}
-  m_Name: NPC_Shopkeeper_Weapon
+  m_Name: NPC_TEST
   m_EditorClassIdentifier: 
-  npcID: 10
+  npcID: 1
   moveSpeed: 3.5
   waitTimeAtPoint: 2
   detectRange: 5
-  questsToGive: []
+  questsToGive:
+  - {fileID: 11400000, guid: 32284c72ba995f843bed07d4da91ae3f, type: 2}
+  - {fileID: 11400000, guid: 80036aac9d11798429a6ed18863f9677, type: 2}
+  - {fileID: 11400000, guid: 2a32f9b767965a747ac6e3fbfe2fe5a4, type: 2}
+  - {fileID: 11400000, guid: 0b197eb5295c9d04e81ce9b3cbd90ee7, type: 2}

@@ -10,7 +10,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable, IQuestInteractable
         controller = GetComponent<NPCController>();
     }
 
-    public string GetInteractPrompt() => $"{LocalizationHelper.L("PROMPT_TALK_TO_NPC", controller.npcData.GetNpcName())}";
+    public string GetInteractPrompt() => $"{LocalizationHelper.L("PROMPT_TALK_TO_NPC", controller.GetNpcName())}";
 
     public string GetQuestPrompt() => LocalizationHelper.L("PROMPT_VIEW_QUEST");
 

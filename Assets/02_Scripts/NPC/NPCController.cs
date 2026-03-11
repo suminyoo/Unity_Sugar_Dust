@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 //NPCBrain은 NPCController에게만 말하고, NPCController가 Animation을 관리하는 구조
 public class NPCController : MonoBehaviour
@@ -6,6 +7,16 @@ public class NPCController : MonoBehaviour
     public NPCData npcData;
     public NPCPatrolPath assignedPath;
 
+    [Header("Instance Data")]
+
+    [SerializeField] private LocalizedString npcName;
+    public DialogueData uniqueDialogue;
+    [SerializeField] private LocalizedString greetingMessage;
+    [SerializeField] private LocalizedString goodByeMessage;
+
+    public string GetNpcName() => npcName.GetLocalizedString();
+    public string GetGreetingMessage() => greetingMessage.GetLocalizedString();
+    public string GetGoodByeMessage() => goodByeMessage.GetLocalizedString();
 
     // 참조
     [HideInInspector] public NPCMovement Movement { get; private set; }

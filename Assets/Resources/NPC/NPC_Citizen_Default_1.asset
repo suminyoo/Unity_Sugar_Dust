@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0124e21744a6e54b88113c912be9dd4, type: 3}
-  m_Name: NPC_Default_3
+  m_Name: NPC_Citizen_Default_1
   m_EditorClassIdentifier: 
   npcID: 100
   npcName:
@@ -24,25 +24,6 @@ MonoBehaviour:
     m_LocalVariables: []
   moveSpeed: 3.5
   waitTimeAtPoint: 2
-  defaultDialogue: {fileID: 11400000, guid: e38ef6338f78e644da98dd32a0febf85, type: 2}
-  defaultGreetingMessage:
-    m_TableReference:
-      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
-    m_TableEntryReference:
-      m_KeyId: 2337023701050
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  defaultGoodByeMessage:
-    m_TableReference:
-      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
-    m_TableEntryReference:
-      m_KeyId: 2337023701051
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
   detectRange: 5
   questsToGive: []
   references:

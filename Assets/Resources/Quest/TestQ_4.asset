@@ -9,42 +9,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0124e21744a6e54b88113c912be9dd4, type: 3}
-  m_Name: NPC_Default_1
+  m_Script: {fileID: 11500000, guid: a2a936062e1f1a74dadd775958bb9239, type: 3}
+  m_Name: TestQ_4
   m_EditorClassIdentifier: 
-  npcID: 101
-  npcName:
+  questID: 4
+  questName:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 2337023701054
+      m_KeyId: 1587355974086656
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  moveSpeed: 3.5
-  waitTimeAtPoint: 2
-  defaultDialogue: {fileID: 0}
-  defaultGreetingMessage:
+  description:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 2337023701056
+      m_KeyId: 1587357794414592
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  defaultGoodByeMessage:
-    m_TableReference:
-      m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
-    m_TableEntryReference:
-      m_KeyId: 2337023701057
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  detectRange: 5
-  questsToGive: []
+  objectives:
+  - type: 2
+    itemID: 0
+    enemyID: 0
+    npcID: 1
+    destinationID: 0
+    requiredAmount: 1
+    currentAmount: 0
+    objectiveDescription:
+      m_TableReference:
+        m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
+      m_TableEntryReference:
+        m_KeyId: 1587359237255168
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  rewardGold: 500
+  requiredQuestID: 0
   references:
     version: 2
     RefIds: []

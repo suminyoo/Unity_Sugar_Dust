@@ -28,6 +28,14 @@ public class Quest
             {
                 handlers.Add(new HuntObjectiveHandler(this, i));
             }
+            else if (obj.type == QuestType.Talk)
+            {
+                handlers.Add(new TalkObjectiveHandler(this, i));
+            }
+            else if (obj.type == QuestType.Destination)
+            {
+                handlers.Add(new DestinationObjectiveHandler(this, i));
+            }
         }
     }
 

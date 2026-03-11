@@ -6,10 +6,9 @@ public static class GameEvents
     public static Action OnQuestProgressUpdated;
 
     // 아이템 제출 퀘스트 이벤트
-    public static Func<string, int> RequestPlayerItemCount;
+    public static Func<ItemID, int> RequestPlayerItemCount;
 
-    // 몬스터처치 이벤트 (몬스터 ID)
-    public static Action<string> OnMonsterKilled;
+    public static Action<EnemyID> OnMonsterKilled;
 
     // 장사수익 이벤트
     public static Action<int> OnRevenueEarned;
@@ -17,7 +16,9 @@ public static class GameEvents
     // 탐사 레벨 도달 이벤트
     public static Action<int> OnLevelReached;
 
-    public static Action<string> OnNPCTalked;
+    public static Action<NPCID> OnNPCTalked;
+
+    public static Action<DestinationID> OnPointArrived;
 
 
 }

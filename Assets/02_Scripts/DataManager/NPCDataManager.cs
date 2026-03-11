@@ -4,12 +4,14 @@ using UnityEngine;
 public enum NPCID //순서나 이름 수정 불가
 {
     None = 0,
-    Shopkeeper_Weapon1 = 10,
+    Test = 1,
 
-    Customer1 = 50,
+    Shopkeeper_Weapon = 10,
 
-    Default_NPC1 = 100,
-    Default_NPC2 = 101,
+    Customer = 50,
+
+    Citizen_Default = 100,
+
 }
 
 

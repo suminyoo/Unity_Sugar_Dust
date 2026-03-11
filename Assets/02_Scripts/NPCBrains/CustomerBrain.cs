@@ -380,7 +380,7 @@ public class CustomerBrain : NPCBrain
 
         if (selectedDialogue != null)
         {
-            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.npcData.GetNpcName(), null, false);
+            DialogueManager.Instance.StartDialogue(selectedDialogue, controller.GetNpcName(), null, false);
         }
         else
         {

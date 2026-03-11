@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Localization;
-using static UnityEditor.Progress;
 public class QuestItemReward
 {
     public ItemID itemID;
@@ -12,29 +11,11 @@ public enum QuestType
 { 
     Hunt, 
     Collect,
-    TalkToNPC,
-    ArriveAtPoint,
+    Talk,
+    Destination,
     EarnMoney, 
     ReachLevel
 
-}
-
-[System.Serializable]
-public struct QuestTargetID
-{
-    public ItemID itemID;
-    public EnemyID enemyID;
-    public NPCID npcID;
-
-    public string GetID(QuestType type)
-    {
-        return type switch
-        {
-            QuestType.Collect => itemID.ToString(),
-            QuestType.Hunt => enemyID.ToString(),
-            _ => "None"
-        };
-    }
 }
 [System.Serializable]
 public class QuestObjective
@@ -44,6 +25,7 @@ public class QuestObjective
     public ItemID itemID;
     public EnemyID enemyID;
     public NPCID npcID;
+    public DestinationID destinationID;
 
     public int requiredAmount;
     public int currentAmount;
@@ -70,6 +52,11 @@ public class QuestObjective
             {
                 var enemy = EnemyDataManager.Instance.GetEnemyByID(enemyID);
                 descText = enemy != null ? enemy.GetEnemyName() + " 처치" : "알 수 없는 몬스터 처치";
+            }
+            else if (type == QuestType.Destination)
+            {
+                descText = "목표 장소 도달";
+                requiredAmount = 1;
             }
             else
             {

@@ -179,16 +179,16 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
     #region Quest
 
-    private int GetItemCountByID(string targetID)
+    private int GetItemCountByID(ItemID targetID)
     {
-        if (string.IsNullOrEmpty(targetID)) return 0;
+        if (targetID == ItemID.None) return 0;
 
         int totalCount = 0;
         foreach (var slot in inventorySystem.Slots)
         {
             if (!slot.IsEmpty)
             {
-                if (slot.ItemData.itemID.ToString() == targetID)
+                if (slot.ItemData.itemID == targetID)
                 {
                     totalCount += slot.Amount;
                 }
@@ -255,7 +255,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
     {
         if (item is ConsumableItemData consumable)
         {
-            if (GetItemCountByID(item.itemID.ToString()) > 0)
+            if (GetItemCountByID(item.itemID) > 0)
             {
                 bool success = consumable.Use(this.gameObject);
 

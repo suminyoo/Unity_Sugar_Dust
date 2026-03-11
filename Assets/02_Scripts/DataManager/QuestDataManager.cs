@@ -4,7 +4,10 @@ public enum QuestID //순서나 이름 수정 불가
 {
     None,
     TestQuest_1,
-    TestQuest_2
+    TestQuest_2,
+    TestQuest_3,
+    TestQuest_4,
+
 
 }
 

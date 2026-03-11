@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2a936062e1f1a74dadd775958bb9239, type: 3}
-  m_Name: TestQ_2
+  m_Name: TestQ_3
   m_EditorClassIdentifier: 
-  questID: 2
+  questID: 3
   questName:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 2337027895341
+      m_KeyId: 1584917716119552
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -26,24 +26,24 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 2337027895342
+      m_KeyId: 1584918877941760
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   objectives:
-  - type: 0
+  - type: 3
     itemID: 0
-    enemyID: 1
+    enemyID: 0
     npcID: 0
-    destinationID: 0
-    requiredAmount: 2
+    destinationID: 1
+    requiredAmount: 1
     currentAmount: 0
     objectiveDescription:
       m_TableReference:
-        m_TableCollectionName: 
+        m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
       m_TableEntryReference:
-        m_KeyId: 0
+        m_KeyId: 1584919674859520
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0

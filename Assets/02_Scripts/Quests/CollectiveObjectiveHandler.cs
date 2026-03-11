@@ -9,8 +9,7 @@ public class CollectObjectiveHandler : QuestObjectiveHandler
         int count = 0;
         if (GameEvents.RequestPlayerItemCount != null)
         {
-            // 바로 itemID.ToString() 사용
-            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID.ToString());
+            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID);
         }
         quest.currentAmounts[objectiveIndex] = count;
     }

@@ -13,13 +13,33 @@ public class NPCBrain : MonoBehaviour
 
     private bool isPlayerInRange = false;
 
+    public GameObject questAlertMark;
+
     protected virtual void Awake()
     {
         controller = GetComponent<NPCController>();
     }
+
+    protected virtual void OnEnable()
+    {
+        if (GameEvents.OnQuestProgressUpdated != null)
+        {
+            GameEvents.OnQuestProgressUpdated += UpdateQuestIndicator;
+        }
+    }
+    protected virtual void OnDisable()
+    {
+        if (GameEvents.OnQuestProgressUpdated != null)
+        {
+            GameEvents.OnQuestProgressUpdated -= UpdateQuestIndicator;
+        }
+    }
     protected virtual void Start()
     {
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        UpdateQuestIndicator();
 
         // 경로가 있으면 패트롤, 없으면 가만히
         if (controller.assignedPath != null)
@@ -124,6 +144,38 @@ public class NPCBrain : MonoBehaviour
     #endregion
 
     #region Quest Interaction
+    public void UpdateQuestIndicator()
+    {
+        if (questAlertMark == null || controller.npcData == null) return;
+
+        bool shouldShow = false;
+
+        if (controller.npcData.questsToGive != null)
+        {
+            foreach (var questData in controller.npcData.questsToGive)
+            {
+                string qID = questData.questID.ToString();
+                Quest activeQuest = QuestManager.Instance.GetActiveQuest(qID);
+
+                if (activeQuest != null)
+                {
+                    if (activeQuest.IsAllObjectivesComplete() && !activeQuest.isRewardClaimed)
+                    {
+                        shouldShow = true; 
+                        break;
+                    }
+                }
+                else if (!QuestManager.Instance.completedQuestIDs.Contains(qID))
+                {
+                    shouldShow = true;
+                    break;
+                }
+            }
+        }
+
+        questAlertMark.SetActive(shouldShow);
+    }
+
     public bool HasAvailableQuest()
     {
         if (controller.npcData.questsToGive == null || controller.npcData.questsToGive.Count == 0)
@@ -150,7 +202,10 @@ public class NPCBrain : MonoBehaviour
     private void OnQuestUIClosed()
     {
         FinishInteraction();
+        UpdateQuestIndicator();
     }
+
+
     #endregion
 
     // 굿바이 인사

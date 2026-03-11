@@ -281,4 +281,34 @@ public class PlayerCondition : MonoBehaviour, ISaveable
             );
         }
     }
+
+    public void UpgradeMaxHealth()
+    {
+        if (playerData.IsMaxHpLevel(hpLevel))
+        {
+            NotificationUIManager.Instance.ShowNotification("이미 최대 체력 레벨입니다.");
+            return;
+        }
+
+        hpLevel++;
+
+        RefreshMaxStats();
+
+        FullHealthRecovery();
+    }
+
+    public void UpgradeMaxStamina()
+    {
+        if (playerData.IsMaxStaminaLevel(staminaLevel))
+        {
+            NotificationUIManager.Instance.ShowNotification("이미 최대 스테미나 레벨입니다.");
+            return;
+        }
+
+        staminaLevel++;
+
+        RefreshMaxStats();
+
+        FullStaminaRecovery();
+    }
 }

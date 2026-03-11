@@ -9,38 +9,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65dc8f51918efb149a5e2437618e3e64, type: 3}
-  m_Name: Item_HealthRecover_2
+  m_Script: {fileID: 11500000, guid: cedd532b32bd7c3409c8d5b0a0d1ac78, type: 3}
+  m_Name: Item_Health_Upgrade
   m_EditorClassIdentifier: 
-  itemID: 20
+  itemID: 33
   itemName:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 494289821347840
+      m_KeyId: 1374848776908800
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  itemType: 3
+  itemType: 4
   description:
     m_TableReference:
       m_TableCollectionName: GUID:0fd956b387874be41a54348d63e43d2b
     m_TableEntryReference:
-      m_KeyId: 495863851364352
+      m_KeyId: 1374973381292032
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  icon: {fileID: 21300000, guid: 6acebcf9d8bacb04c804ef5b5622a1ea, type: 3}
-  weight: 0.5
-  basePrice: 100
-  isStackable: 1
+  icon: {fileID: 21300000, guid: 5a430be6243752d4a9a3e271be8303d4, type: 3}
+  weight: 1
+  basePrice: 4000
+  isStackable: 0
   maxStackAmount: 99
-  dropPrefab: {fileID: 340291144734170784, guid: 3bb020088860ed24e8164bc142e7d0e1, type: 3}
-  sellPrice: 400
-  hpRecoveryAmount: 50
-  staminaRecoveryAmount: 0
+  dropPrefab: {fileID: 8657157881168672309, guid: cd2f8050dcb499c4082c7471e6951845, type: 3}
+  sellPrice: 10000
+  useSound: {fileID: 0}
+  cooldownTime: 0
+  isConsumedOnUse: 1
+  upgradeType: 0
   references:
     version: 2
     RefIds: []

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2606439507464708581}
   - component: {fileID: 274466301989786927}
   - component: {fileID: 1445246479546976681}
+  - component: {fileID: 915076126105635760}
   m_Layer: 0
   m_Name: Crystal_2
   m_TagString: Untagged
@@ -101,8 +102,31 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 9081818028476780087, guid: 01a96078937ba4f039d9a85e4f89d6eb, type: 3}
+--- !u!136 &915076126105635760
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787900284211901690}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5262689
+  m_Height: 3.3857794
+  m_Direction: 1
+  m_Center: {x: 0.30443677, y: 1.051017, z: -0.12557769}

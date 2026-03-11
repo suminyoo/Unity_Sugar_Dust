@@ -257,17 +257,14 @@ public class PlayerInventory : InventoryHolder, ISaveable
         {
             if (GetItemCountByID(item.itemID.ToString()) > 0)
             {
-                ConsumeItem(item, 1);
+                bool success = consumable.Use(this.gameObject);
 
-                PlayerCondition condition = GetComponent<PlayerCondition>();
-                if (condition != null)
+                if (success && consumable.isConsumedOnUse)
                 {
-                    if (consumable.hpRecoveryAmount > 0)
-                        condition.RecoverHp(consumable.hpRecoveryAmount);
-
-                    if (consumable.staminaRecoveryAmount > 0)
-                        condition.RecoverStamina(consumable.staminaRecoveryAmount);
+                    ConsumeItem(item, 1);
                 }
+
+                // consumable.useSound 를 재생 혹은 쿨타임 추가
             }
         }
     }

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8877226739278189522}
   - component: {fileID: 6689756288254371608}
   - component: {fileID: 5410894940172778398}
+  - component: {fileID: 1653818447438519768}
+  - component: {fileID: 2541605762824471072}
   m_Layer: 0
   m_Name: Billboard_2
   m_TagString: Untagged
@@ -101,8 +103,50 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -540906985060584333, guid: d34691e4468024d52bd747074ef0850e, type: 3}
+--- !u!65 &1653818447438519768
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176383741378545357}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9836743, y: 2.1789093, z: 1.1756743}
+  m_Center: {x: -0.058502197, y: 0.96560764, z: -0.019474745}
+--- !u!65 &2541605762824471072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176383741378545357}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9836743, y: 2.6469946, z: 4.199458}
+  m_Center: {x: -0.058502197, y: 3.42305, z: -0.007385254}

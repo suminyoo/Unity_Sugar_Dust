@@ -38,7 +38,7 @@ public class ItemUsageInfoUI : MonoBehaviour
 
         if (useButton != null)
         {
-            useButton.gameObject.SetActive(data is ConsumableItemData);
+            useButton.gameObject.SetActive(data.IsUsable());
         }
     }
     public void OnClickUseButton()

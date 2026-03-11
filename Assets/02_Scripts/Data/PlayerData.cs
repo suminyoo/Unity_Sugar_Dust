@@ -40,4 +40,17 @@ public class PlayerData : ScriptableObject
         int index = Mathf.Clamp(level, 0, array.Length - 1);
         return (float)System.Convert.ToDouble(array.GetValue(index));
     }
+
+    public bool IsMaxHpLevel(int level) => IsMaxLevelSafe(hpLevels, level);
+    public bool IsMaxStaminaLevel(int level) => IsMaxLevelSafe(staminaLevels, level);
+    public bool IsMaxInventoryLevel(int level) => IsMaxLevelSafe(inventorySizes, level);
+    public bool IsMaxDisplayStandLevel(int level) => IsMaxLevelSafe(displayStandSizes, level);
+    public bool IsMaxContainerBoxLevel(int level) => IsMaxLevelSafe(containerBoxSizes, level);
+
+    // 배열을 받아 안전하게 끝인지 검사하는 공통 로직
+    private bool IsMaxLevelSafe(System.Array array, int currentLevel)
+    {
+        if (array == null || array.Length == 0) return true;
+        return currentLevel >= array.Length - 1;
+    }
 }

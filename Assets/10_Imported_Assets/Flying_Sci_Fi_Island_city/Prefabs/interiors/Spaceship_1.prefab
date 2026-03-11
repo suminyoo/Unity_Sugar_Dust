@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3925890618146017520}
   - component: {fileID: 1269847962233676858}
   - component: {fileID: 459070704845043896}
+  - component: {fileID: 5227739021487396328}
   m_Layer: 0
   m_Name: Spaceship_1
   m_TagString: Untagged
@@ -103,6 +104,27 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4506755036080761479, guid: 09786f9b9a1e04fc4b6c847c836ef182, type: 3}
+--- !u!65 &5227739021487396328
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765501497291998703}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.295825, y: 0.88503534, z: 3.719132}
+  m_Center: {x: -0.014484882, y: 0.29640105, z: -0.08076805}

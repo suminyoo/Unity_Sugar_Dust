@@ -6,7 +6,9 @@ public enum ItemType
     [InspectorName("광물")] Mineral,
     [InspectorName("몬스터 부산물")] MonsterLoot,
     [InspectorName("무기")] Weapon,
-    [InspectorName("물약")] Potion
+    [InspectorName("물약")] Potion,
+    [InspectorName("업그레이드")] Upgrade
+
 
 }
 
@@ -54,5 +56,15 @@ public class ItemData : ScriptableObject
             ItemType.Potion => LocalizationHelper.L("ITEM_TYPE_POTION"),
             _ => LocalizationHelper.L("ITEM_TYPE_DEFAULT")
         };
+    }
+
+    public virtual bool IsUsable()
+    {
+        return false;
+    }
+
+    public virtual bool Use(GameObject target)
+    {
+        return false;
     }
 }

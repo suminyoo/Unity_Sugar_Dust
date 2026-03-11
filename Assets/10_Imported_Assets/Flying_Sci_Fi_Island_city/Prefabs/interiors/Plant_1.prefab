@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3900670084155373713}
   - component: {fileID: 1280431385064115291}
   - component: {fileID: 433634390910734545}
+  - component: {fileID: 7705857910166034308}
+  - component: {fileID: 1390667043917931450}
   m_Layer: 0
   m_Name: Plant_1
   m_TagString: Untagged
@@ -101,8 +103,52 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -316046109595110636, guid: 7a57bdb2d1f904067981606894efe3d5, type: 3}
+--- !u!65 &7705857910166034308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776305785615265166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2881153, y: 0.20954323, z: 1.9595776}
+  m_Center: {x: 0, y: -0.052599907, z: 0}
+--- !u!136 &1390667043917931450
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776305785615265166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1345805
+  m_Height: 2.2881153
+  m_Direction: 1
+  m_Center: {x: -0.5167246, y: 0.89561623, z: -0.002663374}

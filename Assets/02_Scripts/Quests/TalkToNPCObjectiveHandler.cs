@@ -1,6 +1,6 @@
-﻿public class TalkObjectiveHandler : QuestObjectiveHandler
+﻿public class TalkToNPCObjectiveHandler : QuestObjectiveHandler
 {
-    public TalkObjectiveHandler(Quest quest, int index) : base(quest, index) { }
+    public TalkToNPCObjectiveHandler(Quest quest, int index) : base(quest, index) { }
 
     public override void OnStart()
     {

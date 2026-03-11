@@ -81,6 +81,11 @@ public class ClosingReceiptUI : MonoBehaviour
     {
         PlayerAssetsManager.Instance.AddMoney(finalAmountToAdd);
 
+        if (finalAmountToAdd > 0)
+        {
+            GameEvents.OnRevenueEarned?.Invoke(finalAmountToAdd);
+        }
+
         SceneController.Instance.ChangeSceneAndAddScene(
             SCENE_NAME.TOWN,
             SCENE_NAME.MY_SHOP,

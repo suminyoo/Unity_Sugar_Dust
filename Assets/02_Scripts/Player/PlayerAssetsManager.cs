@@ -29,6 +29,15 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+    private void OnEnable()
+    {
+        GameEvents.RequestPlayerMoney += GetCurrentMoney;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.RequestPlayerMoney -= GetCurrentMoney;
+    }
 
     private void Start()
     {
@@ -48,7 +57,10 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
             OnMoneyChanged?.Invoke(currentMoney);
         }
     }
-
+    private int GetCurrentMoney()
+    {
+        return currentMoney;
+    }
     public void AddMoney(int amount)
     {
         if(moneyEarnSound.clip != null) SoundManager.Instance.PlaySFX2D(moneyEarnSound);

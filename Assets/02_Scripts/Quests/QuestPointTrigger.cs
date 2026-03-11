@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum DestinationID
+public enum PointID
 {
     None,
     MyShop,
@@ -10,7 +10,7 @@ public enum DestinationID
 
 public class QuestPointTrigger : MonoBehaviour
 {
-    public DestinationID pointID;
+    public PointID pointID;
 
     private void OnTriggerEnter(Collider other)
     {

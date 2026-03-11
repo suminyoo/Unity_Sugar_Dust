@@ -4,12 +4,12 @@ public class HuntObjectiveHandler : QuestObjectiveHandler
 
     public override void OnStart()
     {
-        GameEvents.OnMonsterKilled += HandleMonsterKilled;
+        GameEvents.OnEnemyKilled += HandleMonsterKilled;
     }
 
     public override void OnStop()
     {
-        GameEvents.OnMonsterKilled -= HandleMonsterKilled;
+        GameEvents.OnEnemyKilled -= HandleMonsterKilled;
     }
 
     private void HandleMonsterKilled(EnemyID enemyID)

@@ -20,21 +20,28 @@ public class Quest
         {
             var obj = data.objectives[i];
 
-            if (obj.type == QuestType.Collect)
+            switch (obj.type)
             {
-                handlers.Add(new CollectObjectiveHandler(this, i));
-            }
-            else if (obj.type == QuestType.Hunt)
-            {
-                handlers.Add(new HuntObjectiveHandler(this, i));
-            }
-            else if (obj.type == QuestType.Talk)
-            {
-                handlers.Add(new TalkObjectiveHandler(this, i));
-            }
-            else if (obj.type == QuestType.Destination)
-            {
-                handlers.Add(new DestinationObjectiveHandler(this, i));
+                case QuestType.Collect:
+                    handlers.Add(new CollectObjectiveHandler(this, i));
+                    break;
+                case QuestType.Hunt:
+                    handlers.Add(new HuntObjectiveHandler(this, i));
+                    break;
+                case QuestType.TalkToNPC:
+                    handlers.Add(new TalkToNPCObjectiveHandler(this, i));
+                    break;
+                case QuestType.ReachPoint:
+                    handlers.Add(new ReachPointObjectiveHandler(this, i));
+                    break;
+                case QuestType.PossessMoney:
+                    handlers.Add(new PossessMoneyObjectiveHandler(this, i));
+                    break;
+                case QuestType.ReachDailyIncome:
+                    handlers.Add(new EarnMoneyObjectiveHandler(this, i));
+                    break;
+                default:
+                    break;
             }
         }
     }

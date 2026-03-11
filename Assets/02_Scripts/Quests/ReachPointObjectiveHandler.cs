@@ -1,6 +1,6 @@
-﻿public class DestinationObjectiveHandler : QuestObjectiveHandler
+﻿public class ReachPointObjectiveHandler : QuestObjectiveHandler
 {
-    public DestinationObjectiveHandler(Quest quest, int index) : base(quest, index) { }
+    public ReachPointObjectiveHandler(Quest quest, int index) : base(quest, index) { }
 
     public override void OnStart()
     {
@@ -12,9 +12,9 @@
         GameEvents.OnPointArrived -= HandlePointArrived;
     }
 
-    private void HandlePointArrived(DestinationID targetPointID)
+    private void HandlePointArrived(PointID targetPointID)
     {
-        if (targetPointID == objectiveData.destinationID && !IsComplete())
+        if (targetPointID == objectiveData.pointID && !IsComplete())
         {
             quest.currentAmounts[objectiveIndex]++;
             GameEvents.OnQuestProgressUpdated?.Invoke();

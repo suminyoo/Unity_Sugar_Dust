@@ -113,7 +113,7 @@ public class SceneController : MonoBehaviour
         //  나갈때: 기존 실내 언로드
         if (isExiting)
         {
-            FindObjectOfType<LightController>()?.SetIndoorMode(false);
+            FindObjectOfType<EnvironmentController>()?.SetIndoorMode(false);
 
             Camera.main.clearFlags = CameraClearFlags.Skybox;
 
@@ -126,7 +126,7 @@ public class SceneController : MonoBehaviour
         else // 들어갈떄: 새로운 실내 로드
 
         {
-            FindObjectOfType<LightController>()?.SetIndoorMode(true);
+            FindObjectOfType<EnvironmentController>()?.SetIndoorMode(true);
 
             Camera.main.backgroundColor = backgroundColor;
             Camera.main.clearFlags = CameraClearFlags.SolidColor;

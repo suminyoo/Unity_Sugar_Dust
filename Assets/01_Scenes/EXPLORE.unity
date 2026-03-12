@@ -2251,6 +2251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Essential]PlayerSystems'
       objectReference: {fileID: 0}
+    - target: {fileID: 1485892264228538902, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b59d7d2338ef5646857bd3235215c0c, type: 2}
     - target: {fileID: 3005155421933746466, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.6
@@ -2351,11 +2355,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -38.754997
       objectReference: {fileID: 0}
+    - target: {fileID: 8605734409731820694, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+      propertyPath: mainVolume
+      value: 
+      objectReference: {fileID: 631926681}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+--- !u!114 &631926681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1485892264228538902, guid: 7b336f51b7bd73048a047ed38d6c7bfb, type: 3}
+  m_PrefabInstance: {fileID: 631926680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &651649139 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6610152016162390053, guid: 01e1d40494441d747abbc522eb370325, type: 3}
@@ -2505,7 +2524,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.9607843, b: 0.78431374, a: 1}
+  m_Color: {r: 1, g: 0.972549, b: 0.88235295, a: 1}
   m_Intensity: 0.9
   m_Range: 10
   m_SpotAngle: 30
@@ -4011,7 +4030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4840603325873496200, guid: 01e1d40494441d747abbc522eb370325, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5547485993616417883, guid: 01e1d40494441d747abbc522eb370325, type: 3}
       propertyPath: walkSound

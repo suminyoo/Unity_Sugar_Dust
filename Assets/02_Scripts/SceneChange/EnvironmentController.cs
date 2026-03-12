@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
-public class LightController : MonoBehaviour
+public class EnvironmentController : MonoBehaviour
 {
     [Header("Target Light")]
     [SerializeField] private Light directionalLight;
@@ -17,7 +18,12 @@ public class LightController : MonoBehaviour
     [SerializeField] private Color eveningColor = new Color(1f, 0.5f, 0.3f);
     [SerializeField] private Color nightColor = new Color(0.2f, 0.3f, 0.6f);
 
-    private bool _isIndoor = false;
+    [Header("Post Processing")]
+    public PostProcessVolume mainVolume;
+    public PostProcessProfile outdoorProfile;
+    public PostProcessProfile indoorProfile;
+
+    private bool isIndoor = false;
 
     private void Awake()
     {
@@ -66,10 +72,15 @@ public class LightController : MonoBehaviour
 
     public void SetIndoorMode(bool indoor)
     {
-        _isIndoor = indoor;
+        isIndoor = indoor;
 
         if (GameManager.Instance != null)
             UpdateLight(GameManager.Instance.currentTime);
+
+        if (mainVolume != null)
+        {
+            mainVolume.profile = isIndoor ? indoorProfile : outdoorProfile;
+        }
     }
 
     private void UpdateLight(GAME_TIME time)
@@ -77,7 +88,7 @@ public class LightController : MonoBehaviour
         if (directionalLight == null) return;
 
         // ½Ç³»
-        if (_isIndoor)
+        if (isIndoor)
         {
             directionalLight.enabled = false;
             return;

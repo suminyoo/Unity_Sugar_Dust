@@ -4711,6 +4711,55 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1284937444500844816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5639715582848556598}
+  - component: {fileID: 1485892264228538902}
+  m_Layer: 11
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5639715582848556598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284937444500844816}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6094085051925216577}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485892264228538902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284937444500844816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 156cbacc075407d40865849b29424e09, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1284997141031165259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,6 +5675,7 @@ Transform:
   - {fileID: 4380311945190391979}
   - {fileID: 5531202658332101729}
   - {fileID: 8872193524669787500}
+  - {fileID: 5639715582848556598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3317875293771989421
@@ -5657,10 +5707,13 @@ MonoBehaviour:
   dayIntensity: 0.9
   eveningIntensity: 0.8
   nightIntensity: 0.8
-  morningColor: {r: 0.7882353, g: 1, b: 0.9647059, a: 1}
-  dayColor: {r: 1, g: 1, b: 1, a: 1}
+  morningColor: {r: 0.9098039, g: 1, b: 0.7882353, a: 1}
+  dayColor: {r: 1, g: 0.98810196, b: 0.8901961, a: 1}
   eveningColor: {r: 1, g: 0.6627451, b: 0.5254902, a: 1}
   nightColor: {r: 0.2, g: 0.3, b: 0.6, a: 1}
+  mainVolume: {fileID: 1485892264228538902}
+  outdoorProfile: {fileID: 11400000, guid: 156cbacc075407d40865849b29424e09, type: 2}
+  indoorProfile: {fileID: 11400000, guid: c0335328ca20e224d82773e2fd3940f2, type: 2}
 --- !u!1 &1510787654859742713
 GameObject:
   m_ObjectHideFlags: 0
@@ -16647,6 +16700,7 @@ GameObject:
   - component: {fileID: 4286937944720072931}
   - component: {fileID: 7917877368177801393}
   - component: {fileID: 5222591449708463956}
+  - component: {fileID: 8209409592269901440}
   m_Layer: 0
   m_Name: '[Camera]Main Camera'
   m_TagString: MainCamera
@@ -16662,8 +16716,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3825353236662007410}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15858838, y: 0.024282735, z: -0.0039007147, w: -0.98703843}
-  m_LocalPosition: {x: -2.4, y: 3.508343, z: -8.702851}
+  m_LocalRotation: {x: -0.014453247, y: 0.81546557, z: -0.02026922, w: -0.57826996}
+  m_LocalPosition: {x: 54.76648, y: 3.4319546, z: 12.106331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16753,6 +16807,66 @@ MonoBehaviour:
     m_Bits: 1024
   cameraRadius: 0.2
   wallOffset: 0.1
+--- !u!114 &8209409592269901440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825353236662007410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 838794424459342869}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &3880524933991118370
 GameObject:
   m_ObjectHideFlags: 0
@@ -23818,6 +23932,7 @@ GameObject:
   - component: {fileID: 2861179695914431428}
   - component: {fileID: 1749044050552117262}
   - component: {fileID: 1261486451488569049}
+  - component: {fileID: 4119672150536191280}
   m_Layer: 0
   m_Name: '[Player]Player'
   m_TagString: Player
@@ -23834,7 +23949,7 @@ Transform:
   m_GameObject: {fileID: 5869345468020199328}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.04, y: 1.27, z: -15.3}
+  m_LocalPosition: {x: 49.2, y: 1.1, z: 10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24003,6 +24118,23 @@ MonoBehaviour:
   moneyEarnSound:
     clip: {fileID: 0}
     volume: 0
+--- !u!114 &4119672150536191280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869345468020199328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4fa7e40d616a3d429cadee93116de50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessVolume: {fileID: 1485892264228538902}
+  playerCondition: {fileID: 1749044050552117262}
+  hitColor: {r: 0.7921569, g: 0.12941176, b: 0.20388918, a: 1}
+  hitIntensity: 0.5
+  effectDuration: 1
 --- !u!1 &5872971085322681958
 GameObject:
   m_ObjectHideFlags: 0

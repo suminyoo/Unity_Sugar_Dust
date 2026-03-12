@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b44c24b539a396145ae5831a96150e87, type: 3}
-  m_Name: Item_SugarDust6
+  m_Name: Item_SugarDust4_SkyBlue
   m_EditorClassIdentifier: 
-  itemID: 30
+  itemID: 28
   itemName:
     m_TableReference:
       m_TableCollectionName: GUID:aa60676f38159654d95a1004ebd97cd7
     m_TableEntryReference:
-      m_KeyId: 24721530940
+      m_KeyId: 24721530936
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -27,18 +27,18 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:aa60676f38159654d95a1004ebd97cd7
     m_TableEntryReference:
-      m_KeyId: 24721530939
+      m_KeyId: 24721530935
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  icon: {fileID: 21300000, guid: 2b2f04963e59e6140ab137262fb4ba27, type: 3}
-  weight: 2
-  basePrice: 1000
+  icon: {fileID: 21300000, guid: 768edadd8d710cc47ad155cfed048237, type: 3}
+  weight: 1.6
+  basePrice: 250
   isStackable: 1
   maxStackAmount: 99
-  dropPrefab: {fileID: 6621725855886256615, guid: 3b35fca62273f0c44bec2ccc439bf3c0, type: 3}
-  sellPrice: 2500
+  dropPrefab: {fileID: 4632160313163229737, guid: 28e8c3217983dda4facb6c11ac399ee6, type: 3}
+  sellPrice: 630
   references:
     version: 2
     RefIds: []

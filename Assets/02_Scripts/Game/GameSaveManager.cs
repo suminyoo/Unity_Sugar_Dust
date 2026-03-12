@@ -81,7 +81,7 @@ public class GameSaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(savedData, true);
         File.WriteAllText(filePath, json);
 
-        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SAVE_COMPLETE"));
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SAVE_COMPLETE"));
         //Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
     }
 

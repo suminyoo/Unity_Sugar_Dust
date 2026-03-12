@@ -15,7 +15,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     private bool isCounterMode = false; 
     private bool isTransactionActive = false; // 지금 계산 중인지
 
-    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_CHECKOUT");
+    public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_CHECKOUT");
 
     // 상호작용
     public void OnInteract()
@@ -24,7 +24,7 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
 
         if (waitingQueue.Count == 0)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_NO_WAITING_CUSTOMER"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_NO_WAITING_CUSTOMER"));
             return;
         }
 

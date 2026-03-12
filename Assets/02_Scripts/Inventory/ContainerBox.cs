@@ -5,7 +5,7 @@ public class ContainerBox : InventoryHolder, IInteractable, ISaveable
 {
     #region Interaction (IInteractable)
 
-    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_OPEN_STORAGE");
+    public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_OPEN_STORAGE");
 
     public void OnInteract()
     {

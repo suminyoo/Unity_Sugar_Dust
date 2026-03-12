@@ -22,7 +22,7 @@ public class SaveSlotUI : MonoBehaviour
     
         if (slotNameText != null && !isSub)
         {
-            slotNameText.text = LocalizationHelper.L("UI_MENU_SAVE", slotNumber + 1);
+            slotNameText.text = LocalizationHelper.Main("UI_MENU_SAVE", slotNumber + 1);
         }
     
         fullFilePath = path;
@@ -50,7 +50,7 @@ public class SaveSlotUI : MonoBehaviour
 
         saveTimeText.text = data.saveTime;
 
-        inGameDayTimeText.text = LocalizationHelper.L("DAY_AND_TIME", data.inGameDay, timeName);
+        inGameDayTimeText.text = LocalizationHelper.Main("DAY_AND_TIME", data.inGameDay, timeName);
 
         int hours = Mathf.FloorToInt(data.playTime / 3600);
         int minutes = Mathf.FloorToInt((data.playTime % 3600) / 60);

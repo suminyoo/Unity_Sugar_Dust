@@ -32,8 +32,8 @@ public class ItemUsageInfoUI : MonoBehaviour
 
         icon.sprite = data.icon;
         nameText.text = data.GetItemName();
-        typeText.text = LocalizationHelper.L("ITEM_INFO_TYPE", data.GetItemTypeName());
-        weightText.text = LocalizationHelper.L("ITEM_INFO_WEIGHT", data.weight);
+        typeText.text = LocalizationHelper.Main("ITEM_INFO_TYPE", data.GetItemTypeName());
+        weightText.text = LocalizationHelper.Main("ITEM_INFO_WEIGHT", data.weight);
         infoText.text = data.GetDescription();
 
         if (useButton != null)

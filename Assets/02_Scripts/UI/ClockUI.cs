@@ -50,7 +50,7 @@ public class ClockUI : MonoBehaviour
 
         if (GameManager.Instance != null && dayTimeText != null)
         {
-            dayTimeText.text = LocalizationHelper.L("DAY_AND_TIME", GameManager.Instance.currentDay, timeName);
+            dayTimeText.text = LocalizationHelper.Main("DAY_AND_TIME", GameManager.Instance.currentDay, timeName);
         }
 
         morningImage.SetActive(false);

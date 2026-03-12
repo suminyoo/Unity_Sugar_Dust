@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: QuestTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: QuestTable
+  m_TableCollectionNameGuidString: 17e3a36361834a04396334d883968b77
+  m_Entries:
+  - m_Id: 8359432724482
+    m_Key: QUEST_TEST1_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724483
+    m_Key: QUEST_TEST1_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724484
+    m_Key: QUEST_TEST1_OBJC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724485
+    m_Key: QUEST_TEST2_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724486
+    m_Key: QUEST_TEST2_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724487
+    m_Key: QUEST_TEST2_OBJC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724488
+    m_Key: QUEST_TEST3_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724489
+    m_Key: QUEST_TEST3_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724490
+    m_Key: QUEST_TEST3_OBJC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724491
+    m_Key: QUEST_TEST4_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724492
+    m_Key: QUEST_TEST4_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8359432724493
+    m_Key: QUEST_TEST4_OBJC
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7552575337140322314
+  references:
+    version: 2
+    RefIds:
+    - rid: 7552575337140322314
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1773305269239

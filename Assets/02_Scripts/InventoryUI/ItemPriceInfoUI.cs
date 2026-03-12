@@ -152,12 +152,12 @@ public class ItemPriceInfoUI : MonoBehaviour
         // 활성화 버튼
         if (isCurrentActive)
         {
-            buttonText.text = LocalizationHelper.L("ITEM_INFO_STOP_SALE");
+            buttonText.text = LocalizationHelper.Main("ITEM_INFO_STOP_SALE");
             buttonImage.color = activePriceColor;
         }
         else
         {
-            buttonText.text = LocalizationHelper.L("ITEM_INFO_START_SALE");
+            buttonText.text = LocalizationHelper.Main("ITEM_INFO_START_SALE");
             buttonImage.color = inactivePriceColor;
         }
     }

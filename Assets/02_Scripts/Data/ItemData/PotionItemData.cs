@@ -13,12 +13,12 @@ public class PotionItemData : ItemData
 
         if (hpRecoveryAmount > 0)
         {
-            finalDesc += " " + LocalizationHelper.L("ITEM_HEALTH_RECOVER_RATE", hpRecoveryAmount);
+            finalDesc += " " + LocalizationHelper.Item("ITEM_HEALTH_RECOVER_RATE", hpRecoveryAmount);
         }
 
         if (staminaRecoveryAmount > 0)
         {
-            finalDesc += " " + LocalizationHelper.L("ITEM_STAMINA_RECOVER_RATE", staminaRecoveryAmount);
+            finalDesc += " " + LocalizationHelper.Item("ITEM_STAMINA_RECOVER_RATE", staminaRecoveryAmount);
         }
 
         return finalDesc;

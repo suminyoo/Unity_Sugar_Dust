@@ -75,7 +75,7 @@ public class QuestManager : MonoBehaviour
             {
                 PlayerAssetsManager.Instance.AddMoney(quest.data.rewardGold);
                 NotificationUIManager.Instance.ShowNotification(
-                    LocalizationHelper.L(
+                    LocalizationHelper.Main(
                         "NOTI_QUEST_REWARD_GOLD",
                         quest.data.rewardGold,
                         CustomerPaymentSystem.CURRENCY_SYMBOL
@@ -95,7 +95,7 @@ public class QuestManager : MonoBehaviour
                         {
                             PlayerInventory.Instance.AddItem(itemData, reward.amount);
                             NotificationUIManager.Instance.ShowNotification(
-                                LocalizationHelper.L(
+                                LocalizationHelper.Main(
                                     "NOTI_QUEST_REWARD_ITEM",
                                     itemData.GetItemName(),
                                     reward.amount

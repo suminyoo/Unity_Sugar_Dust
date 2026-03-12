@@ -149,7 +149,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         if (remaining == count)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_INVENTORY_FULL"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_INVENTORY_FULL"));
             return -1;
         }
 
@@ -172,7 +172,7 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         if (!success)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_NOT_ENOUGH_ITEM", item.GetItemName()));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_NOT_ENOUGH_ITEM", item.GetItemName()));
         }
     }
     #endregion

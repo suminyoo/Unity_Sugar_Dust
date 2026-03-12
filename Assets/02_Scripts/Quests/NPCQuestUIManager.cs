@@ -70,15 +70,15 @@ public class NPCQuestUIManager : MonoBehaviour
 
             if (activeQuest == null)
             {
-                slotUI.SetupSlot(questData, null, LocalizationHelper.L("QUEST_ACCEPT"), true, () => AcceptQuest(questData));
+                slotUI.SetupSlot(questData, null, LocalizationHelper.Main("QUEST_ACCEPT"), true, () => AcceptQuest(questData));
             }
             else if (activeQuest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_CLAIM"), true, () => ClaimReward(activeQuest));
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.Main("QUEST_CLAIM"), true, () => ClaimReward(activeQuest));
             }
             else
             {
-                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.L("QUEST_IN_PROGRESS"), false, null);
+                slotUI.SetupSlot(questData, activeQuest, LocalizationHelper.Main("QUEST_IN_PROGRESS"), false, null);
             }
         }
     }

@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2f6ee2d11bdf641b6b2474471c339e, type: 3}
   m_Name: D_Customer_Indecisive
   m_EditorClassIdentifier: 
-  sentences:
-  - "\uC548\uB155\uD558\uC138\uC694."
-  - "\uBB3C\uAC74 \uC88B\uB124\uC694."
+  dialogueBlock:
+    m_TableReference:
+      m_TableCollectionName: GUID:f4073b05ce61ad142921eac5dffafc13
+    m_TableEntryReference:
+      m_KeyId: 313327394836
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (currentTime == GAME_TIME.Evening || currentTime == GAME_TIME.Night)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_TOO_COLD"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_TOO_COLD"));
             return false;
         }
         return true;
@@ -156,12 +156,12 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (currentTime == GAME_TIME.Morning || currentTime == GAME_TIME.Day)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_EVENING_ONLY"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SHOP_EVENING_ONLY"));
             return false;
         }
         if (currentTime == GAME_TIME.Night)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_SHOP_CLOSED"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SHOP_CLOSED"));
             return false;
         }
         return true;

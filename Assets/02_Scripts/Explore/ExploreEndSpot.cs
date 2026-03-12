@@ -8,12 +8,12 @@ public class ExploreEndSpot : MonoBehaviour, IInteractable
 
     public string GetInteractPrompt()
     {
-        return LocalizationHelper.L("PROMPT_SPACESHIP_CALL");
+        return LocalizationHelper.Main("PROMPT_SPACESHIP_CALL");
     }
 
     public void OnInteract()
     {
-        string localizedMsg = LocalizationHelper.L("CONFIRM_RETURN_TOWN");
+        string localizedMsg = LocalizationHelper.Main("CONFIRM_RETURN_TOWN");
         CommonConfirmPopup.Instance.OpenPopup(
             localizedMsg,
             () => {

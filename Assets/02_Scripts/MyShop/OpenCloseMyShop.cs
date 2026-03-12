@@ -30,11 +30,11 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
         switch (currentState)
         {
             case MyShopState.TOWN_MODE:
-                return LocalizationHelper.L("PROMPT_SHOP_OPEN");
+                return LocalizationHelper.Main("PROMPT_SHOP_OPEN");
             case MyShopState.SHOP_OPEN:
-                return LocalizationHelper.L("PROMPT_SHOP_EARLY_CLOSE");
+                return LocalizationHelper.Main("PROMPT_SHOP_EARLY_CLOSE");
             case MyShopState.SHOP_CLOSED:
-                return LocalizationHelper.L("PROMPT_CLOSE_SHOP");
+                return LocalizationHelper.Main("PROMPT_CLOSE_SHOP");
             default: return "";
         }
     }
@@ -43,12 +43,12 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
     {
         // 영업 시작
         string popupMsg = "";
-        string itemNotify = LocalizationHelper.L("MYSHOP_WARNING", warningColor);
+        string itemNotify = LocalizationHelper.Main("MYSHOP_WARNING", warningColor);
         if (currentState == MyShopState.TOWN_MODE)
         {
             if (!GameManager.Instance.CanShop()) return;
 
-            popupMsg = LocalizationHelper.L("CONFIRM_SHOP_OPEN");
+            popupMsg = LocalizationHelper.Main("CONFIRM_SHOP_OPEN");
 
             CommonConfirmPopup.Instance.OpenPopup(
                 popupMsg,
@@ -60,11 +60,11 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
         // 영업 마감
         if (currentState == MyShopState.SHOP_OPEN)
         {
-            popupMsg = LocalizationHelper.L("CONFIRM_EARLY_CLOSE", itemNotify);
+            popupMsg = LocalizationHelper.Main("CONFIRM_EARLY_CLOSE", itemNotify);
         }
         else if (currentState == MyShopState.SHOP_CLOSED)
         {
-            popupMsg = LocalizationHelper.L("CONFIRM_SHOP_SETTLEMENT", itemNotify);
+            popupMsg = LocalizationHelper.Main("CONFIRM_SHOP_SETTLEMENT", itemNotify);
         }
         if (!string.IsNullOrEmpty(popupMsg))
         {

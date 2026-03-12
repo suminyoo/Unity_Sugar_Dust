@@ -17,8 +17,27 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 882a6b3aa82befb488b3a0f5343cdb8a
   m_SerializeEntries:
+  - m_GUID: 0d524c0c9450cb848935a405305dda38
+    m_Address: DialogueTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 374d0c0e94c54ce4bbe40f7c7091d92b
+    m_Address: QuestTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c5ff2b29314938441abc334a2b56ed8b
-    m_Address: GameLanguageTable_en
+    m_Address: GameMainTable_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed28e5f2399afaf47b0994945a021df9
+    m_Address: ItemTable_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

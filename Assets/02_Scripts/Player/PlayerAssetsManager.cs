@@ -89,7 +89,7 @@ public class PlayerAssetsManager : MonoBehaviour, ISaveable
         }
         else
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_NOT_ENOUGH_MONEY"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_NOT_ENOUGH_MONEY"));
             return false;
 
         }

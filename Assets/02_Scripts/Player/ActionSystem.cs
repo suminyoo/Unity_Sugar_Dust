@@ -113,12 +113,12 @@ public class ActionSystem : MonoBehaviour
             // Àû IDamageable
             if (currentHit.collider.GetComponentInParent<IDamageable>() != null)
             {
-                PromptUIManager.Instance.SetActionPrompt(LocalizationHelper.L("PROMPT_ACTION_ATTACK"));
+                PromptUIManager.Instance.SetActionPrompt(LocalizationHelper.Main("PROMPT_ACTION_ATTACK"));
             }
             // ±¤¹° IMineable
             else if (currentHit.collider.GetComponentInParent<IMineable>() != null)
             {
-                PromptUIManager.Instance.SetActionPrompt(LocalizationHelper.L("PROMPT_ACTION_MINE"));
+                PromptUIManager.Instance.SetActionPrompt(LocalizationHelper.Main("PROMPT_ACTION_MINE"));
             }
             else
             {

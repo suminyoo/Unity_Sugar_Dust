@@ -87,7 +87,7 @@ public class PauseManager : MonoBehaviour
     public void GoToTitle()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            $"{LocalizationHelper.L("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.L("CONFIRM_GO_TITLE")}",
+            $"{LocalizationHelper.Main("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.Main("CONFIRM_GO_TITLE")}",
             () => {
                 GameManager.Instance.ResumeGameTime();
 
@@ -101,7 +101,7 @@ public class PauseManager : MonoBehaviour
     public void ExitGame()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            $"{LocalizationHelper.L("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.L("CONFIRM_EXIT_GAME")}",
+            $"{LocalizationHelper.Main("CONFIRM_UNSAVED_WARNING")}\n{LocalizationHelper.Main("CONFIRM_EXIT_GAME")}",
             () => {
                 Application.Quit();
             }

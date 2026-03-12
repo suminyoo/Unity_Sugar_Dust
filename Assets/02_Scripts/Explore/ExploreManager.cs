@@ -133,7 +133,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
         frozenBG.SetActive(true);
 
         
-        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_TEMP_DROP"));
+        NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_TEMP_DROP"));
     }
     void HandleFrozenDamage()
     {
@@ -206,7 +206,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
         if (isRetrying)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_EXPLORE_RETRY"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_EXPLORE_RETRY"));
             isRetrying = false;
         }
 
@@ -258,17 +258,17 @@ public class ExploreManager : MonoBehaviour, ISaveable
         if (isCleared || ratio >= 0.7f)
         {
             currentSuccessProb = 100f;
-            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_CLEAR");
+            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CLEAR");
         }
         else if (ratio >= 0.4f)
         {
             currentSuccessProb = 50f;
-            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_FAMILIAR");
+            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_FAMILIAR");
         }
         else
         {
             currentSuccessProb = 10f;
-            explorePathText.text = LocalizationHelper.L("EXPLORE_PATH_CONFUSED");
+            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CONFUSED");
         }
     }
     #endregion
@@ -346,13 +346,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
         {
             if (exploreSuccessSFX.clip != null) SoundManager.Instance.PlaySFX2D(exploreSuccessSFX);
 
-            resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_SUCCESS");
-            resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_SUCCESS_DESC");
+            resultTitleText.text = LocalizationHelper.Main("EXPLORE_RESULT_SUCCESS");
+            resultInfoText.text = LocalizationHelper.Main("EXPLORE_RESULT_SUCCESS_DESC");
         }
         else
         {
-            resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_COMPLETE");
-            resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_COMPLETE_DESC");
+            resultTitleText.text = LocalizationHelper.Main("EXPLORE_RESULT_COMPLETE");
+            resultInfoText.text = LocalizationHelper.Main("EXPLORE_RESULT_COMPLETE_DESC");
             LoseItems(false);
         }
 
@@ -368,8 +368,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isExplorationEnded = true;
         isExploreSuccess = false;
 
-        resultTitleText.text = LocalizationHelper.L("EXPLORE_RESULT_FAIL");
-        resultInfoText.text = LocalizationHelper.L("EXPLORE_RESULT_FAIL_DESC");
+        resultTitleText.text = LocalizationHelper.Main("EXPLORE_RESULT_FAIL");
+        resultInfoText.text = LocalizationHelper.Main("EXPLORE_RESULT_FAIL_DESC");
 
         LoseItems(true);
         ShowResultItems();

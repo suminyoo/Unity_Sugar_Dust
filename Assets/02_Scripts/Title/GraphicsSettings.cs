@@ -41,7 +41,7 @@ public class GraphicsSettings : MonoBehaviour
 
         for (int i = 0; i < displayModeKeys.Length; i++)
         {
-            displayModeDropdown.options[i].text = LocalizationHelper.L(displayModeKeys[i]);
+            displayModeDropdown.options[i].text = LocalizationHelper.Main(displayModeKeys[i]);
         }
         displayModeDropdown.RefreshShownValue();
     }
@@ -53,7 +53,7 @@ public class GraphicsSettings : MonoBehaviour
         List<string> options = new List<string>();
         for (int i = 0; i < displayModeKeys.Length; i++)
         {
-            options.Add(LocalizationHelper.L(displayModeKeys[i]));
+            options.Add(LocalizationHelper.Main(displayModeKeys[i]));
         }
         displayModeDropdown.AddOptions(options);
 

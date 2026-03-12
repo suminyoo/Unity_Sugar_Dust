@@ -50,11 +50,11 @@ public class ItemData : ScriptableObject
     {
         return itemType switch
         {
-            ItemType.Mineral => LocalizationHelper.L("ITEM_TYPE_MINERAL"),
-            ItemType.MonsterLoot => LocalizationHelper.L("ITEM_TYPE_MONSTER_LOOT"),
-            ItemType.Weapon => LocalizationHelper.L("ITEM_TYPE_WEAPON"),
-            ItemType.Potion => LocalizationHelper.L("ITEM_TYPE_POTION"),
-            _ => LocalizationHelper.L("ITEM_TYPE_DEFAULT")
+            ItemType.Mineral => LocalizationHelper.Main("ITEM_TYPE_MINERAL"),
+            ItemType.MonsterLoot => LocalizationHelper.Main("ITEM_TYPE_MONSTER_LOOT"),
+            ItemType.Weapon => LocalizationHelper.Main("ITEM_TYPE_WEAPON"),
+            ItemType.Potion => LocalizationHelper.Main("ITEM_TYPE_POTION"),
+            _ => LocalizationHelper.Main("ITEM_TYPE_DEFAULT")
         };
     }
 

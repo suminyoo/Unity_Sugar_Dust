@@ -66,11 +66,11 @@ public class PlayerQuestUIManager : MonoBehaviour
 
             if (quest.IsAllObjectivesComplete())
             {
-                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_CLAIM"), true, () => ClaimReward(quest));
+                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.Main("QUEST_CLAIM"), true, () => ClaimReward(quest));
             }
             else
             {
-                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.L("QUEST_IN_PROGRESS"), false, null);
+                slotUI.SetupSlot(quest.data, quest, LocalizationHelper.Main("QUEST_IN_PROGRESS"), false, null);
             }
         }
     }

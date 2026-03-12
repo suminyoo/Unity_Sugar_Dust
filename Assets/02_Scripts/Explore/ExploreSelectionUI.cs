@@ -61,7 +61,7 @@ public class ExploreSelectionUI : MonoBehaviour
             int envStartLevel = (i * exploreConfig.levelsPerEnvironment);
             environmentButtons[i].interactable = maxUnlocked >= envStartLevel;
             TextMeshProUGUI buttonText = environmentButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = $"{LocalizationHelper.L("PANEL_NAME_EXPLORE_AREA")} {i + 1}";
+            buttonText.text = $"{LocalizationHelper.Main("PANEL_NAME_EXPLORE_AREA")} {i + 1}";
         }
     }
 
@@ -93,8 +93,8 @@ public class ExploreSelectionUI : MonoBehaviour
             int minutes = (int)data.timeLimit / 60;
             int seconds = (int)data.timeLimit % 60;
 
-            levelNameText.text = LocalizationHelper.L("EXPLORE_STAGE_AREA", data.GetStageNameText(), localLevel);
-            timeLimitText.text = $"{LocalizationHelper.L("EXPLORE_TIME_UNTIL_SUNSET")} {minutes:D2}:{seconds:D2}";
+            levelNameText.text = LocalizationHelper.Main("EXPLORE_STAGE_AREA", data.GetStageNameText(), localLevel);
+            timeLimitText.text = $"{LocalizationHelper.Main("EXPLORE_TIME_UNTIL_SUNSET")} {minutes:D2}:{seconds:D2}";
 
             selectedLevelNumber = levelNum;
 
@@ -110,7 +110,7 @@ public class ExploreSelectionUI : MonoBehaviour
         {
             ExploreStageData data = exploreConfig.GetStageData(selectedLevelNumber);
             int localLevel = exploreConfig.GetLocalLevel(selectedLevelNumber);
-            string localizedMsg = LocalizationHelper.L("CONFIRM_START_EXPLORE", data.GetStageNameText(), localLevel);
+            string localizedMsg = LocalizationHelper.Main("CONFIRM_START_EXPLORE", data.GetStageNameText(), localLevel);
 
             CommonConfirmPopup.Instance.OpenPopup(
                 localizedMsg,

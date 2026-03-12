@@ -20,7 +20,7 @@ public class Door : MonoBehaviour, IInteractable
     public string GetInteractPrompt()
     {
         string key = isExiting ? "PROMPT_DOOR_EXIT" : "PROMPT_DOOR_ENTER";
-        return LocalizationHelper.L(key, GetPlaceName());
+        return LocalizationHelper.Main(key, GetPlaceName());
     }
 
     public void OnInteract()
@@ -33,7 +33,7 @@ public class Door : MonoBehaviour, IInteractable
 
         if (isExiting && MyShopManager.Instance != null && MyShopManager.Instance.IsShopOpen)
         {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.L("NOTI_CANNOT_EXIT_SHOP"));
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_CANNOT_EXIT_SHOP"));
             return;
         }
 

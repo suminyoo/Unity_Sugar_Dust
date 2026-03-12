@@ -12,6 +12,6 @@ public class TownToExplorePoint : MonoBehaviour, IInteractable
         }
     }
 
-    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_SPACESHIP_RIDE");
+    public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_SPACESHIP_RIDE");
 }
 

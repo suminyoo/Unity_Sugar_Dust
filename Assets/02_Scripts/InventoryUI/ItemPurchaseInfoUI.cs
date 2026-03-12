@@ -34,14 +34,14 @@ public class ItemPurchaseInfoUI : MonoBehaviour
 
         itemIcon.sprite = data.icon;
         itemNameText.text = data.GetItemName();
-        purchasePriceText.text = LocalizationHelper.L("ITEM_INFO_PRICE", price, CustomerPaymentSystem.CURRENCY_SYMBOL);
-        itemWeightText.text = LocalizationHelper.L("ITEM_INFO_WEIGHT", data.weight);
+        purchasePriceText.text = LocalizationHelper.Main("ITEM_INFO_PRICE", price, CustomerPaymentSystem.CURRENCY_SYMBOL);
+        itemWeightText.text = LocalizationHelper.Main("ITEM_INFO_WEIGHT", data.weight);
         itemDescriptionText.text = data.GetDescription();
         
         if (stockAmount == -1)
-            itemStockAmountText.text = LocalizationHelper.L("ITEM_INFO_ITEM_UNLIMITED");
+            itemStockAmountText.text = LocalizationHelper.Main("ITEM_INFO_ITEM_UNLIMITED");
         else
-            itemStockAmountText.text = LocalizationHelper.L("ITEM_INFO_STOCK", stockAmount);
+            itemStockAmountText.text = LocalizationHelper.Main("ITEM_INFO_STOCK", stockAmount);
     }
     public void Close()
     {

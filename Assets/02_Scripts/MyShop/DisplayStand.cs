@@ -21,7 +21,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     #region Interaction (IInteractable)
 
-    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_OPEN_DISPLAY_STAND");
+    public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_OPEN_DISPLAY_STAND");
 
     public void OnInteract()
     {

@@ -5,7 +5,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
     public ExploreManager exploreManager;
     public SoundData walkSound;
 
-    public string GetInteractPrompt() => LocalizationHelper.L("PROMPT_EXPLORE_DEEPER");
+    public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_EXPLORE_DEEPER");
 
     void Start()
     {
@@ -15,7 +15,7 @@ public class ExploreNextMapPoint : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            LocalizationHelper.L("CONFIRM_MOVE_NEXT_AREA"), 
+            LocalizationHelper.Main("CONFIRM_MOVE_NEXT_AREA"), 
             () =>
             {
                 if (exploreManager != null)

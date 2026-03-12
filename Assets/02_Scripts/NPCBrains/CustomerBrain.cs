@@ -107,7 +107,7 @@ public class CustomerBrain : NPCBrain
         }
         else
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_NOTHING_TO_BUY"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_NOTHING_TO_BUY"));
             yield return new WaitForSeconds(2f);
             ExitPhase();
         }
@@ -170,7 +170,7 @@ public class CustomerBrain : NPCBrain
         var slot = targetShop.InventorySystem.Slots[targetItemSlotIndex];
         if (slot.IsEmpty || slot.ItemData == null)
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_ITEM_DISAPPEARED"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_ITEM_DISAPPEARED"));
             yield return new WaitForSeconds(1.0f);
             yield return StartCoroutine(WanderPhase());
             yield break;
@@ -191,7 +191,7 @@ public class CustomerBrain : NPCBrain
         // Case A: 너무 비쌈 (> 2배) -> 안 삼
         if (potentialPrice > 0 && currentRatio > finalMaxRatio)
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_TOO_EXPENSIVE", potentialPrice));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_TOO_EXPENSIVE", potentialPrice));
 
             // 재고를 건드리지 않고 바로 퇴장
             yield return new WaitForSeconds(1.5f);
@@ -214,18 +214,22 @@ public class CustomerBrain : NPCBrain
                 {
                     itemObjInhand = Instantiate(itemToBuy.dropPrefab, itemCarryPoint.transform.position, Quaternion.identity, itemCarryPoint.transform);
                     if (itemObjInhand.GetComponent<WorldItem>() != null)
+                    {
                         itemObjInhand.GetComponent<WorldItem>().enabled = false;
+                        itemObjInhand.GetComponent<Collider>().enabled = false;
+                    }
+
                 }
 
                 if (itemToBuyPrice == 0)
                 {
-                    SayToSelf(LocalizationHelper.L("NPC_SAY_FREE_ITEM"));
+                    SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_FREE_ITEM"));
                     yield return new WaitForSeconds(1.5f);
                     ExitPhase();
                 }
                 else
                 {
-                    SayToSelf(LocalizationHelper.L("NPC_SAY_GOOD_PRICE"));
+                    SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_GOOD_PRICE"));
 
                     PreparePayment();
 
@@ -236,7 +240,7 @@ public class CustomerBrain : NPCBrain
             }
             else
             {
-                SayToSelf(LocalizationHelper.L("NPC_SAY_NO_STOCK"));
+                SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_NO_STOCK"));
                 yield return new WaitForSeconds(1.0f);
                 ExitPhase();
             }
@@ -266,7 +270,7 @@ public class CustomerBrain : NPCBrain
 
         if (queueInfo == null)
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_QUEUE_TOO_LONG"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_QUEUE_TOO_LONG"));
             DropItemOnFloor();
             yield return new WaitForSeconds(2.0f);
             ExitPhase();
@@ -307,7 +311,7 @@ public class CustomerBrain : NPCBrain
         if (isFrontOfQueue)
         {
             IsReadyForTransaction = true;
-            SayToSelf(LocalizationHelper.L("NPC_SAY_CHECKOUT_PLEASE"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_CHECKOUT_PLEASE"));
 
             OnArrivedAtCounter?.Invoke(this);
         }
@@ -342,7 +346,7 @@ public class CustomerBrain : NPCBrain
         isExiting = false; // 중복 실행 방지
 
         controller.Movement.Stop();
-        SayToSelf(LocalizationHelper.L("NPC_SAY_COME_AGAIN"));
+        SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_COME_AGAIN"));
 
         yield return new WaitForSeconds(1f);
 
@@ -394,11 +398,11 @@ public class CustomerBrain : NPCBrain
 
         if (isSuccess)
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_THANK_YOU"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_THANK_YOU"));
         }
         else
         {
-            SayToSelf(LocalizationHelper.L("NPC_SAY_DISAPPOINTED"));
+            SayToSelf(LocalizationHelper.Talk("SAY_CUSTOMER_DISAPPOINTED"));
             DropItemOnFloor();
         }
         counter.LeaveQueue(this);

@@ -189,7 +189,7 @@ public class SaveLoadUIManager : MonoBehaviour
     public void DeleteSlot(int arrayIndex)
     {
         CommonConfirmPopup.Instance.OpenPopup(
-            LocalizationHelper.L("CONFIRM_DELETE_SAVE"),
+            LocalizationHelper.Main("CONFIRM_DELETE_SAVE"),
             () => {
                 int slotNum = saveSlots[arrayIndex].slotNumber;
                 string directoryPath = Path.Combine(Application.persistentDataPath, $"Saves/Slot{slotNum}");

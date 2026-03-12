@@ -76,8 +76,8 @@ public class TransactionUI : MonoBehaviour
             itemIconImage.sprite = customer.ItemToBuy.icon;
             itemIconImage.gameObject.SetActive(true);
             itemNameText.text = customer.ItemToBuy.GetItemName();
-            itempriceText.text = LocalizationHelper.L("ITEM_INFO_REGISTERED_PRICE", customer.ItemToBuyPrice, CustomerPaymentSystem.CURRENCY_SYMBOL);
-            itemAmountText.text = LocalizationHelper.L("ITEM_INFO_BROUGHT_AMOUNT", customer.ItemToBuyAmount);
+            itempriceText.text = LocalizationHelper.Main("ITEM_INFO_REGISTERED_PRICE", customer.ItemToBuyPrice, CustomerPaymentSystem.CURRENCY_SYMBOL);
+            itemAmountText.text = LocalizationHelper.Main("ITEM_INFO_BROUGHT_AMOUNT", customer.ItemToBuyAmount);
             itemTotalPriceText.text = $"{customer.ItemToBuyPrice * customer.ItemToBuyAmount:N0} {CustomerPaymentSystem.CURRENCY_SYMBOL}";
         }
 

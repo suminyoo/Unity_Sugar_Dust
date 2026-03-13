@@ -6,7 +6,7 @@ public class PlayerAttackZone : MonoBehaviour
     private BoxCollider boxCol;
     private float damage;
     private bool isCritical;
-    private ActionSystem.ActionType type;
+    private ActionType type;
 
     void Awake()
     {
@@ -15,7 +15,7 @@ public class PlayerAttackZone : MonoBehaviour
         boxCol.enabled = false;
     }
 
-    public void EnableZone(float damage, bool isCritical, ActionSystem.ActionType actionType)
+    public void EnableZone(float damage, bool isCritical, ActionType actionType)
     {
         this.damage = damage;
         this.isCritical = isCritical;
@@ -31,7 +31,7 @@ public class PlayerAttackZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (type == ActionSystem.ActionType.Attack)
+        if (type == ActionType.Attack)
         {
             IDamageable target = other.GetComponentInParent<IDamageable>();
 
@@ -40,7 +40,7 @@ public class PlayerAttackZone : MonoBehaviour
                 target.TakeDamage(damage, isCritical); 
             }
         }
-        else if (type == ActionSystem.ActionType.Mine)
+        else if (type == ActionType.Mine)
         {
             IMineable mineral = other.GetComponentInParent<IMineable>();
 

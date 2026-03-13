@@ -5,7 +5,7 @@ public enum ItemType
 {
     [InspectorName("광물")] Mineral,
     [InspectorName("몬스터 부산물")] MonsterLoot,
-    [InspectorName("무기")] Weapon,
+    [InspectorName("도구")] Tool,
     [InspectorName("물약")] Potion,
     [InspectorName("업그레이드")] Upgrade
 
@@ -52,7 +52,7 @@ public class ItemData : ScriptableObject
         {
             ItemType.Mineral => LocalizationHelper.Main("ITEM_TYPE_MINERAL"),
             ItemType.MonsterLoot => LocalizationHelper.Main("ITEM_TYPE_MONSTER_LOOT"),
-            ItemType.Weapon => LocalizationHelper.Main("ITEM_TYPE_WEAPON"),
+            ItemType.Tool => LocalizationHelper.Main("ITEM_TYPE_WEAPON"),
             ItemType.Potion => LocalizationHelper.Main("ITEM_TYPE_POTION"),
             _ => LocalizationHelper.Main("ITEM_TYPE_DEFAULT")
         };

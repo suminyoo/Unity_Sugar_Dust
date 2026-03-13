@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36130124d0f542f4aa82a42a8e560876, type: 3}
+  m_Name: Item_Sword8_Red
+  m_EditorClassIdentifier: 
+  itemID: 42
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:aa60676f38159654d95a1004ebd97cd7
+    m_TableEntryReference:
+      m_KeyId: 13691844337677
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  itemType: 2
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:aa60676f38159654d95a1004ebd97cd7
+    m_TableEntryReference:
+      m_KeyId: 13691844337678
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  icon: {fileID: 0}
+  weight: 5
+  basePrice: 9000
+  isStackable: 0
+  maxStackAmount: 99
+  dropPrefab: {fileID: 4064842549054677953, guid: a9dcf96ee93694248abedfa2c6f18143, type: 3}
+  sellPrice: 20000
+  toolActionType: 0
+  toolPrefab: {fileID: 8834743050832374540, guid: b50c89cf2c0a7774b841beabb2a78aca, type: 3}
+  power: 55
+  range: 2.5
+  cooldown: 1.2
+  criticalChance: 0.12
+  criticalMultiplier: 1.2
+  actionSound:
+    clip: {fileID: 8300000, guid: 6b08e07b2853bb14c93a4c39250aa424, type: 3}
+    volume: 0.1
+  references:
+    version: 2
+    RefIds: []

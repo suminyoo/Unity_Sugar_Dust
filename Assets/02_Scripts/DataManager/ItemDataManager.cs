@@ -37,7 +37,30 @@ public enum ItemID //순서나 이름 수정 불가
     SugarDust7_White,
     SugarDust8_Rainbow,
     Health_Upgrade,
-    Stamina_Upgrade
+    Stamina_Upgrade,
+
+    Sword_1,
+    Sword_2,
+    Sword_3,
+    Sword_4,
+    Sword_5,
+    Sword_6,
+    Sword_7,
+    Sword_8,
+    Sword_9,
+    Sword_10,
+    Sword_11,
+    Pickaxe_1,
+    Pickaxe_2, 
+    Pickaxe_3,
+    Pickaxe_4, 
+    Pickaxe_5,
+    Pickaxe_6,
+    Pickaxe_7, 
+    Pickaxe_8,
+    Pickaxe_9,
+    Pickaxe_10,
+    Pickaxe_11,
 
 
 }

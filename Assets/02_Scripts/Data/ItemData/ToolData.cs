@@ -18,6 +18,9 @@ public class ToolData : ItemData
 
     [Header("Sounds")]
     public SoundData actionSound;
+
+    public override bool IsUsable() => true;
+
 }
 
 public enum ActionType

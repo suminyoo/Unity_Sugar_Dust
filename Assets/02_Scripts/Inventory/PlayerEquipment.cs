@@ -1,76 +1,66 @@
-//using UnityEngine;
+using UnityEngine;
 
-//public class PlayerEquipment : InventoryHolder
-//{
-//    public ActionSystem actionSystem;
-//    public InventoryUI equipmentUI;
+public class PlayerEquipment : InventoryHolder
+{
+    public static PlayerEquipment Instance;
 
-//    protected override void Awake()
-//    {
-//        inventorySystem = new InventorySystem(2);
-//    }
+    public ActionSystem actionSystem;
 
-//    private void Start()
-//    {
-//        if (equipmentUI != null)
-//        {
-//            equipmentUI.SetInventorySystem(this.inventorySystem);
-//        }
+    public ToolData bareHandSword;
+    public ToolData bareHandPickaxe;
 
-//        inventorySystem.OnInventoryUpdated += UpdateActionSystem;
+    protected override void Awake()
+    {
+        inventorySystem = new InventorySystem(2);
 
-//        UpdateActionSystem();
-//    }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
-//    private void OnDestroy()
-//    {
-//        if (inventorySystem != null)
-//        {
-//            inventorySystem.OnInventoryUpdated -= UpdateActionSystem;
-//        }
-//    }
+    private void Start()
+    {
+        inventorySystem.OnInventoryUpdated += UpdateActionSystem;
+        UpdateActionSystem();
+    }
 
-//    public override int AddItem(ItemData item, int count)
-//    {
-//        if (!(item is ToolData tool))
-//        {
-//            return count;
-//        }
+    public void EquipFromBag(ToolData newTool)
+    {
+        int targetSlot = (newTool.toolActionType == ActionType.Attack) ? 0 : 1;
+        var bag = PlayerInventory.Instance;
 
-//        if (tool.toolActionType == ActionType.Attack)
-//        {
-//            if (!inventorySystem.Slots[0].IsEmpty) return count;
+        InventorySlot currentSlot = inventorySystem.Slots[targetSlot];
+        ItemData oldItem = currentSlot.ItemData;
 
-//            inventorySystem.Slots[0].UpdateSlot(item, count);
-//            UpdateActionSystem();
-//            return 0;
-//        }
+        bag.InventorySystem.ConsumeItem(newTool, 1);
 
-//        if (tool.toolActionType == ActionType.Mine)
-//        {
-//            if (!inventorySystem.Slots[1].IsEmpty) return count;
+        currentSlot.UpdateSlot(newTool, 1);
 
-//            inventorySystem.Slots[1].UpdateSlot(item, count);
-//            UpdateActionSystem();
-//            return 0;
-//        }
+        if (oldItem != null && oldItem != bareHandSword && oldItem != bareHandPickaxe)
+        {
+            bag.AddItem(oldItem, 1);
+        }
 
-//        return count;
-//    }
+        //inventorySystem.NotifyUpdated();
+    }
 
-//    private void UpdateActionSystem()
-//    {
-//        ToolData swordData = inventorySystem.Slots[0].IsEmpty
-//            ? null
-//            : inventorySystem.Slots[0].ItemData as ToolData;
+    public override int AddItem(ItemData item, int count)
+    {
+        if (item is ToolData tool)
+        {
+            int targetSlot = (tool.toolActionType == ActionType.Attack) ? 0 : 1;
+            return base.AddItem(item, count);
+        }
+        return count;
+    }
 
-//        ToolData pickaxeData = inventorySystem.Slots[1].IsEmpty
-//            ? null
-//            : inventorySystem.Slots[1].ItemData as ToolData;
+    private void UpdateActionSystem()
+    {
+        ToolData sword = inventorySystem.Slots[0].IsEmpty ? bareHandSword : (ToolData)inventorySystem.Slots[0].ItemData;
+        ToolData pickaxe = inventorySystem.Slots[1].IsEmpty ? bareHandPickaxe : (ToolData)inventorySystem.Slots[1].ItemData;
 
-//        if (actionSystem != null)
-//        {
-//            actionSystem.UpdateEquippedWeapons(swordData, pickaxeData);
-//        }
-//    }
-//}
+        if (actionSystem != null)
+        {
+            actionSystem.UpdateEquippedWeapons(sword, pickaxe);
+        }
+    }
+}

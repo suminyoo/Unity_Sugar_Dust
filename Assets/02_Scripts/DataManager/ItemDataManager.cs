@@ -62,6 +62,10 @@ public enum ItemID //순서나 이름 수정 불가
     Pickaxe_10,
     Pickaxe_11,
 
+    BareHand_Sword,
+    BareHand_Pickaxe,
+
+
 
 }
 

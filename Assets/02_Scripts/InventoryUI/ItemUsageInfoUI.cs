@@ -38,14 +38,26 @@ public class ItemUsageInfoUI : MonoBehaviour
 
         if (useButton != null)
         {
-            useButton.gameObject.SetActive(data.IsUsable());
+            useButton.gameObject.SetActive(data.IsUsable() || data is ToolData);
+
+            var btnText = useButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (btnText != null)
+            {
+                btnText.text = (data is ToolData) ? "장착하기" : "사용하기";
+            }
         }
     }
     public void OnClickUseButton()
     {
-        if (currentData != null && PlayerInventory.Instance != null)
+        if (currentData is ToolData tool)
+        {
+            PlayerEquipment.Instance.EquipFromBag(tool);
+            Close();
+        }
+        else if (currentData != null)
         {
             PlayerInventory.Instance.UseItem(currentData);
+            Close();
         }
     }
 

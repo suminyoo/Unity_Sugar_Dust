@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36130124d0f542f4aa82a42a8e560876, type: 3}
+  m_Name: Item_BareHand_Sword
+  m_EditorClassIdentifier: 
+  itemID: 57
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  itemType: 2
+  description:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  icon: {fileID: 0}
+  weight: 0
+  basePrice: 0
+  isStackable: 0
+  maxStackAmount: 99
+  dropPrefab: {fileID: 0}
+  sellPrice: 0
+  toolActionType: 0
+  toolPrefab: {fileID: 0}
+  power: 1
+  range: 2.5
+  cooldown: 1
+  criticalChance: 0
+  criticalMultiplier: 0
+  actionSound:
+    clip: {fileID: 8300000, guid: 6b08e07b2853bb14c93a4c39250aa424, type: 3}
+    volume: 0.1
+  references:
+    version: 2
+    RefIds: []

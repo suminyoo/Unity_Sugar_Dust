@@ -470,7 +470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 7.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1697296120444621750
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0c2fbcba869f54d97cb4f89a1897dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedInventory: {fileID: 2861179695914431428}
+  connectedInventory: {fileID: 3937726180583055345}
   mouseItemData: {fileID: 2282914791179185328}
   slotPrefab: {fileID: 7153219060786524397, guid: 4f1466e4a78ae1949baebd7f87e9726d, type: 3}
   contentPanel: {fileID: 7667977651168051167}
@@ -2137,7 +2137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 293.75, y: 0}
+  m_AnchoredPosition: {x: 302, y: 0}
   m_SizeDelta: {x: 255, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8609583759739164874
@@ -7888,7 +7888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8872193524669787500
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17765,8 +17765,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55, y: -46}
-  m_SizeDelta: {x: 25, y: 25}
+  m_AnchoredPosition: {x: -50, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7979698490162617476
 CanvasRenderer:
@@ -17789,7 +17789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.12941177}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26941,8 +26941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 51.8, y: -46}
-  m_SizeDelta: {x: 25, y: 25}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3813184506366610065
 CanvasRenderer:
@@ -26965,7 +26965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.14117648}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -31825,7 +31825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1805554522395511915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33911,8 +33911,9 @@ GameObject:
   - component: {fileID: 1447261619496624904}
   - component: {fileID: 4621993315052264783}
   - component: {fileID: 4098761852924780871}
+  - component: {fileID: 3937726180583055345}
   m_Layer: 5
-  m_Name: ToolPanel
+  m_Name: PlayerEquipmentPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33937,8 +33938,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -284.5, y: 199.4}
-  m_SizeDelta: {x: 210, y: 120.5}
+  m_AnchoredPosition: {x: -285, y: 217}
+  m_SizeDelta: {x: 190, y: 90}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1447261619496624904
 CanvasRenderer:
@@ -33990,6 +33991,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670d1fdeacebd6e4987a602c4bbfbad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3937726180583055345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8302326004100437144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f751d81402a2945b4cadacdc725265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPosition: {fileID: 462483497026609026}
+  inventorySystem:
+    slots: []
+    maxSlots: 0
+  actionSystem: {fileID: 8109765995978425900}
+  bareHandSword: {fileID: 11400000, guid: 4b0896aa90930c843a9976d48678b75f, type: 2}
+  bareHandPickaxe: {fileID: 11400000, guid: 1ad2cb94c98bc8149baec9f859479747, type: 2}
 --- !u!1 &8354082147738456087
 GameObject:
   m_ObjectHideFlags: 0
@@ -34875,7 +34895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -284.5, y: -65}
+  m_AnchoredPosition: {x: -284.5, y: -55}
   m_SizeDelta: {x: 190, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7915784145819485363
@@ -35654,7 +35674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 293.75, y: 0}
+  m_AnchoredPosition: {x: 302, y: 0}
   m_SizeDelta: {x: 255, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5334285573081162766

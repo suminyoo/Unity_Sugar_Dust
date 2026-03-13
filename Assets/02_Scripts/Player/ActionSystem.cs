@@ -168,4 +168,12 @@ public class ActionSystem : MonoBehaviour
             EquipTool(type);
         }
     }
+
+    public void UpdateEquippedWeapons(ToolData sword, ToolData pickaxe)
+    {
+        currentSwordData = sword;
+        currentPickaxeData = pickaxe;
+
+        EquipTool(lastEquippedType);
+    }
 }

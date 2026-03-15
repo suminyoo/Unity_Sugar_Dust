@@ -117,7 +117,10 @@ public class PlayerInventory : InventoryHolder, ISaveable
             totalWeight += mouseWeight;
             //Debug.Log($"마우스 아이템 무게 추가: {mouseWeight:F1}kg");
         }
-
+        if (PlayerEquipment.Instance != null)
+        {
+            totalWeight += PlayerEquipment.Instance.GetEquipmentWeight();
+        }
         currentWeight = totalWeight;
         UpdateWeightUI();
         //Debug.Log($"총 무게 업데이트: {currentWeight:F1}kg / {maxWeight:F1}kg");

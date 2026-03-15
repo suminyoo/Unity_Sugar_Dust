@@ -551,7 +551,7 @@ MonoBehaviour:
   mouseItemData: {fileID: 2282914791179185328}
   slotPrefab: {fileID: 7153219060786524397, guid: 4f1466e4a78ae1949baebd7f87e9726d, type: 3}
   contentPanel: {fileID: 7667977651168051167}
-  contextType: 0
+  contextType: 4
 --- !u!1 &202215328739238386
 GameObject:
   m_ObjectHideFlags: 0
@@ -17743,7 +17743,7 @@ GameObject:
   - component: {fileID: 7979698490162617476}
   - component: {fileID: 982465123448130232}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: SwordImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17756,13 +17756,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4085413280191482518}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7118130076606207408}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -50, y: 0}
@@ -17789,7 +17789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.12941177}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26919,7 +26919,7 @@ GameObject:
   - component: {fileID: 3813184506366610065}
   - component: {fileID: 6862299834217149511}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: PickaxeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26932,13 +26932,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6582427395908020430}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7118130076606207408}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 50, y: 0}
@@ -26965,7 +26965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.14117648}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -31825,7 +31825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1805554522395511915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33931,15 +33931,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7667977651168051167}
   - {fileID: 2581073295747631064}
   - {fileID: 8807655910151585409}
+  - {fileID: 7667977651168051167}
   m_Father: {fileID: 1805554522395511915}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -285, y: 217}
-  m_SizeDelta: {x: 190, y: 90}
+  m_AnchoredPosition: {x: -285, y: 215.3}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1447261619496624904
 CanvasRenderer:
@@ -33962,7 +33962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4009434, g: 1, b: 0.8439335, a: 1}
+  m_Color: {r: 0.5078419, g: 0.43654326, b: 0.8490566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33978,7 +33978,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.5
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &4098761852924780871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34008,6 +34008,7 @@ MonoBehaviour:
     slots: []
     maxSlots: 0
   actionSystem: {fileID: 8109765995978425900}
+  equipmentUI: {fileID: 0}
   bareHandSword: {fileID: 11400000, guid: 4b0896aa90930c843a9976d48678b75f, type: 2}
   bareHandPickaxe: {fileID: 11400000, guid: 1ad2cb94c98bc8149baec9f859479747, type: 2}
 --- !u!1 &8354082147738456087

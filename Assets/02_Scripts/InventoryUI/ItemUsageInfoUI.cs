@@ -16,6 +16,7 @@ public class ItemUsageInfoUI : MonoBehaviour
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI weightText;
 
+    private InventoryContext currentContext;
 
     private void Start()
     {
@@ -23,9 +24,10 @@ public class ItemUsageInfoUI : MonoBehaviour
         defaultPanel.SetActive(true);
     }
 
-    public void OpenPanel(ItemData data)
+    public void OpenPanel(ItemData data, InventoryContext context)
     {
         currentData = data;
+        currentContext = context;
 
         defaultPanel.SetActive(false);
         itemInfoPanel.SetActive(true);
@@ -43,13 +45,25 @@ public class ItemUsageInfoUI : MonoBehaviour
             var btnText = useButton.GetComponentInChildren<TextMeshProUGUI>();
             if (btnText != null)
             {
-                btnText.text = (data is ToolData) ? "장착하기" : "사용하기";
+                if (currentContext == InventoryContext.Equipment)
+                {
+                    btnText.text = LocalizationHelper.Main("INVEN_UNEQUIP");
+                }
+                else
+                {
+                    btnText.text = LocalizationHelper.Main((data is ToolData) ? "INVEN_EQUIP" : "INVEN_USE");
+                }
             }
         }
     }
     public void OnClickUseButton()
     {
-        if (currentData is ToolData tool)
+        if (currentContext == InventoryContext.Equipment && currentData is ToolData unequipTool)
+        {
+            PlayerEquipment.Instance.UnequipTool(unequipTool);
+            Close();
+        }
+        else if (currentData is ToolData tool)
         {
             PlayerEquipment.Instance.EquipFromBag(tool);
             Close();

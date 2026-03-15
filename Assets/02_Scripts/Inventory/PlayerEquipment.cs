@@ -3,16 +3,14 @@ using UnityEngine;
 public class PlayerEquipment : InventoryHolder
 {
     public static PlayerEquipment Instance;
-
     public ActionSystem actionSystem;
-
+    public InventoryUI equipmentUI;
     public ToolData bareHandSword;
     public ToolData bareHandPickaxe;
 
     protected override void Awake()
     {
         inventorySystem = new InventorySystem(2);
-
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
@@ -20,27 +18,37 @@ public class PlayerEquipment : InventoryHolder
     private void Start()
     {
         inventorySystem.OnInventoryUpdated += UpdateActionSystem;
+
+        if (PlayerInventory.Instance != null)
+        {
+            inventorySystem.OnInventoryUpdated += PlayerInventory.Instance.RefreshTotalWeight;
+        }
+
         UpdateActionSystem();
+
+        if (equipmentUI != null)
+        {
+            equipmentUI.connectedInventory = this;
+            equipmentUI.SetInventorySystem(this.inventorySystem);
+        }
     }
 
+    // 우클릭 장착
     public void EquipFromBag(ToolData newTool)
     {
         int targetSlot = (newTool.toolActionType == ActionType.Attack) ? 0 : 1;
         var bag = PlayerInventory.Instance;
 
-        InventorySlot currentSlot = inventorySystem.Slots[targetSlot];
-        ItemData oldItem = currentSlot.ItemData;
+        ItemData oldItem = inventorySystem.Slots[targetSlot].ItemData;
 
         bag.InventorySystem.ConsumeItem(newTool, 1);
 
-        currentSlot.UpdateSlot(newTool, 1);
+        inventorySystem.UpdateSlotAtIndex(targetSlot, newTool, 1);
 
         if (oldItem != null && oldItem != bareHandSword && oldItem != bareHandPickaxe)
         {
             bag.AddItem(oldItem, 1);
         }
-
-        //inventorySystem.NotifyUpdated();
     }
 
     public override int AddItem(ItemData item, int count)
@@ -48,9 +56,24 @@ public class PlayerEquipment : InventoryHolder
         if (item is ToolData tool)
         {
             int targetSlot = (tool.toolActionType == ActionType.Attack) ? 0 : 1;
-            return base.AddItem(item, count);
+
+            // base.AddItem을 쓰지 않고 정해진 슬롯이 비었을 때만 시스템을 통해 직접 할당
+            if (inventorySystem.Slots[targetSlot].IsEmpty)
+            {
+                inventorySystem.UpdateSlotAtIndex(targetSlot, item, count);
+                return 0;
+            }
         }
         return count;
+    }
+
+    // 드래그 앤 드롭 가능한지 위치 확인
+    public override bool CanAcceptItem(int slotIndex, ItemData item)
+    {
+        if (!(item is ToolData tool)) return false;
+        int targetSlot = (tool.toolActionType == ActionType.Attack) ? 0 : 1;
+
+        return slotIndex == targetSlot;
     }
 
     private void UpdateActionSystem()
@@ -61,6 +84,35 @@ public class PlayerEquipment : InventoryHolder
         if (actionSystem != null)
         {
             actionSystem.UpdateEquippedWeapons(sword, pickaxe);
+        }
+    }
+
+    public float GetEquipmentWeight()
+    {
+        float weight = 0f;
+        foreach (var slot in inventorySystem.Slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                weight += slot.ItemData.weight * slot.Amount;
+            }
+        }
+        return weight;
+    }
+
+    public void UnequipTool(ToolData tool)
+    {
+        int targetSlot = (tool.toolActionType == ActionType.Attack) ? 0 : 1;
+
+        int remaining = PlayerInventory.Instance.AddItem(tool, 1);
+
+        if (remaining == 0)
+        {
+            inventorySystem.UpdateSlotAtIndex(targetSlot, null, 0);
+        }
+        else
+        {
+            NotificationUIManager.Instance.ShowNotification("가방이 꽉 차서 장착을 해제할 수 없습니다.");
         }
     }
 }

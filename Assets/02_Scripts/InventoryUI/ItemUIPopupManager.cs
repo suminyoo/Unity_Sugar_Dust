@@ -17,9 +17,9 @@ public class ItemUIPopupManager : MonoBehaviour
     }
 
     // 아이템 정보창 열기
-    public void ShowItemInfo(ItemData data)
+    public void ShowItemInfo(ItemData data, InventoryContext context)
     {
-        usageInfoUI.OpenPanel(data);
+        usageInfoUI.OpenPanel(data, context);
     }
 
     // 진열대 아이템 창

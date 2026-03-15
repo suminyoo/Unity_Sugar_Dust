@@ -13,7 +13,8 @@ public enum InventoryContext
     Player,     // 플레이어 가방 (사용/장착)
     Container,      // 보관함 (이동)
     MyShop,     // 내 진열대 (가격 설정, 판매 취소)
-    NPCShop     // 남의 상점 (구매)
+    NPCShop,     // 남의 상점 (구매)
+    Equipment,
 }
 
 public class InventoryUI : MonoBehaviour
@@ -202,9 +203,10 @@ public class InventoryUI : MonoBehaviour
         switch (contextType)
         {
             case InventoryContext.Player:
+            case InventoryContext.Equipment:
             case InventoryContext.Container:
                 // 플레이어나 상자: 정보창
-                ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData);
+                ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData, contextType);
                 break;
 
             case InventoryContext.MyShop:

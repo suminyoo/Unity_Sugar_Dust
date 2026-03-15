@@ -227,6 +227,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         if (!managerUI.mouseItemData.HasItem) return;
 
+        ItemData mouseItem = managerUI.mouseItemData.MouseSlot.ItemData;
+        if (!managerUI.connectedInventory.CanAcceptItem(mySlotIndex, mouseItem))
+        {
+            return; //holder 거절시 드롭 취ㄱ소
+        }
+
         // InventorySystem에 스왑요청 (같으면 합치기, 다르면 교체)
         var system = managerUI.connectedInventory.InventorySystem;
         InventorySlot mouseSlot = managerUI.mouseItemData.MouseSlot;

@@ -101,8 +101,11 @@ public class InventoryHolder : MonoBehaviour
         }
 
     }
-    
-    #endregion
 
+    #endregion
+    public virtual bool CanAcceptItem(int slotIndex, ItemData item)
+    {
+        return true;
+    }
 
 }

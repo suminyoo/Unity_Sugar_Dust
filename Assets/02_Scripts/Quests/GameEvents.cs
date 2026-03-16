@@ -3,6 +3,9 @@ using System;
 // 퀘스트용 static 클래스
 public static class GameEvents
 {
+
+    public static Action<QuestID> OnQuestCompleted;
+
     public static Action OnQuestProgressUpdated;
 
     public static Func<ItemID, int> RequestPlayerItemCount;

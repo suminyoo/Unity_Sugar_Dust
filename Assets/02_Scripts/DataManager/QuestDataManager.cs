@@ -2,11 +2,24 @@ using UnityEngine;
 using System.Collections.Generic;
 public enum QuestID //순서나 이름 수정 불가
 {
-    None,
-    TestQuest_1,
-    TestQuest_2,
-    TestQuest_3,
-    TestQuest_4,
+    None = 0,
+    TestQuest_1 = 1,
+    TestQuest_2 = 2,
+    TestQuest_3 = 3,
+    TestQuest_4 = 4,
+
+
+    Tuto_01 = 10,
+    Tuto_02 = 11,
+    Tuto_03 = 12,
+    Tuto_04 = 13,
+    Tuto_05 = 14,
+    Tuto_06 = 15,
+    Tuto_07 = 16,
+    Tuto_08 = 17,
+    Tuto_09 = 18,
+    Tuto_10 = 19,
+    Tuto_11 = 20,
 
 
 }

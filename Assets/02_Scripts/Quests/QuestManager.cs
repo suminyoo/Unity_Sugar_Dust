@@ -69,6 +69,7 @@ public class QuestManager : MonoBehaviour
 
             completedQuestIDs.Add(quest.data.questID.ToString());
             activeQuests.Remove(quest);
+            GameEvents.OnQuestCompleted?.Invoke(quest.data.questID);
 
             // º¸»ó °ñµå
             if (quest.data.rewardGold > 0)

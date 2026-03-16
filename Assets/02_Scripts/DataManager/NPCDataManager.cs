@@ -6,6 +6,11 @@ public enum NPCID //순서나 이름 수정 불가
     None = 0,
     Test = 1,
 
+    Parent = 5,
+    Guide = 6,
+
+    SpaceshipOwner = 7,
+
     Shopkeeper_Weapon = 10,
 
     Customer = 50,

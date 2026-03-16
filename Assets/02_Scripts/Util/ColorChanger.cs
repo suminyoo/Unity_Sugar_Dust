@@ -22,8 +22,8 @@ public class ColorChanger : MonoBehaviour
         if (_renderer == null) _renderer = GetComponent<Renderer>();
         if (_propBlock == null) _propBlock = new MaterialPropertyBlock();
 
-        _renderer.GetPropertyBlock(_propBlock);
+        _renderer.GetPropertyBlock(_propBlock, 0);
         _propBlock.SetColor("_Color", myColor);
-        _renderer.SetPropertyBlock(_propBlock);
+        _renderer.SetPropertyBlock(_propBlock, 0);
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -25,9 +24,9 @@ public class TutorialManager : MonoBehaviour
     [Header("Dialogue Data (교체)")]
     public DialogueData parentDialogue_Phase1;
     public DialogueData parentDialogue_AfterGuide;
-    public DialogueData curiousDialogue_AfterWeapon; // 내가 귀찮아서 시키는게 아니야
-    public DialogueData weaponDialogue_AfterReward;  // 너를 위한 작은 무기도 만들거란다
-    public DialogueData spaceshipDialogue_AfterClear;// 임대인한테 가봐
+    public DialogueData curiousDialogue_AfterWeapon;
+    public DialogueData weaponDialogue_AfterReward;
+    public DialogueData spaceshipDialogue_AfterClear;
 
     [Header("Scene Objects")]
     public GameObject shopBlockerCollider;

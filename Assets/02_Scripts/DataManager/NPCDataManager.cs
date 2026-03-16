@@ -8,8 +8,9 @@ public enum NPCID //순서나 이름 수정 불가
 
     Parent = 5,
     Guide = 6,
-
-    SpaceshipOwner = 7,
+    Curious = 7,
+    SpaceshipOwner = 8,
+    Landlord = 9,
 
     Shopkeeper_Weapon = 10,
 

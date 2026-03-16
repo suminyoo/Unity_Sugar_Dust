@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -40,13 +40,13 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 0.5
+    value: 1.5
   color:
     overrideState: 1
-    value: {r: 0.17779309, g: 0.16078433, b: 0.41568628, a: 1}
+    value: {r: 0.1982467, g: 0.1982467, b: 0.4245283, a: 1}
   ambientOnly:
     overrideState: 0
     value: 1
@@ -60,8 +60,8 @@ MonoBehaviour:
     overrideState: 0
     value: -12
   thicknessModifier:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 5
   zBias:
     overrideState: 0
     value: 0.0001
@@ -69,11 +69,11 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   radius:
-    overrideState: 0
-    value: 0.25
+    overrideState: 1
+    value: 0.5
   quality:
-    overrideState: 0
-    value: 2
+    overrideState: 1
+    value: 1
 --- !u!114 &-1314678317192180588
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -92,12 +92,12 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2.5
+    value: 5
   threshold:
-    overrideState: 0
-    value: 1.2
+    overrideState: 1
+    value: 0.9
   softKnee:
-    overrideState: 0
+    overrideState: 1
     value: 0.5
   clamp:
     overrideState: 0
@@ -1472,13 +1472,13 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.17237903, g: 0.13465646, b: 0.3207547, a: 1}
+    value: {r: 0.2627451, g: 0.29525396, b: 0.5294118, a: 1}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.2
+    value: 0.373
   smoothness:
     overrideState: 1
     value: 0.2

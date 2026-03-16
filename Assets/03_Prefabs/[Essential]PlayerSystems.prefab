@@ -5787,13 +5787,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5639715582848556598}
   - {fileID: 838794424459342869}
   - {fileID: 3005155421933746466}
   - {fileID: 3466065013929244015}
   - {fileID: 4380311945190391979}
   - {fileID: 5531202658332101729}
   - {fileID: 8872193524669787500}
-  - {fileID: 5639715582848556598}
+  - {fileID: 453063990476320432}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3317875293771989421
@@ -21474,6 +21475,66 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4963388285009854002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453063990476320432}
+  - component: {fileID: 5442620787380767976}
+  m_Layer: 0
+  m_Name: '[Manager]TutorialManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &453063990476320432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963388285009854002}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6094085051925216577}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5442620787380767976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963388285009854002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649b4e149603b414fa429be72c94a2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalNPCGroup: {fileID: 0}
+  tutorialNPCGroup: {fileID: 0}
+  parentNPC: {fileID: 0}
+  guideNPC: {fileID: 0}
+  curiousNPC: {fileID: 0}
+  weaponNPC: {fileID: 0}
+  spaceshipNPC: {fileID: 0}
+  landlordNPC: {fileID: 0}
+  tuto02_Guide: {fileID: 0}
+  tuto03_Curious: {fileID: 0}
+  parentDialogue_Phase1: {fileID: 0}
+  parentDialogue_AfterGuide: {fileID: 0}
+  curiousDialogue_AfterWeapon: {fileID: 0}
+  weaponDialogue_AfterReward: {fileID: 0}
+  spaceshipDialogue_AfterClear: {fileID: 0}
+  shopBlockerCollider: {fileID: 0}
 --- !u!1 &4975140988706835197
 GameObject:
   m_ObjectHideFlags: 0
@@ -31825,7 +31886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1805554522395511915
 RectTransform:
   m_ObjectHideFlags: 0

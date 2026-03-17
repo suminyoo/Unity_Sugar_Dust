@@ -30,6 +30,8 @@ public class QuestManager : MonoBehaviour
 
         newQuest.StartQuest();
         newQuest.EvaluateAll();
+
+        GameEvents.OnQuestAccepted?.Invoke(questData.questID);
     }
 
     public void RefreshAllQuestProgress()

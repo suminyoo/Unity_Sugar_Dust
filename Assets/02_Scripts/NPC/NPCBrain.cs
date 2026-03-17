@@ -86,7 +86,7 @@ public class NPCBrain : MonoBehaviour
         // 이미 대화 중이면 중복 실행 방지
         if (isInteracting) return;
 
-        GameEvents.OnNPCTalked?.Invoke(controller.npcData.npcID);
+        GameEvents.OnNPCInteractionStarted?.Invoke(controller);
 
         StartCoroutine(DefaultInteractionProcess());
     }
@@ -99,6 +99,8 @@ public class NPCBrain : MonoBehaviour
 
         // 대화 진행 (대화 끝나는거 대기)
         yield return StartCoroutine(DialogueProcess());
+
+        GameEvents.OnNPCTalkedFinished?.Invoke(controller.npcData.npcID);
 
         FinishInteraction();
     }
@@ -157,18 +159,38 @@ public class NPCBrain : MonoBehaviour
                 string qID = questData.questID.ToString();
                 Quest activeQuest = QuestManager.Instance.GetActiveQuest(qID);
 
+                // 이미 받은 퀘스트인 경우
                 if (activeQuest != null)
                 {
+                    // 완료는 했지만 보상을 아직 안 받았다면 느낌표 표시
                     if (activeQuest.IsAllObjectivesComplete() && !activeQuest.isRewardClaimed)
                     {
-                        shouldShow = true; 
+                        shouldShow = true;
                         break;
                     }
+                    // 진행 중인 상태 느낌표 안 보임
+                    continue;
                 }
-                else if (!QuestManager.Instance.completedQuestIDs.Contains(qID))
+
+                // 아직 안 받은 퀘스트인 경우
+                if (!QuestManager.Instance.completedQuestIDs.Contains(qID))
                 {
-                    shouldShow = true;
-                    break;
+                    // 선행 퀘스트 조건 확인
+                    bool canAccept = true;
+                    if (questData.requiredQuestID != QuestID.None)
+                    {
+                        // 선행 퀘스트를 완료하지 않았다면 표시 안 함
+                        if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID.ToString()))
+                        {
+                            canAccept = false;
+                        }
+                    }
+
+                    if (canAccept)
+                    {
+                        shouldShow = true;
+                        break;
+                    }
                 }
             }
         }

@@ -4,12 +4,12 @@
 
     public override void OnStart()
     {
-        GameEvents.OnNPCTalked += HandleNPCTalked;
+        GameEvents.OnNPCTalkedFinished += HandleNPCTalked;
     }
 
     public override void OnStop()
     {
-        GameEvents.OnNPCTalked -= HandleNPCTalked;
+        GameEvents.OnNPCTalkedFinished -= HandleNPCTalked;
     }
 
     private void HandleNPCTalked(NPCID targetNpcID)

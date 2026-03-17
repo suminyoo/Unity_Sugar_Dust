@@ -15,8 +15,8 @@ public class NPCController : MonoBehaviour
     [SerializeField] private LocalizedString goodByeMessage;
 
     public string GetNpcName() => npcName.GetLocalizedString();
-    public string GetGreetingMessage() => greetingMessage.GetLocalizedString();
-    public string GetGoodByeMessage() => goodByeMessage.GetLocalizedString();
+    public string GetGreetingMessage() => GetSafeLocalizedString(greetingMessage);
+    public string GetGoodByeMessage() => GetSafeLocalizedString(goodByeMessage);
 
     // ÂüÁ¶
     [HideInInspector] public NPCMovement Movement { get; private set; }
@@ -49,5 +49,15 @@ public class NPCController : MonoBehaviour
     public void OnQuestInteract()
     {
         Brain.HandleQuestInteraction();
+    }
+
+    private string GetSafeLocalizedString(LocalizedString localizedString)
+    {
+        if (localizedString == null || localizedString.IsEmpty)
+        {
+            return string.Empty;
+        }
+
+        return localizedString.GetLocalizedString();
     }
 }

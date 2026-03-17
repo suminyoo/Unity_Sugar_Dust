@@ -22,14 +22,23 @@ public class TutorialManager : MonoBehaviour
     public QuestData tuto03_Curious;
 
     [Header("Dialogue Data (교체)")]
-    public DialogueData parentDialogue_Phase1;
-    public DialogueData parentDialogue_AfterGuide;
-    public DialogueData curiousDialogue_AfterWeapon;
-    public DialogueData weaponDialogue_AfterReward;
-    public DialogueData spaceshipDialogue_AfterClear;
+    public DialogueData parentDialogue_Phase2;
+    public DialogueData parentDialogue_Phase3;
+   
+    public DialogueData curiousDialogue_Phase2;
+    public DialogueData weaponDialogue_Phase2;
+
+    public DialogueData spaceshipDialogue_Phase2;
+    public DialogueData spaceshipDialogue_Phase3;
+
 
     [Header("Scene Objects")]
     public GameObject shopBlockerCollider;
+    public GameObject houseDoorCollider;
+
+    [Header("Village Introduce")]
+    public PathLookAtController townCamController;
+    public DialogueData[] townDialogues;
 
     private void Awake()
     {
@@ -40,7 +49,7 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         // TODO: 세이브 데이터 추가 해야함 게임 세이브 매니저
-        bool isTutorialCompleted = PlayerPrefs.GetInt("IsTutorialCompleted", 0) == 1;
+        bool isTutorialCompleted = false;
 
         if (isTutorialCompleted)
         {
@@ -61,45 +70,52 @@ public class TutorialManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.OnNPCTalked += HandleNPCTalked;
+        GameEvents.OnNPCTalkedFinished += HandleNPCTalkedFinished;
         GameEvents.OnPointArrived += HandlePointArrived;
         GameEvents.OnQuestCompleted += HandleQuestCompleted;
+        GameEvents.OnNPCInteractionStarted += UpdateNPCDialogueContext;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnNPCTalked -= HandleNPCTalked;
+        GameEvents.OnNPCTalkedFinished -= HandleNPCTalkedFinished;
         GameEvents.OnPointArrived -= HandlePointArrived;
         GameEvents.OnQuestCompleted -= HandleQuestCompleted;
+        GameEvents.OnNPCInteractionStarted -= UpdateNPCDialogueContext;
     }
 
     private IEnumerator StartPhase1_WakeUp()
     {
         yield return new WaitForSeconds(1.0f);
 
-        DialogueManager.Instance.StartDialogue(
-            parentDialogue_Phase1,
-            "부모 외계인",
-            () =>
-            {
-                QuestManager.Instance.AddQuest(tuto02_Guide);
-            }
-        );
+        if (parentNPC == null)
+        {
+            GameObject obj = GameObject.Find("TutoParent");
+            if (obj != null) parentNPC = obj.GetComponent<NPCController>();
+        }
+     
     }
 
-    // NPC와 대화했을 때 연출 (안내원 컷신, 탐사 이동 등)
-    private void HandleNPCTalked(NPCID npcID)
+    private void HandleNPCTalkedFinished(NPCID npcID)
     {
-        // 안내원에게 말을 걸었고 Tuto_02가 진행 중일 때
-        if (npcID == NPCID.Guide && HasActiveQuest("Tuto_02"))
+        if (npcID == NPCID.Parent)
+        {
+            if (HasActiveQuest("Tuto_02"))
+            {
+                if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
+            }
+        }
+        else if (npcID == NPCID.Guide && HasActiveQuest("Tuto_02"))
         {
             StartCoroutine(PlayGuideSequence());
         }
+    }
 
-        // 우주선 NPC에게 말을 걸었고 Tuto_05가 진행 중일 때
-        else if (npcID == NPCID.SpaceshipOwner && HasActiveQuest("Tuto_05"))
+    private void HandleQuestAccepted(QuestID questID)
+    {
+        if (questID == QuestID.Tuto_02)
         {
-            StartCoroutine(MoveToExplorationMap());
+            if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
         }
     }
 
@@ -110,13 +126,13 @@ public class TutorialManager : MonoBehaviour
         {
             case QuestID.Tuto_04:
                 Debug.Log("무기 장만 퀘스트 완료 무기상인, 호기심 NPC 대본 교체");
-                weaponNPC.uniqueDialogue = weaponDialogue_AfterReward;
-                curiousNPC.uniqueDialogue = curiousDialogue_AfterWeapon;
+                weaponNPC.uniqueDialogue = weaponDialogue_Phase2;
+                curiousNPC.uniqueDialogue = curiousDialogue_Phase2;
                 break;
 
             case QuestID.Tuto_07:
                 Debug.Log("수집품 보고 퀘스트 완료 우주선 NPC 대본 교체");
-                spaceshipNPC.uniqueDialogue = spaceshipDialogue_AfterClear;
+                spaceshipNPC.uniqueDialogue = spaceshipDialogue_Phase2;
                 break;
 
             case QuestID.Tuto_08:
@@ -146,32 +162,40 @@ public class TutorialManager : MonoBehaviour
     {
         InputControlManager.Instance.LockInput();
 
-        Debug.Log("안내원 대화 종료 -> 카메라 마을 전경 컷신 시작");
+        townCamController.gameObject.SetActive(true);
+        townCamController.vcam.Priority = 20;
+        townCamController.ResetPath();
 
-        // TODO: 카메라 워킹 연출 (Cinemachine Timeline 등)
-        // 안내책자, 단축키 설명 등 화면에 출력
-        yield return new WaitForSeconds(4.0f); // 컷신 재생 시간 대기
+        for (int i = 0; i < townDialogues.Length; i++)
+        {
+            yield return StartCoroutine(townCamController.MoveToNextTarget());
 
-        Debug.Log("컷신 종료 -> 안내원 퇴장, 대본 교체, 다음 퀘스트 지급");
+            DialogueData currentData = townDialogues[i];
 
-        // 안내원 퇴장
-        if (guideNPC != null) guideNPC.gameObject.SetActive(false);
+            if (currentData != null)
+            {
+                bool isDialogueFinished = false;
 
-        // 부모 NPC 대본 교체 (조심히 둘러보고 오렴)
-        if (parentNPC != null) parentNPC.uniqueDialogue = parentDialogue_AfterGuide;
+                DialogueManager.Instance.StartDialogue(
+                    currentData,
+                    "마을 안내원",
+                    () => { isDialogueFinished = true; }
+                );
+                yield return new WaitUntil(() => isDialogueFinished);
+            }
+        }
 
-        // 컷신 종료 후 자연스럽게 Tuto_03(인간의 가능성) 퀘스트 강제 지급
-        QuestManager.Instance.AddQuest(tuto03_Curious);
+        townCamController.vcam.Priority = 5;
+        townCamController.gameObject.SetActive(false);
 
-        InputControlManager.Instance.UnlockInput(); // 조작 잠금 해제
+        InputControlManager.Instance.UnlockInput();
     }
 
     private IEnumerator MoveToExplorationMap()
     {
         InputControlManager.Instance.LockInput();
 
-        Debug.Log("탐사 맵으로 이동 시작 (화면 암전 등)");
-        yield return new WaitForSeconds(1.5f); // 텔레포트 연출 대기
+        yield return new WaitForSeconds(1.5f);
 
         // TODO: 탐사 맵 씬으로 이동하거나 플레이어를 텔레포트
         // SceneManager.LoadScene("ExplorationMap");
@@ -185,5 +209,30 @@ public class TutorialManager : MonoBehaviour
     private bool HasActiveQuest(string questID)
     {
         return QuestManager.Instance.GetActiveQuest(questID) != null;
+    }
+
+    private void UpdateNPCDialogueContext(NPCController npc)
+    {
+        NPCID id = npc.npcData.npcID;
+
+        switch (id)
+        {
+            case NPCID.Parent:
+                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_02"))
+                    npc.uniqueDialogue = parentDialogue_Phase3;
+                else if (HasActiveQuest("Tuto_02"))
+                    npc.uniqueDialogue = parentDialogue_Phase2;
+                break;
+
+            case NPCID.SpaceshipOwner:
+                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_05"))
+                    npc.uniqueDialogue = spaceshipDialogue_Phase2;
+                break;
+
+            case NPCID.Shopkeeper_Weapon:
+                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_04"))
+                    npc.uniqueDialogue = weaponDialogue_Phase2;
+                break;
+        }
     }
 }

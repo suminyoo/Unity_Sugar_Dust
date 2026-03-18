@@ -7,7 +7,7 @@ public class QuestManager : MonoBehaviour
     public static QuestManager Instance;
 
     public List<Quest> activeQuests = new List<Quest>();
-    public List<string> completedQuestIDs = new List<string>();
+    public List<QuestID> completedQuestIDs = new List<QuestID>();
 
     private void Awake()
     {
@@ -25,9 +25,9 @@ public class QuestManager : MonoBehaviour
         GameEvents.OnQuestProgressUpdated -= RefreshQuestAlertStatus;
         GameEvents.OnQuestAccepted -= HandleQuestAccepted;
     }
-    public Quest GetActiveQuest(string questID)
+    public Quest GetActiveQuest(QuestID questID)
     {
-        return activeQuests.Find(q => q.data.questID.ToString() == questID);
+        return activeQuests.Find(q => q.data.questID.ToString() == questID.ToString());
     }
 
     // 퀘스트 수락
@@ -79,7 +79,7 @@ public class QuestManager : MonoBehaviour
             quest.isRewardClaimed = true;
             quest.StopQuest();
 
-            completedQuestIDs.Add(quest.data.questID.ToString());
+            completedQuestIDs.Add(quest.data.questID);
             activeQuests.Remove(quest);
             GameEvents.OnQuestCompleted?.Invoke(quest.data.questID);
 
@@ -149,7 +149,7 @@ public class QuestManager : MonoBehaviour
         var loadedData = GameSaveManager.Instance.LoadQuestData();
 
         // 완료 퀘스트
-        completedQuestIDs = loadedData.completedIDs ?? new List<string>();
+        completedQuestIDs = loadedData.completedIDs ?? new List<QuestID>();
 
         // 진행 중 퀘스트
         activeQuests.Clear();

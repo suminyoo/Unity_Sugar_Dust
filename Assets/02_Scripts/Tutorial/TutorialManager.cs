@@ -18,12 +18,12 @@ public class TutorialManager : MonoBehaviour
     public NPCController landlordNPC;
 
     [Header("Quest Data")]
-    public QuestData tuto02_Guide;
-    public QuestData tuto03_Curious;
+    public QuestData tuto_01;
 
     [Header("Dialogue Data (교체)")]
     public DialogueData parentDialogue_Phase2;
     public DialogueData parentDialogue_Phase3;
+
     public DialogueData guideDialogue_Phase2;
    
     public DialogueData curiousDialogue_Phase2;
@@ -43,6 +43,8 @@ public class TutorialManager : MonoBehaviour
 
     [Header("Tutorial UI")]
     public GameObject tutorialGuideUI;
+
+    private bool isTownGuideFinished = false;
 
     private void Awake()
     {
@@ -65,10 +67,11 @@ public class TutorialManager : MonoBehaviour
         else
         {
             // 튜토리얼 진행
-            //집에 있는 문 콜라이더 키기
+            // TODO: 집에 있는 문 콜라이더 키기
+
             normalNPCGroup.SetActive(false);
             tutorialNPCGroup.SetActive(true);
-
+            tutorialGuideUI.SetActive(true);
             StartCoroutine(StartPhaseWakeUp());
         }
     }
@@ -79,6 +82,7 @@ public class TutorialManager : MonoBehaviour
         GameEvents.OnPointArrived += HandlePointArrived;
         GameEvents.OnQuestCompleted += HandleQuestCompleted;
         GameEvents.OnNPCInteractionStarted += UpdateNPCDialogueContext;
+        GameEvents.OnQuestAccepted += HandleQuestAccepted;
     }
 
     private void OnDisable()
@@ -87,42 +91,41 @@ public class TutorialManager : MonoBehaviour
         GameEvents.OnPointArrived -= HandlePointArrived;
         GameEvents.OnQuestCompleted -= HandleQuestCompleted;
         GameEvents.OnNPCInteractionStarted -= UpdateNPCDialogueContext;
+        GameEvents.OnQuestAccepted -= HandleQuestAccepted;
     }
 
     private IEnumerator StartPhaseWakeUp()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return null;
+        QuestManager.Instance.AddQuest(tuto_01);
 
-        if (parentNPC == null)
-        {
-            GameObject obj = GameObject.Find("TutoParent");
-            if (obj != null) parentNPC = obj.GetComponent<NPCController>();
-        }
+        //if (parentNPC == null)
+        //{
+        //    GameObject obj = GameObject.Find("TutoParent");
+        //    if (obj != null) parentNPC = obj.GetComponent<NPCController>();
+        //}
+
 
         tutorialGuideUI.SetActive(true);
     }
 
     private void HandleNPCTalkedFinished(NPCID npcID)
     {
-        if (npcID == NPCID.Parent)
+        if (npcID == NPCID.Guide && HasActiveQuest(QuestID.Tuto_02) && !isTownGuideFinished)
         {
-            if (HasActiveQuest("Tuto_02"))
-            {
-                if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
-                tutorialGuideUI.SetActive(false);
-            }
-        }
-        else if (npcID == NPCID.Guide && HasActiveQuest("Tuto_02"))
-        {
+
             StartCoroutine(PlayGuideSequence());
+
         }
     }
 
     private void HandleQuestAccepted(QuestID questID)
     {
+
         if (questID == QuestID.Tuto_02)
         {
             if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
+            if (tutorialGuideUI != null) tutorialGuideUI.SetActive(false);
         }
     }
 
@@ -132,13 +135,13 @@ public class TutorialManager : MonoBehaviour
         switch (questID)
         {
             case QuestID.Tuto_04:
-                Debug.Log("무기 장만 퀘스트 완료 무기상인, 호기심 NPC 대본 교체");
+                //Debug.Log("무기 장만 퀘스트 완료 무기상인, 호기심 NPC 대본 교체");
                 weaponNPC.uniqueDialogue = weaponDialogue_Phase2;
                 curiousNPC.uniqueDialogue = curiousDialogue_Phase2;
                 break;
 
             case QuestID.Tuto_07:
-                Debug.Log("수집품 보고 퀘스트 완료 우주선 NPC 대본 교체");
+                //Debug.Log("수집품 보고 퀘스트 완료 우주선 NPC 대본 교체");
                 spaceshipNPC.uniqueDialogue = spaceshipDialogue_Phase2;
                 break;
 
@@ -152,7 +155,7 @@ public class TutorialManager : MonoBehaviour
     private void HandlePointArrived(PointID pointID)
     {
         // 내 상점 내부에 진입했고 Tuto_09가 진행 중일 때
-        if (pointID == PointID.MyShop && HasActiveQuest("Tuto_09"))
+        if (pointID == PointID.MyShop && HasActiveQuest(QuestID.Tuto_09))
         {
             Debug.Log("상점 진입! 임대업자 NPC 퇴장 및 튜토리얼 UI 오픈");
 
@@ -167,6 +170,7 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator PlayGuideSequence()
     {
+        isTownGuideFinished = true;
         InputControlManager.Instance.LockInput();
 
         townCamController.gameObject.SetActive(true);
@@ -195,6 +199,8 @@ public class TutorialManager : MonoBehaviour
         townCamController.vcam.Priority = 5;
         townCamController.gameObject.SetActive(false);
 
+        guideNPC.uniqueDialogue = guideDialogue_Phase2;
+
         InputControlManager.Instance.UnlockInput();
     }
 
@@ -213,7 +219,7 @@ public class TutorialManager : MonoBehaviour
         // 별도의 콜백으로
     }
 
-    private bool HasActiveQuest(string questID)
+    private bool HasActiveQuest(QuestID questID)
     {
         return QuestManager.Instance.GetActiveQuest(questID) != null;
     }
@@ -224,27 +230,27 @@ public class TutorialManager : MonoBehaviour
 
         switch (id)
         {
-            case NPCID.Parent:
-                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_09"))
-                    npc.uniqueDialogue = parentDialogue_Phase3;
-                else if (HasActiveQuest("Tuto_02"))
-                    npc.uniqueDialogue = parentDialogue_Phase2;
-                break;
+            //case NPCID.Parent:
+            //    if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+            //        npc.uniqueDialogue = parentDialogue_Phase3;
+            //    else if (HasActiveQuest(QuestID.Tuto_02))
+            //        npc.uniqueDialogue = parentDialogue_Phase2;
+            //    break;
 
             case NPCID.Guide:
-                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_02"))
+                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_02))
                 {
                     npc.uniqueDialogue = guideDialogue_Phase2;
                 }
                 break;
 
             case NPCID.SpaceshipOwner:
-                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_05"))
+                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_05))
                     npc.uniqueDialogue = spaceshipDialogue_Phase2;
                 break;
 
             case NPCID.Shopkeeper_Weapon:
-                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_04"))
+                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_04))
                     npc.uniqueDialogue = weaponDialogue_Phase2;
                 break;
         }

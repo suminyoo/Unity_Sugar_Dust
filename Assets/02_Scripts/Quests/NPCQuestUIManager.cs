@@ -53,11 +53,11 @@ public class NPCQuestUIManager : MonoBehaviour
         foreach (var questData in currentQuestsToOffer) 
         {
             // 완료 퀘스트는 안그림
-            if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID.ToString())) continue;
+            if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID)) continue;
 
             if (questData.requiredQuestID != QuestID.None)
             {
-                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID.ToString()))
+                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
                 {
                     continue;
                 }
@@ -66,7 +66,7 @@ public class NPCQuestUIManager : MonoBehaviour
             GameObject slotObj = Instantiate(questSlotPrefab, contentParent);
             QuestSlotUI slotUI = slotObj.GetComponent<QuestSlotUI>();
 
-            Quest activeQuest = QuestManager.Instance.GetActiveQuest(questData.questID.ToString());
+            Quest activeQuest = QuestManager.Instance.GetActiveQuest(questData.questID);
 
             if (activeQuest == null)
             {

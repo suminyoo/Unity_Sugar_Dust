@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class NPCBrain : MonoBehaviour
@@ -86,6 +87,7 @@ public class NPCBrain : MonoBehaviour
         // 이미 대화 중이면 중복 실행 방지
         if (isInteracting) return;
 
+        controller.UpdateDialogueContext();
         GameEvents.OnNPCInteractionStarted?.Invoke(controller);
 
         StartCoroutine(DefaultInteractionProcess());
@@ -156,8 +158,7 @@ public class NPCBrain : MonoBehaviour
         {
             foreach (var questData in controller.npcData.questsToGive)
             {
-                string qID = questData.questID.ToString();
-                Quest activeQuest = QuestManager.Instance.GetActiveQuest(qID);
+                Quest activeQuest = QuestManager.Instance.GetActiveQuest(questData.questID);
 
                 // 이미 받은 퀘스트인 경우
                 if (activeQuest != null)
@@ -173,14 +174,14 @@ public class NPCBrain : MonoBehaviour
                 }
 
                 // 아직 안 받은 퀘스트인 경우
-                if (!QuestManager.Instance.completedQuestIDs.Contains(qID))
+                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
                 {
                     // 선행 퀘스트 조건 확인
                     bool canAccept = true;
                     if (questData.requiredQuestID != QuestID.None)
                     {
                         // 선행 퀘스트를 완료하지 않았다면 표시 안 함
-                        if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID.ToString()))
+                        if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
                         {
                             canAccept = false;
                         }
@@ -205,7 +206,7 @@ public class NPCBrain : MonoBehaviour
 
         foreach (var questData in controller.npcData.questsToGive)
         {
-            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID.ToString()))
+            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
             {
                 return true;
             }

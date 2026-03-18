@@ -884,9 +884,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 586fd1918743b5a4e82ef202fd14a199, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: npcName.m_TableEntryReference.m_KeyId
       value: 3281846725287936
       objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: f7c30da2de5199349b27dff694322bb1, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 320cfa11795ccb74aa3582a9d0f47e91, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableEntryReference.m_KeyId
       value: 0
@@ -894,6 +906,22 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: greetingMessage.m_TableEntryReference.m_KeyId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].checkCompleted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].triggerQuestID
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].checkCompleted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].triggerQuestID
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableReference.m_TableCollectionName
@@ -1617,7 +1645,7 @@ GameObject:
   - component: {fileID: 8861925812715648846}
   - component: {fileID: 5829759118134315210}
   - component: {fileID: 4878884586018912897}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rug 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

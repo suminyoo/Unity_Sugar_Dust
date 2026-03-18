@@ -310,19 +310,31 @@ public class GameSaveManager : MonoBehaviour
 
     #region 퀘스트 데이터 세이브로드
 
-    public void SaveQuestData(List<string> completedIDs, List<QuestSaveData> activeQuestData)
+    public void SaveQuestData(List<QuestID> completedIDs, List<QuestSaveData> activeQuestData)
     {
         // 완료목록
-        savedData.completedQuestIDs = new List<string>(completedIDs);
-
+        savedData.completedQuestIDs = completedIDs.Select(id => id.ToString()).ToList();
         // 진행중 목록
         savedData.activeQuests = new List<QuestSaveData>(activeQuestData);
 
     }
 
-    public (List<string> completedIDs, List<QuestSaveData> activeQuestData) LoadQuestData()
+    public (List<QuestID> completedIDs, List<QuestSaveData> activeQuestData) LoadQuestData()
     {
-        return (savedData.completedQuestIDs, savedData.activeQuests);
+        List<QuestID> convertedIDs = new List<QuestID>();
+
+        if (savedData.completedQuestIDs != null)
+        {
+            foreach (var idStr in savedData.completedQuestIDs)
+            {
+                if (System.Enum.TryParse(idStr, out QuestID result))
+                {
+                    convertedIDs.Add(result);
+                }
+            }
+        }
+
+        return (convertedIDs, savedData.activeQuests);
     }
 
     #endregion

@@ -10,7 +10,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
             LocalizationHelper.Main("CONFIRM_SLEEP"),
             () => {
                 // 잠들기 전에 튜토리얼 퀘스트가 진행 중인지 확인
-                Quest tuto10 = QuestManager.Instance.GetActiveQuest("Tuto_10");
+                Quest tuto10 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_10);
                 if (tuto10 != null)
                 {
                     // 튜토리얼 완료 저장

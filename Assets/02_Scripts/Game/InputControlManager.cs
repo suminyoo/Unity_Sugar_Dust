@@ -10,7 +10,6 @@ public class InputControlManager : MonoBehaviour
     private int inputLockCount = 0;
     public bool IsInputLocked => inputLockCount > 0;
 
-    // 상태가 변할 때 알리는 이벤트
     public event Action<bool> OnInputStateChanged; // true: 입력 가능, false: 입력 불가
 
     private void Awake()

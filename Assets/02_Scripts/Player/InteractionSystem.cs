@@ -39,7 +39,11 @@ public class InteractionSystem : MonoBehaviour
 
         ValidateCurrentTarget();
         UpdateCurrentInteractable();
-        HandleInput();
+
+        if (InputControlManager.Instance != null && !InputControlManager.Instance.IsInputLocked)
+        {
+            HandleInput();
+        }
 
     }
 

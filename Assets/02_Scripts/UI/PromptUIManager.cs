@@ -12,10 +12,28 @@ public class PromptUIManager : MonoBehaviour
     private string currentInteractionText = "";
     private string currentActionText = "";
 
+    private bool isInputLocked = false;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+    private void Start()
+    {
+        InputControlManager.Instance.OnInputStateChanged += HandleInputStateChanged;
+        
+    }
+
+    private void OnDestroy()
+    {
+        InputControlManager.Instance.OnInputStateChanged -= HandleInputStateChanged;
+        
+    }
+    private void HandleInputStateChanged(bool isUnlocked)
+    {
+        isInputLocked = !isUnlocked;
+        UpdatePrompt();
     }
 
     // InteractionSystem
@@ -45,6 +63,12 @@ public class PromptUIManager : MonoBehaviour
     // 최종 결정 로직
     private void UpdatePrompt()
     {
+        if (isInputLocked)
+        {
+            HideUI();
+            return;
+        }
+
         // 액션
         if (!string.IsNullOrEmpty(currentActionText))
         {

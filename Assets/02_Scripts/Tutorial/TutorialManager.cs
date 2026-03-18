@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class TutorialManager : MonoBehaviour
     [Header("Dialogue Data (교체)")]
     public DialogueData parentDialogue_Phase2;
     public DialogueData parentDialogue_Phase3;
+    public DialogueData guideDialogue_Phase2;
    
     public DialogueData curiousDialogue_Phase2;
     public DialogueData weaponDialogue_Phase2;
@@ -39,6 +41,9 @@ public class TutorialManager : MonoBehaviour
     [Header("Village Introduce")]
     public PathLookAtController townCamController;
     public DialogueData[] townDialogues;
+
+    [Header("Tutorial UI")]
+    public GameObject tutorialGuideUI;
 
     private void Awake()
     {
@@ -61,10 +66,11 @@ public class TutorialManager : MonoBehaviour
         else
         {
             // 튜토리얼 진행
+            //집에 있는 문 콜라이더 키기
             normalNPCGroup.SetActive(false);
             tutorialNPCGroup.SetActive(true);
 
-            StartCoroutine(StartPhase1_WakeUp());
+            StartCoroutine(StartPhaseWakeUp());
         }
     }
 
@@ -84,7 +90,7 @@ public class TutorialManager : MonoBehaviour
         GameEvents.OnNPCInteractionStarted -= UpdateNPCDialogueContext;
     }
 
-    private IEnumerator StartPhase1_WakeUp()
+    private IEnumerator StartPhaseWakeUp()
     {
         yield return new WaitForSeconds(1.0f);
 
@@ -93,7 +99,11 @@ public class TutorialManager : MonoBehaviour
             GameObject obj = GameObject.Find("TutoParent");
             if (obj != null) parentNPC = obj.GetComponent<NPCController>();
         }
-     
+
+        tutorialGuideUI.SetActive(true);
+        
+
+
     }
 
     private void HandleNPCTalkedFinished(NPCID npcID)
@@ -103,6 +113,7 @@ public class TutorialManager : MonoBehaviour
             if (HasActiveQuest("Tuto_02"))
             {
                 if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
+                tutorialGuideUI.SetActive(false);
             }
         }
         else if (npcID == NPCID.Guide && HasActiveQuest("Tuto_02"))
@@ -178,7 +189,7 @@ public class TutorialManager : MonoBehaviour
 
                 DialogueManager.Instance.StartDialogue(
                     currentData,
-                    "마을 안내원",
+                    "마을 안내 외계인",
                     () => { isDialogueFinished = true; }
                 );
                 yield return new WaitUntil(() => isDialogueFinished);
@@ -218,10 +229,17 @@ public class TutorialManager : MonoBehaviour
         switch (id)
         {
             case NPCID.Parent:
-                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_02"))
+                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_09"))
                     npc.uniqueDialogue = parentDialogue_Phase3;
                 else if (HasActiveQuest("Tuto_02"))
                     npc.uniqueDialogue = parentDialogue_Phase2;
+                break;
+
+            case NPCID.Guide:
+                if (QuestManager.Instance.completedQuestIDs.Contains("Tuto_02"))
+                {
+                    npc.uniqueDialogue = guideDialogue_Phase2;
+                }
                 break;
 
             case NPCID.SpaceshipOwner:

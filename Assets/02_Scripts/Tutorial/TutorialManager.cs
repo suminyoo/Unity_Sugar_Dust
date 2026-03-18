@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -101,9 +100,6 @@ public class TutorialManager : MonoBehaviour
         }
 
         tutorialGuideUI.SetActive(true);
-        
-
-
     }
 
     private void HandleNPCTalkedFinished(NPCID npcID)

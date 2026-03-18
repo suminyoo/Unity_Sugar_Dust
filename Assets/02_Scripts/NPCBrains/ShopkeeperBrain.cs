@@ -15,33 +15,21 @@ public class ShopkeeperBrain : NPCBrain
         base.Start();
 
         myShop = GetComponent<NPCShop>();
-
-        // 기본 패트롤 없음
-
-        // TODO: 상점 주인 대기 모션 (근데 지금 없는)
-        // controller.Animation.PlayIdle(ShopIdle); 
     }
 
-    public override void HandleInteraction()
-    {
-        // 중복 실행 방지
-        if (isInteracting) return;
 
-        // 코루틴 시작
-        StartCoroutine(ShopProcess());
-    }
-
-    // 상호작용
-    private IEnumerator ShopProcess()
+    protected override IEnumerator DefaultInteractionProcess()
     {
         PrepareInteraction();
-        yield return StartCoroutine(DialogueProcess());
+
+        yield return StartCoroutine(DialogueProcess(showAutoGoodbye: false));
+
+        GameEvents.OnNPCTalkedFinished?.Invoke(controller.npcData.npcID);
 
         bool isShopping = true;
 
-        // 스토리지 매니저 호출
         StorageUIManager.Instance.OpenStorage(myShop, myShop.GetShopType(),
-            () => { isShopping = false; } // 콜백(Action)
+            () => { isShopping = false; }
         );
         yield return new WaitForSeconds(0.5f);
 

@@ -19,6 +19,8 @@ public class TutorialManager : MonoBehaviour
 
     [Header("Quest Data")]
     public QuestData tuto_01;
+    public QuestData tuto_07;
+
 
     [Header("Dialogue Data (교체)")]
     public DialogueData parentDialogue_Phase2;
@@ -74,24 +76,34 @@ public class TutorialManager : MonoBehaviour
             tutorialGuideUI.SetActive(true);
             StartCoroutine(StartPhaseWakeUp());
         }
+
+        // 튜토리얼 퀘스트 6 관련 하드코딩
+        if (QuestManager.Instance.IsQuestAchieved(QuestID.Tuto_06))
+        {
+            if (!HasActiveQuest(QuestID.Tuto_07) && !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_07))
+            {
+                QuestManager.Instance.AddQuest(tuto_07);
+
+                if (PlayerQuestUIManager.Instance != null)
+                    PlayerQuestUIManager.Instance.ShowQuestAlert();
+            }
+        }
     }
 
     private void OnEnable()
     {
         GameEvents.OnNPCTalkedFinished += HandleNPCTalkedFinished;
         GameEvents.OnPointArrived += HandlePointArrived;
-        GameEvents.OnQuestCompleted += HandleQuestCompleted;
-        GameEvents.OnNPCInteractionStarted += UpdateNPCDialogueContext;
         GameEvents.OnQuestAccepted += HandleQuestAccepted;
+        GameEvents.OnQuestProgressUpdated += CheckTuto06Completion;
     }
 
     private void OnDisable()
     {
         GameEvents.OnNPCTalkedFinished -= HandleNPCTalkedFinished;
         GameEvents.OnPointArrived -= HandlePointArrived;
-        GameEvents.OnQuestCompleted -= HandleQuestCompleted;
-        GameEvents.OnNPCInteractionStarted -= UpdateNPCDialogueContext;
         GameEvents.OnQuestAccepted -= HandleQuestAccepted;
+        GameEvents.OnQuestProgressUpdated -= CheckTuto06Completion;
     }
 
     private IEnumerator StartPhaseWakeUp()
@@ -105,6 +117,8 @@ public class TutorialManager : MonoBehaviour
         //    if (obj != null) parentNPC = obj.GetComponent<NPCController>();
         //}
 
+        PlayerQuestUIManager.Instance.ShowQuestAlert();
+        
 
         tutorialGuideUI.SetActive(true);
     }
@@ -129,27 +143,6 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // 퀘스트 완료했을 때 대본 교체
-    private void HandleQuestCompleted(QuestID questID)
-    {
-        switch (questID)
-        {
-            case QuestID.Tuto_04:
-                //Debug.Log("무기 장만 퀘스트 완료 무기상인, 호기심 NPC 대본 교체");
-                weaponNPC.uniqueDialogue = weaponDialogue_Phase2;
-                curiousNPC.uniqueDialogue = curiousDialogue_Phase2;
-                break;
-
-            case QuestID.Tuto_07:
-                //Debug.Log("수집품 보고 퀘스트 완료 우주선 NPC 대본 교체");
-                spaceshipNPC.uniqueDialogue = spaceshipDialogue_Phase2;
-                break;
-
-            case QuestID.Tuto_08:
-                shopBlockerCollider.SetActive(false);
-                break;
-        }
-    }
 
     //특정 장소에 도달했을 때
     private void HandlePointArrived(PointID pointID)
@@ -224,35 +217,34 @@ public class TutorialManager : MonoBehaviour
         return QuestManager.Instance.GetActiveQuest(questID) != null;
     }
 
-    private void UpdateNPCDialogueContext(NPCController npc)
+    private void CheckTuto06Completion()
     {
-        NPCID id = npc.npcData.npcID;
+        if (HasActiveQuest(QuestID.Tuto_07) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_07))
+            return;
 
-        switch (id)
+        bool isTuto06Achieved = false;
+
+        // 이미 보상까지 다 받았는지
+        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_06))
         {
-            //case NPCID.Parent:
-            //    if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
-            //        npc.uniqueDialogue = parentDialogue_Phase3;
-            //    else if (HasActiveQuest(QuestID.Tuto_02))
-            //        npc.uniqueDialogue = parentDialogue_Phase2;
-            //    break;
+            isTuto06Achieved = true;
+        }
+        else
+        {
+            // 진행 중인데 목표량은 다 채웠는지
+            Quest tuto6 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_06);
+            if (tuto6 != null && tuto6.IsAllObjectivesComplete())
+            {
+                isTuto06Achieved = true;
+            }
+        }
 
-            case NPCID.Guide:
-                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_02))
-                {
-                    npc.uniqueDialogue = guideDialogue_Phase2;
-                }
-                break;
-
-            case NPCID.SpaceshipOwner:
-                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_05))
-                    npc.uniqueDialogue = spaceshipDialogue_Phase2;
-                break;
-
-            case NPCID.Shopkeeper_Weapon:
-                if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_04))
-                    npc.uniqueDialogue = weaponDialogue_Phase2;
-                break;
+        // Tuto_07 강제 지급
+        if (isTuto06Achieved && tuto_07 != null)
+        {
+            QuestManager.Instance.AddQuest(tuto_07);
+            PlayerQuestUIManager.Instance.ShowQuestAlert();
+            
         }
     }
 }

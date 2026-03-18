@@ -17,13 +17,11 @@ public class QuestManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnQuestProgressUpdated += RefreshQuestAlertStatus;
-        GameEvents.OnQuestAccepted += HandleQuestAccepted;
     }
 
     private void OnDisable()
     {
         GameEvents.OnQuestProgressUpdated -= RefreshQuestAlertStatus;
-        GameEvents.OnQuestAccepted -= HandleQuestAccepted;
     }
     public Quest GetActiveQuest(QuestID questID)
     {
@@ -82,7 +80,7 @@ public class QuestManager : MonoBehaviour
             completedQuestIDs.Add(quest.data.questID);
             activeQuests.Remove(quest);
             GameEvents.OnQuestCompleted?.Invoke(quest.data.questID);
-
+            GameEvents.OnQuestProgressUpdated?.Invoke();
             // 보상 골드
             if (quest.data.rewardGold > 0)
             {
@@ -175,11 +173,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private void HandleQuestAccepted(QuestID id)
-    {
-        PlayerQuestUIManager.Instance.ShowQuestAlert();
-    }
-
     public void RefreshQuestAlertStatus()
     {
         bool hasReadyToClaim = false;
@@ -200,5 +193,25 @@ public class QuestManager : MonoBehaviour
         {
             PlayerQuestUIManager.Instance.HideQuestAlert();
         }
+    }
+
+    // 퀘스트가 선행 조건으로서 달성되었는지 확인
+    public bool IsQuestAchieved(QuestID checkQuestID)
+    {
+        if (completedQuestIDs.Contains(checkQuestID)) return true;
+
+        Quest activeQuest = GetActiveQuest(checkQuestID);
+        if (activeQuest != null)
+        {
+            if (activeQuest.IsAllObjectivesComplete())
+            {
+                // 보상 수령이 필수인 퀘스트(제출)는 미제출이니 달성 안한거
+                if (activeQuest.data.requireClaimToUnlockNext) return false;
+
+                // 보상 수령이 필수가 아니라면 달성한거
+                return true;
+            }
+        }
+        return false;
     }
 }

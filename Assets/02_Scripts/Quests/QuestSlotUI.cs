@@ -33,11 +33,27 @@ public class QuestSlotUI : MonoBehaviour
     {
         titleText.text = questData.GetQuestName();
         descriptionText.text = questData.GetDescription();
-        rewardText.text = LocalizationHelper.Main(
-            "QUEST_REWARD",
-            questData.rewardGold,
-            CustomerPaymentSystem.CURRENCY_SYMBOL
-        );
+        string fullRewardText = "";
+
+        // 골드 보상
+        if (questData.rewardGold > 0)
+        {
+            fullRewardText += LocalizationHelper.Main("QUEST_REWARD", questData.rewardGold, CustomerPaymentSystem.CURRENCY_SYMBOL) + "\n";
+        }
+
+        // 아이템 보상
+        if (questData.rewardItems != null && questData.rewardItems.Count > 0)
+        {
+            foreach (var itemReward in questData.rewardItems)
+            {
+                var itemData = ItemDataManager.Instance.GetItemByID(itemReward.itemID.ToString());
+                if (itemData != null)
+                {
+                    fullRewardText += LocalizationHelper.Main("QUEST_REWARD", itemData.GetItemName(), $" x{itemReward.amount}") + "\n";
+                }
+            }
+        }
+        rewardText.text = fullRewardText.TrimEnd();
 
         Color textColor;
         Color buttonColor;
@@ -58,11 +74,22 @@ public class QuestSlotUI : MonoBehaviour
         // 목표 텍스트 및 진행도 설정
         if (questData.objectives.Count > 0)
         {
-            QuestObjective questobjective = questData.objectives[0];
-            int current = (activeQuest == null) ? 0 : activeQuest.currentAmounts[0];
+            string fullProgressText = "";
 
-            progressText.text = questobjective.GetProgressText(current);
+            for (int i = 0; i < questData.objectives.Count; i++)
+            {
+                QuestObjective obj = questData.objectives[i];
+                int current = (activeQuest == null) ? 0 : activeQuest.currentAmounts[i];
+
+                fullProgressText += obj.GetProgressText(current) + "\n";
+            }
+
+            progressText.text = fullProgressText.TrimEnd();
             progressText.color = textColor;
+        }
+        else
+        {
+            progressText.text = "";
         }
 
         actionButtonText.text = btnText;

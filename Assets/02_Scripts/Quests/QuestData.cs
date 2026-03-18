@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Localization;
+
+[System.Serializable]
 public class QuestItemReward
 {
     public ItemID itemID;
@@ -89,7 +91,7 @@ public class QuestData : ScriptableObject
     public int rewardGold;
     public List<QuestItemReward> rewardItems;
     public QuestID requiredQuestID;
-
+    public bool requireClaimToUnlockNext = false; //Á¦ÃâÄù½ºÆ®¸¸ Å°¸é µÊ
     public string GetQuestName() => questName.GetLocalizedString();
     public string GetDescription() => description.GetLocalizedString();
 }

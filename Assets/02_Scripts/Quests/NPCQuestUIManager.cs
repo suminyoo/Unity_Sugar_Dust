@@ -57,7 +57,7 @@ public class NPCQuestUIManager : MonoBehaviour
 
             if (questData.requiredQuestID != QuestID.None)
             {
-                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
+                if (!QuestManager.Instance.IsQuestAchieved(questData.requiredQuestID))
                 {
                     continue;
                 }

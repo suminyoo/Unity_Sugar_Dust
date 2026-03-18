@@ -180,8 +180,7 @@ public class NPCBrain : MonoBehaviour
                     bool canAccept = true;
                     if (questData.requiredQuestID != QuestID.None)
                     {
-                        // 선행 퀘스트를 완료하지 않았다면 표시 안 함
-                        if (!QuestManager.Instance.completedQuestIDs.Contains(questData.requiredQuestID))
+                        if (!QuestManager.Instance.IsQuestAchieved(questData.requiredQuestID))
                         {
                             canAccept = false;
                         }

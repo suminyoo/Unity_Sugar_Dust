@@ -3149,7 +3149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6281020186520017012, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281020186520017012, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 6656736106478109390, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5308,7 +5312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -5475,7 +5479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_IsActive
@@ -6966,7 +6970,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3403615711857556600, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_LocalScale.x
@@ -8395,7 +8403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -8481,7 +8489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -9711,7 +9719,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3403615711857556600, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_LocalScale.x
@@ -11723,11 +11735,19 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: uniqueDialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 52389c49a051e4e478020ceb0c391775, type: 2}
+      objectReference: {fileID: 11400000, guid: 2dd171362e1616443bb57fd5c0fbb795, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: npcName.m_TableEntryReference.m_KeyId
       value: 3282015134982144
       objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 52389c49a051e4e478020ceb0c391775, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableEntryReference.m_KeyId
       value: 0
@@ -11735,6 +11755,10 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: greetingMessage.m_TableEntryReference.m_KeyId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].triggerQuestID
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableReference.m_TableCollectionName
@@ -14381,7 +14405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -15351,9 +15375,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 755a8b78fa9e0d8409a0841902cd1c46, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: npcName.m_TableEntryReference.m_KeyId
       value: 3281851062198272
       objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 78d3f364c85439d4387930bed6f03968, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableEntryReference.m_KeyId
       value: 0
@@ -15361,6 +15393,14 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: greetingMessage.m_TableEntryReference.m_KeyId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].checkCompleted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].triggerQuestID
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableReference.m_TableCollectionName
@@ -17936,7 +17976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -18521,7 +18561,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6281020186520017012, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281020186520017012, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 6656736106478109390, guid: 22fbfaebb574b41d68d9c958da92311b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19162,6 +19206,7 @@ MonoBehaviour:
   spaceshipNPC: {fileID: 1799654323}
   landlordNPC: {fileID: 1171035372}
   tuto_01: {fileID: 11400000, guid: 37e54009c8883ba479e3d4e079541800, type: 2}
+  tuto_07: {fileID: 11400000, guid: e0f82f2e12cf93640acddc69c9f67b73, type: 2}
   parentDialogue_Phase2: {fileID: 11400000, guid: f7c30da2de5199349b27dff694322bb1, type: 2}
   parentDialogue_Phase3: {fileID: 11400000, guid: 320cfa11795ccb74aa3582a9d0f47e91, type: 2}
   guideDialogue_Phase2: {fileID: 11400000, guid: 0907c03121281da4a978f88b43c58cb2, type: 2}
@@ -19718,7 +19763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937892303269151329, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3937892303269151329, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4462474057197689051, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20122,11 +20171,27 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: uniqueDialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 84bdd660c9528994280cae4f03a9d04b, type: 2}
+      objectReference: {fileID: 11400000, guid: 77179230fa4e2864583bc568649a05c3, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: npcName.m_TableEntryReference.m_KeyId
       value: 3281975842742272
       objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 84bdd660c9528994280cae4f03a9d04b, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: d5d127d479a25f74b96207cfc00efe04, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: f139407f02bbde94c8e4482361b705a3, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableEntryReference.m_KeyId
       value: 0
@@ -20134,6 +20199,30 @@ PrefabInstance:
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: greetingMessage.m_TableEntryReference.m_KeyId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].checkCompleted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[0].triggerQuestID
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].checkCompleted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[1].triggerQuestID
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].checkCompleted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].triggerQuestID
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: goodByeMessage.m_TableReference.m_TableCollectionName
@@ -22059,7 +22148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627783142366602946, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3403615711857556600, guid: ad5857fb47ae34557b7a694ced428ba6, type: 3}
       propertyPath: m_LocalScale.x
@@ -23443,7 +23536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226909510116109336, guid: cb81a3c5de4fb46f3be3dc23923b1ce9, type: 3}
       propertyPath: m_TagString
@@ -23521,8 +23614,8 @@ Transform:
   m_Children:
   - {fileID: 1532897430}
   - {fileID: 1413146651}
-  - {fileID: 1171035369}
   - {fileID: 1799654320}
+  - {fileID: 1171035369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116965281
@@ -24713,7 +24806,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937892303269151329, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3937892303269151329, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4462474057197689051, guid: 3d58bd426ecf8401db80a186de7e31c9, type: 3}
       propertyPath: m_LocalScale.x

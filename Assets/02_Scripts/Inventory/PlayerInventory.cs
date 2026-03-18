@@ -54,6 +54,14 @@ public class PlayerInventory : InventoryHolder, ISaveable
 
         inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
+
+
+        if (inventorySystem != null)
+        {
+            inventorySystem.OnInventoryUpdated += () => {
+                GameEvents.OnInventoryChanged?.Invoke();
+            };
+        }
     }
     private void OnEnable()
     {

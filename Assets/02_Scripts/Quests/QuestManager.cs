@@ -14,7 +14,17 @@ public class QuestManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+    private void OnEnable()
+    {
+        GameEvents.OnQuestProgressUpdated += RefreshQuestAlertStatus;
+        GameEvents.OnQuestAccepted += HandleQuestAccepted;
+    }
 
+    private void OnDisable()
+    {
+        GameEvents.OnQuestProgressUpdated -= RefreshQuestAlertStatus;
+        GameEvents.OnQuestAccepted -= HandleQuestAccepted;
+    }
     public Quest GetActiveQuest(string questID)
     {
         return activeQuests.Find(q => q.data.questID.ToString() == questID);
@@ -162,6 +172,33 @@ public class QuestManager : MonoBehaviour
                     activeQuests.Add(restoredQuest); //Ãß°¡
                 }
             }
+        }
+    }
+
+    private void HandleQuestAccepted(QuestID id)
+    {
+        PlayerQuestUIManager.Instance.ShowQuestAlert();
+    }
+
+    public void RefreshQuestAlertStatus()
+    {
+        bool hasReadyToClaim = false;
+
+        foreach (var quest in activeQuests)
+        {
+            if (quest.IsAllObjectivesComplete())
+            {
+                hasReadyToClaim = true;
+                break;
+            }
+        }
+        if (hasReadyToClaim)
+        {
+            PlayerQuestUIManager.Instance.ShowQuestAlert();
+        }
+        else
+        {
+            PlayerQuestUIManager.Instance.HideQuestAlert();
         }
     }
 }

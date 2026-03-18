@@ -1,21 +1,48 @@
 
+//public class CollectObjectiveHandler : QuestObjectiveHandler
+//{
+//    // 부모 클래스 초기화를 위해 base 생성자 호출. 함수 : base 문법
+//    public CollectObjectiveHandler(Quest quest, int index) : base(quest, index) { }
+
+//    public override void EvaluateProgress()
+//    {
+//        int count = 0;
+//        if (GameEvents.RequestPlayerItemCount != null)
+//        {
+//            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID);
+//        }
+//        quest.currentAmounts[objectiveIndex] = count;
+//    }
+
+//    //public override string GetProgressText()
+//    //{
+//    //    return $"{objectiveData.targetID} 제출: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
+//    //}
+//}
+
 public class CollectObjectiveHandler : QuestObjectiveHandler
 {
-    // 부모 클래스 초기화를 위해 base 생성자 호출. 함수 : base 문법
     public CollectObjectiveHandler(Quest quest, int index) : base(quest, index) { }
 
-    public override void EvaluateProgress()
+    public override void OnStart()
     {
-        int count = 0;
-        if (GameEvents.RequestPlayerItemCount != null)
-        {
-            count = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID);
-        }
-        quest.currentAmounts[objectiveIndex] = count;
+        GameEvents.OnInventoryChanged += UpdateCount;
+        UpdateCount();
     }
 
-    //public override string GetProgressText()
-    //{
-    //    return $"{objectiveData.targetID} 제출: {quest.currentAmounts[objectiveIndex]} / {objectiveData.requiredAmount}";
-    //}
+    public override void OnStop()
+    {
+        GameEvents.OnInventoryChanged -= UpdateCount;
+    }
+
+    private void UpdateCount()
+    {
+        if (GameEvents.RequestPlayerItemCount != null)
+        {
+            quest.currentAmounts[objectiveIndex] = GameEvents.RequestPlayerItemCount.Invoke(objectiveData.itemID);
+            GameEvents.OnQuestProgressUpdated?.Invoke();
+        }
+    }
+
+    public override void EvaluateProgress() { } 
 }

@@ -108,10 +108,9 @@ public class PlayerQuestUIManager : MonoBehaviour
     public void CloseQuestPanel()
     {
         playerQuestPanel.SetActive(false);
+        QuestManager.Instance.RefreshQuestAlertStatus();
         InputControlManager.Instance.UnlockInput();
     }
-
-
 
     // 새 퀘스트를 받거나 보상 조건이 달성되었을 때
     public void ShowQuestAlert()

@@ -5,6 +5,7 @@ public class EnvironmentController : MonoBehaviour
 {
     [Header("Target Light")]
     [SerializeField] private Light directionalLight;
+    [SerializeField] private string lightTag = "MainLight";
 
     [Header("Intensity Settings")]
     [SerializeField] private float morningIntensity = 0.8f;
@@ -53,14 +54,11 @@ public class EnvironmentController : MonoBehaviour
 
     private void FindDirectionalLight()
     {
-        Light[] lights = GameObject.FindObjectsOfType<Light>();
-        foreach (var l in lights)
+        GameObject lightObj = GameObject.FindWithTag(lightTag);
+
+        if (lightObj != null)
         {
-            if (l.type == LightType.Directional)
-            {
-                directionalLight = l;
-                break;
-            }
+            directionalLight = lightObj.GetComponent<Light>();
         }
     }
 

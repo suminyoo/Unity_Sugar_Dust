@@ -36,6 +36,7 @@ public class GameData
     public int hpLevel = 0;
     public int staminaLevel = 0;
     public int inventorySizeLevel = 0;
+    public int equipmentSizeLevel = 0;
     public int displayStandSizeLevel = 0;
     public int containerSizeLevel = 0;
 
@@ -52,6 +53,9 @@ public class GameData
 
     // 플레이어 인벤토리
     public List<ItemSaveData> inventorySlots = new List<ItemSaveData>();
+
+    //플레이어 장착 슬롯
+    public List<ItemSaveData> equipmentSlots = new List<ItemSaveData>();
 
     //상점 진열대
     public List<ItemSaveData> displayStandSlots = new List<ItemSaveData>();
@@ -75,6 +79,7 @@ public class GameData
         hpLevel = 0;
         staminaLevel = 0;
         inventorySizeLevel = 0;
+        equipmentSizeLevel = 0;
         displayStandSizeLevel = 0;
         containerSizeLevel = 0;
 
@@ -88,6 +93,10 @@ public class GameData
         int invSize = blueprint.GetInventorySize(this.inventorySizeLevel);
         inventorySlots = new List<ItemSaveData>();
         for (int i = 0; i < invSize; i++) inventorySlots.Add(new ItemSaveData());
+
+        int eqipSize = blueprint.GetEquipmentSize(this.equipmentSizeLevel);
+        equipmentSlots = new List<ItemSaveData>();
+        for (int i = 0; i < eqipSize; i++) equipmentSlots.Add(new ItemSaveData());
 
         int dsSize = blueprint.GetDisplayStandSize(this.displayStandSizeLevel);
         displayStandSlots = new List<ItemSaveData>();

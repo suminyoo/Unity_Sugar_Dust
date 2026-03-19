@@ -141,6 +141,13 @@ public class TutorialManager : MonoBehaviour
             if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
             if (tutorialGuideUI != null) tutorialGuideUI.SetActive(false);
         }
+        if (questID == QuestID.Tuto_05)
+        {
+            if (guideNPC != null) guideNPC.gameObject.SetActive(false);
+
+        }
+
+
     }
 
 

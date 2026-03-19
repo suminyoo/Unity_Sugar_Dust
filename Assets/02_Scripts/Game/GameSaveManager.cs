@@ -82,7 +82,7 @@ public class GameSaveManager : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SAVE_COMPLETE"));
-        //Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
+        Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
     }
 
     private void ManageRollingSaves(string directoryPath, int maxFiles)
@@ -338,4 +338,39 @@ public class GameSaveManager : MonoBehaviour
     }
 
     #endregion
+
+    #region 플레이어 장착슬롯 데이터 세이브로드
+
+    public void SavePlayerEquipment(IReadOnlyList<InventorySlot> slots)
+    {
+        savedData.equipmentSlots.Clear();
+        foreach (var slot in slots)
+        {
+            string id = slot.IsEmpty ? "" : slot.ItemData.itemID.ToString();
+            savedData.equipmentSlots.Add(new ItemSaveData { itemID = id, amount = slot.Amount });
+        }
+    }
+
+    public (int size, List<InventorySlot> slots) LoadPlayerEquipment()
+    {
+        List<InventorySlot> loadedSlots = new List<InventorySlot>();
+
+        foreach (var savedSlot in savedData.equipmentSlots)
+        {
+            if (string.IsNullOrEmpty(savedSlot.itemID))
+            {
+                loadedSlots.Add(new InventorySlot());
+            }
+            else
+            {
+                ItemData item = ItemDataManager.Instance.GetItemByID(savedSlot.itemID);
+                loadedSlots.Add(new InventorySlot(item, savedSlot.amount));
+            }
+        }
+
+        int equipmentSize = defaultPlayerData.GetEquipmentSize(savedData.equipmentSizeLevel);
+        return (equipmentSize, loadedSlots);
+    }
+    #endregion
+
 }

@@ -30,38 +30,43 @@ public class PlayerInventory : InventoryHolder, ISaveable
         else Destroy(gameObject);
         base.Awake();
     }
-
+    // 유지할 순서
+    // 1. UI 찾기
+    // 2. connectedInventory 연결
+    // 3. Load
+    // 4. SetInventorySystem
     private void Start()
     {
-        // 인스펙터 연결이 끊겨 있으면 씬에 존재하는 인벤토리 직접 연결
-        if (inventoryUI == null)
+        //// 인스펙터 연결이 끊겨 있으면 씬에 존재하는 인벤토리 직접 연결
+        //if (inventoryUI == null)
+        //{
+        //    InventoryUI[] allUIs = FindObjectsOfType<InventoryUI>(true);
+        //    foreach (var ui in allUIs)
+        //    {
+        //        if (ui.contextType == InventoryContext.Player)
+        //        {
+        //            inventoryUI = ui;
+        //            break;
+        //        }
+        //    }
+        //}
+        // 연결
+        if (inventoryUI != null)
         {
-            InventoryUI[] allUIs = FindObjectsOfType<InventoryUI>(true);
-            foreach (var ui in allUIs)
-            {
-                if (ui.contextType == InventoryContext.Player)
-                {
-                    inventoryUI = ui;
-                    break;
-                }
-            }
+            inventoryUI.connectedInventory = this;
         }
-
-        if (GameSaveManager.Instance != null)
-        {
-            LoadInventoryFromManager();
-        }
+        // 데이터 로드
+        LoadInventoryFromManager();
+        RefreshUI();
+        
 
         inventorySystem.OnInventoryUpdated += RefreshTotalWeight;
         mouseItemData.OnMouseItemChanged += RefreshTotalWeight;
 
-
-        if (inventorySystem != null)
-        {
-            inventorySystem.OnInventoryUpdated += () => {
-                GameEvents.OnInventoryChanged?.Invoke();
-            };
-        }
+        inventorySystem.OnInventoryUpdated += () => {
+            GameEvents.OnInventoryChanged?.Invoke();
+        };
+        
     }
     private void OnEnable()
     {
@@ -94,14 +99,21 @@ public class PlayerInventory : InventoryHolder, ISaveable
                 inventorySystem.Slots[i].UpdateSlot(savedSlots[i].ItemData, savedSlots[i].Amount);
         }
 
-        // ui에게 재연결
+        //// ui에게 재연결
+        //if (inventoryUI != null)
+        //{
+        //    inventoryUI.SetInventorySystem(this.inventorySystem);
+        //}
+
+        UpdateWeightUI();
+        //Debug.Log("인벤토리 로드 및 UI 재연결 완료");
+    }
+    public void RefreshUI()
+    {
         if (inventoryUI != null)
         {
             inventoryUI.SetInventorySystem(this.inventorySystem);
         }
-
-        UpdateWeightUI();
-        //Debug.Log("인벤토리 로드 및 UI 재연결 완료");
     }
 
     #endregion

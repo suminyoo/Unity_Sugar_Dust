@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0c2fbcba869f54d97cb4f89a1897dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedInventory: {fileID: 3937726180583055345}
+  connectedInventory: {fileID: 0}
   mouseItemData: {fileID: 2282914791179185328}
   slotPrefab: {fileID: 7153219060786524397, guid: 4f1466e4a78ae1949baebd7f87e9726d, type: 3}
   contentPanel: {fileID: 7667977651168051167}
@@ -16314,6 +16314,7 @@ GameObject:
   - component: {fileID: 1614088829528534574}
   - component: {fileID: 1585865001654277057}
   - component: {fileID: 3474830422778414060}
+  - component: {fileID: 7392537491512282659}
   m_Layer: 5
   m_Name: '[Canvas]StorageSystemLayer'
   m_TagString: Untagged
@@ -16469,6 +16470,26 @@ MonoBehaviour:
   usageInfoUI: {fileID: 3122770303382093155}
   priceInfoUI: {fileID: 5254231652533049900}
   purchaseInfoUI: {fileID: 7929382225531095409}
+--- !u!114 &7392537491512282659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765861202546146456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f751d81402a2945b4cadacdc725265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPosition: {fileID: 462483497026609026}
+  inventorySystem:
+    slots: []
+    maxSlots: 0
+  actionSystem: {fileID: 8109765995978425900}
+  equipmentUI: {fileID: 2270120102502666883}
+  bareHandSword: {fileID: 11400000, guid: 4b0896aa90930c843a9976d48678b75f, type: 2}
+  bareHandPickaxe: {fileID: 11400000, guid: 1ad2cb94c98bc8149baec9f859479747, type: 2}
 --- !u!1 &3786105289288181832
 GameObject:
   m_ObjectHideFlags: 0
@@ -24138,7 +24159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.545, y: -38.754997}
+  m_AnchoredPosition: {x: 79.545, y: -10}
   m_SizeDelta: {x: 139.09, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1712155949138741821
@@ -34445,7 +34466,6 @@ GameObject:
   - component: {fileID: 1447261619496624904}
   - component: {fileID: 4621993315052264783}
   - component: {fileID: 4098761852924780871}
-  - component: {fileID: 3937726180583055345}
   m_Layer: 5
   m_Name: PlayerEquipmentPanel
   m_TagString: Untagged
@@ -34525,26 +34545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670d1fdeacebd6e4987a602c4bbfbad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3937726180583055345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8302326004100437144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2f751d81402a2945b4cadacdc725265, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDropPosition: {fileID: 462483497026609026}
-  inventorySystem:
-    slots: []
-    maxSlots: 0
-  actionSystem: {fileID: 8109765995978425900}
-  equipmentUI: {fileID: 2270120102502666883}
-  bareHandSword: {fileID: 11400000, guid: 4b0896aa90930c843a9976d48678b75f, type: 2}
-  bareHandPickaxe: {fileID: 11400000, guid: 1ad2cb94c98bc8149baec9f859479747, type: 2}
 --- !u!1 &8350303837343999008
 GameObject:
   m_ObjectHideFlags: 0

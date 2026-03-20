@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using System.Collections;
-
+using UnityEngine.UI;
 public static class ExploreEvents
 {
     public static System.Action OnMonsterDefeated;
@@ -34,6 +34,18 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public TextMeshProUGUI exploreLevelText;
     public TextMeshProUGUI explorePathText;
     public GameObject frozenBG;
+
+    [Header("UI - Progress Bar")]
+    public Slider exploreProgressSlider;
+    public Image sliderFillImage;
+    public float lerpSpeed = 5f;
+
+    public Color progressColorLow = new Color(1f, 0.3f, 0.3f);
+    public Color progressColorMid = new Color(1f, 0.8f, 0.2f);
+    public Color progressColorHigh = new Color(0.3f, 1f, 0.4f);
+
+    private float targetProgressRatio = 0f;
+    private Color targetProgressColor;
 
     [Header("Result")]
     public GameObject resultUIPanel;
@@ -107,10 +119,19 @@ public class ExploreManager : MonoBehaviour, ISaveable
     {
         if (isExplorationEnded || !isExploreStarted) return;
 
+        if (exploreProgressSlider != null)
+        {
+            exploreProgressSlider.value = Mathf.Lerp(exploreProgressSlider.value, targetProgressRatio, Time.deltaTime * lerpSpeed);
+        }
+
+        if (sliderFillImage != null)
+        {
+            sliderFillImage.color = Color.Lerp(sliderFillImage.color, targetProgressColor, Time.deltaTime * lerpSpeed);
+        }
+
         if (!isFrozenEnvironment)
         {
             currentTime -= Time.deltaTime;
-
             if (currentTime <= 0)
             {
                 StartFrozenEnvironment();
@@ -186,7 +207,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     public void AddExplorationProgress()
     {
         currentProgressCount++;
-        UpdateExploreProgressUI();
+        UpdateExploreProgressUI(false);
     }
 
     void OnMapReady()
@@ -195,7 +216,8 @@ public class ExploreManager : MonoBehaviour, ISaveable
         string stageName = exploreConfig.GetStageData(currentExplorationLevel).GetStageNameText();
         exploreLevelText.text = $"{stageName} {localLevel:00}";
 
-        UpdateExploreProgressUI();
+        UpdateExploreProgressUI(true);
+        
         if (playerController != null)
         {
             PlayerSpawnHandler.Instance.SpawnPlayer(playerSpawnPointID);
@@ -244,7 +266,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
 
     #region UI
 
-    public void UpdateExploreProgressUI()
+    public void UpdateExploreProgressUI(bool isInstant = false)
     {
         float ratio = 0f;
         if (targetProgressCount > 0)
@@ -252,23 +274,34 @@ public class ExploreManager : MonoBehaviour, ISaveable
         else
             ratio = 1f;
 
+        ratio = Mathf.Clamp01(ratio);
+        targetProgressRatio = ratio; 
+
         int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
         bool isCleared = currentExplorationLevel < maxLevel;
 
         if (isCleared || ratio >= 0.7f)
         {
             currentSuccessProb = 100f;
-            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CLEAR");
+            if (explorePathText != null) explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CLEAR");
+            targetProgressColor = progressColorHigh;
         }
         else if (ratio >= 0.4f)
         {
             currentSuccessProb = 50f;
-            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_FAMILIAR");
+            if (explorePathText != null) explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_FAMILIAR");
+            targetProgressColor = progressColorMid;
         }
         else
         {
             currentSuccessProb = 10f;
-            explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CONFUSED");
+            if (explorePathText != null) explorePathText.text = LocalizationHelper.Main("EXPLORE_PATH_CONFUSED");
+            targetProgressColor = progressColorLow;
+        }
+        if (isInstant)
+        {
+            if (exploreProgressSlider != null) exploreProgressSlider.value = targetProgressRatio;
+            if (sliderFillImage != null) sliderFillImage.color = targetProgressColor;
         }
     }
     #endregion

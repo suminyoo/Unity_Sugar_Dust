@@ -154,14 +154,9 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public bool CanShop()
     {
-        if (currentTime == GAME_TIME.Morning || currentTime == GAME_TIME.Day)
+        if (currentTime != GAME_TIME.Evening)
         {
             NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SHOP_EVENING_ONLY"));
-            return false;
-        }
-        if (currentTime == GAME_TIME.Night)
-        {
-            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SHOP_CLOSED"));
             return false;
         }
         return true;

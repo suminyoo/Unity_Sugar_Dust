@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
-public class TutorialManager : MonoBehaviour
+public class TownTutorialManager : MonoBehaviour
 {
-    public static TutorialManager Instance;
+    public static TownTutorialManager Instance;
 
     [Header("NPC Groups")]
     public GameObject normalNPCGroup;
@@ -43,9 +44,6 @@ public class TutorialManager : MonoBehaviour
     public PathLookAtController townCamController;
     public DialogueData[] townDialogues;
 
-    [Header("Tutorial UI")]
-    public GameObject tutorialGuideUI;
-
     private bool isTownGuideFinished = false;
 
     private void Awake()
@@ -56,34 +54,33 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        // TODO: 세이브 데이터 추가 해야함 게임 세이브 매니저
-        bool isTutorialCompleted = false;
-
-        if (isTutorialCompleted)
+        if (GameSaveManager.Instance.savedData.isTutorialCompleted)
         {
-            tutorialNPCGroup.SetActive(false);
-            normalNPCGroup.SetActive(true);
-            this.enabled = false; 
+            // 튜토리얼이 이미 끝났다면 일반 NPC 켜고 매니저 종료
+            if (tutorialNPCGroup != null) tutorialNPCGroup.SetActive(false);
+            if (normalNPCGroup != null) normalNPCGroup.SetActive(true);
+            this.enabled = false;
             return;
         }
-        else
-        {
-            // 튜토리얼 진행
-            // TODO: 집에 있는 문 콜라이더 키기
 
-            normalNPCGroup.SetActive(false);
-            tutorialNPCGroup.SetActive(true);
-            tutorialGuideUI.SetActive(true);
+
+        if (normalNPCGroup != null) normalNPCGroup.SetActive(false);
+        if (tutorialNPCGroup != null) tutorialNPCGroup.SetActive(true);
+
+        // Tuto_01 퀘스트가 진행 중이거나 이미 완료되었는지 확인
+        bool isTuto01Active = HasActiveQuest(QuestID.Tuto_01);
+        bool isTuto01Completed = QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_01);
+
+        if (!isTuto01Active && !isTuto01Completed)
+        {
             StartCoroutine(StartPhaseWakeUp());
         }
 
-        // 튜토리얼 퀘스트 6 관련 하드코딩
-        if (QuestManager.Instance.IsQuestAchieved(QuestID.Tuto_06))
+        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_06))
         {
             if (!HasActiveQuest(QuestID.Tuto_07) && !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_07))
             {
                 QuestManager.Instance.AddQuest(tuto_07);
-
                 if (PlayerQuestUIManager.Instance != null)
                     PlayerQuestUIManager.Instance.ShowQuestAlert();
             }
@@ -120,7 +117,6 @@ public class TutorialManager : MonoBehaviour
         PlayerQuestUIManager.Instance.ShowQuestAlert();
         
 
-        tutorialGuideUI.SetActive(true);
     }
 
     private void HandleNPCTalkedFinished(NPCID npcID)
@@ -139,7 +135,6 @@ public class TutorialManager : MonoBehaviour
         if (questID == QuestID.Tuto_02)
         {
             if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
-            if (tutorialGuideUI != null) tutorialGuideUI.SetActive(false);
         }
         if (questID == QuestID.Tuto_05)
         {

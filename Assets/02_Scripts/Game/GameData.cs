@@ -29,6 +29,9 @@ public class GameData
 {
     //게임 데이터
     public SaveMetadata metadata = new SaveMetadata();
+
+    public bool isTutorialCompleted = false;
+
     public int currentDay = 0;
     public GAME_TIME currentTime = GAME_TIME.None;
 
@@ -73,7 +76,7 @@ public class GameData
         metadata = new SaveMetadata();
         metadata.playTime = 0;
 
-        currentDay = 1;
+        currentDay = 0;
         currentTime = GAME_TIME.Morning;
 
         hpLevel = 0;

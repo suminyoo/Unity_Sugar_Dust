@@ -214,4 +214,21 @@ public class QuestManager : MonoBehaviour
         }
         return false;
     }
+
+    // 예외용): 퀘스트의 모든 목표 진행도를 100%로 꽉 채워주는 함수 
+    public void MaxOutQuestObjectives(QuestID questID)
+    {
+        Quest quest = GetActiveQuest(questID);
+        if (quest != null)
+        {
+            for (int i = 0; i < quest.currentAmounts.Length; i++)
+            {
+                quest.currentAmounts[i] = quest.data.objectives[i].requiredAmount;
+            }
+
+            quest.EvaluateAll();
+
+            GameEvents.OnQuestProgressUpdated?.Invoke();
+        }
+    }
 }

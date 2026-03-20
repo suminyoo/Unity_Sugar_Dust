@@ -48,6 +48,16 @@ public class GameSaveManager : MonoBehaviour
         savedData.InitNewGame(defaultPlayerData);
     }
 
+    public bool IsTutorialCompleted()
+    {
+        return savedData.isTutorialCompleted;
+    }
+
+    public void CompleteTutorial()
+    {
+        savedData.isTutorialCompleted = true;
+    }
+
     #region 게임 데이터 슬롯에 저장
 
     public void SaveCurrentGame()

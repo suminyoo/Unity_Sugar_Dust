@@ -7,23 +7,37 @@ public class ColorChanger : MonoBehaviour
     private Renderer _renderer;
     private MaterialPropertyBlock _propBlock;
 
+    private bool _isColorOverridden = false;
+
     private void OnValidate()
     {
-        ApplyColor();
+        if (!Application.isPlaying) ApplyColor(myColor);
     }
 
     private void Start()
     {
-        ApplyColor();
+        if (!_isColorOverridden)
+        {
+            ApplyColor(myColor);
+        }
     }
 
-    private void ApplyColor()
+    public void SetDynamicColor(Color newColor)
     {
-        if (_renderer == null) _renderer = GetComponent<Renderer>();
+        _isColorOverridden = true;
+        myColor = newColor;
+        ApplyColor(newColor);
+    }
+
+    private void ApplyColor(Color targetColor)
+    {
+        if (_renderer == null) _renderer = GetComponentInChildren<Renderer>();
+        if (_renderer == null) return;
+
         if (_propBlock == null) _propBlock = new MaterialPropertyBlock();
 
         _renderer.GetPropertyBlock(_propBlock, 0);
-        _propBlock.SetColor("_Color", myColor);
+        _propBlock.SetColor("_Color", targetColor);
         _renderer.SetPropertyBlock(_propBlock, 0);
     }
 }

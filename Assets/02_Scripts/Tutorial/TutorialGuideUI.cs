@@ -13,14 +13,12 @@ public class TutorialGuideUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image contentImage;
-    [SerializeField] private TextMeshProUGUI pageIndicatorText; 
+    [SerializeField] private TextMeshProUGUI pageIndicatorText;
 
     [Header("Navigation Buttons")]
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
 
-    [Header("Input Settings")]
-    public KeyCode toggleKey = KeyCode.T;
 
     private int _currentPageIndex = 0;
 
@@ -41,11 +39,6 @@ public class TutorialGuideUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(toggleKey))
-        {
-            ToggleGuide();
-        }
-
         if (Input.GetKeyDown(KeyCode.Escape) && guideRootCanvas != null && guideRootCanvas.activeSelf)
         {
             OnClickClose();
@@ -74,7 +67,6 @@ public class TutorialGuideUI : MonoBehaviour
         guideRootCanvas.SetActive(true);
         _currentPageIndex = 0;
         UpdateUI();
-
     }
 
     public void OnClickNext()
@@ -98,7 +90,6 @@ public class TutorialGuideUI : MonoBehaviour
     public void OnClickClose()
     {
         if (guideRootCanvas != null) guideRootCanvas.SetActive(false);
-
     }
 
     private void UpdateUI()

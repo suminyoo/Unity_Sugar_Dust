@@ -178,6 +178,10 @@ public class GameManager : MonoBehaviour, ISaveable
         currentDay++;
         OnSleep?.Invoke();
 
+
+        GameSaveManager.Instance.SaveCurrentGame();
+
+
         yield return new WaitForSeconds(1.0f);
         if (sleepSound.clip != null) SoundManager.Instance.PlaySFX2D(sleepSound);
 

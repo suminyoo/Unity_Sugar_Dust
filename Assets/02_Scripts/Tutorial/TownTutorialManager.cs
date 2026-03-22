@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class TownTutorialManager : MonoBehaviour
@@ -21,7 +20,7 @@ public class TownTutorialManager : MonoBehaviour
     [Header("Quest Data")]
     public QuestData tuto_01;
     public QuestData tuto_07;
-
+    public QuestData tuto_10;
 
     [Header("Dialogue Data (교체)")]
     public DialogueData parentDialogue_Phase2;
@@ -35,10 +34,9 @@ public class TownTutorialManager : MonoBehaviour
     public DialogueData spaceshipDialogue_Phase2;
     public DialogueData spaceshipDialogue_Phase3;
 
-
-    [Header("Scene Objects")]
-    public GameObject shopBlockerCollider;
-    public GameObject houseDoorCollider;
+    [Header("Spaceship Tuto 06 Dialogues")]
+    public DialogueData spaceship_FailNight;
+    public DialogueData spaceship_ReadyDay;
 
     [Header("Village Introduce")]
     public PathLookAtController townCamController;
@@ -67,6 +65,9 @@ public class TownTutorialManager : MonoBehaviour
         if (normalNPCGroup != null) normalNPCGroup.SetActive(false);
         if (tutorialNPCGroup != null) tutorialNPCGroup.SetActive(true);
 
+
+        SyncEnvironmentState();
+
         // Tuto_01 퀘스트가 진행 중이거나 이미 완료되었는지 확인
         bool isTuto01Active = HasActiveQuest(QuestID.Tuto_01);
         bool isTuto01Completed = QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_01);
@@ -85,6 +86,18 @@ public class TownTutorialManager : MonoBehaviour
                     PlayerQuestUIManager.Instance.ShowQuestAlert();
             }
         }
+
+        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+        {
+            if (!HasActiveQuest(QuestID.Tuto_10) && !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_10))
+            {
+                if (tuto_10 != null)
+                {
+                    QuestManager.Instance.AddQuest(tuto_10);
+                    if (PlayerQuestUIManager.Instance != null) PlayerQuestUIManager.Instance.ShowQuestAlert();
+                }
+            }
+        }
     }
 
     private void OnEnable()
@@ -101,6 +114,43 @@ public class TownTutorialManager : MonoBehaviour
         GameEvents.OnPointArrived -= HandlePointArrived;
         GameEvents.OnQuestAccepted -= HandleQuestAccepted;
         GameEvents.OnQuestProgressUpdated -= CheckTuto06Completion;
+    }
+
+
+    private void SyncEnvironmentState()
+    {
+        // 가이드 NPC 퇴장 동기화 (Tuto_05를 받았거나 완료했다면 끈다)
+        if (HasActiveQuest(QuestID.Tuto_05) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_05))
+        {
+            if (guideNPC != null) guideNPC.gameObject.SetActive(false);
+        }
+
+        // 임대업자 NPC 퇴장 동기화 (Tuto_09를 받았거나 완료했다면 끈다)
+        if (HasActiveQuest(QuestID.Tuto_09) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+        {
+            if (landlordNPC != null) landlordNPC.gameObject.SetActive(false);
+        }
+
+        // 타운 안내 카메라 연출을 이미 본 상태라면, 가이드 NPC의 대사를 Phase2로
+        if (HasActiveQuest(QuestID.Tuto_02))
+        {
+            if (guideNPC != null) guideNPC.uniqueDialogue = guideDialogue_Phase2;
+            isTownGuideFinished = true;
+        }
+
+        if (HasActiveQuest(QuestID.Tuto_06))
+        {
+            if (GameManager.Instance.currentTime == GAME_TIME.Evening || GameManager.Instance.currentTime == GAME_TIME.Night)
+            {
+                // 저녁에 돌아왔다면 대사로 미리 바꿔두기
+                if (spaceshipNPC != null) spaceshipNPC.uniqueDialogue = spaceship_FailNight;
+            }
+            else
+            {
+                // 낮이라면 정상(탐사 준비) 대사 유지
+                if (spaceshipNPC != null) spaceshipNPC.uniqueDialogue = spaceship_ReadyDay;
+            }
+        }
     }
 
     private IEnumerator StartPhaseWakeUp()
@@ -123,45 +173,70 @@ public class TownTutorialManager : MonoBehaviour
     {
         if (npcID == NPCID.Guide && HasActiveQuest(QuestID.Tuto_02) && !isTownGuideFinished)
         {
-
             StartCoroutine(PlayGuideSequence());
+        }
+        if (npcID == NPCID.SpaceshipOwner && HasActiveQuest(QuestID.Tuto_06))
+        {
+            Quest tuto06 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_06);
 
+            // 목표량을 이미 다 채운 상태
+            if (tuto06 != null && tuto06.IsAllObjectivesComplete())
+            {
+                // 유저에게 보상을 받으라고 안내
+                NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_CLAIM_QUEST_REWARD"));
+                return;
+            }
+
+            // 목표를 덜 채웠는데 저녁/밤인 경우
+            if (GameManager.Instance.currentTime == GAME_TIME.Evening || GameManager.Instance.currentTime == GAME_TIME.Night)
+            {
+                StartCoroutine(TimeResetSequence());
+            }
         }
     }
 
     private void HandleQuestAccepted(QuestID questID)
     {
-
-        if (questID == QuestID.Tuto_02)
-        {
-            if (houseDoorCollider != null) houseDoorCollider.SetActive(false);
-        }
         if (questID == QuestID.Tuto_05)
         {
             if (guideNPC != null) guideNPC.gameObject.SetActive(false);
 
         }
 
-
     }
 
 
-    //특정 장소에 도달했을 때
     private void HandlePointArrived(PointID pointID)
     {
-        // 내 상점 내부에 진입했고 Tuto_09가 진행 중일 때
         if (pointID == PointID.MyShop && HasActiveQuest(QuestID.Tuto_09))
         {
-            Debug.Log("상점 진입! 임대업자 NPC 퇴장 및 튜토리얼 UI 오픈");
-
             if (landlordNPC != null) landlordNPC.gameObject.SetActive(false);
 
-            // TODO: 장사 안내서 UI 팝업 띄우기 
-            // ShopTutorialUIManager.Instance.ShowManual();
         }
     }
 
-    // 전용 연출 코루틴 (컷신/이동 등)
+    private IEnumerator TimeResetSequence()
+    {
+        InputControlManager.Instance.LockInput();
+        yield return FadeUIManager.Instance.FadeOut();
+
+        // 시간만 낮으로
+        GameManager.Instance.ChangeTime(GAME_TIME.Morning);
+
+        // 체력 회복
+        PlayerCondition playerCondition = FindObjectOfType<PlayerCondition>();
+        if (playerCondition != null)
+        {
+            playerCondition.FullHealthRecovery();
+        }
+
+        // 대사 변경
+        if (spaceshipNPC != null) spaceshipNPC.uniqueDialogue = spaceship_ReadyDay;
+
+        yield return FadeUIManager.Instance.FadeIn();
+        InputControlManager.Instance.UnlockInput();
+
+    }
 
     private IEnumerator PlayGuideSequence()
     {
@@ -197,21 +272,6 @@ public class TownTutorialManager : MonoBehaviour
         guideNPC.uniqueDialogue = guideDialogue_Phase2;
 
         InputControlManager.Instance.UnlockInput();
-    }
-
-    private IEnumerator MoveToExplorationMap()
-    {
-        InputControlManager.Instance.LockInput();
-
-        yield return new WaitForSeconds(1.5f);
-
-        // TODO: 탐사 맵 씬으로 이동하거나 플레이어를 텔레포트
-        // SceneManager.LoadScene("ExplorationMap");
-
-        InputControlManager.Instance.UnlockInput();
-
-        // 탐사 맵 도착 직후 우주선 NPC의 탐사 맵 전용 대사나 시스템 안내를
-        // 별도의 콜백으로
     }
 
     private bool HasActiveQuest(QuestID questID)

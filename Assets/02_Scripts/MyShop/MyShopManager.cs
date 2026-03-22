@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class MyShopManager : MonoBehaviour
 {
@@ -86,7 +87,7 @@ public class MyShopManager : MonoBehaviour
         if (!IsShopOpen) return;
         IsShopOpen = false;
 
-        if(closeShopSound.clip != null) SoundManager.Instance.PlaySFX2D(closeShopSound);
+        if (closeShopSound.clip != null) SoundManager.Instance.PlaySFX2D(closeShopSound);
 
         NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SHOP_CLOSE"));
 

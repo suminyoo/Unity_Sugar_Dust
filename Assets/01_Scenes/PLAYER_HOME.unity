@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 92232747}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPC_Tuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,6 +496,37 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.78400004, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &680631624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680631625}
+  m_Layer: 0
+  m_Name: NPC_Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &680631625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680631624}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1000, y: 0, z: 1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!208 &704470207
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -605,6 +636,52 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2091117164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1061230856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1061230858}
+  - component: {fileID: 1061230857}
+  m_Layer: 0
+  m_Name: LocalTutorialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1061230857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061230856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9e52707e097294db660d6c926922c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialGroup: {fileID: 92232746}
+  normalGroup: {fileID: 680631624}
+--- !u!4 &1061230858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061230856}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094459683
 GameObject:
@@ -1073,7 +1150,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 586fd1918743b5a4e82ef202fd14a199, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: questBasedDialogues.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: npcName.m_TableEntryReference.m_KeyId
@@ -1085,6 +1162,14 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: f7c30da2de5199349b27dff694322bb1, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: questBasedDialogues.Array.data[1].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: f7c30da2de5199349b27dff694322bb1, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 320cfa11795ccb74aa3582a9d0f47e91, type: 2}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[3].dialogue
       value: 
       objectReference: {fileID: 11400000, guid: 320cfa11795ccb74aa3582a9d0f47e91, type: 2}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
@@ -1105,10 +1190,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: questBasedDialogues.Array.data[1].checkCompleted
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: questBasedDialogues.Array.data[1].triggerQuestID
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].checkCompleted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[2].triggerQuestID
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: questBasedDialogues.Array.data[3].triggerQuestID
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
@@ -6900,5 +6997,7 @@ SceneRoots:
   - {fileID: 1094459685}
   - {fileID: 5478877789413864515}
   - {fileID: 2091117164}
+  - {fileID: 680631625}
   - {fileID: 92232747}
   - {fileID: 396389806}
+  - {fileID: 1061230858}

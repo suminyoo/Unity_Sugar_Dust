@@ -61,7 +61,7 @@ public static class InteractionValidator
                 Quest tuto10 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_10);
                 if (tuto10 == null)
                 {
-                    msg = LocalizationHelper.Main("NOTI_BED_TUTORIAL");
+                    msg = LocalizationHelper.Main("NOTI_TUTO_NOT_DONE");
                     return false;
                 }
                 break;

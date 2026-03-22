@@ -19,14 +19,24 @@ public class BedInteraction : MonoBehaviour, IInteractable
             LocalizationHelper.Main("CONFIRM_SLEEP"),
             () => {
                 Quest tuto10 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_10);
+
                 if (tuto10 != null)
                 {
                     QuestManager.Instance.MaxOutQuestObjectives(QuestID.Tuto_10);
                     GameSaveManager.Instance.CompleteTutorial();
-                    //Debug.Log("튜토리얼 완료");
-                }
 
-                GameManager.Instance.TrySleep();
+                    GameManager.Instance.TrySleep();
+
+                    SceneController.Instance.ChangeSceneAndAddScene(
+                        SCENE_NAME.TOWN,
+                        SCENE_NAME.PLAYER_HOME,
+                        SPAWN_ID.PLAYERHOME_BED
+                    );
+                }
+                else
+                {
+                    GameManager.Instance.TrySleep();
+                }
             }
         );
     }

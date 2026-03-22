@@ -27,6 +27,11 @@ public class SceneController : MonoBehaviour
 
     #region Change Scene
 
+    // [isLoadGame 설명]
+    // false (일반 이동): 현재 씬의 변경사항(위치, 퀘스트 등)을 메모리에 기록하고 이동함.
+    // true  (데이터 로드): 타이틀에서 새로 시작하거나 저장 파일을 불러오는 경우임. 
+    //                    이때 저장 로직이 돌면 기존 데이터를 빈 값으로 덮어쓸 위험이 있어 건너뜀.
+
     public void ChangeScene(SCENE_NAME sceneName, SPAWN_ID spawnPointID, bool isLoadGame = false)
     {
         if (isChangingScene) return;
@@ -98,6 +103,7 @@ public class SceneController : MonoBehaviour
 
         // ================= 데이터 저장 =======================
         // 현재 씬의 ISaveable 인터페이스를 가진 컴포넌트를 찾아서 저장
+
         if (!isLoadGame)
         {
             var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();

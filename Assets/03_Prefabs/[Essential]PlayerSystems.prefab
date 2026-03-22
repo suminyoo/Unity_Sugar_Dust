@@ -24614,7 +24614,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.545, y: -38.754997}
+  m_AnchoredPosition: {x: 79.545, y: -10}
   m_SizeDelta: {x: 139.09, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1712155949138741821
@@ -30746,6 +30746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ef749adbea06a4aaa0767b5737a951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guideType: 0
+  autoOpenOnStart: 1
   tutorialData: {fileID: 0}
   guideRootCanvas: {fileID: 2815964792340290411}
   titleText: {fileID: 7730426826250609774}

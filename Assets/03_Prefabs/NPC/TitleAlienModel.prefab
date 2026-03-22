@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6252045914798542688}
   - component: {fileID: 2769781991431484162}
+  - component: {fileID: 6103281659978660318}
   m_Layer: 0
   m_Name: Alien
   m_TagString: Untagged
@@ -87,6 +88,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6103281659978660318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494201464673823692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b058d286f6e629c4580b9d8a02f976ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &769826235869519210
 GameObject:
   m_ObjectHideFlags: 0

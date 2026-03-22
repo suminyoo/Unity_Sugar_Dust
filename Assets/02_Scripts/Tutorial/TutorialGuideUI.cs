@@ -73,6 +73,15 @@ public class TutorialGuideUI : MonoBehaviour, ISaveable
         MarkAsViewed();
     }
 
+    // 외부에서 새로운 튜토리얼 데이터와 타입을 덮어씌우며 강제로 여는 함수
+    public void OpenGuideWithData(TutorialDataSO newData, GuideType newGuideType)
+    {
+        this.tutorialData = newData;
+        this.guideType = newGuideType;
+
+        OpenGuide();
+    }
+
     private bool HasViewedGuideLocal()
     {
         if (guideType == GuideType.None) return false;

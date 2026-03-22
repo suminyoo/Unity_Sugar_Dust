@@ -20,7 +20,7 @@ public class GameSaveManager : MonoBehaviour
     public bool isTimerActive = false;
 
     // 씬이 넘어가도 살아있는 데이터 보관함
-    public GameData savedData = new GameData();
+    public GameData savedData { get; private set; } = new GameData();
 
     public SoundData writingSound;
 
@@ -383,4 +383,21 @@ public class GameSaveManager : MonoBehaviour
     }
     #endregion
 
+    #region 가이드(튜토리얼) 세이브로드
+
+    public bool HasViewedGuide(GuideType guideType)
+    {
+        if (savedData == null || savedData.viewedGuides == null) return false;
+        return savedData.viewedGuides.Contains(guideType);
+    }
+
+    public void SaveViewedGuide(GuideType guideType)
+    {
+        if (!savedData.viewedGuides.Contains(guideType))
+        {
+            savedData.viewedGuides.Add(guideType);
+        }
+    }
+
+    #endregion
 }

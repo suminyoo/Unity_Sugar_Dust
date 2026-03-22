@@ -2,14 +2,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialGuideUI : MonoBehaviour
+public class TutorialGuideUI : MonoBehaviour, ISaveable
 {
+    [Header("Guide Settings")]
+    public GuideType guideType = GuideType.None;
+    public bool autoOpenOnStart = true;
+
     [Header("Tutorial Data")]
     public TutorialDataSO tutorialData;
 
     [Header("UI")]
     [SerializeField] private GameObject guideRootCanvas;
-
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image contentImage;
@@ -19,14 +22,21 @@ public class TutorialGuideUI : MonoBehaviour
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
 
-
     private int _currentPageIndex = 0;
+
+    private bool _isViewedThisSession = false;
 
     private void Start()
     {
-        if (GameSaveManager.Instance != null && GameSaveManager.Instance.savedData != null)
+        if (GameSaveManager.Instance != null)
         {
-            if (!GameSaveManager.Instance.savedData.isTutorialCompleted)
+            if (GameSaveManager.Instance.IsTutorialCompleted())
+            {
+                if (guideRootCanvas != null) guideRootCanvas.SetActive(false);
+                return;
+            }
+
+            if (autoOpenOnStart && !HasViewedGuideLocal())
             {
                 OpenGuide();
             }
@@ -48,25 +58,42 @@ public class TutorialGuideUI : MonoBehaviour
     public void ToggleGuide()
     {
         if (guideRootCanvas == null) return;
-
-        if (guideRootCanvas.activeSelf)
-        {
-            OnClickClose();
-        }
-        else
-        {
-            OpenGuide();
-        }
+        if (guideRootCanvas.activeSelf) OnClickClose();
+        else OpenGuide();
     }
 
     public void OpenGuide()
     {
-        // 데이터가 없으면 열리지 않도록
         if (guideRootCanvas == null || tutorialData == null || tutorialData.pages == null || tutorialData.pages.Length == 0) return;
 
         guideRootCanvas.SetActive(true);
         _currentPageIndex = 0;
         UpdateUI();
+
+        MarkAsViewed();
+    }
+
+    private bool HasViewedGuideLocal()
+    {
+        if (guideType == GuideType.None) return false;
+
+        return _isViewedThisSession || GameSaveManager.Instance.HasViewedGuide(guideType);
+    }
+
+    private void MarkAsViewed()
+    {
+        if (guideType != GuideType.None && !HasViewedGuideLocal())
+        {
+            _isViewedThisSession = true;
+        }
+    }
+
+    public void SaveData()
+    {
+        if (_isViewedThisSession && guideType != GuideType.None)
+        {
+            GameSaveManager.Instance.SaveViewedGuide(guideType);
+        }
     }
 
     public void OnClickNext()

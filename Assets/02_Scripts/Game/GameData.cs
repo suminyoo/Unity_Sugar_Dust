@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 
+
+public enum GuideType { None, Town, Explore, Shop }
+
 [System.Serializable]
 public class QuestSaveData
 {
@@ -31,6 +34,7 @@ public class GameData
     public SaveMetadata metadata = new SaveMetadata();
 
     public bool isTutorialCompleted = false;
+    public List<GuideType> viewedGuides = new List<GuideType>();
 
     public int currentDay = 0;
     public GAME_TIME currentTime = GAME_TIME.None;
@@ -78,6 +82,9 @@ public class GameData
 
         currentDay = 0;
         currentTime = GAME_TIME.Morning;
+
+        isTutorialCompleted = false;
+        viewedGuides = new List<GuideType>();
 
         hpLevel = 0;
         staminaLevel = 0;

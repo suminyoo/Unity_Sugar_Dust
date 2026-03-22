@@ -3752,12 +3752,20 @@ PrefabInstance:
       value: "\uC9D1"
       objectReference: {fileID: 0}
     - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: tutorialLock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
       propertyPath: targetSpawnId
       value: 301
       objectReference: {fileID: 0}
     - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
       propertyPath: targetSceneName
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
+      propertyPath: tutorialLockType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8033074328104130754, guid: 4195baf241c8d494685b25816651289f, type: 3}
       propertyPath: placeName.m_TableEntryReference.m_KeyId
@@ -5609,6 +5617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db5572f89f3b274b91e3e57f6c0e3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialLockType: 4
 --- !u!65 &6705992269698604326
 BoxCollider:
   m_ObjectHideFlags: 0

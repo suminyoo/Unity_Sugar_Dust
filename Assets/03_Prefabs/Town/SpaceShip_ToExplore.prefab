@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 4155194640015126328}
   - component: {fileID: 1010473278377713821}
   - component: {fileID: 3017723316504532055}
+  - component: {fileID: 6372919402639950875}
+  - component: {fileID: 6657178900522829740}
+  - component: {fileID: 180398960629782513}
   m_Layer: 0
   m_Name: Space_Car_2
   m_TagString: Untagged
@@ -83,6 +86,58 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6372919402639950875
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666465756679583106}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6432750020379824417, guid: a4da91bae952a4c28a4407a29d6f4e7f, type: 3}
+--- !u!114 &6657178900522829740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666465756679583106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040e13805249f9847a0d08a5a03a68a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetModel: {fileID: 4155194640015126328}
+  amplitude: 0.1
+  frequency: 1.5
+  rotationSpeed: {x: 0, y: 0, z: 0}
+--- !u!114 &180398960629782513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666465756679583106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9247af86d89e87e4c94a26ac9bdff055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectionUI: {fileID: 0}
+  tutorialLockType: 2
 --- !u!1 &4776000833783288789
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,9 +149,6 @@ GameObject:
   - component: {fileID: 6931011437660250636}
   - component: {fileID: 5749015789093742769}
   - component: {fileID: 1336145945003608375}
-  - component: {fileID: 8006412203609874120}
-  - component: {fileID: 8991014313637010495}
-  - component: {fileID: 3653001152810711857}
   m_Layer: 9
   m_Name: SpaceShip_ToExplore
   m_TagString: Untagged
@@ -112,7 +164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4776000833783288789}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.6550026, y: 0.69873405, z: -53.26921}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -170,53 +222,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8006412203609874120
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4776000833783288789}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7.444859, y: 3.2349107, z: 8.120525}
-  m_Center: {x: -0.017324686, y: 1.1174554, z: -0.00866127}
---- !u!114 &8991014313637010495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4776000833783288789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9247af86d89e87e4c94a26ac9bdff055, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionUI: {fileID: 0}
---- !u!114 &3653001152810711857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4776000833783288789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 040e13805249f9847a0d08a5a03a68a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetModel: {fileID: 4155194640015126328}
-  amplitude: 0.1
-  frequency: 1.5
-  rotationSpeed: {x: 0, y: 0, z: 0}

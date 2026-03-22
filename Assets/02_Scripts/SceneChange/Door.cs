@@ -3,31 +3,55 @@ using UnityEngine.Localization;
 
 public class Door : MonoBehaviour, IInteractable
 {
+    [Header("Door Settings")]
     public LocalizedString placeName;
     public SCENE_NAME targetSceneName;
     public SPAWN_ID targetSpawnId;
     public bool isExiting = false;
 
+    [Header("Audio")]
     public SoundData doorOpenSound;
     public SoundData doorLockedSound;
 
-    public string GetPlaceName()
-    {
-        return placeName.GetLocalizedString();
-    }
-
+    [Header("Locks")]
+    public TutorialLockType tutorialLock = TutorialLockType.None;
+    public TimeLockType timeLock = TimeLockType.None;
+    public AccessLockType accessLock = AccessLockType.None;
 
     public string GetInteractPrompt()
     {
         string key = isExiting ? "PROMPT_DOOR_EXIT" : "PROMPT_DOOR_ENTER";
-        return LocalizationHelper.Main(key, GetPlaceName());
+
+        string nameText = "";
+
+        if (placeName != null && !placeName.IsEmpty)
+        {
+            try
+            {
+                nameText = placeName.GetLocalizedString();
+            }
+            catch (System.Exception)
+            {
+                nameText = "";
+            }
+        }
+        string finalPrompt = LocalizationHelper.Main(key, nameText);
+
+        return finalPrompt.Trim();
     }
 
     public void OnInteract()
     {
-        if(targetSceneName == SCENE_NAME.NONE || targetSpawnId == SPAWN_ID.NONE)
+        if (!InteractionValidator.CanInteract(tutorialLock, timeLock, accessLock, out string rejectMsg))
         {
-            if(doorLockedSound.clip != null) SoundManager.Instance.PlaySFX(doorLockedSound, transform.position); 
+            if (doorLockedSound.clip != null) SoundManager.Instance.PlaySFX(doorLockedSound, transform.position);
+            NotificationUIManager.Instance.ShowNotification(rejectMsg);
+            return;
+        }
+
+        if (targetSceneName == SCENE_NAME.NONE || targetSpawnId == SPAWN_ID.NONE)
+        {
+            if (doorLockedSound.clip != null) SoundManager.Instance.PlaySFX(doorLockedSound, transform.position);
             return;
         }
 
@@ -37,8 +61,7 @@ public class Door : MonoBehaviour, IInteractable
             return;
         }
 
-        if(doorOpenSound.clip != null) SoundManager.Instance.PlaySFX(doorOpenSound, transform.position);
+        if (doorOpenSound.clip != null) SoundManager.Instance.PlaySFX(doorOpenSound, transform.position);
         SceneController.Instance.AddSceneAndMoveTo(targetSceneName, targetSpawnId, isExiting);
     }
 }
-

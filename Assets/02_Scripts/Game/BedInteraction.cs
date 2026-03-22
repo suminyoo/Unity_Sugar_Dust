@@ -2,22 +2,19 @@ using UnityEngine;
 
 public class BedInteraction : MonoBehaviour, IInteractable
 {
+    [Header("Tutorial Lock")]
+    public TutorialLockType tutorialLockType = TutorialLockType.Bed;
+
     public string GetInteractPrompt() => LocalizationHelper.Main("PROMPT_SLEEP");
 
     public void OnInteract()
     {
-        // 튜토리얼 아직 진행중
-        if (!GameSaveManager.Instance.IsTutorialCompleted())
+        if (!InteractionValidator.CanInteract(tutorialLockType, out string rejectMsg))
         {
-            Quest tuto10 = QuestManager.Instance.GetActiveQuest(QuestID.Tuto_10);
-            if (tuto10 == null)
-            {
-                NotificationUIManager.Instance.ShowNotification("아직 튜토리얼에서 해야 할 일이 남아있어 잠을 잘 수 없습니다.");
-                return; 
-            }
+            NotificationUIManager.Instance.ShowNotification(rejectMsg);
+            return;
         }
 
-        // 잠을 잘 수 있는 상태
         CommonConfirmPopup.Instance.OpenPopup(
             LocalizationHelper.Main("CONFIRM_SLEEP"),
             () => {
@@ -25,12 +22,10 @@ public class BedInteraction : MonoBehaviour, IInteractable
                 if (tuto10 != null)
                 {
                     QuestManager.Instance.MaxOutQuestObjectives(QuestID.Tuto_10);
-
-                    GameSaveManager.Instance.savedData.isTutorialCompleted = true;
-                    Debug.Log("튜토리얼 완료");
+                    GameSaveManager.Instance.CompleteTutorial();
+                    //Debug.Log("튜토리얼 완료");
                 }
 
-                // 수면 및 다음 날 이동 로직
                 GameManager.Instance.TrySleep();
             }
         );

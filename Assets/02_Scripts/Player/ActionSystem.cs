@@ -48,7 +48,7 @@ public class ActionSystem : MonoBehaviour
         float finalDamage = activeToolData.power;
         if (isCritical) finalDamage *= activeToolData.criticalMultiplier;
 
-        // 히트박스 켜기! (도구 데이터가 가진 타입을 직접 전달)
+        // 히트박스 켜기 (도구 데이터가 가진 타입을 직접 전달)
         attackZone.EnableZone(finalDamage, isCritical, activeToolData.toolActionType);
     }
 

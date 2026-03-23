@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using System.Linq;
 public class TownTutorialManager : MonoBehaviour
 {
     public static TownTutorialManager Instance;
@@ -70,16 +70,17 @@ public class TownTutorialManager : MonoBehaviour
 
         // Tuto_01 퀘스트가 진행 중이거나 이미 완료되었는지 확인
         bool isTuto01Active = HasActiveQuest(QuestID.Tuto_01);
-        bool isTuto01Completed = QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_01);
+        bool isTuto01Completed = QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_01);
 
         if (!isTuto01Active && !isTuto01Completed)
         {
             StartCoroutine(StartPhaseWakeUp());
         }
 
-        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_06))
+        // 06번 퀘스트 관련
+        if (QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_06))
         {
-            if (!HasActiveQuest(QuestID.Tuto_07) && !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_07))
+            if (!HasActiveQuest(QuestID.Tuto_07) && !QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_07))
             {
                 QuestManager.Instance.AddQuest(tuto_07);
                 if (PlayerQuestUIManager.Instance != null)
@@ -87,9 +88,10 @@ public class TownTutorialManager : MonoBehaviour
             }
         }
 
-        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+        // 09번 퀘스트 관련
+        if (QuestManager.Instance.IsQuestAchieved(QuestID.Tuto_09))
         {
-            if (!HasActiveQuest(QuestID.Tuto_10) && !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_10))
+            if (!HasActiveQuest(QuestID.Tuto_10) && !QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_10))
             {
                 if (tuto_10 != null)
                 {
@@ -120,13 +122,13 @@ public class TownTutorialManager : MonoBehaviour
     private void SyncEnvironmentState()
     {
         // 가이드 NPC 퇴장 동기화 (Tuto_05를 받았거나 완료했다면 끈다)
-        if (HasActiveQuest(QuestID.Tuto_05) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_05))
+        if (HasActiveQuest(QuestID.Tuto_05) || QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_05))
         {
             if (guideNPC != null) guideNPC.gameObject.SetActive(false);
         }
 
         // 임대업자 NPC 퇴장 동기화 (Tuto_09를 받았거나 완료했다면 끈다)
-        if (HasActiveQuest(QuestID.Tuto_09) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+        if (HasActiveQuest(QuestID.Tuto_09) || QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_09))
         {
             if (landlordNPC != null) landlordNPC.gameObject.SetActive(false);
         }
@@ -281,13 +283,13 @@ public class TownTutorialManager : MonoBehaviour
 
     private void CheckTuto06Completion()
     {
-        if (HasActiveQuest(QuestID.Tuto_07) || QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_07))
+        if (HasActiveQuest(QuestID.Tuto_07) || QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_07))
             return;
 
         bool isTuto06Achieved = false;
 
         // 이미 보상까지 다 받았는지
-        if (QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_06))
+        if (QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_06))
         {
             isTuto06Achieved = true;
         }

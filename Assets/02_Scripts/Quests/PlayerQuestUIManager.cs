@@ -71,7 +71,7 @@ public class PlayerQuestUIManager : MonoBehaviour
     {
         foreach (Transform child in contentParent) Destroy(child.gameObject);
 
-        var activeQuests = QuestManager.Instance.activeQuests;
+        var activeQuests = QuestManager.Instance.ActiveQuests;
 
         if (activeQuests == null || activeQuests.Count == 0)
         {

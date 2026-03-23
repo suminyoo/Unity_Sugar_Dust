@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 public class NPCQuestUIManager : MonoBehaviour
 {
     public static NPCQuestUIManager Instance;
@@ -53,7 +53,7 @@ public class NPCQuestUIManager : MonoBehaviour
         foreach (var questData in currentQuestsToOffer) 
         {
             // 완료 퀘스트는 안그림
-            if (QuestManager.Instance.completedQuestIDs.Contains(questData.questID)) continue;
+            if (QuestManager.Instance.CompletedQuestIDs.Contains(questData.questID)) continue;
 
             if (questData.requiredQuestID != QuestID.None)
             {

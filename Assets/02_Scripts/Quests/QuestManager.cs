@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
 
-    public List<Quest> activeQuests = new List<Quest>();
-    public List<QuestID> completedQuestIDs = new List<QuestID>();
+    private List<Quest> activeQuests = new List<Quest>();
+    private List<QuestID> completedQuestIDs = new List<QuestID>();
+
+    public IReadOnlyList<Quest> ActiveQuests => activeQuests;
+    public IReadOnlyList<QuestID> CompletedQuestIDs => completedQuestIDs;
 
     private void Awake()
     {
@@ -216,6 +218,7 @@ public class QuestManager : MonoBehaviour
     }
 
     // 예외용): 퀘스트의 모든 목표 진행도를 100%로 꽉 채워주는 함수 
+    // 현재 마지막 퀘스트에서 사용
     public void MaxOutQuestObjectives(QuestID questID)
     {
         Quest quest = GetActiveQuest(questID);

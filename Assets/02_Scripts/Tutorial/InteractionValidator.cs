@@ -1,3 +1,6 @@
+using System.Linq;
+
+
 public enum TutorialLockType { None, HouseExit, Spaceship, ShopEnter, Bed, ExploreNextMap, WalkToTown }
 public enum TimeLockType { None, MorningOnly, DayOnly, EveningOnly, NightOnly, NotNight }
 public enum AccessLockType { None, NoPermission, UnderConstruction }
@@ -32,7 +35,7 @@ public static class InteractionValidator
         {
             case TutorialLockType.HouseExit:
                 if (QuestManager.Instance.GetActiveQuest(QuestID.Tuto_02) == null &&
-                    !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_02))
+                    !QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_02))
                 {
                     msg = LocalizationHelper.Main("NOTI_NEED_TALK_PARENT");
                     return false;
@@ -41,7 +44,7 @@ public static class InteractionValidator
 
             case TutorialLockType.Spaceship:
                 if (QuestManager.Instance.GetActiveQuest(QuestID.Tuto_06) == null &&
-                    !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_06))
+                    !QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_06))
                 {
                     msg = LocalizationHelper.Main("NOTI_NEED_PREPARE_EXPLORE");
                     return false;
@@ -50,7 +53,7 @@ public static class InteractionValidator
 
             case TutorialLockType.ShopEnter:
                 if (QuestManager.Instance.GetActiveQuest(QuestID.Tuto_09) == null &&
-                    !QuestManager.Instance.completedQuestIDs.Contains(QuestID.Tuto_09))
+                    !QuestManager.Instance.CompletedQuestIDs.Contains(QuestID.Tuto_09))
                 {
                     msg = LocalizationHelper.Main("NOTI_SHOP_NOT_READY");
                     return false;

@@ -174,7 +174,7 @@ public class NPCBrain : MonoBehaviour
                 }
 
                 // 아직 안 받은 퀘스트인 경우
-                if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
+                if (!QuestManager.Instance.CompletedQuestIDs.Contains(questData.questID))
                 {
                     // 선행 퀘스트 조건 확인
                     bool canAccept = true;
@@ -205,7 +205,7 @@ public class NPCBrain : MonoBehaviour
 
         foreach (var questData in controller.npcData.questsToGive)
         {
-            if (!QuestManager.Instance.completedQuestIDs.Contains(questData.questID))
+            if (!QuestManager.Instance.CompletedQuestIDs.Contains(questData.questID))
             {
                 return true;
             }

@@ -174,13 +174,12 @@ public class GameManager : MonoBehaviour, ISaveable
         InputControlManager.Instance.LockInput();
         yield return FadeUIManager.Instance.FadeOut();
 
-        ChangeTime(GAME_TIME.Morning);
         currentDay++;
+
+        ChangeTime(GAME_TIME.Morning);
         OnSleep?.Invoke();
 
-
         GameSaveManager.Instance.SaveCurrentGame();
-
 
         yield return new WaitForSeconds(1.0f);
         if (sleepSound.clip != null) SoundManager.Instance.PlaySFX2D(sleepSound);

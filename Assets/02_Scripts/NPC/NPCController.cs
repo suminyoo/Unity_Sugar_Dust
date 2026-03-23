@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
+using System.Linq;
 
 [System.Serializable]
 public struct QuestDialogue
@@ -89,7 +90,7 @@ public class NPCController : MonoBehaviour
         {
             if (qd.checkCompleted)
             {
-                if (QuestManager.Instance.completedQuestIDs.Contains(qd.triggerQuestID))
+                if (QuestManager.Instance.CompletedQuestIDs.Contains(qd.triggerQuestID))
                 {
                     uniqueDialogue = qd.dialogue;
                     //Debug.Log($"{npcData.npcID} 대사 교체됨 (완료/영구): {qd.triggerQuestID}");

@@ -92,7 +92,7 @@ public class GameSaveManager : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_SAVE_COMPLETE"));
-        Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
+        //Debug.Log($"[{currentSaveSlot}번 슬롯] 세이브 완료 경로: {filePath}");
     }
 
     private void ManageRollingSaves(string directoryPath, int maxFiles)

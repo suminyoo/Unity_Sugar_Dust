@@ -98,7 +98,7 @@ public class GameData
 
         exploreMaxUnlockedLevel = 0;
 
-        money = 1000; //돈 초기 금액(수정가능)
+        money = 0;
 
         int invSize = blueprint.GetInventorySize(this.inventorySizeLevel);
         inventorySlots = new List<ItemSaveData>();

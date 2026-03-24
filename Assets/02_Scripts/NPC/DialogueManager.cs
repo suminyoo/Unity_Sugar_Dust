@@ -34,6 +34,13 @@ public class DialogueManager : MonoBehaviour
 
         dialogueRootPanel.SetActive(false); 
     }
+    private void Update()
+    {
+        if (isDialogueActive && Input.GetKeyDown(KeyCode.Escape))
+        {
+            EndDialogue();
+        }
+    }
 
     // NPCBrain에서 이 함수를 호출해서 대화시작
     public void StartDialogue(DialogueData data, string speakerName, Action callback, bool autoClose = true)
@@ -122,6 +129,9 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         if (!isDialogueActive) return;
+
+        StopAllCoroutines();
+        isTyping = false;
 
         isDialogueActive = false;
         dialogueRootPanel.SetActive(false);

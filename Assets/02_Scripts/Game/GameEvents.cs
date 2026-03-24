@@ -26,4 +26,5 @@ public static class GameEvents
 
     public static Action<NPCController> OnNPCInteractionStarted;
 
+    public static Action<ItemData, int> OnItemEarned;
 }

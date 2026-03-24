@@ -176,6 +176,12 @@ public class PlayerInventory : InventoryHolder, ISaveable
             return -1;
         }
 
+        int obtainedCount = count - remaining;
+        if (obtainedCount > 0)
+        {
+            GameEvents.OnItemEarned?.Invoke(item, obtainedCount);
+        }
+
         return remaining;
     }
 

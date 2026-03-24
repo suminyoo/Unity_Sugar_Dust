@@ -142,6 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1805485956997665403}
+  - component: {fileID: -6943551676391465102}
   - component: {fileID: 7315277174287918396}
   - component: {fileID: 1580372163438004816}
   - component: {fileID: 5460004203642848548}
@@ -149,7 +150,6 @@ GameObject:
   - component: {fileID: 1062941399472053195}
   - component: {fileID: 1454819086271059053}
   - component: {fileID: 5617540184040866238}
-  - component: {fileID: -6943551676391465102}
   m_Layer: 9
   m_Name: NPCAlien_Customer
   m_TagString: Untagged
@@ -174,6 +174,33 @@ Transform:
   - {fileID: 383774712261283641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &-6943551676391465102
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175322777703999182}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &7315277174287918396
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -278,7 +305,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  uniqueDialogue: {fileID: 0}
   greetingMessage:
     m_TableReference:
       m_TableCollectionName: GUID:f4073b05ce61ad142921eac5dffafc13
@@ -297,6 +323,8 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  uniqueDialogue: {fileID: 0}
+  questBasedDialogues: []
   references:
     version: 2
     RefIds: []
@@ -317,33 +345,6 @@ MonoBehaviour:
   dialogueDatabase: {fileID: 11400000, guid: 30dd9310fb4d6064790640eb5c54b2e4, type: 2}
   myType: 0
   IsReadyForTransaction: 0
---- !u!54 &-6943551676391465102
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175322777703999182}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &2730173095526639795
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubbleCanvas: {fileID: 783997185592517360}
   bubbleText: {fileID: 5332496874601648336}
+  nameText: {fileID: 0}
 --- !u!114 &2560701942948735571
 MonoBehaviour:
   m_ObjectHideFlags: 0

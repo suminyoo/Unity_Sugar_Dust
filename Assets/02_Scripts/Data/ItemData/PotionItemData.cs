@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Potion Item", menuName = "Game/Item Data/Consumable/Potion")]
-public class PotionItemData : ItemData
+public class PotionItemData : ConsumableItemData
 {
     [Header("Consumable Stats")]
     public float hpRecoveryAmount;

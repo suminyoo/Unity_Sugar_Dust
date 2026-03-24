@@ -52,7 +52,7 @@ public class GameData
     public float currentStamina;
 
     // 탐사
-    public int exploreMaxUnlockedLevel = 1;
+    public int exploreMaxUnlockedLevel = 0;
 
     // 자산
     public int money;
@@ -96,7 +96,7 @@ public class GameData
         currentHp = blueprint.GetMaxHpValue(0);
         currentStamina = blueprint.GetMaxStaminaValue(0);
 
-        exploreMaxUnlockedLevel = 1;
+        exploreMaxUnlockedLevel = 0;
 
         money = 1000; //돈 초기 금액(수정가능)
 

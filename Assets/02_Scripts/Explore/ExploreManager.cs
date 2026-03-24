@@ -29,6 +29,7 @@ public class ExploreManager : MonoBehaviour, ISaveable
     private bool isExploreStarted = false;
     private bool isExploreSuccess = false;
 
+    public AudioClip frozenBGM;
 
     [Header("UI")]
     public TextMeshProUGUI exploreLevelText;
@@ -153,7 +154,11 @@ public class ExploreManager : MonoBehaviour, ISaveable
         isFrozenEnvironment = true;
         frozenBG.SetActive(true);
 
-        
+        if (frozenBGM != null)
+        {
+            SoundManager.Instance.PlayBGM(frozenBGM, 1.0f, 0f, 1.0f);
+        }
+
         NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_TEMP_DROP"));
     }
     void HandleFrozenDamage()
@@ -196,12 +201,13 @@ public class ExploreManager : MonoBehaviour, ISaveable
         // 진척도를 위한 적 개수
         foreach (var info in data.enemyObjects)
             targetProgressCount += Mathf.RoundToInt(info.spawnRateCurve.Evaluate(localLevelIndex));
-
-        int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
-        if (currentExplorationLevel < maxLevel)
-        {
-            currentProgressCount = targetProgressCount;
-        }
+        
+        //이미 진행한 맵이면 진행도를 채워버리는 로직
+        //int maxLevel = GameSaveManager.Instance.LoadExploreMaxUnlockedLevel();
+        //if (currentExplorationLevel < maxLevel)
+        //{
+        //    currentProgressCount = targetProgressCount;
+        //}
     }
 
     public void AddExplorationProgress()

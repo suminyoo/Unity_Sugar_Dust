@@ -17,9 +17,11 @@ public class PlayerData : ScriptableObject
     [Header("Stats")]
     public float[] hpLevels = { 100f, 120f, 150f, 200f };
     public float[] staminaLevels = { 50f, 80f, 100f, 120f };
+    public float[] weightLevels = { 20f, 40f, 60f, 80f, 100f }; //인벤토리 레벨과 같은 사이즈여야함
+
 
     [Header("Storages")]
-    public int[] inventorySizes = { 6, 8, 10, 12 };
+    public int[] inventorySizes = { 5, 8, 10, 13, 15 };
     public int[] equipmentSizes = { 2 }; 
     public int[] displayStandSizes = { 3, 5, 7, 9 };
     public int[] containerBoxSizes = { 30, 50, 70, 90 };
@@ -31,6 +33,7 @@ public class PlayerData : ScriptableObject
 
     public float GetMaxHpValue(int level) => GetValueSafe(hpLevels, level);
     public float GetMaxStaminaValue(int level) => GetValueSafe(staminaLevels, level);
+    public float GetMaxWeightValue(int level) => GetValueSafe(weightLevels, level);
     public int GetInventorySize(int level) => (int)GetValueSafe(inventorySizes, level);
     public int GetEquipmentSize(int level) => (int)GetValueSafe(equipmentSizes, level);
     public int GetDisplayStandSize(int level) => (int)GetValueSafe(displayStandSizes, level);
@@ -45,6 +48,7 @@ public class PlayerData : ScriptableObject
 
     public bool IsMaxHpLevel(int level) => IsMaxLevelSafe(hpLevels, level);
     public bool IsMaxStaminaLevel(int level) => IsMaxLevelSafe(staminaLevels, level);
+    public bool IsMaxWeightLevel(int level) => IsMaxLevelSafe(weightLevels, level);
     public bool IsMaxInventoryLevel(int level) => IsMaxLevelSafe(inventorySizes, level);
     public bool IsMaxDisplayStandLevel(int level) => IsMaxLevelSafe(displayStandSizes, level);
     public bool IsMaxContainerBoxLevel(int level) => IsMaxLevelSafe(containerBoxSizes, level);

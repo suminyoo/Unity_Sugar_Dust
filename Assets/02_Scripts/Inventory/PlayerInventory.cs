@@ -11,8 +11,12 @@ public class PlayerInventory : InventoryHolder, ISaveable
     public MouseItemData mouseItemData;
     public InventoryUI inventoryUI;
 
-    [Header("Weight")]
-    public float maxWeight = 100f; //TODO: 가방 종류 혹은 플레이어 능력에 따른 무게 한계치
+    [Header("Data & Levels")]
+    public PlayerData playerData;
+    private int weightLevel = 0;
+    private int inventorySizeLevel = 0;
+
+    public float maxWeight; //TODO: 가방 종류 혹은 플레이어 능력에 따른 무게 한계치
     public float currentWeight = 0f;
     public TextMeshProUGUI weightText;
 
@@ -86,8 +90,16 @@ public class PlayerInventory : InventoryHolder, ISaveable
     public void LoadInventoryFromManager()
     {
         if (GameSaveManager.Instance == null) return;
-
+       
         var data = GameSaveManager.Instance.LoadPlayerInventory();
+
+        this.inventorySizeLevel = data.invLevel;
+        this.weightLevel = data.weightLevel;
+
+        if (playerData != null)
+        {
+            maxWeight = playerData.GetMaxWeightValue(weightLevel);
+        }
 
         inventorySystem = new InventorySystem(data.size);
 
@@ -231,7 +243,11 @@ public class PlayerInventory : InventoryHolder, ISaveable
     {
         if (GameSaveManager.Instance != null)
         {
-            GameSaveManager.Instance.SavePlayerInventory(InventorySystem.Slots);
+            GameSaveManager.Instance.SavePlayerInventory(
+                inventorySystem.Slots,
+                inventorySizeLevel,
+                weightLevel
+            );
         }
     }
 
@@ -276,6 +292,32 @@ public class PlayerInventory : InventoryHolder, ISaveable
             occupiedIndices.RemoveAt(randomIndex);
         }
         return lostItems;
+    }
+
+    #endregion
+
+    #region Upgrade
+
+    public void UpgradeInventorySize()
+    {
+        if (playerData.IsMaxInventoryLevel(inventorySizeLevel))
+        {
+            return;
+        }
+
+        GameSaveManager.Instance.SavePlayerInventory(inventorySystem.Slots, inventorySizeLevel, weightLevel);
+
+        inventorySizeLevel++;
+        weightLevel++;
+
+        GameSaveManager.Instance.savedData.inventorySizeLevel = inventorySizeLevel;
+        GameSaveManager.Instance.savedData.weightLevel = weightLevel;
+
+        LoadInventoryFromManager();
+
+        RefreshTotalWeight();
+        UpdateWeightUI();
+        RefreshUI();
     }
 
     #endregion

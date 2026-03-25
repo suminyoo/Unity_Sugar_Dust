@@ -10,13 +10,27 @@ public class DamagePopup : MonoBehaviour
     private float disappearTimer = 0.5f;
     private float fadeSpeed = 5f;
 
+    private float initialScale = 0.5f;
+    private float targetScale = 1.5f;
+    private float currentScale;
+
     void Awake()
     {
         textMesh = GetComponentInChildren<TextMeshPro>();
+
+        transform.localScale = Vector3.one * initialScale;
+        currentScale = initialScale;
     }
     void Update()
     {
         transform.position += Vector3.up * moveYSpeed * Time.deltaTime;
+
+        if (disappearTimer > 0)
+        {
+            currentScale = Mathf.Lerp(currentScale, targetScale, Time.deltaTime * 10f);
+            transform.localScale = Vector3.one * currentScale;
+        }
+
         disappearTimer -= Time.deltaTime;
 
         if (disappearTimer < 0)

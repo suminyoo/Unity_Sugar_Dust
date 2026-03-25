@@ -13,10 +13,13 @@ public class PlayerHitEffect : MonoBehaviour
     [Range(0f, 1f)] public float hitIntensity = 0.45f;
     public float effectDuration = 0.3f;
 
+
     private Vignette vignette;
     private float originalIntensity;
     private Color originalColor;
     private Coroutine hitEffectCoroutine;
+    private float originalSmoothness;
+    public float hitSmoothness = 1f;
 
     private void Start()
     {
@@ -24,6 +27,7 @@ public class PlayerHitEffect : MonoBehaviour
         {
             originalIntensity = vignette.intensity.value;
             originalColor = vignette.color.value;
+            originalSmoothness = vignette.smoothness.value;
         }
 
 
@@ -56,6 +60,7 @@ public class PlayerHitEffect : MonoBehaviour
     {
         vignette.color.value = hitColor;
         vignette.intensity.value = hitIntensity;
+        vignette.smoothness.value = hitSmoothness;
 
         float timer = 0f;
 
@@ -66,11 +71,13 @@ public class PlayerHitEffect : MonoBehaviour
 
             vignette.color.value = Color.Lerp(hitColor, originalColor, t);
             vignette.intensity.value = Mathf.Lerp(hitIntensity, originalIntensity, t);
+            vignette.smoothness.value = Mathf.Lerp(hitSmoothness, originalSmoothness, t);
 
             yield return null; 
         }
 
         vignette.color.value = originalColor;
         vignette.intensity.value = originalIntensity;
+        vignette.smoothness.value = originalSmoothness;
     }
 }

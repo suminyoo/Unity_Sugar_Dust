@@ -10,7 +10,7 @@ public class LookAtCamera : MonoBehaviour
             mainCameraTransform = Camera.main.transform;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (mainCameraTransform == null) return;
 

@@ -286,7 +286,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (playerData.IsMaxHpLevel(hpLevel))
         {
-            NotificationUIManager.Instance.ShowNotification("이미 최대 체력 레벨입니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_MAX_LEVEL"));
             return;
         }
 
@@ -301,7 +301,7 @@ public class PlayerCondition : MonoBehaviour, ISaveable
     {
         if (playerData.IsMaxStaminaLevel(staminaLevel))
         {
-            NotificationUIManager.Instance.ShowNotification("이미 최대 스테미나 레벨입니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_MAX_LEVEL"));
             return;
         }
 

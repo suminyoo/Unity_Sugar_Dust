@@ -25,13 +25,14 @@ public class Mineral : MonoBehaviour, IMineable
 
         currentHealth -= power;
 
-        DamageTextManager.Instance.ShowDamage(power, transform.position + Vector3.up, isCritical);
+        Vector3 textPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
+
+        DamageTextManager.Instance.ShowDamage(power, textPos, isCritical);
         healthBar.UpdateHealth(currentHealth, data.maxHealth);
 
-        Vector3 spawnPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
-        if (data.hitEffectPrefab != null) Instantiate(data.hitEffectPrefab, spawnPos, Quaternion.identity);
-        
-        if(data.mineSound.clip != null) SoundManager.Instance.PlaySFX(data.mineSound, transform.position);
+        if (data.hitEffectPrefab != null) Instantiate(data.hitEffectPrefab, transform.position, Quaternion.identity);
+
+        if (data.mineSound.clip != null) SoundManager.Instance.PlaySFX(data.mineSound, transform.position);
         
 
         GetComponent<HitEffect>()?.PlayHitFlash();

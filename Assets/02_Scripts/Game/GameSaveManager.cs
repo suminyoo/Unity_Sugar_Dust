@@ -176,8 +176,11 @@ public class GameSaveManager : MonoBehaviour
 
     #region 플레이어 인벤토리 데이터 세이브로드
 
-    public void SavePlayerInventory(IReadOnlyList<InventorySlot> slots)
+    public void SavePlayerInventory(IReadOnlyList<InventorySlot> slots, int invLevel, int weightLevel)
     {
+        savedData.inventorySizeLevel = invLevel;
+        savedData.weightLevel = weightLevel;
+
         savedData.inventorySlots.Clear();
         foreach (var slot in slots)
         {
@@ -187,7 +190,7 @@ public class GameSaveManager : MonoBehaviour
         }
     }
 
-    public (int size, List<InventorySlot> slots) LoadPlayerInventory()
+    public (int size, List<InventorySlot> slots, int invLevel, int weightLevel) LoadPlayerInventory()
     {
         List<InventorySlot> loadedSlots = new List<InventorySlot>();
 
@@ -207,7 +210,7 @@ public class GameSaveManager : MonoBehaviour
         }
 
         int inventorySize = defaultPlayerData.GetInventorySize(savedData.inventorySizeLevel);
-        return (inventorySize, loadedSlots);
+        return (inventorySize, loadedSlots, savedData.inventorySizeLevel, savedData.weightLevel);
     }
     #endregion
 

@@ -118,7 +118,7 @@ public class PlayerEquipment : InventoryHolder, ISaveable
         }
         else
         {
-            NotificationUIManager.Instance.ShowNotification("가방이 꽉 차서 장착을 해제할 수 없습니다.");
+            NotificationUIManager.Instance.ShowNotification(LocalizationHelper.Main("NOTI_INVENTORY_FULL"));
         }
     }
 

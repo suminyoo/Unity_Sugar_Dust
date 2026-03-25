@@ -199,10 +199,11 @@ public class Enemy : MonoBehaviour, IDamageable
         if (data.hitSound.clip != null) SoundManager.Instance.PlaySFX(data.hitSound, transform.position);
 
         GetComponent<HitEffect>()?.PlayHitFlash();
-        EffectManager.Instance.PlayEffect(data.hitEffect, transform.position, 1f);
+        EffectManager.Instance.PlayEffect(data.hitEffect, transform.position);
 
         Vector3 spawnPos = damageTextPos != null ? damageTextPos.position : transform.position + Vector3.up;
         DamageTextManager.Instance.ShowDamage(damage, spawnPos, isCritical);
+
         healthBar.UpdateHealth(currentHp, data.maxHp);
 
         if (currentHp <= 0) Die();

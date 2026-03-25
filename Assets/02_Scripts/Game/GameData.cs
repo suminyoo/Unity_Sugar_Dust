@@ -42,6 +42,7 @@ public class GameData
     // 레벨 데이터
     public int hpLevel = 0;
     public int staminaLevel = 0;
+    public int weightLevel = 0;
     public int inventorySizeLevel = 0;
     public int equipmentSizeLevel = 0;
     public int displayStandSizeLevel = 0;
@@ -88,6 +89,7 @@ public class GameData
 
         hpLevel = 0;
         staminaLevel = 0;
+        weightLevel = 0;
         inventorySizeLevel = 0;
         equipmentSizeLevel = 0;
         displayStandSizeLevel = 0;

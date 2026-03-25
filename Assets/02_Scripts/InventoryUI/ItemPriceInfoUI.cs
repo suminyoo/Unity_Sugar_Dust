@@ -6,9 +6,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct DigitController
 {
-    public TextMeshProUGUI digitText; // 해당 자리의 숫자 텍스트
-    public Button upButton;           // 위 버튼 (+1)
-    public Button downButton;         // 아래 버튼 (-1)
+    public TextMeshProUGUI digitText;
+    public Button upButton;
+    public Button downButton;
 }
 
 public class ItemPriceInfoUI : MonoBehaviour
@@ -22,11 +22,12 @@ public class ItemPriceInfoUI : MonoBehaviour
     [Header("Item Info")]
     public Image icon;
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI basePriceText;
 
     [Header("Activation")]
-    public Button activateButton;       // 활성화 비활성화 토글 버튼
-    public TextMeshProUGUI buttonText;  // 버튼 글씨 (판매 시작 / 판매 중지)
-    public Image buttonImage;           // 버튼 색상용
+    public Button activateButton;
+    public TextMeshProUGUI buttonText;
+    public Image buttonImage;
 
     public Color activePriceColor = new Color(0, 0.6f, 0, 0.8f);
     public Color inactivePriceColor = new Color(0, 0, 0, 0.5f);
@@ -83,6 +84,7 @@ public class ItemPriceInfoUI : MonoBehaviour
         // 기본 정보 표시
         icon.sprite = data.icon;
         nameText.text = data.GetItemName();
+        basePriceText.text = LocalizationHelper.Main("ITEM_INFO_BASE_PRICE", data.basePrice, CustomerPaymentSystem.CURRENCY_SYMBOL);
 
         currentSellingPrice = Mathf.Clamp(currentPrice, 0, 9999);
         currentSellingPrice = (currentSellingPrice / 10) * 10;

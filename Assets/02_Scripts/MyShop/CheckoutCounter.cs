@@ -44,6 +44,16 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
             StopCounterMode();
         }
     }
+    private void OnDisable()
+    {
+        if (isCounterMode)
+        {
+            if (PauseManager.openPopupCount > 0)
+                PauseManager.openPopupCount--;
+
+            isCounterMode = false;
+        }
+    }
 
     #endregion
 
@@ -53,6 +63,8 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
     {
         isCounterMode = true;
         isTransactionActive = false;
+
+        PauseManager.openPopupCount++;
 
         InputControlManager.Instance.LockInput();
         mainCamera.StartOverrideView(counterViewPoint, transitionSpeed);
@@ -86,7 +98,20 @@ public class CheckoutCounter : MonoBehaviour, IInteractable
         mainCamera.ExitOverrideView();
 
         InputControlManager.Instance.UnlockInput();
+
+        StartCoroutine(DecreasePopupCountDelayed());
     }
+
+    private System.Collections.IEnumerator DecreasePopupCountDelayed()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (PauseManager.openPopupCount > 0)
+        {
+            PauseManager.openPopupCount--;
+        }
+    }
+
     #endregion
 
     #region Transaction Management

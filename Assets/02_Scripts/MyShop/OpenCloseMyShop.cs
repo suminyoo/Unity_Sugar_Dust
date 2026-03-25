@@ -34,7 +34,7 @@ public class OpenCloseMyShop : MonoBehaviour, IInteractable
             case MyShopState.SHOP_OPEN:
                 return LocalizationHelper.Main("PROMPT_SHOP_EARLY_CLOSE");
             case MyShopState.SHOP_CLOSED:
-                return LocalizationHelper.Main("PROMPT_CLOSE_SHOP");
+                return LocalizationHelper.Main("PROMPT_SHOP_CLOSE");
             default: return "";
         }
     }

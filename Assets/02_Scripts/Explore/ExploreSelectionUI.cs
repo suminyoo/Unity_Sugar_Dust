@@ -59,9 +59,13 @@ public class ExploreSelectionUI : MonoBehaviour
         for (int i = 0; i < environmentButtons.Length; i++)
         {
             int envStartLevel = (i * exploreConfig.levelsPerEnvironment);
+            bool isUnlocked = maxUnlocked >= envStartLevel;
+
             environmentButtons[i].interactable = maxUnlocked >= envStartLevel;
             TextMeshProUGUI buttonText = environmentButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = $"{LocalizationHelper.Main("PANEL_NAME_EXPLORE_AREA")} {i + 1}";
+
+            buttonText.color = isUnlocked ? Color.white : Color.gray;
         }
     }
 

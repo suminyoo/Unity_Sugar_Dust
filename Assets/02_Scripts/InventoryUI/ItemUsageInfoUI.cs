@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class ItemUsageInfoUI : MonoBehaviour
 {    
@@ -15,6 +16,7 @@ public class ItemUsageInfoUI : MonoBehaviour
     public TextMeshProUGUI infoText;
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI weightText;
+    public TextMeshProUGUI basePriceText;
 
     private InventoryContext currentContext;
 
@@ -36,6 +38,7 @@ public class ItemUsageInfoUI : MonoBehaviour
         nameText.text = data.GetItemName();
         typeText.text = LocalizationHelper.Main("ITEM_INFO_TYPE", data.GetItemTypeName());
         weightText.text = LocalizationHelper.Main("ITEM_INFO_WEIGHT", data.weight);
+        basePriceText.text = LocalizationHelper.Main("ITEM_INFO_BASE_PRICE", data.basePrice, CustomerPaymentSystem.CURRENCY_SYMBOL);
         infoText.text = data.GetDescription();
 
         if (useButton != null)

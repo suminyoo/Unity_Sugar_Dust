@@ -17,6 +17,9 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
     public List<int> slotPrices = new List<int>();    // 각 인벤토리 슬롯에 대응하는 판매 가격 리스트
     public List<bool> slotActiveStates = new List<bool>(); //각 인벤토리 슬롯 활성화 여부 리스트
 
+    public Color activeStandColor = new Color(0.2f, 0.8f, 0.2f, 1f);
+    public Color inactiveStandColor = Color.white;
+    
     #endregion
 
     #region Interaction (IInteractable)
@@ -211,6 +214,25 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
                 // 빈 칸 null 추가
                 spawnedVisualItems.Add(null);
             }
+
+            UpdateDisplayStandColor(i);
+        }
+    }
+
+    private void UpdateDisplayStandColor(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= spawnedStandObjects.Count) return;
+
+        GameObject standObj = spawnedStandObjects[slotIndex];
+        if (standObj == null) return;
+
+        ColorChanger colorChanger = standObj.GetComponentInChildren<ColorChanger>();
+        if (colorChanger != null)
+        {
+            bool isActive = IsSlotActive(slotIndex);
+            Color targetColor = isActive ? activeStandColor : inactiveStandColor;
+
+            colorChanger.SetDynamicColor(targetColor);
         }
     }
 
@@ -234,6 +256,7 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
         {
             slotActiveStates[slotIndex] = isActive;
             //Debug.Log($"슬롯 {slotIndex} 판매 상태 변경: {isActive}");
+            UpdateDisplayStandColor(slotIndex);
         }
     }
 
@@ -365,6 +388,6 @@ public class DisplayStand : InventoryHolder, IInteractable, IShopSource, ISaveab
 
     #endregion
 
-    
+
 
 }

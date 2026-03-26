@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.Events;
 
 // 버튼을 꾹 누르고 있으면 이벤트를 반복해서 실행해주는 유틸
-public class RepeatButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class RepeatButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [Header("Settings")]
     public float initialDelay = 0.5f; // 처음 눌렀을 때 대기
@@ -20,7 +20,12 @@ public class RepeatButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (eventData.button != PointerEventData.InputButton.Left) return;
 
         onPressed?.Invoke();
-        repeatCoroutine = StartCoroutine(RepeatRoutine());
+
+        if (gameObject.activeInHierarchy)
+        {
+            if (repeatCoroutine != null) StopCoroutine(repeatCoroutine);
+            repeatCoroutine = StartCoroutine(RepeatRoutine());
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)

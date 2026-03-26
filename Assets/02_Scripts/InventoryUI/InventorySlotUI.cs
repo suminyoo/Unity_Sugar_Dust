@@ -140,6 +140,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (managerUI.contextType == InventoryContext.NPCShop) return;
+
         // 우클릭: 1개 놓기 or 절반 들기
         if (eventData.button == PointerEventData.InputButton.Right)
         {
@@ -160,6 +162,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (managerUI.contextType == InventoryContext.NPCShop) return;
+
         // 좌클릭: 맨손일 때 슬롯의 아이템 전체 집기
         if (eventData.button == PointerEventData.InputButton.Left)
         {
@@ -260,6 +264,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     private void HandleDropLogic()
     {
         if (!managerUI.mouseItemData.HasItem) return;
+        if (managerUI.contextType == InventoryContext.NPCShop) return;
 
         ItemData mouseItem = managerUI.mouseItemData.MouseSlot.ItemData;
 

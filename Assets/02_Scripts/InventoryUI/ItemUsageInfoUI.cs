@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Diagnostics;
 
 public class ItemUsageInfoUI : MonoBehaviour
 {    
@@ -20,16 +19,19 @@ public class ItemUsageInfoUI : MonoBehaviour
 
     private InventoryContext currentContext;
 
+    private int currentSlotIndex = -1;
+
     private void Start()
     {
         itemInfoPanel.SetActive(false);
         defaultPanel.SetActive(true);
     }
 
-    public void OpenPanel(ItemData data, InventoryContext context)
+    public void OpenPanel(ItemData data, InventoryContext context, int slotIndex = -1)
     {
         currentData = data;
         currentContext = context;
+        currentSlotIndex = slotIndex;
 
         defaultPanel.SetActive(false);
         itemInfoPanel.SetActive(true);
@@ -73,8 +75,11 @@ public class ItemUsageInfoUI : MonoBehaviour
         }
         else if (currentData != null)
         {
-            PlayerInventory.Instance.UseItem(currentData);
-            Close();
+            if (currentSlotIndex != -1)
+                PlayerInventory.Instance.UseItemAtIndex(currentSlotIndex);
+            else
+                PlayerInventory.Instance.UseItem(currentData);
+
         }
     }
 

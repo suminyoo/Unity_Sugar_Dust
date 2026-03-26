@@ -175,12 +175,8 @@ public class InventoryUI : MonoBehaviour
                 if (contextType == InventoryContext.MyShop)
                 {
                     uiSlots[i].UpdatePriceVisuals(itemPrice, isActive);
-                    uiSlots[i].SetSelected(i == selectedSlotIndex); //선택된 슬롯인지 체크
                 }
-                else
-                {
-                    uiSlots[i].SetSelected(false);//다른 모드
-                }
+                uiSlots[i].SetSelected(i == selectedSlotIndex);
             }
         }
     }
@@ -206,7 +202,7 @@ public class InventoryUI : MonoBehaviour
             case InventoryContext.Equipment:
             case InventoryContext.Container:
                 // 플레이어나 상자: 정보창
-                ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData, contextType);
+                ItemUIPopupManager.Instance.ShowItemInfo(slot.ItemData, contextType, slotIndex);
                 break;
 
             case InventoryContext.MyShop:

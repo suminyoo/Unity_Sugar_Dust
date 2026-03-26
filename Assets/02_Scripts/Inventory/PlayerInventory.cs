@@ -340,4 +340,20 @@ public class PlayerInventory : InventoryHolder, ISaveable
         }
     }
 
+    public void UseItemAtIndex(int slotIndex)
+    {
+        var slot = inventorySystem.Slots[slotIndex];
+        if (slot.IsEmpty) return;
+
+        if (slot.ItemData is ConsumableItemData consumable)
+        {
+            bool success = consumable.Use(this.gameObject);
+
+            if (success && consumable.isConsumedOnUse)
+            {
+                inventorySystem.RemoveItemAtIndex(slotIndex, 1);
+            }
+        }
+    }
+
 }

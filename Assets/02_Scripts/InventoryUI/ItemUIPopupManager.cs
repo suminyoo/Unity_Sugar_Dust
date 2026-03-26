@@ -17,11 +17,11 @@ public class ItemUIPopupManager : MonoBehaviour
     }
 
     // 아이템 정보창 열기
-    public void ShowItemInfo(ItemData data, InventoryContext context)
+    public void ShowItemInfo(ItemData data, InventoryContext context, int slotIndex = -1)
     {
-        usageInfoUI.OpenPanel(data, context);
+        usageInfoUI.OpenPanel(data, context, slotIndex);
     }
-
+    
     // 진열대 아이템 창
     public void ShowPriceInfo(ItemData data, int currentPrice, bool isActive,
                                  Action<int> onPriceChanged, Action<bool> onActiveChanged)

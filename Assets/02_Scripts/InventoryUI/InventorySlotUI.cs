@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [Header("UI")]
     public Image itemIcon;
@@ -102,145 +102,209 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // 슬롯 선택 효과 (테두리 켜기/끄기)
     public void SetSelected(bool isSelected)
     {
-
         selectionBorder.gameObject.SetActive(isSelected);
-
     }
 
     #endregion
 
-    #region Click Event
+    #region Click & Pointer Event
 
-    //  클릭 처리
     public void OnPointerClick(PointerEventData eventData)
     {
-        // ==== 우클릭 : 아이템 정보 열기
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            // 우클릭으로 창띄우기 (매니저에게 위임)
-            managerUI.HandleSlotRightClick(mySlotIndex);
-
-            if (mySlot.IsEmpty) return;
-
-            return; // 우클릭 처리 완료 후 종료
-        }
-
-        // 좌클릭인 경우에만 아래 로직 수행
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (managerUI.contextType == InventoryContext.NPCShop) return;
+            if (eventData.dragging) return; // 드래그 중일 땐 클릭 무시
 
-            // ==== Ctrl 좌클릭으로 한개 집기
-            // 일반 좌클릭보다 특수 키 조합을 먼저 체크하여 중복 실행 방지
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                HandlePickOne();
-                return;
-            }
-
-            // ==== Shift 좌클릭으로 아이템 이동
+            // Shift 좌클릭: 빠른 이동
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                // 샵 매니저가 존재한다면 (상점/진열대 모드라면)
                 if (StorageUIManager.Instance != null && StorageUIManager.Instance.rootCanvas.activeSelf)
                 {
-                    // 매니저에게 슬롯 인덱스로 이동요청, 자기소속 UI 전달
                     StorageUIManager.Instance.HandleItemTransfer(mySlotIndex, managerUI);
                 }
                 return;
             }
 
-            // ==== 일반 좌클릭: 슬롯에 마우스 아이템 드롭 
-            // Shift나 Ctrl이 눌리지 않았을 때만 실행됨
+            // 마우스에 아이템을 들고 있다면? => 클릭으로 내려놓기
             if (managerUI.mouseItemData.HasItem)
             {
                 HandleDropLogic();
             }
+            // 마우스가 비어있고 슬롯에 아이템이 있다면 => 아이템 정보창/상점창 띄우기
+            else if (!mySlot.IsEmpty)
+            {
+                managerUI.HandleSlotRightClick(mySlotIndex);
+            }
         }
     }
 
-    void HandlePickOne()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        // InventorySystem에 한개 집기 요청
-        var system = managerUI.connectedInventory.InventorySystem;
-        InventorySlot mouseSlot = managerUI.mouseItemData.MouseSlot;
-
-        system.PickOneToExternal(mySlotIndex, mouseSlot);
-        managerUI.mouseItemData.UpdateMouseSlot(mouseSlot.ItemData, mouseSlot.Amount);
-
+        // 우클릭: 1개 놓기 or 절반 들기
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (managerUI.mouseItemData.HasItem)
+            {
+                HandleDropOneItem();
+            }
+            else if (!mySlot.IsEmpty)
+            {
+                HandlePickHalfItem();
+            }
+        }
     }
 
     #endregion
 
     #region Drag & Drop Event
 
-    // 드래그 시작 (좌클릭)
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (managerUI.contextType == InventoryContext.NPCShop) return;
-
-        if (mySlot.IsEmpty || eventData.button != PointerEventData.InputButton.Left) return;
-
-        int amountToPick = mySlot.Amount;
-
-        // Ctrl 키 누르면 절반만 집기
-        if (Input.GetKey(KeyCode.LeftControl))
+        // 좌클릭: 맨손일 때 슬롯의 아이템 전체 집기
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            amountToPick = Mathf.CeilToInt(mySlot.Amount / 2.0f);
-        }
+            if (!mySlot.IsEmpty && !managerUI.mouseItemData.HasItem)
+            {
+                int amountToPick = mySlot.Amount;
+                InventorySlot tempSlot = new InventorySlot(mySlot.ItemData, amountToPick);
 
-        InventorySlot tempSlot = new InventorySlot(mySlot.ItemData, amountToPick);
-        managerUI.mouseItemData.UpdateMouseSlot(tempSlot.ItemData, tempSlot.Amount);
-        managerUI.connectedInventory.InventorySystem.RemoveItemAtIndex(mySlotIndex, amountToPick);
+                managerUI.mouseItemData.UpdateMouseSlot(tempSlot.ItemData, tempSlot.Amount);
+                managerUI.connectedInventory.InventorySystem.RemoveItemAtIndex(mySlotIndex, amountToPick);
+            }
+        }
+        // 우클릭: OnPointerDown에서 이미 절반을 집었으므로 드래그 시작만 통과시킴
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            return;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) { }
 
+    public void OnDrop(PointerEventData eventData)
+    {
+        // 좌클릭이든 우클릭이든 마우스 버튼을 떼면 드롭 시도
+        if (eventData.button == PointerEventData.InputButton.Left || eventData.button == PointerEventData.InputButton.Right)
+        {
+            HandleDropLogic();
+        }
+    }
+
     public void OnEndDrag(PointerEventData eventData)
     {
-        // 드롭 실패 시(허공에 놓음) 복구
+        // 드롭이 끝난 후에도 마우스에 아이템이 남아있다면
         if (managerUI.mouseItemData.HasItem)
         {
             var mouseData = managerUI.mouseItemData.MouseSlot;
-            InventorySlot currentSlot = managerUI.connectedInventory.InventorySystem.Slots[mySlotIndex];
+            InventorySlot originalSlot = managerUI.connectedInventory.InventorySystem.Slots[mySlotIndex];
 
-            if (currentSlot.IsEmpty)
+            // 원래 자리가 비어있다면 => 복구
+            if (originalSlot.IsEmpty)
             {
                 managerUI.connectedInventory.InventorySystem.UpdateSlotAtIndex(mySlotIndex, mouseData.ItemData, mouseData.Amount);
+                managerUI.mouseItemData.ClearSlot();
             }
-            else if (currentSlot.ItemData == mouseData.ItemData)
+            // 원래 슬롯에 같은 아이템이 있다면 => 합치기 복구
+            else if (originalSlot.ItemData == mouseData.ItemData)
             {
-                int total = currentSlot.Amount + mouseData.Amount;
-                managerUI.connectedInventory.InventorySystem.UpdateSlotAtIndex(mySlotIndex, mouseData.ItemData, total);
+                int total = originalSlot.Amount + mouseData.Amount;
+                int maxStack = mouseData.ItemData.maxStackAmount;
+
+                if (total <= maxStack)
+                {
+                    managerUI.connectedInventory.InventorySystem.UpdateSlotAtIndex(mySlotIndex, mouseData.ItemData, total);
+                    managerUI.mouseItemData.ClearSlot();
+                }
+                else
+                {
+                    // 꽉 차면 꽉 채우고 남은 건 마우스에 유지
+                    managerUI.connectedInventory.InventorySystem.UpdateSlotAtIndex(mySlotIndex, mouseData.ItemData, maxStack);
+                    managerUI.mouseItemData.UpdateMouseSlot(mouseData.ItemData, total - maxStack);
+                }
             }
-
-            managerUI.mouseItemData.ClearSlot();
         }
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        HandleDropLogic();
-    }
-
-    void HandleDropLogic()
-    {
-        if (!managerUI.mouseItemData.HasItem) return;
-
-        ItemData mouseItem = managerUI.mouseItemData.MouseSlot.ItemData;
-        if (!managerUI.connectedInventory.CanAcceptItem(mySlotIndex, mouseItem))
-        {
-            return; //holder 거절시 드롭 취ㄱ소
-        }
-
-        // InventorySystem에 스왑요청 (같으면 합치기, 다르면 교체)
-        var system = managerUI.connectedInventory.InventorySystem;
-        InventorySlot mouseSlot = managerUI.mouseItemData.MouseSlot;
-
-        system.SwapWithExternal(mySlotIndex, mouseSlot);
-        managerUI.mouseItemData.UpdateMouseSlot(mouseSlot.ItemData, mouseSlot.Amount);
     }
 
     #endregion
 
+    #region Drop & Pick Logic Methods
+
+    private void HandlePickHalfItem()
+    {
+        int halfAmount = Mathf.CeilToInt(mySlot.Amount / 2.0f);
+
+        // 절반을 마우스로 복사하고 현재 슬롯에서 차감
+        managerUI.mouseItemData.UpdateMouseSlot(mySlot.ItemData, halfAmount);
+        managerUI.connectedInventory.InventorySystem.RemoveItemAtIndex(mySlotIndex, halfAmount);
+    }
+
+    private void HandleDropOneItem()
+    {
+        ItemData mouseItem = managerUI.mouseItemData.MouseSlot.ItemData;
+
+        // 슬롯이 비어있거나, 같은 아이템이면서 최대 스택을 넘지 않을 때만 1개 놓기 가능
+        if (mySlot.IsEmpty || (mySlot.ItemData == mouseItem && mySlot.Amount < mouseItem.maxStackAmount))
+        {
+            // 인벤토리 시스템에 추가
+            managerUI.connectedInventory.InventorySystem.UpdateSlotAtIndex(mySlotIndex, mouseItem, mySlot.Amount + 1);
+
+            // 마우스 쪽에서는 1개 차감
+            int leftover = managerUI.mouseItemData.MouseSlot.Amount - 1;
+            if (leftover > 0)
+                managerUI.mouseItemData.UpdateMouseSlot(mouseItem, leftover);
+            else
+                managerUI.mouseItemData.ClearSlot(); // 마우스 비우기
+        }
+    }
+
+    private void HandleDropLogic()
+    {
+        if (!managerUI.mouseItemData.HasItem) return;
+
+        ItemData mouseItem = managerUI.mouseItemData.MouseSlot.ItemData;
+
+        // 인벤토리 홀더가 이 아이템을 거절하면 취소
+        if (!managerUI.connectedInventory.CanAcceptItem(mySlotIndex, mouseItem)) return;
+
+        var system = managerUI.connectedInventory.InventorySystem;
+        InventorySlot mouseSlot = managerUI.mouseItemData.MouseSlot;
+        InventorySlot targetSlot = system.Slots[mySlotIndex];
+
+        // 대상 슬롯이 비어있을 때
+        if (targetSlot.IsEmpty)
+        {
+            system.UpdateSlotAtIndex(mySlotIndex, mouseItem, mouseSlot.Amount);
+            managerUI.mouseItemData.ClearSlot();
+        }
+        // 같은 아이템일 때 (합치기 & 최대 스택 방어)
+        else if (targetSlot.ItemData == mouseItem)
+        {
+            int total = targetSlot.Amount + mouseSlot.Amount;
+            int maxStack = mouseItem.maxStackAmount;
+
+            if (total <= maxStack)
+            {
+                // 전부 합치기
+                system.UpdateSlotAtIndex(mySlotIndex, mouseItem, total);
+                managerUI.mouseItemData.ClearSlot();
+            }
+            else
+            {
+                // 최대 스택까지만 채우고 남은 건 마우스에
+                system.UpdateSlotAtIndex(mySlotIndex, mouseItem, maxStack);
+                managerUI.mouseItemData.UpdateMouseSlot(mouseItem, total - maxStack);
+            }
+        }
+        // 다른 아이템일 때
+        else
+        {
+            // InventorySystem에서 자리를 바꾸기
+            system.SwapWithExternal(mySlotIndex, mouseSlot);
+
+            // 아이템 정보 갱신
+            managerUI.mouseItemData.UpdateMouseSlot(mouseSlot.ItemData, mouseSlot.Amount);
+        }
+    }
+
+    #endregion
 }

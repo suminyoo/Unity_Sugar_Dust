@@ -133,7 +133,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             // 마우스가 비어있고 슬롯에 아이템이 있다면 => 아이템 정보창/상점창 띄우기
             else if (!mySlot.IsEmpty)
             {
-                managerUI.HandleSlotRightClick(mySlotIndex);
+                managerUI.HandleSlotInfoClick(mySlotIndex);
             }
         }
     }

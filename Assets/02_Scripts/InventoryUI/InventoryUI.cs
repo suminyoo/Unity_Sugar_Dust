@@ -185,7 +185,7 @@ public class InventoryUI : MonoBehaviour
     #region Click Event Handling
 
     //우클릭 이벤트 분기 처리 
-    public void HandleSlotRightClick(int slotIndex)
+    public void HandleSlotInfoClick(int slotIndex)
     {
         var slot = connectedInventory.InventorySystem.Slots[slotIndex];
         if (slot.IsEmpty) return;

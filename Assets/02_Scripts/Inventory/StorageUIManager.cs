@@ -27,14 +27,14 @@ public class StorageUIManager : MonoBehaviour
     // UI 전체를 감싸는 부모 오브젝트 (배경 등)
 
     // 현재 활성화된 데이터와 UI 변수
-    private InventoryHolder _playerHolder;
-    private InventoryHolder _currentOtherHolder; // 현재 거래 중인 Storage
-    private InventoryUI _currentOtherUI;         // 현재 켜져 있는 Storage UI
-    private GameObject _currentOtherPanel;       // 현재 켜져 있는 Storage UI를 자식으로 두는 패널
+    private InventoryHolder playerHolder;
+    private InventoryHolder currentOtherHolder; // 현재 거래 중인 Storage
+    private InventoryUI currentOtherUI;         // 현재 켜져 있는 Storage UI
+    private GameObject currentOtherPanel;       // 현재 켜져 있는 Storage UI를 자식으로 두는 패널
 
     [Header("Others")]
     public float closeDistance = 3.0f;
-    public bool IsAnyStorageUIOpen => playerBagPanel.activeSelf || (_currentOtherPanel != null && _currentOtherPanel.activeSelf);
+    public bool IsAnyStorageUIOpen => playerBagPanel.activeSelf || (currentOtherPanel != null && currentOtherPanel.activeSelf);
 
     [Header("Sounds")]
     public SoundData containerOpenSound;
@@ -49,7 +49,7 @@ public class StorageUIManager : MonoBehaviour
 
         rootCanvas.SetActive(false);
 
-        _playerHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryHolder>();
+        playerHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryHolder>();
 
         // 시작할 때 모든 상대방 UI 비활성화
         if (myShopUI) myShopUI.gameObject.SetActive(false);
@@ -70,9 +70,9 @@ public class StorageUIManager : MonoBehaviour
             }
 
             // 거리 체크 (멀어지면 닫기)
-            if (_currentOtherHolder != null && _playerHolder != null)
+            if (currentOtherHolder != null && playerHolder != null)
             {
-                float dist = Vector3.Distance(_playerHolder.transform.position, _currentOtherHolder.transform.position);
+                float dist = Vector3.Distance(playerHolder.transform.position, currentOtherHolder.transform.position);
                 if (dist > closeDistance)
                 {
                     CloseStorage();
@@ -85,7 +85,7 @@ public class StorageUIManager : MonoBehaviour
     // TODO: uiType -  Enum을 써서 상자별 다른 ui를 열도록 확장 가능
     public void OpenStorage(InventoryHolder other, InventoryContext shopType, Action onClosed = null)
     {
-        _currentOtherHolder = other;
+        currentOtherHolder = other;
 
         // 닫힐 때 실행할 행동
         this.onCloseCallback = onClosed;
@@ -96,13 +96,13 @@ public class StorageUIManager : MonoBehaviour
         playerBagPanel.SetActive(true);
 
         // 플레이어 UI 연결 및 갱신
-        playerInventoryUI.connectedInventory = _playerHolder;
-        playerInventoryUI.SetInventorySystem(_playerHolder.InventorySystem);
+        playerInventoryUI.connectedInventory = playerHolder;
+        playerInventoryUI.SetInventorySystem(playerHolder.InventorySystem);
 
         CloseOtherStoragePanels();
 
-        _currentOtherUI = null;
-        _currentOtherPanel = null;
+        currentOtherUI = null;
+        currentOtherPanel = null;
 
         // 타입에 따라 UI 패널 선택
         switch (shopType)
@@ -110,42 +110,42 @@ public class StorageUIManager : MonoBehaviour
             case InventoryContext.MyShop:
                 if (defaultOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(defaultOpenSound);
 
-                _currentOtherUI = myShopUI;
-                _currentOtherPanel = myShopPanel;
+                currentOtherUI = myShopUI;
+                currentOtherPanel = myShopPanel;
                 if (other is IShopSource source)
-                    _currentOtherUI.InitShopMode(source, InventoryContext.MyShop);
+                    currentOtherUI.InitShopMode(source, InventoryContext.MyShop);
                 break;
                 
             case InventoryContext.NPCShop:
                 if (defaultOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(defaultOpenSound);
 
-                _currentOtherUI = npcShopUI;
-                _currentOtherPanel = npcShopPanel;
+                currentOtherUI = npcShopUI;
+                currentOtherPanel = npcShopPanel;
                 if (other is IShopSource npcSource)
-                    _currentOtherUI.InitShopMode(npcSource, InventoryContext.NPCShop);
+                    currentOtherUI.InitShopMode(npcSource, InventoryContext.NPCShop);
                 break;
 
             case InventoryContext.Container:
                 if (containerOpenSound.clip != null) SoundManager.Instance.PlaySFX2D(containerOpenSound);
 
-                _currentOtherUI = containerUI;
-                _currentOtherPanel = containerPanel;
-                if (_currentOtherUI != null)
-                    _currentOtherUI.contextType = InventoryContext.Container;
+                currentOtherUI = containerUI;
+                currentOtherPanel = containerPanel;
+                if (currentOtherUI != null)
+                    currentOtherUI.contextType = InventoryContext.Container;
                 break;
 
         }
 
         // 선택된 상대방 UI 활성화 및 데이터 연결
-        if (_currentOtherUI != null && _currentOtherPanel != null)
+        if (currentOtherUI != null && currentOtherPanel != null)
         {
-            _currentOtherPanel.SetActive(true);
-            _currentOtherUI.gameObject.SetActive(true);
+            currentOtherPanel.SetActive(true);
+            currentOtherUI.gameObject.SetActive(true);
 
-            _currentOtherUI.connectedInventory = _currentOtherHolder;
-            _currentOtherUI.SetInventorySystem(_currentOtherHolder.InventorySystem);
+            currentOtherUI.connectedInventory = currentOtherHolder;
+            currentOtherUI.SetInventorySystem(currentOtherHolder.InventorySystem);
 
-            _currentOtherUI.RefreshUI();
+            currentOtherUI.RefreshUI();
         }
     }
     public void CloseOtherStoragePanels()
@@ -164,17 +164,17 @@ public class StorageUIManager : MonoBehaviour
 
         // 상대ui 끄기
         // TODO: 상점 배경?과 상대ui 수정 고려
-        if (_currentOtherUI != null) _currentOtherUI.gameObject.SetActive(false);
-        if (_currentOtherPanel != null) _currentOtherPanel.SetActive(false);
+        if (currentOtherUI != null) currentOtherUI.gameObject.SetActive(false);
+        if (currentOtherPanel != null) currentOtherPanel.SetActive(false);
 
         // 플레이어 가방 끄기
         playerBagPanel.SetActive(false);
 
         TryClearMouseItem();
 
-        _currentOtherHolder = null;
-        _currentOtherUI = null;
-        _currentOtherPanel = null;
+        currentOtherHolder = null;
+        currentOtherUI = null;
+        currentOtherPanel = null;
 
         if (onCloseCallback != null)
         {
@@ -198,18 +198,18 @@ public class StorageUIManager : MonoBehaviour
         // 플레이어 UI를 클릭했는지
         if (clickedUI == playerInventoryUI)
         {
-            fromHolder = _playerHolder;       // 플레이어
-            toHolder = _currentOtherHolder;   // 현재 열린 스토리지
+            fromHolder = playerHolder;       // 플레이어
+            toHolder = currentOtherHolder;   // 현재 열린 스토리지
 
 
             // 플레이어 인벤토리에서 상점으로 아이템 이동 금지 (기부행동 레전드)
-            if (_currentOtherUI != null && _currentOtherUI.contextType == InventoryContext.NPCShop) return;
+            if (currentOtherUI != null && currentOtherUI.contextType == InventoryContext.NPCShop) return;
         }
         // 현재열린상대방 UI를 클릭했느,ㄴ지
-        else if (clickedUI == _currentOtherUI)
+        else if (clickedUI == currentOtherUI)
         {
-            fromHolder = _currentOtherHolder; // 현재 열린 스토리지
-            toHolder = _playerHolder;         // 플레이어
+            fromHolder = currentOtherHolder; // 현재 열린 스토리지
+            toHolder = playerHolder;         // 플레이어
         }
 
         // 전송 실행

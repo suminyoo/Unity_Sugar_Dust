@@ -179,6 +179,8 @@ public class PlayerInventory : InventoryHolder, ISaveable
     {
         float extraCapacity = maxWeight * (0.8f / Mathf.Log(maxWeight + 1, 10));
         float limit = maxWeight + extraCapacity;
+        
+        // 무게 초과로 인해 아이템 추가 안되는 로직 고려 (기획)
 
         int remaining = inventorySystem.AddItemToSlots(item, count);
 

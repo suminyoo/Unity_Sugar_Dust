@@ -23,16 +23,7 @@ public class TownTutorialManager : MonoBehaviour
     public QuestData tuto_10;
 
     [Header("Dialogue Data (±³Ã¼)")]
-    public DialogueData parentDialogue_Phase2;
-    public DialogueData parentDialogue_Phase3;
-
     public DialogueData guideDialogue_Phase2;
-   
-    public DialogueData curiousDialogue_Phase2;
-    public DialogueData weaponDialogue_Phase2;
-
-    public DialogueData spaceshipDialogue_Phase2;
-    public DialogueData spaceshipDialogue_Phase3;
 
     [Header("Spaceship Tuto 06 Dialogues")]
     public DialogueData spaceship_FailNight;

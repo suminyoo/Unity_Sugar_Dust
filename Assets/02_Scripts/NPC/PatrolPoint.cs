@@ -2,7 +2,26 @@ using UnityEngine;
 
 public class PatrolPoint : MonoBehaviour
 {
+    public bool isRandomWait = false;
     public float waitTime = 2f;
+
+    private void Awake()
+    {
+        ApplyRandomTime();
+    }
+
+    private void OnEnable()
+    {
+        ApplyRandomTime();
+    }
+
+    private void ApplyRandomTime()
+    {
+        if (isRandomWait)
+        {
+            waitTime = (float)Random.Range(3, 16);
+        }
+    }
 
     private void OnDrawGizmos()
     {

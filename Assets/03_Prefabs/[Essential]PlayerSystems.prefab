@@ -18162,14 +18162,14 @@ MonoBehaviour:
   containerUI: {fileID: 1134432428702434637}
   closeDistance: 10
   containerOpenSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: a634ee6fcac89124f92b1910dacfb922, type: 3}
+    volume: 0.5
   defaultOpenSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 4e7ce19b0c9dda1458946554f940d3b8, type: 3}
+    volume: 0.5
   defaultCloseSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 7abccce1359ba0d4a8421bcc212783c5, type: 3}
+    volume: 0.5
 --- !u!114 &1585865001654277057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18185,8 +18185,8 @@ MonoBehaviour:
   playerBagPanel: {fileID: 7644848444117479039}
   toggleKey: 9
   inventoryOpenSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 5e7bc695c1adcf0489162823f2f1c7a9, type: 3}
+    volume: 0.5
 --- !u!114 &3474830422778414060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26870,11 +26870,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoney: 0
   moneySpendSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 33b856df142ac424c8fc9fa6446a4a23, type: 3}
+    volume: 0.5
   moneyEarnSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: b8020b022dbffba48bfbbe9279528d92, type: 3}
+    volume: 0.5
 --- !u!114 &4119672150536191280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32541,7 +32541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voiceSound:
     clip: {fileID: 8300000, guid: ebb03b2b009894845b81a64051a5c698, type: 3}
-    volume: 0.4
+    volume: 0.2
   pitchVariation: 0.5
 --- !u!114 &1922746540106532958
 MonoBehaviour:

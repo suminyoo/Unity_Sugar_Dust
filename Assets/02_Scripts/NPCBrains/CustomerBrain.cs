@@ -178,7 +178,7 @@ public class CustomerBrain : NPCBrain
         ItemData potentialItem = slot.ItemData;
         int potentialPrice = targetShop.GetSlotPrice(targetItemSlotIndex);
 
-        float costPrice = Mathf.Max(1f, potentialItem.sellPrice);
+        float costPrice = Mathf.Max(1f, potentialItem.basePrice);
 
         // 로그 기반 배수 계산: 가격이 높을수록 배수가 낮아짐
         float baseMaxRatio = 1.2f + (5.0f / (Mathf.Log10(costPrice + 10f) + 1f));
@@ -186,7 +186,7 @@ public class CustomerBrain : NPCBrain
         float finalMaxRatio = baseMaxRatio * priceGenerosity;
         float currentRatio = (float)potentialPrice / costPrice;
 
-        float ratio = (potentialItem.sellPrice == 0) ? 0 : (float)potentialPrice / potentialItem.sellPrice;
+        float ratio = (potentialItem.basePrice == 0) ? 0 : (float)potentialPrice / potentialItem.sellPrice;
 
         // Case A: 너무 비쌈 (> 2배) -> 안 삼
         if (potentialPrice > 0 && currentRatio > finalMaxRatio)

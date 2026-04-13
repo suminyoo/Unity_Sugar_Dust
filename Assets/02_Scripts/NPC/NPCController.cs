@@ -19,6 +19,7 @@ public class NPCController : MonoBehaviour
 {
     public NPCData npcData;
     public NPCPatrolPath assignedPath;
+    public bool useRandomColor = false;
 
     [Header("Instance Data")]
 
@@ -59,6 +60,11 @@ public class NPCController : MonoBehaviour
         Movement.SetSpeed(npcData.moveSpeed);
 
         UpdateDialogueContext();
+
+        if (useRandomColor)
+        {
+            NPCVisualUtility.ApplyRandomColor(gameObject);
+        }
 
     }
 

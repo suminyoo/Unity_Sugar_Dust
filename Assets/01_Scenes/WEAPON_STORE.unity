@@ -559,6 +559,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7125633580651769442, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1846869206802433
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 390967288839638453, guid: e65503020731d7e4eae7051123d1037d, type: 3}
     m_RemovedGameObjects: []
@@ -761,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 10
 --- !u!1001 &294001616
 PrefabInstance:
@@ -1235,6 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 30
 --- !u!23 &522067373
 MeshRenderer:
@@ -1476,6 +1482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 10
 --- !u!1 &754529157
 GameObject:
@@ -1786,7 +1793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &872839056
 Transform:
   m_ObjectHideFlags: 0
@@ -1913,7 +1920,7 @@ PrefabInstance:
     - target: {fileID: 390967288839638453, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: questAlertMark
       value: 
-      objectReference: {fileID: 2307123403767924463}
+      objectReference: {fileID: 1081191554}
     - target: {fileID: 4944551089940101172, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: assignedPath
       value: 
@@ -2011,6 +2018,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+--- !u!1 &1081191554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1284195725310021697, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+  m_PrefabInstance: {fileID: 1081191553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1153404174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,6 +2268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 5
 --- !u!23 &1179603254
 MeshRenderer:
@@ -2385,6 +2398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 10
 --- !u!23 &1191707891
 MeshRenderer:
@@ -2578,6 +2592,10 @@ PrefabInstance:
     - target: {fileID: 6856294405653126216, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125633580651769442, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1846869206802433
       objectReference: {fileID: 0}
     - target: {fileID: 8820973129667859725, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: m_IsActive
@@ -3072,6 +3090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 30
 --- !u!23 &1662286415
 MeshRenderer:
@@ -3782,7 +3801,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: e65503020731d7e4eae7051123d1037d, type: 3}
 --- !u!1 &2009753255 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8820973129667859725, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1284195725310021697, guid: e65503020731d7e4eae7051123d1037d, type: 3}
   m_PrefabInstance: {fileID: 2009753254}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2037634921
@@ -3854,6 +3873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 10
 --- !u!23 &2057856182
 MeshRenderer:
@@ -4016,6 +4036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 10
 --- !u!1 &2123055788
 GameObject:
@@ -5033,11 +5054,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &2307123403767924463 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8820973129667859725, guid: e65503020731d7e4eae7051123d1037d, type: 3}
-  m_PrefabInstance: {fileID: 1081191553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2375691729710735977
 PrefabInstance:
   m_ObjectHideFlags: 0

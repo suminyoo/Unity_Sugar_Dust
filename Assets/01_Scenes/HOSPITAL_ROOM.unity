@@ -372,6 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 5
 --- !u!23 &188101541
 MeshRenderer:
@@ -764,6 +765,10 @@ PrefabInstance:
     - target: {fileID: 6856294405653126216, guid: e65503020731d7e4eae7051123d1037d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.048
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125633580651769442, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1846869206802432
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 390967288839638453, guid: e65503020731d7e4eae7051123d1037d, type: 3}
@@ -1514,6 +1519,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.048
       objectReference: {fileID: 0}
+    - target: {fileID: 7125633580651769442, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1846869198413825
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1570,6 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 5
 --- !u!23 &2096921203
 MeshRenderer:

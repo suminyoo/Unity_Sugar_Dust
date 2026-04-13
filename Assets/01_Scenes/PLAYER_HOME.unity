@@ -824,6 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 60
 --- !u!23 &1313128927
 MeshRenderer:
@@ -921,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 60
 --- !u!23 &1422689848
 MeshRenderer:
@@ -1272,6 +1274,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7125633580651769442, guid: e65503020731d7e4eae7051123d1037d, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 3281846725287936
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1407,6 +1413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 60
 --- !u!23 &1901570635
 MeshRenderer:
@@ -1557,6 +1564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3efa9c52bfd3f42811911388c6883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWait: 0
   waitTime: 60
 --- !u!23 &2084335351
 MeshRenderer:
